@@ -1,3 +1,4 @@
+import { Express } from "express"
 import { ManagedIdentityCredential, VisualStudioCodeCredential } from "@azure/identity"
 
 let credential: ManagedIdentityCredential | VisualStudioCodeCredential
