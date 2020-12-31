@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "A utility to manage unique user login to PAW devices via Microsoft Endpoint Manager (Intune).",
   "main": "index.js",
+  "private":"true",
   "scripts": {
     "test": "mocha"
   },
