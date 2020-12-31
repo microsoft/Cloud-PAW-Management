@@ -3,10 +3,11 @@
   "version": "0.0.1",
   "description": "A utility to manage unique user login to PAW devices via Microsoft Endpoint Manager (Intune).",
   "main": "bin/src/index.js",
-  "private":"true",
+  "private": "true",
   "scripts": {
     "start": "node ./bin/src/index.js",
-    "test": "mocha"
+    "test": "mocha",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,7 @@
   "dependencies": {
     "@azure/identity": "^1.2.0",
     "@microsoft/microsoft-graph-client": "^2.2.1",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "isomorphic-fetch": "^3.0.0"
   }
 }
