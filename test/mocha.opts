@@ -1,0 +1,4 @@
+bin/test/
+--reporter xunit
+--reporter-options output=mochaTestResults.xml
+--recursive
