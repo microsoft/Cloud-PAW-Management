@@ -2,9 +2,10 @@
   "name": "cloud-paw-login-management",
   "version": "0.0.1",
   "description": "A utility to manage unique user login to PAW devices via Microsoft Endpoint Manager (Intune).",
-  "main": "index.js",
+  "main": "bin/src/index.js",
   "private":"true",
   "scripts": {
+    "start": "node ./bin/src/index.js",
     "test": "mocha"
   },
   "repository": {
