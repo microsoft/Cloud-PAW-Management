@@ -1,4 +1,5 @@
 import express from "express";
+import { validateGUID } from "./Utility";
 import { MSAzureAccessCredential } from "./Authentication"
 import { MSGraphClient } from "./GraphClient";
 
@@ -9,14 +10,14 @@ const tenantID = process.env.Tenant_ID || "None"
 const port = process.env.PORT || 3000;
 
 // Validate environmental variable input to ensure that the input is as expected
-if (clientID === "None") {
-    throw new Error("Client ID is not configured!");
+if (validateGUID(clientID)) {
+    throw new Error("Client ID is not configured properly!");
 };
 if (clientSecret === "None") {
     throw new Error("Client Secret is not configured!");
 };
-if (tenantID === "None") {
-    throw new Error("Tenant ID is not configured!");
+if (validateGUID(tenantID)) {
+    throw new Error("Tenant ID is not configured properly!");
 };
 
 // Log into Azure AD
