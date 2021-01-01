@@ -1,5 +1,5 @@
 import { Client, ClientOptions } from "@microsoft/microsoft-graph-client";
-import type { ClientSecretCredential } from "@azure/identity"
+import type { ChainedTokenCredential } from "@azure/identity"
 import { GraphClientAuthProvider } from "./Authentication";
 import "isomorphic-fetch";
 
@@ -7,7 +7,7 @@ export class MSGraphClient {
     private configurationList: Array<any> = []
 
     // Define the login command that returns a connected instance of the Graph client
-    login(credentials: ClientSecretCredential): Client {
+    login(credentials: ChainedTokenCredential): Client {
         // Instantiate the access token interpreter
         const graphAuthProvider = new GraphClientAuthProvider(credentials);
 
