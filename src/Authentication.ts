@@ -1,12 +1,30 @@
-import { ClientSecretCredential } from "@azure/identity"
+import { ClientSecretCredential, ManagedIdentityCredential, ChainedTokenCredential } from "@azure/identity"
+import { validateGUID } from "./Utility";
 import type { AuthenticationProvider } from "@microsoft/microsoft-graph-client";
+
 export class MSAzureAccessCredential {
-    // strictly type the credential property
-    credential: ClientSecretCredential
+    // Define the class properties
+    credential: ChainedTokenCredential
+    private clientSecretCred: ClientSecretCredential
+    private managedIdentCred: ManagedIdentityCredential
 
     // todo: write docs and validate, add managed identity support
-    constructor(appRegID: string, appRegSecret: string, tenantID: string) {
-        this.credential = new ClientSecretCredential(tenantID, appRegID, appRegSecret);
+    constructor(appRegID: string, appRegSecret: string, tenantID: string, managedIdentityGUID?: string) {
+        
+        // Validate if a GUID is provided for a user assigned managed identity
+        if (typeof managedIdentityGUID !== "undefined" && validateGUID(managedIdentityGUID)) {
+            // Initialize the managed identity credential object for user assigned managed identity
+            this.managedIdentCred = new ManagedIdentityCredential(managedIdentityGUID)
+        } else {
+            // Initialize the managed identity credential object for system assigned managed identity
+            this.managedIdentCred = new ManagedIdentityCredential();
+        }
+        
+        // Initialize an app registration credential object with the specified options
+        this.clientSecretCred = new ClientSecretCredential(tenantID, appRegID, appRegSecret);
+        
+        // Chain the two credentials together to allow the automatic flow of authentication during token consumption
+        this.credential = new ChainedTokenCredential(this.clientSecretCred, this.managedIdentCred);
     };
 };
 
@@ -14,10 +32,10 @@ export class GraphClientAuthProvider implements AuthenticationProvider {
     // define the credential property as the get access token method is not allowed to have parameters
     // data will have to be passed into it via property access instead of param access.
     // this property should be private as nobody needs to access the auth system besides the graph client.
-    private credential: ClientSecretCredential
+    private credential: ChainedTokenCredential
 
     // Create the credential constructor
-    constructor(AzureIdentityCredential: ClientSecretCredential){
+    constructor(AzureIdentityCredential: ChainedTokenCredential){
         // Set the value of the credential property with the azure credential passed to it
         this.credential = AzureIdentityCredential;
     }
