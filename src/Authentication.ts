@@ -2,6 +2,7 @@ import { ClientSecretCredential, ManagedIdentityCredential, ChainedTokenCredenti
 import { validateGUID } from "./Utility";
 import type { AuthenticationProvider } from "@microsoft/microsoft-graph-client";
 
+// Create the MS Azure Access Credential handler class.
 export class MSAzureAccessCredential {
     // Define the class properties
     credential: ChainedTokenCredential
