@@ -24,6 +24,8 @@ webServer.get('/accessToken', (request, response) => {
             } else {
                 response.send("no token returned :(");
             };
+        }).catch((error)=>{
+            response.send(error);
         });
     });
 });
