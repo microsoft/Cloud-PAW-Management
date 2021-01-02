@@ -16,18 +16,24 @@ const azureAuthSession = new MSAzureAccessCredential();
 const webServer = express();
 
 // Debugging entry to list access token to manually web request as the app
-webServer.get('/accessToken', (request, response) => {
-    azureAuthSession.credential.then((credObject) => {
-        credObject.getToken("https://graph.microsoft.com/.default").then((token) => {
-            if (token !== null) {
-                response.send(token);
-            } else {
-                response.send("no token returned :(");
-            };
-        }).catch((error)=>{
-            response.send(error);
-        });
-    });
+webServer.get('/accessToken', async (request, response) => {
+    try {
+        // grab a token and extract its value
+        const token = await (await azureAuthSession.credential).getToken("https://graph.microsoft.com/.default");
+
+        // Validate that the token has value
+        if (token !== null) {
+            // If it does, send its value as a response
+            response.send(token);
+            // If it does not
+        } else {
+            // Send a notice to the caller stating that it does not have value.
+            response.send("no token data received")
+        };
+    } catch (error) {
+        response.send(error);
+    }
+});
 });
 
 // Start the web server
