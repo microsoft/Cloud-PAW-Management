@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "@azure/identity": "^1.2.0",
+    "@azure/keyvault-secrets": "^4.1.0",
     "@microsoft/microsoft-graph-client": "^2.2.1",
     "express": "^4.17.1",
     "isomorphic-fetch": "^3.0.0"
