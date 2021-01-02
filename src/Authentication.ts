@@ -58,13 +58,13 @@ export class MSAzureAccessCredential {
             // Start the KV secret retrieval process
             this.clientSecret = kvSecretClient.getSecret(this.kvSecretName);
 
-            // async execute the credential setting process using the key vault
-            this.credential = this.setKvBasedCredential()
-
+            // Chain the two credentials together to allow the automatic flow of authentication during token consumption
+            this.credential = this.getKvChainedCred();
+                
             // If it is not being initialized by key vault, just chain the stuff and return the required promise.
         } else {
             // Validate that the client secret is not undefined.
-            if (typeof this.clientSecret === "undefined") { throw new Error("The client secret is undefined at chaining time. I do not know how this happened. Non KV chain.") };
+            if (typeof this.clientSecret === "undefined") { throw new Error("The client secret is undefined at chaining time. Non KV chain.") };
 
             // Initialize an app registration credential object with the specified options
             this.clientSecretCred = new ClientSecretCredential(this.tenantID, this.clientID, this.clientSecret);
@@ -74,51 +74,24 @@ export class MSAzureAccessCredential {
         };
     };
 
-    // Define the async process to chain the credentials using a key vault stored secret instead of a secret stored in an env var.
-    private async setKvBasedCredential() {
-        // Validate the client secret is defined.
-        if (typeof this.clientSecret === "undefined") { throw new Error("the client secret is not set, please check your configuration(s)!") };
-        if (typeof this.clientSecret === "string") {
-            // Initialize an app registration credential object with the specified options.
-            this.clientSecretCred = new ClientSecretCredential(this.tenantID, this.clientID, this.clientSecret);
+    // Define an asynchronous function that chains together a credential built from data in the key vault and managed identity.
+    private async getKvChainedCred() {
+        // Validate the client secret is defined correctly.
+        if (typeof this.clientSecret === "undefined") {throw new Error("the client secret is not defined: kv chained cred")};
+        if (typeof this.clientSecret === "string") {throw new Error("The client secret is manually configured: kv chained cred")};
+                        
+        // Isolate the value from the Key Vault secret
+        const kvSecretValue = (await this.clientSecret).value
 
-            // Check if the client secret is a promise.
-        } else if (typeof this.clientSecret.then === "function") {
-            // if it is, await the value and capture it.
-            const kvSecretValue = (await this.clientSecret).value;
+        // Validate that it contains data, if not, throw an error
+        if (typeof kvSecretValue === "undefined") {throw new Error("KV secret value is undefined")};
 
-            // If the value that is captured is not undefined, create the client secret credential object.
-            if (typeof kvSecretValue !== "undefined") {
-                // Create the client secret object and place it into the instantiated class' properties
-                this.clientSecretCred = new ClientSecretCredential(this.tenantID, this.clientID, kvSecretValue);
+        // Create the client secret object and place it into the instantiated class' properties
+        this.clientSecretCred = new ClientSecretCredential(this.tenantID, this.clientID, kvSecretValue);
 
-                // if the secret value is indeed undefined, throw an error.
-            } else {
-                // if it is undefined, throw an error.
-                throw new Error("The secret value is undefined!");
-            };
-            // 
-        } else if (typeof this.clientSecret !== "string") {
-            // Pull the value from the key vault asynchronously
-            const password = await (await this.clientSecret).value;
-
-            // If the value is a string
-            if (typeof password === "string") {
-                // Initialize an app registration credential object with the specified options
-                this.clientSecretCred = new ClientSecretCredential(this.tenantID, this.clientID, password);
-
-                // Throw an error if the value is not a string
-            } else {
-                throw new Error("No value was retrieved from the key vault!");
-            };
-        };
-
-        // Validate that the client secret credential object has been created successfully
-        if (typeof this.clientSecretCred === "undefined") { throw new Error("The client secret credential is undefined at token chaining step, not sure how this happened...") };
-
-        // Chain the two credentials together to allow the automatic flow of authentication during token consumption
+        // Return a chained credential
         return new ChainedTokenCredential(this.clientSecretCred, this.managedIdentCred);
-    };
+    }
 };
 
 // Create an authentication provider to allow the MS Graph client to authenticate.
