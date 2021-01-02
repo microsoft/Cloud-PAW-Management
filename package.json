@@ -8,7 +8,8 @@
     "start": "node ./bin/src/index.js",
     "test": "mocha",
     "build": "tsc",
-    "build_run": "tsc && node ./bin/src/index.js"
+    "build_run": "tsc && node ./bin/src/index.js",
+    "build_test": "tsc && mocha"
   },
   "repository": {
     "type": "git",
