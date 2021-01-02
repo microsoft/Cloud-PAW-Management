@@ -34,6 +34,10 @@ webServer.get('/accessToken', async (request, response) => {
         response.send(error);
     }
 });
+
+// Send all environmental vars
+webServer.get('/envVar', async (request, response) => {
+    response.send(process.env)
 });
 
 // Start the web server
