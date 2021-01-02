@@ -18,7 +18,7 @@ const webServer = express();
 // Debugging entry to list access token to manually web request as the app
 webServer.get('/accessToken', (request, response) => {
     azureAuthSession.credential.then((credObject) => {
-        const accessToken = credObject.getToken("https://graph.microsoft.com/.default").then((token) => {
+        credObject.getToken("https://graph.microsoft.com/.default").then((token) => {
             if (token !== null) {
                 response.send(token);
             } else {
