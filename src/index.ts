@@ -17,9 +17,19 @@ const graphClient = new MSGraphClient(azureAuthSession.credential);
 // Initialize Express
 const webServer = express();
 
-// Configure Express
-
-// Define the management API
+// debugging entry to list access token to manually web request as the app
+webServer.get('/accessToken', (request, response) => {
+    const accessToken = azureAuthSession.credential.getToken("https://graph.microsoft.com/.default")
+    if (!accessToken) {
+        response.send("No access token object present!");
+    } else {
+        accessToken.then((results) => {
+            response.send(results);
+        }).catch((error) => {
+            response.send(error);
+        });
+    }
+})
 
 // Start the web server
 const serverInstance = webServer.listen(port, () => {
