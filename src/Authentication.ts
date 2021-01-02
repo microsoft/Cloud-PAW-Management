@@ -28,10 +28,10 @@ export class MSAzureAccessCredential {
         this.kvSecretName = process.env.KeyVault_Secret
 
         // Validate environmental variable input to ensure that the input is as expected and not an injection attempt.
-        if (validateGUID(this.clientID)) { throw new Error("Client ID is not configured properly!") };
+        if (!validateGUID(this.clientID)) { throw new Error("Client ID is not configured properly!") };
         if (typeof this.clientSecret !== "undefined" && typeof this.keyVaultName !== "undefined") { throw new Error("You should not specify a app secret if you are using a key vault to store the secret. This is a security risk!") };
         if (typeof this.clientSecret === "undefined" && typeof this.keyVaultName === "undefined") { throw new Error("You must specify either a Key Vault name (preferred) and Key Vault secret name, or set a app registration secret to authenticate to the MS graph"); }
-        if (validateGUID(this.tenantID)) { throw new Error("Tenant ID is not configured properly!") };
+        if (!validateGUID(this.tenantID)) { throw new Error("Tenant ID is not configured properly!") };
         if (!validateGUID(this.managedIdentGUID) && this.managedIdentGUID !== "None") { throw new Error("The user assigned managed identity GUID is not a valid GUID!") };
         if (typeof this.keyVaultName !== "undefined" && typeof this.kvSecretName === "undefined") { throw new Error("If you specify a Key Vault name, you need to specify the name of a secret in the key vault"); }
 
