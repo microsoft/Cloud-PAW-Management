@@ -2,5 +2,11 @@
     "cSpell.words": [
         "Intune",
         "keyvault"
-    ]
+    ],
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.deploySubpath": ".",
+    "appService.defaultWebAppToDeploy": "None"
 }
