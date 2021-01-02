@@ -37,11 +37,11 @@ export class MSGraphClient {
     }
 
     // Todo: write the code that builds a new login restriction configuration
-    newInteractiveLoginConfiguration() {}
+    newInteractiveLoginConfiguration() { }
 
     // Todo: Write the code that updates existing login restriction configurations
-    updateInteractiveLoginConfiguration() {}
+    updateInteractiveLoginConfiguration() { }
 
     // Todo: Write the code that removes login restriction configurations
-    removeInteractiveLoginConfiguration() {}
+    removeInteractiveLoginConfiguration() { }
 }
