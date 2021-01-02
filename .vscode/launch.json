@@ -18,6 +18,19 @@
             "type": "pwa-node"
         },
         {
+            "name": "Build and Test",
+            "request": "launch",
+            "runtimeArgs": [
+                "run-script",
+                "build_test"
+            ],
+            "runtimeExecutable": "npm",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node"
+        },
+        {
             "name": "Build",
             "request": "launch",
             "runtimeArgs": [
