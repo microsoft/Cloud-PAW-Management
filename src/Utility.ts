@@ -6,7 +6,7 @@ export function validateGUID(GUIDToTest: any): boolean {
         return false;
     } else {
         // Convert the data to a string then run a GUID string regex match against it and store the results.
-        const results = GUIDToTest.toString().match("/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i")
+        const results = GUIDToTest.toString().match("^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$")
     
         // Check to see if any match was found and if a match was found, check to make sure it was only one.
         if (results !== null && results.length === 1) {
