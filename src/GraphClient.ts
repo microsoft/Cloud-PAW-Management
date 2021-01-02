@@ -30,8 +30,18 @@ export class MSGraphClient {
         return Client.initWithMiddleware(clientOptions);
     }
 
+    // Todo: Build the code that retrieves the list of device configurations
     // retrieve a list of all device configurations that are accessible to the app
     getDeviceConfigList() {
-        console.log(this.configurationList)
+        // const deviceConfig = instance.api("/deviceManagement/deviceConfigurations").get()
     }
+
+    // Todo: write the code that builds a new login restriction configuration
+    newInteractiveLoginConfiguration() {}
+
+    // Todo: Write the code that updates existing login restriction configurations
+    updateInteractiveLoginConfiguration() {}
+
+    // Todo: Write the code that removes login restriction configurations
+    removeInteractiveLoginConfiguration() {}
 }
