@@ -3,13 +3,22 @@ import type { ChainedTokenCredential } from "@azure/identity"
 import { GraphClientAuthProvider } from "./Authentication";
 import "isomorphic-fetch";
 
+// Define the Graph Client class.
 export class MSGraphClient {
-    private configurationList: Array<any> = []
+    private configurationList: Array<any> = [];
+    private credential: ChainedTokenCredential;
+    private client: Client;
+
+    // Define the initialization of the class
+    constructor(credential: ChainedTokenCredential) {
+        this.credential = credential
+        this.client = this.init();
+    }
 
     // Define the login command that returns a connected instance of the Graph client
-    login(credentials: ChainedTokenCredential): Client {
+    private init(): Client {
         // Instantiate the access token interpreter
-        const graphAuthProvider = new GraphClientAuthProvider(credentials);
+        const graphAuthProvider = new GraphClientAuthProvider(this.credential);
 
         // Configure teh initialization system to use the custom graph auth provider
         const clientOptions: ClientOptions = {
@@ -17,7 +26,7 @@ export class MSGraphClient {
             authProvider: graphAuthProvider
         };
 
-        // connect the graph client to the graph
+        // Connect the graph client to the graph
         return Client.initWithMiddleware(clientOptions);
     }
 
