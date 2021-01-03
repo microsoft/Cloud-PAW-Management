@@ -44,4 +44,11 @@ export class MSGraphClient {
 
     // Todo: Write the code that removes login restriction configurations
     removeInteractiveLoginConfiguration() { }
+
+    listEndpointScope() { }
+    newEndpointScope() { }
+    getAADUserList() { }
+    getAADGroupList() { }
+    newAADGroup() { }
+
 }
