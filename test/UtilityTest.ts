@@ -35,7 +35,7 @@ describe("GUID Validator", () => {
             const undefinedData = validateGUID(undefined);
 
             // This should return false
-            expect(undefinedData).to.equal(false);
+            expect(undefinedData).to.equal(true);
         });
 
         it("Validates null input as not a GUID", () => {
