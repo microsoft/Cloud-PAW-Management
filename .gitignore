@@ -1,6 +1,9 @@
 # typescript compiled output
 bin/
 
+# Ignore the mocha test restults file
+mochaTestResults.xml
+
 # Logs
 logs
 *.log
