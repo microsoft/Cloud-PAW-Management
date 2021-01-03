@@ -2,5 +2,6 @@
     "reporter": "xunit",
     "reporter-option": "output=mochaTestResults.xml",
     "recursive": true,
-    "spec": "bin/test/"
+    "spec": "bin/test/",
+    "color": true
 }
