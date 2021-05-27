@@ -1,7 +1,7 @@
 {
-  "name": "cloud-paw-login-management",
-  "version": "0.0.1",
-  "description": "A utility to manage unique user login to PAW devices via Microsoft Endpoint Manager (Intune).",
+  "name": "cloud-paw-management",
+  "version": "0.0.2",
+  "description": "A utility to easily manage cloud PAW devices via Microsoft Endpoint Manager (Intune).",
   "main": "bin/src/index.js",
   "private": "true",
   "scripts": {
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/elliot-labs/Cloud-PAW-Login-Management"
+    "url": "https://github.com/elliot-labs/Cloud-PAW-Management"
   },
   "keywords": [
     "Intune",
