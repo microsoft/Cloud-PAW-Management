@@ -11,7 +11,7 @@ export class MSAzureAccessCredential {
     private clientSecretCred: ClientSecretCredential | undefined;
     private managedIdentCred: ManagedIdentityCredential;
     private clientID: string
-    private clientSecret: string | Promise<KeyVaultSecret> | undefined
+    private clientSecret: string | Promise<KeyVaultSecret>
     private tenantID: string
     private managedIdentGUID: string
     private keyVaultName: string | undefined
@@ -20,18 +20,18 @@ export class MSAzureAccessCredential {
     // todo: write docs and validate, add key vault
     constructor() {
         // Import environmental variables
-        this.clientID = process.env.Client_GUID || "None"
-        this.clientSecret = process.env.Client_Secret
-        this.tenantID = process.env.Tenant_ID || "None"
+        this.clientID = process.env.Client_GUID || ""
+        this.clientSecret = process.env.Client_Secret || ""
+        this.tenantID = process.env.Tenant_ID || ""
         this.managedIdentGUID = process.env.Managed_ID_GUID || "None"
         this.keyVaultName = process.env.KeyVault_Name
         this.kvSecretName = process.env.KeyVault_Secret
 
         // Validate environmental variable input to ensure that the input is as expected and not an injection attempt.
-        if (!validateGUID(this.clientID)) { throw new Error("Client ID is not configured properly!") };
-        if (typeof this.clientSecret !== "undefined" && typeof this.keyVaultName !== "undefined") { throw new Error("You should not specify a app secret if you are using a key vault to store the secret. This is a security risk!") };
-        if (typeof this.clientSecret === "undefined" && typeof this.keyVaultName === "undefined") { throw new Error("You must specify either a Key Vault name (preferred) and Key Vault secret name, or set a app registration secret to authenticate to the MS graph"); }
-        if (!validateGUID(this.tenantID)) { throw new Error("Tenant ID is not configured properly!") };
+        if (!validateGUID(this.clientID) && this.clientID !== "") { throw new Error("Client ID is not configured properly!") };
+        if (this.clientSecret !== "" && typeof this.keyVaultName !== "undefined") { throw new Error("You should not specify a app secret if you are using a key vault to store the secret. This is a security risk!") };
+        if (this.clientSecret === "" && typeof this.keyVaultName === "undefined") { throw new Error("You must specify either a Key Vault name (preferred) and Key Vault secret name, or set a app registration secret to authenticate to the MS graph"); }
+        if (!validateGUID(this.tenantID) && this.tenantID !== "") { throw new Error("Tenant ID is not configured properly!") };
         if (!validateGUID(this.managedIdentGUID) && this.managedIdentGUID !== "None") { throw new Error("The user assigned managed identity GUID is not a valid GUID!") };
         if (typeof this.keyVaultName !== "undefined" && typeof this.kvSecretName === "undefined") { throw new Error("If you specify a Key Vault name, you need to specify the name of a secret in the key vault"); }
 
@@ -64,7 +64,7 @@ export class MSAzureAccessCredential {
             // If it is not being initialized by key vault, just chain the stuff and return the required promise.
         } else {
             // Validate that the client secret is not undefined.
-            if (typeof this.clientSecret === "undefined") { throw new Error("The client secret is undefined at chaining time. Non KV chain.") };
+            if (this.clientSecret === "") { throw new Error("The client secret is undefined at chaining time. Non KV chain.") };
 
             // Initialize an app registration credential object with the specified options
             this.clientSecretCred = new ClientSecretCredential(this.tenantID, this.clientID, this.clientSecret);
@@ -77,7 +77,7 @@ export class MSAzureAccessCredential {
     // Define an asynchronous function that chains together a credential built from data in the key vault and managed identity.
     private async getKvChainedCred() {
         // Validate the client secret is defined correctly.
-        if (typeof this.clientSecret === "undefined") {throw new Error("the client secret is not defined: kv chained cred")};
+        if (this.clientSecret === "") {throw new Error("the client secret is not defined: kv chained cred")};
         if (typeof this.clientSecret === "string") {throw new Error("The client secret is manually configured: kv chained cred")};
                         
         // Isolate the value from the Key Vault secret
