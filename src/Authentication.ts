@@ -17,7 +17,7 @@ export class MSAzureAccessCredential {
     private keyVaultName: string | undefined
     private kvSecretName: string | undefined
 
-    // todo: write docs and validate, add key vault
+    // Initialize the Access Credential class when instantiated
     constructor() {
         // Import environmental variables
         this.clientID = process.env.Client_GUID || ""
