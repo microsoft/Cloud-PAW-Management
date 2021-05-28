@@ -64,7 +64,7 @@ export class MSAzureAccessCredential {
             // If it is not being initialized by key vault, just chain the stuff and return the required promise.
         } else {
             // Validate that the client secret is not undefined.
-            if (this.clientSecret === "") { throw new Error("The client secret is undefined at chaining time. Non KV chain.") };
+            if (typeof this.clientSecret === "undefined") { throw new Error("The client secret is undefined at chaining time. Non KV chain.") };
 
             // Initialize an app registration credential object with the specified options
             this.clientSecretCred = new ClientSecretCredential(this.tenantID, this.clientID, this.clientSecret);
