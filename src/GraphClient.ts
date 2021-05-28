@@ -1,7 +1,10 @@
 import { Client, ClientOptions } from "@microsoft/microsoft-graph-client";
-import type { ChainedTokenCredential } from "@azure/identity"
 import { GraphClientAuthProvider } from "./Authentication";
 import "isomorphic-fetch";
+import type { GraphRequest } from "@microsoft/microsoft-graph-client";
+import type * as MicrosoftGraph from "@microsoft/microsoft-graph-types";
+import type * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta";
+import type { ChainedTokenCredential } from "@azure/identity"
 
 // Define the Graph Client class.
 export class MSGraphClient {

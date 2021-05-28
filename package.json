@@ -27,6 +27,7 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "@microsoft/microsoft-graph-types": "^1.38.0",
+    "@microsoft/microsoft-graph-types-beta": "^0.8.0-preview",
     "@types/chai": "^4.2.18",
     "@types/express": "^4.17.12",
     "@types/mocha": "^8.2.2",
