@@ -1,7 +1,6 @@
 import { Client, ClientOptions } from "@microsoft/microsoft-graph-client";
 import { GraphClientAuthProvider } from "./Authentication";
 import "isomorphic-fetch";
-import type { GraphRequest } from "@microsoft/microsoft-graph-client";
 import type * as MicrosoftGraph from "@microsoft/microsoft-graph-types";
 import type * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta";
 import type { ChainedTokenCredential } from "@azure/identity"
@@ -31,6 +30,40 @@ export class MSGraphClient {
 
         // Connect the graph client to the graph
         return Client.initWithMiddleware(clientOptions);
+    }
+
+    // todo: add support for multiple pages of data (paging of results)
+    // Return the instance of the specified scope tag
+    async getEndpointScopeTag() {
+        // Error check environmental variables to ensure that the app is configured properly
+        if (typeof process.env.Scope_Tag === "undefined") {throw new Error("The scope tag configuration is not defined, please specify the name of the scope tag to use with this app.")};
+        
+        // Retrieve a list of Scope Tags from Endpoint Manager
+        const tagList = await this.client.api("/deviceManagement/roleScopeTags").version("beta").get();
+        
+        // Extract the values from the returned list and type it for easier processing
+        const tagListValue: Array<MicrosoftGraphBeta.RoleScopeTag> = tagList.value
+
+        // Check to make sure that data was returned from the Graph API query
+        if (typeof tagListValue !== "undefined") {
+            // loop through each of the items in the tag list array
+            for (let index = 0; index < tagListValue.length; index++) {
+                // Extract the current tag item from the tag list.
+                const tag = tagListValue[index];
+
+                // Since the display name is enforced to be unique, if a match is successful, return the results and stop processing.
+                // Otherwise, continue checking for more matches down the line.
+                if (tag.displayName == process.env.Scope_Tag) {
+                    // return the tag to the caller
+                    return tag;
+                }                
+            }
+            // If no tag matched and terminated execution by calling the return key word, throw an error stating that there is no match.
+            throw new Error("no matched tag!");
+        } else {
+            // If the undefined check failed and the value list is undefined, throw an error.
+            throw new Error("No tag values returned from query :-/");
+        }
     }
 
     // Todo: Build the code that retrieves the list of device configurations
