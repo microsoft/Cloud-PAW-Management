@@ -1,5 +1,6 @@
 import express from "express";
-import { MSAzureAccessCredential } from "./Authentication"
+import { MSAzureAccessCredential } from "./Authentication";
+import { MSGraphClient } from "./GraphClient";
 
 // Import environmental variables
 const port = process.env.PORT || 3000;
@@ -9,9 +10,6 @@ const debugMode = process.env.Debug || "false"
 // If it is, log into Azure with user assigned MI and app registration credentials.
 // If it isn't, Log into Azure with app registration only.
 const azureAuthSession = new MSAzureAccessCredential();
-
-// Initialize the Microsoft Graph client
-// const graphClient = new MSGraphClient(azureAuthSession.credential);
 
 // Initialize Express
 const webServer = express();
@@ -39,9 +37,16 @@ if (debugMode === "true") {
     });
 
     // Send all environmental vars
-    webServer.get('/envVar', async (request, response) => {
+    webServer.get('/envVar', (request, response) => {
         response.send(process.env)
     });
+
+    // Configure the role scope tag endpoint
+    webServer.get('/roleScopeTag', async (request, response) => {
+        // Initialize the Microsoft Graph client
+        const graphClient = new MSGraphClient(await azureAuthSession.credential);
+        response.send(await graphClient.getEndpointScopeTag());
+    })
 };
 
 // Start the web server
