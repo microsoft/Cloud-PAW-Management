@@ -1,4 +1,4 @@
-import { Client, ClientOptions } from "@microsoft/microsoft-graph-client";
+import { Client, ClientOptions, PageCollection, PageIterator } from "@microsoft/microsoft-graph-client";
 import { GraphClientAuthProvider } from "./Authentication";
 import "isomorphic-fetch";
 import type * as MicrosoftGraph from "@microsoft/microsoft-graph-types";
@@ -30,7 +30,33 @@ export class MSGraphClient {
 
         // Connect the graph client to the graph
         return Client.initWithMiddleware(clientOptions);
-    }
+    };
+
+    // make a page iterator so that pages of data will automatically be all of the data
+    private async iteratePage(graphResponse: PageCollection): Promise<any[]> {
+        try {
+            // Initialize the collection that will be returned after iteration.
+            let collection: Array<any> = [];
+            
+            // Initialize the iterator to use the existing graph connection and the current response that may need iterated on.
+            const pageIterator = new PageIterator(await this.client, graphResponse, (data) => {
+                // Add data gathered from the iterator to the collection
+                collection.push(data);
+
+                // Continue iteration (true means continue, false means pause iteration).
+                return true;
+            });
+
+            // Start the iteration process and wait for completion of the operation.
+            await pageIterator.iterate();
+
+            // Return the collection to the caller
+            return collection;
+        } catch (error) {
+            // if there is an error, tell us about it...
+            throw new Error("Page iterator breakdown :(");
+        };
+    };
 
     // todo: add support for multiple pages of data (paging of results)
     // Return the instance of the specified scope tag
