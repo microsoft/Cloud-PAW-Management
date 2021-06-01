@@ -62,16 +62,16 @@ export class MSGraphClient {
     // Return the instance of the specified scope tag
     async getEndpointScopeTag() {
         // Error check environmental variables to ensure that the app is configured properly
-        if (typeof process.env.Scope_Tag === "undefined") {throw new Error("The scope tag configuration is not defined, please specify the name of the scope tag to use with this app.")};
-        
+        if (typeof process.env.Scope_Tag === "undefined") { throw new Error("The scope tag configuration is not defined, please specify the name of the scope tag to use with this app.") };
+
         // Retrieve a list of Scope Tags from Endpoint Manager
-        const tagList = await (await this.client).api("/deviceManagement/roleScopeTags").version("beta").get();
-        
+        const tagList: PageCollection = await (await this.client).api("/deviceManagement/roleScopeTags").version("beta").get();
+
         // Extract the values from the returned list and type it for easier processing
         const tagListValue: Array<MicrosoftGraphBeta.RoleScopeTag> = await this.iteratePage(tagList);
 
         // Check to make sure that data was returned from the Graph API query
-        if (typeof tagListValue !== "undefined") {
+        if (tagListValue.length !== 0) {
             // loop through each of the items in the tag list array
             for (let index = 0; index < tagListValue.length; index++) {
                 // Extract the current tag item from the tag list.
@@ -82,7 +82,7 @@ export class MSGraphClient {
                 if (tag.displayName == process.env.Scope_Tag) {
                     // return the tag to the caller
                     return tag;
-                }                
+                }
             }
             // If no tag matched and terminated execution by calling the return key word, throw an error stating that there is no match.
             throw new Error("no matched tag!");
