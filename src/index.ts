@@ -6,10 +6,12 @@ import { MSGraphClient } from "./GraphClient";
 const port = process.env.PORT || 3000;
 const debugMode = process.env.Debug || "false"
 
-// Check to see if a user assigned managed identity GUID is provided.
-// If it is, log into Azure with user assigned MI and app registration credentials.
-// If it isn't, Log into Azure with app registration only.
+// Generate an authentication session that can create access tokens.
+// This will automatically use available credentials available in Managed Identity, Key Vault or environmental vars.
 const azureAuthSession = new MSAzureAccessCredential();
+
+// Initialize the graph client
+const graphClient = new MSGraphClient(azureAuthSession.credential);
 
 // Initialize Express
 const webServer = express();
@@ -44,7 +46,6 @@ if (debugMode === "true") {
     // Configure the role scope tag endpoint
     webServer.get('/roleScopeTag', async (request, response) => {
         // Initialize the Microsoft Graph client
-        const graphClient = new MSGraphClient(await azureAuthSession.credential);
         response.send(await graphClient.getEndpointScopeTag());
     })
 };
