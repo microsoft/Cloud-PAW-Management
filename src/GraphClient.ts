@@ -68,7 +68,7 @@ export class MSGraphClient {
         const tagList = await (await this.client).api("/deviceManagement/roleScopeTags").version("beta").get();
         
         // Extract the values from the returned list and type it for easier processing
-        const tagListValue: Array<MicrosoftGraphBeta.RoleScopeTag> = tagList.value
+        const tagListValue: Array<MicrosoftGraphBeta.RoleScopeTag> = await this.iteratePage(tagList);
 
         // Check to make sure that data was returned from the Graph API query
         if (typeof tagListValue !== "undefined") {
