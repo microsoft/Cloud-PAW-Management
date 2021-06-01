@@ -8,19 +8,19 @@ import type { ChainedTokenCredential } from "@azure/identity"
 // Define the Graph Client class.
 export class MSGraphClient {
     private configurationList: Array<any> = [];
-    private credential: ChainedTokenCredential;
-    private client: Client;
+    private credential: Promise<ChainedTokenCredential>;
+    private client: Promise<Client>;
 
     // Define the initialization of the class
-    constructor(credential: ChainedTokenCredential) {
+    constructor(credential: Promise<ChainedTokenCredential>) {
         this.credential = credential
         this.client = this.init();
     }
 
     // Define the login command that returns a connected instance of the Graph client
-    private init(): Client {
+    private async init(): Promise<Client> {
         // Instantiate the access token interpreter
-        const graphAuthProvider = new GraphClientAuthProvider(this.credential);
+        const graphAuthProvider = new GraphClientAuthProvider(await this.credential);
 
         // Configure teh initialization system to use the custom graph auth provider
         const clientOptions: ClientOptions = {
@@ -39,7 +39,7 @@ export class MSGraphClient {
         if (typeof process.env.Scope_Tag === "undefined") {throw new Error("The scope tag configuration is not defined, please specify the name of the scope tag to use with this app.")};
         
         // Retrieve a list of Scope Tags from Endpoint Manager
-        const tagList = await this.client.api("/deviceManagement/roleScopeTags").version("beta").get();
+        const tagList = await (await this.client).api("/deviceManagement/roleScopeTags").version("beta").get();
         
         // Extract the values from the returned list and type it for easier processing
         const tagListValue: Array<MicrosoftGraphBeta.RoleScopeTag> = tagList.value
