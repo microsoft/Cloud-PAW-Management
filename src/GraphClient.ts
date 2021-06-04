@@ -7,7 +7,6 @@ import type { ChainedTokenCredential } from "@azure/identity"
 
 // Define the Graph Client class.
 export class MSGraphClient {
-    private configurationList: Array<any> = [];
     private client: Promise<Client>;
 
     // Define the initialization of the class
