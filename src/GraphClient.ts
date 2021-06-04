@@ -8,19 +8,19 @@ import type { ChainedTokenCredential } from "@azure/identity"
 // Define the Graph Client class.
 export class MSGraphClient {
     private configurationList: Array<any> = [];
-    private credential: Promise<ChainedTokenCredential>;
     private client: Promise<Client>;
 
     // Define the initialization of the class
     constructor(credential: Promise<ChainedTokenCredential>) {
-        this.credential = credential
-        this.client = this.init();
+        // Create an instance of the graph client and expose it internally.
+        // The credentials are passed as a parameter as to not expose them to other methods internal to this class.
+        this.client = this.init(credential);
     }
 
     // Define the login command that returns a connected instance of the Graph client
-    private async init(): Promise<Client> {
+    private async init(credential: Promise<ChainedTokenCredential>): Promise<Client> {
         // Instantiate the access token interpreter
-        const graphAuthProvider = new GraphClientAuthProvider(await this.credential);
+        const graphAuthProvider = new GraphClientAuthProvider(await credential);
 
         // Configure teh initialization system to use the custom graph auth provider
         const clientOptions: ClientOptions = {

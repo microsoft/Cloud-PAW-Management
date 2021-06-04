@@ -46,7 +46,7 @@ if (debugMode === "true") {
     // Configure the role scope tag endpoint
     webServer.get('/roleScopeTag', async (request, response) => {
         // Initialize the Microsoft Graph client
-        response.send(await graphClient.getEndpointScopeTag());
+        response.send(await graphClient.getEndpointScopeTag("PAW-Login"));
     })
 };
 
