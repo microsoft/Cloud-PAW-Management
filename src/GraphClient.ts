@@ -58,14 +58,21 @@ export class MSGraphClient {
         };
     };
 
-    // todo: add support for multiple pages of data (paging of results)
     // Return the instance of the specified scope tag
-    async getEndpointScopeTag() {
+    async getEndpointScopeTag(scopeTagName: String): Promise<MicrosoftGraphBeta.RoleScopeTag> {
         // Error check environmental variables to ensure that the app is configured properly
-        if (typeof process.env.Scope_Tag === "undefined") { throw new Error("The scope tag configuration is not defined, please specify the name of the scope tag to use with this app.") };
+        if (typeof scopeTagName === "undefined") { throw new Error("The scope tag name is not defined, please specify the name of the scope tag to query.") };
+
+        // Define the regex to find the input characters that could be used to break out of the query.
+        const regexQuote = /'+/gi;
+        const regexBackSlash = /\\+/gi;
+
+        // Find and escape potentially malicious characters before it is sent to the query
+        let sanitizedTagName: String = scopeTagName.replace(regexQuote,"\\'");
+        sanitizedTagName = sanitizedTagName.replace(regexBackSlash, "\\\\");
 
         // Retrieve a list of Scope Tags from Endpoint Manager
-        const tagList: PageCollection = await (await this.client).api("/deviceManagement/roleScopeTags").version("beta").get();
+        const tagList: PageCollection = await (await this.client).api("/deviceManagement/roleScopeTags").version("beta").filter("displayName eq '" + scopeTagName + "'").get();
 
         // Extract the values from the returned list and type it for easier processing
         const tagListValue: Array<MicrosoftGraphBeta.RoleScopeTag> = await this.iteratePage(tagList);
@@ -79,23 +86,23 @@ export class MSGraphClient {
 
                 // Since the display name is enforced to be unique, if a match is successful, return the results and stop processing.
                 // Otherwise, continue checking for more matches down the line.
-                if (tag.displayName == process.env.Scope_Tag) {
+                if (tag.displayName == scopeTagName) {
                     // return the tag to the caller
                     return tag;
                 }
             }
             // If no tag matched and terminated execution by calling the return key word, throw an error stating that there is no match.
-            throw new Error("no matched tag!");
+            throw new Error("No matched tag!");
         } else {
             // If the undefined check failed and the value list is undefined, throw an error.
-            throw new Error("No tag values returned from query :-/");
+            throw new Error("No tag value returned from query :-/");
         }
     }
 
     // Todo: Build the code that retrieves the list of device configurations
     // retrieve a list of all device configurations that are accessible to the app
     getDeviceConfigList() {
-        // const deviceConfig = instance.api("/deviceManagement/deviceConfigurations").get()
+        // const deviceConfig = await (await this.client).api("/deviceManagement/deviceConfigurations").get()
     }
 
     // Todo: write the code that builds a new login restriction configuration
