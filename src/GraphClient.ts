@@ -1,6 +1,7 @@
 import { GraphClientAuthProvider } from "./Authentication";
 import { Client, ClientOptions, PageCollection, PageIterator } from "@microsoft/microsoft-graph-client";
 import "isomorphic-fetch";
+import type { ScopeTagUpdate } from "./Utility";
 import type * as MicrosoftGraph from "@microsoft/microsoft-graph-types";
 import type * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta";
 import type { ChainedTokenCredential } from "@azure/identity"
@@ -109,24 +110,42 @@ export class MSGraphClient {
         // Return the processed data
         return pageProcessedScopeTag;
     }
+
+    // Todo: build the scope tag creation system
+    async newEndpointScopeTag(scopeTagName: String, description?: String) {
+        // Ensure there is less than 1024 characters in the nameDesc
+        if (typeof description !== "undefined" && description.length) {
+            throw new Error("You cannot have more than 1024 characters in the description!")
+        }
+    }
+
+    // Todo: build the scope tag update system
+    async updateEndpointScopeTag(id: number, nameDesc: ScopeTagUpdate) {
+        // Ensure that the method is not being abused by sending nothing in with the update object
+        if (typeof nameDesc.name === "undefined" && typeof nameDesc.description === "undefined") {throw new Error("You cannot send an object that does not contain a name or description!")}
+        
+        // Ensure there is less than 1024 characters in the nameDesc
+        if (typeof nameDesc.description !== "undefined" && nameDesc.description.length) {
+            throw new Error("You cannot have more than 1024 characters in the description!")
+        }
+    }
+
     // Todo: Build the code that retrieves the list of device configurations
     // retrieve a list of all device configurations that are accessible to the app
-    getDeviceConfigList() {
+    async getDeviceConfigList() {
         // const deviceConfig = await (await this.client).api("/deviceManagement/deviceConfigurations").get()
     }
 
     // Todo: write the code that builds a new login restriction configuration
-    newInteractiveLoginConfiguration() { }
+    async newInteractiveLoginConfiguration() { }
 
     // Todo: Write the code that updates existing login restriction configurations
-    updateInteractiveLoginConfiguration() { }
+    async updateInteractiveLoginConfiguration() { }
 
     // Todo: Write the code that removes login restriction configurations
-    removeInteractiveLoginConfiguration() { }
+    async removeInteractiveLoginConfiguration() { }
 
-    newEndpointScope() { }
-    getAADUserList() { }
-    getAADGroupList() { }
-    newAADGroup() { }
-
+    async getAADUserList() { }
+    async getAADGroupList() { }
+    async newAADGroup() { }
 }

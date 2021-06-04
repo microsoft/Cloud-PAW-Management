@@ -18,3 +18,9 @@ export function validateGUID(GUIDToTest: any): boolean {
         };
     };
 };
+
+// Define the data structure that scope tag update objects use for the graph client library
+export interface ScopeTagUpdate {
+    name?: string
+    description?: string
+}
