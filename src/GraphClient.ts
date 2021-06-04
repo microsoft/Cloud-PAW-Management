@@ -1,5 +1,5 @@
-import { Client, ClientOptions, PageCollection, PageIterator } from "@microsoft/microsoft-graph-client";
 import { GraphClientAuthProvider } from "./Authentication";
+import { Client, ClientOptions, PageCollection, PageIterator } from "@microsoft/microsoft-graph-client";
 import "isomorphic-fetch";
 import type * as MicrosoftGraph from "@microsoft/microsoft-graph-types";
 import type * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta";
