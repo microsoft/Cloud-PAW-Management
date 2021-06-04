@@ -5,6 +5,7 @@ import { MSGraphClient } from "./GraphClient";
 // Import environmental variables
 const port = process.env.PORT || 3000;
 const debugMode = process.env.Debug || "false"
+const roleScopeTag = process.env.Scope_Tag;
 
 // Generate an authentication session that can create access tokens.
 // This will automatically use available credentials available in Managed Identity, Key Vault or environmental vars.
@@ -43,11 +44,21 @@ if (debugMode === "true") {
         response.send(process.env)
     });
 
-    // Configure the role scope tag endpoint
-    webServer.get('/roleScopeTag', async (request, response) => {
-        // Initialize the Microsoft Graph client
-        response.send(await graphClient.getEndpointScopeTag("PAW-Login"));
-    })
+    // Configure the role scope tag endpoint to return the configured role scope tag
+    webServer.get('/getRoleScopeTag', async (request, response) => {
+        if (typeof roleScopeTag === "undefined") {
+            // Notify the calling app that the role scope tag is not defined in the env vars.
+            response.send("The role scope tag variable is not defined!");
+        } else {
+            // Get all role scope tags in Microsoft Endpoint Manager (Intune)
+            response.send(await graphClient.getEndpointScopeTag(roleScopeTag));
+        }
+    });
+
+    // Configure a debug endpoint that lists all of the role scope tags that are present in the graph API.
+    webServer.get('/listRoleScopeTag', async (request, response) => {
+        response.send(await graphClient.listEndpointScopeTag());
+    });
 };
 
 // Start the web server
