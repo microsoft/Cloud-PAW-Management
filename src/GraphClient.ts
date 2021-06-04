@@ -98,6 +98,17 @@ export class MSGraphClient {
         }
     }
 
+    // Todo: list all scope tags that are present in the tenant for microsoft endpoint manager
+    async listEndpointScopeTag(): Promise<MicrosoftGraphBeta.RoleScopeTag[]> {
+        // Retrieve a list of Scope Tags from Endpoint Manager
+        const tagList: PageCollection = await (await this.client).api("/deviceManagement/roleScopeTags").version("beta").get();
+        
+        // Process the page collection to its base form (RoleScopeTag)
+        const pageProcessedScopeTag: MicrosoftGraphBeta.RoleScopeTag[] = await this.iteratePage(tagList);
+
+        // Return the processed data
+        return pageProcessedScopeTag;
+    }
     // Todo: Build the code that retrieves the list of device configurations
     // retrieve a list of all device configurations that are accessible to the app
     getDeviceConfigList() {
@@ -113,7 +124,6 @@ export class MSGraphClient {
     // Todo: Write the code that removes login restriction configurations
     removeInteractiveLoginConfiguration() { }
 
-    listEndpointScope() { }
     newEndpointScope() { }
     getAADUserList() { }
     getAADGroupList() { }
