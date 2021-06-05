@@ -133,6 +133,34 @@ export class MSGraphClient {
             };
         }
     }
+
+    // Retrieve Microsoft Endpoint Manager Group Policy configuration list. Can pull individual policy based upon GUID
+    async getDeviceGroupPolicyConfig(GUID?: String): Promise<MicrosoftGraphBeta.GroupPolicyConfiguration[]> {
+        if (typeof GUID === "undefined") {
+            // Retrieve the specified device configurations from Endpoint Manager
+            const deviceGroupPolicyPage: PageCollection = await (await this.client).api("/deviceManagement/groupPolicyConfigurations/").version("beta").get();
+            
+            // Process the page collection to its base form (DeviceConfiguration)
+            const deviceGroupPolicyList: MicrosoftGraphBeta.GroupPolicyConfiguration[] = await this.iteratePage(deviceGroupPolicyPage);
+
+            // Return the processed data
+            return deviceGroupPolicyList;
+        } else {
+            // Validate user input to ensure they don't slip us a mickey
+            if (validateGUID(GUID)) {
+                // Retrieve the specified device configurations from Endpoint Manager
+                const deviceGroupPolicyPage: MicrosoftGraphBeta.GroupPolicyConfiguration = await (await this.client).api("/deviceManagement/groupPolicyConfigurations/" + GUID).version("beta").get();
+                
+                // Convert the result to an array for type consistency.
+                const deviceGroupPolicyList = [deviceGroupPolicyPage];
+
+                // Return the processed data
+                return deviceGroupPolicyList;
+            } else {
+                // Notify the caller that the GUID isn't right if GUID validation fails.
+                throw new Error("The parameter specified is not a valid GUID!");
+            };
+        } 
     }
 
     // Todo: write the code that builds a new login restriction configuration
