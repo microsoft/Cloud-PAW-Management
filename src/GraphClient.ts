@@ -1,5 +1,5 @@
 import { GraphClientAuthProvider } from "./Authentication";
-import { validateGUID } from "./Utility";
+import { validateGUID, validateEmail } from "./Utility";
 import { Client, ClientOptions, PageCollection, PageIterator } from "@microsoft/microsoft-graph-client";
 import "isomorphic-fetch";
 import type { ScopeTagUpdate } from "./Utility";
