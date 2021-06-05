@@ -5,13 +5,10 @@ import type { ChainedTokenCredential } from "@azure/identity"
 export class DebugRouter {
     // Define the properties that will be available to the class
     private webServer: express.Express;
-    private roleScopeTag: String | undefined;
     private graphClient: MSGraphClient;
 
     // Define how the class should be instantiated
     constructor(webServer: express.Express, graphClient: MSGraphClient, credential: Promise<ChainedTokenCredential>) {
-        // Initialize the environmental variable list
-        this.roleScopeTag = process.env.Scope_Tag
         
         // Make the express instance available to the class
         this.webServer = webServer;
@@ -50,25 +47,26 @@ export class DebugRouter {
             response.send(process.env)
         });
 
-        // Configure the role scope tag endpoint to return the configured role scope tag
-        this.webServer.get('/getRoleScopeTag', async (request, response) => {
-            if (typeof this.roleScopeTag === "undefined") {
-                // Notify the calling app that the role scope tag is not defined in the env vars.
-                response.send("The role scope tag variable is not defined!");
-            } else {
-                // Get all role scope tags in Microsoft Endpoint Manager (Intune)
-                response.send(await this.graphClient.getEndpointScopeTag(this.roleScopeTag));
-            }
+        // Lists all of the role scope tags from Endpoint Manager
+        this.webServer.get('/roleScopeTag', async (request, response) => {
+            response.send(await this.graphClient.getEndpointScopeTag());
         });
 
         // Lists all of the role scope tags from Endpoint Manager
-        this.webServer.get('/listRoleScopeTag', async (request, response) => {
-            response.send(await this.graphClient.listEndpointScopeTag());
+        this.webServer.get('/roleScopeTag/:id', async (request, response) => {
+            // Parse the parameter with the Number parser.
+            const parseID = Number(request.params.id);
+
+            // Check to make sure that the Number Parser was able to complete successfully.
+            if (Object.is(parseID, NaN)) {
+                // If the Parser failed, send a notice to the caller.
+                response.send("Please send a valid ID for the Role Scope Tag!")
+            } else {
+                // Otherwise use the graph client to query the Scope Tag
+                response.send(await this.graphClient.getEndpointScopeTag(parseID));
+            };
         });
 
         // List the Microsoft Endpoint manager device configurations
-        this.webServer.get('/listDeviceConfiguration', async (request, response) => {
-            response.send(await this.graphClient.listDeviceConfig());
-        })
     }
 }
