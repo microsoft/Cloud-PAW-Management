@@ -61,9 +61,14 @@ export class DebugRouter {
             }
         });
 
-        // Configure a debug endpoint that lists all of the role scope tags that are present in the graph API.
+        // Lists all of the role scope tags from Endpoint Manager
         this.webServer.get('/listRoleScopeTag', async (request, response) => {
             response.send(await this.graphClient.listEndpointScopeTag());
         });
+
+        // List the Microsoft Endpoint manager device configurations
+        this.webServer.get('/listDeviceConfiguration', async (request, response) => {
+            response.send(await this.graphClient.listDeviceConfig());
+        })
     }
 }
