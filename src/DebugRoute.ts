@@ -77,14 +77,34 @@ export class DebugRouter {
             response.send(await this.graphClient.getDeviceConfig(request.params.id));
         });
 
-        // Get a specific Device Configuration based on its GUID
+        // List the Device Group Policy Configurations
         this.webServer.get('/deviceGroupPolicyConfiguration', async (request, response) => {
             response.send(await this.graphClient.getDeviceGroupPolicyConfig());
         });
 
-        // Get a specific Device Configuration based on its GUID
+        // Get a specific Device Group Policy Configuration based on its GUID
         this.webServer.get('/deviceGroupPolicyConfiguration/:id', async (request, response) => {
             response.send(await this.graphClient.getDeviceGroupPolicyConfig(request.params.id));
+        });
+
+        // List all groups in AAD
+        this.webServer.get('/group', async (request, response) => {
+            response.send(await this.graphClient.getAADGroup());
+        });
+
+        // Get a specific group in AAD based on its GUID
+        this.webServer.get('/group/:id', async (request, response) => {
+            response.send(await this.graphClient.getAADGroup(request.params.id));
+        });
+
+        // List all users in AAD
+        this.webServer.get('/user', async (request, response) => {
+            response.send(await this.graphClient.getAADUser());
+        });
+
+        // Get a specific user in AAD based on their GUID or UPN
+        this.webServer.get('/user/:id', async (request, response) => {
+            response.send(await this.graphClient.getAADUser(request.params.id));
         });
     }
 }
