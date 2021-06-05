@@ -99,7 +99,7 @@ export class MSGraphClient {
         }
     }
 
-    // Todo: list all scope tags that are present in the tenant for microsoft endpoint manager
+    // List all scope tags that are present in the tenant for microsoft endpoint manager
     async listEndpointScopeTag(): Promise<MicrosoftGraphBeta.RoleScopeTag[]> {
         // Retrieve a list of Scope Tags from Endpoint Manager
         const tagList: PageCollection = await (await this.client).api("/deviceManagement/roleScopeTags").version("beta").get();
@@ -130,10 +130,16 @@ export class MSGraphClient {
         }
     }
 
-    // Todo: Build the code that retrieves the list of device configurations
-    // retrieve a list of all device configurations that are accessible to the app
-    async getDeviceConfigList() {
-        // const deviceConfig = await (await this.client).api("/deviceManagement/deviceConfigurations").get()
+    // List all device configurations in Microsoft EndpointManager
+    async listDeviceConfig(): Promise<MicrosoftGraph.DeviceConfiguration[]> {
+        // Retrieve a list of device configurations from Endpoint Manager
+        const deviceConfigPage: PageCollection = await (await this.client).api("/deviceManagement/deviceConfigurations").get();
+
+        // Process the page collection to its base form (DeviceConfiguration)
+        const deviceConfigList: MicrosoftGraph.DeviceConfiguration[] = await this.iteratePage(deviceConfigPage);
+
+        // Return the processed data
+        return deviceConfigList;
     }
 
     // Todo: write the code that builds a new login restriction configuration
