@@ -172,7 +172,63 @@ export class MSGraphClient {
     // Todo: Write the code that removes login restriction configurations
     async removeInteractiveLoginConfiguration() { }
 
-    async getAADUserList() { }
-    async getAADGroupList() { }
-    async newAADGroup() { }
+    // Retrieve Azure Active Directory user list. Can pull individual users based upon GUID or the UPN
+    async getAADUser(ID?: string): Promise<MicrosoftGraphBeta.User[]> {
+        if (typeof ID === "undefined") {
+            // Grab an initial user page collection
+            const userPage: PageCollection = await (await this.client).api("/users").version("beta").get();
+
+            // Process the page collection to its base form (User)
+            const userList: MicrosoftGraphBeta.User[] = await this.iteratePage(userPage);
+
+            // Return the processed data
+            return userList;
+        } else {
+            // Validate the GUID/UPN to ensure no fishy stuff goes on
+            if (validateGUID(ID) || validateEmail(ID)) {
+                // Retrieve the specified user from AAD
+                const userPage: MicrosoftGraphBeta.User = await (await this.client).api("/users/" + ID).version("beta").get();
+
+                // Convert the result to an array for type consistency.
+                const userList = [userPage];
+
+                // Return the processed data
+                return userList;
+            } else {
+                // Notify the caller that the ID isn't right if ID validation fails.
+                throw new Error("The parameter specified is not a valid ID!");
+            };
+        }
+    }
+
+    // Retrieve Azure Active Directory (AAD) group list. Can pull individual groups based upon the group's GUID
+    async getAADGroup(GUID?: string): Promise<MicrosoftGraphBeta.Group[]> {
+        if (typeof GUID === "undefined") {
+            // Grab an initial group page collection
+            const groupPage: PageCollection = await (await this.client).api("/groups").version("beta").get();
+
+            // Process the page collection to its base form (Group)
+            const groupList: MicrosoftGraphBeta.Group[] = await this.iteratePage(groupPage);
+
+            // Return the processed data
+            return groupList;
+        } else {
+            if (validateGUID(GUID)) {
+                // Retrieve the specified group from AAD
+                const groupPage: MicrosoftGraphBeta.Group = await (await this.client).api("/groups/" + GUID).version("beta").get();
+
+                // Convert the result to an array for type consistency.
+                const groupList = [groupPage];
+
+                // Return the processed data
+                return groupList;
+            } else {
+                // Notify the caller that the GUID isn't right if GUID validation fails.
+                throw new Error("The parameter specified is not a valid GUID!");
+            };
+        }
+    }
+
+    // Todo: Add group creation functionality
+    async newAADGroup() {}
 }
