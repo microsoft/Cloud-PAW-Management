@@ -12,6 +12,19 @@ export function validateGUID(GUIDToTest: any): boolean {
         return GUIDRegex.test(GUIDToTest.toString());
     };
 };
+
+// Create a GUID validation function to ensure GUID data is in correct format
+export function validateEmail(emailToTest: any): boolean {
+    // If the data is undefined, it is not a GUID
+    if (typeof emailToTest === "undefined" || emailToTest === null) {
+        // Return false since it is not a GUID
+        return false;
+    } else {
+        // Define the GUID pattern
+        const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+        // Test the value to ensure it is in the right format
+        return emailRegex.test(emailToTest.toString());
     };
 };
 
