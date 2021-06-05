@@ -68,5 +68,23 @@ export class DebugRouter {
         });
 
         // List the Microsoft Endpoint manager device configurations
+        this.webServer.get('/deviceConfiguration', async (request, response) => {
+            response.send(await this.graphClient.getDeviceConfig());
+        });
+
+        // Get a specific Device Configuration based on its GUID
+        this.webServer.get('/deviceConfiguration/:id', async (request, response) => {
+            response.send(await this.graphClient.getDeviceConfig(request.params.id));
+        });
+
+        // Get a specific Device Configuration based on its GUID
+        this.webServer.get('/deviceGroupPolicyConfiguration', async (request, response) => {
+            response.send(await this.graphClient.getDeviceGroupPolicyConfig());
+        });
+
+        // Get a specific Device Configuration based on its GUID
+        this.webServer.get('/deviceGroupPolicyConfiguration/:id', async (request, response) => {
+            response.send(await this.graphClient.getDeviceGroupPolicyConfig(request.params.id));
+        });
     }
 }
