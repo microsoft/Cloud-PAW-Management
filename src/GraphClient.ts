@@ -1,4 +1,5 @@
 import { GraphClientAuthProvider } from "./Authentication";
+import { validateGUID } from "./Utility";
 import { Client, ClientOptions, PageCollection, PageIterator } from "@microsoft/microsoft-graph-client";
 import "isomorphic-fetch";
 import type { ScopeTagUpdate } from "./Utility";
@@ -59,56 +60,30 @@ export class MSGraphClient {
     };
 
     // Return the instance of the specified scope tag
-    async getEndpointScopeTag(scopeTagName: String): Promise<MicrosoftGraphBeta.RoleScopeTag> {
-        // Error check environmental variables to ensure that the app is configured properly
-        if (typeof scopeTagName === "undefined") { throw new Error("The scope tag name is not defined, please specify the name of the scope tag to query.") };
+    async getEndpointScopeTag(ID?: number): Promise<MicrosoftGraphBeta.RoleScopeTag[]> {
+        if (typeof ID === "undefined") {
+            // Retrieve a list of Scope Tags from Endpoint Manager
+            const tagListPage: PageCollection = await (await this.client).api("/deviceManagement/roleScopeTags").version("beta").get();
 
-        // Define the regex to find the input characters that could be used to break out of the query.
-        const regexQuote = /'+/gi;
-        const regexBackSlash = /\\+/gi;
+            // Extract the values from the returned list and type it for easier processing
+            const tagList: MicrosoftGraphBeta.RoleScopeTag[] = await this.iteratePage(tagListPage);
 
-        // Find and escape potentially malicious characters before it is sent to the query
-        let sanitizedTagName: String = scopeTagName.replace(regexQuote,"\\'");
-        sanitizedTagName = sanitizedTagName.replace(regexBackSlash, "\\\\");
-
-        // Retrieve a list of Scope Tags from Endpoint Manager
-        const tagList: PageCollection = await (await this.client).api("/deviceManagement/roleScopeTags").version("beta").filter("displayName eq '" + scopeTagName + "'").get();
-
-        // Extract the values from the returned list and type it for easier processing
-        const tagListValue: Array<MicrosoftGraphBeta.RoleScopeTag> = await this.iteratePage(tagList);
-
-        // Check to make sure that data was returned from the Graph API query
-        if (tagListValue.length !== 0) {
-            // loop through each of the items in the tag list array
-            for (let index = 0; index < tagListValue.length; index++) {
-                // Extract the current tag item from the tag list.
-                const tag = tagListValue[index];
-
-                // Since the display name is enforced to be unique, if a match is successful, return the results and stop processing.
-                // Otherwise, continue checking for more matches down the line.
-                if (tag.displayName == scopeTagName) {
-                    // return the tag to the caller
-                    return tag;
-                }
-            }
-            // If no tag matched and terminated execution by calling the return key word, throw an error stating that there is no match.
-            throw new Error("No matched tag!");
+            // Return the processed data
+            return tagList;
         } else {
-            // If the undefined check failed and the value list is undefined, throw an error.
-            throw new Error("No tag value returned from query :-/");
+            if (typeof ID === "number") {
+                // Retrieve the specified Scope Tag from Endpoint Manager
+                const tagPage: MicrosoftGraphBeta.RoleScopeTag = await (await this.client).api("/deviceManagement/roleScopeTags/" + ID).version("beta").get();
+
+                // Convert the result to an array for type consistency.
+                const tagPageList = [tagPage];
+
+                // Return the processed data
+                return tagPageList;
+            } else {
+                throw new Error("The ID that has been passed is not a number! Only numbers should be passed!");
+            }
         }
-    }
-
-    // List all scope tags that are present in the tenant for microsoft endpoint manager
-    async listEndpointScopeTag(): Promise<MicrosoftGraphBeta.RoleScopeTag[]> {
-        // Retrieve a list of Scope Tags from Endpoint Manager
-        const tagList: PageCollection = await (await this.client).api("/deviceManagement/roleScopeTags").version("beta").get();
-        
-        // Process the page collection to its base form (RoleScopeTag)
-        const pageProcessedScopeTag: MicrosoftGraphBeta.RoleScopeTag[] = await this.iteratePage(tagList);
-
-        // Return the processed data
-        return pageProcessedScopeTag;
     }
 
     // Todo: build the scope tag creation system
@@ -130,16 +105,34 @@ export class MSGraphClient {
         }
     }
 
-    // List all device configurations in Microsoft EndpointManager
-    async listDeviceConfig(): Promise<MicrosoftGraph.DeviceConfiguration[]> {
-        // Retrieve a list of device configurations from Endpoint Manager
-        const deviceConfigPage: PageCollection = await (await this.client).api("/deviceManagement/deviceConfigurations").get();
+    // Retrieve Microsoft Endpoint Manager configuration profile list. Can pull individual profile based upon GUID
+    async getDeviceConfig(GUID?: String): Promise<MicrosoftGraphBeta.GroupPolicyConfiguration[]> {
+        if (typeof GUID === "undefined") {
+            // Retrieve a list of device configurations from Endpoint Manager
+            const deviceConfigPage: PageCollection = await (await this.client).api("/deviceManagement/deviceConfigurations").version("beta").get();
 
-        // Process the page collection to its base form (DeviceConfiguration)
-        const deviceConfigList: MicrosoftGraph.DeviceConfiguration[] = await this.iteratePage(deviceConfigPage);
+            // Process the page collection to its base form (DeviceConfiguration)
+            const deviceConfigList: MicrosoftGraphBeta.DeviceConfiguration[] = await this.iteratePage(deviceConfigPage);
 
-        // Return the processed data
-        return deviceConfigList;
+            // Return the processed data
+            return deviceConfigList;
+        } else {
+            // Validate user input to ensure they don't slip us a mickey
+            if (validateGUID(GUID)) {
+                // Retrieve the specified device configurations from Endpoint Manager
+                const deviceConfigPage: MicrosoftGraphBeta.DeviceConfiguration = await (await this.client).api("/deviceManagement/deviceConfigurations/" + GUID).version("beta").get();
+
+                // Convert the result to an array for type consistency.
+                const deviceConfigList = [deviceConfigPage];
+
+                // Return the processed data
+                return deviceConfigList;
+            } else {
+                // Notify the caller that the GUID isn't right if GUID validation fails.
+                throw new Error("The parameter specified is not a valid GUID!");
+            };
+        }
+    }
     }
 
     // Todo: write the code that builds a new login restriction configuration
