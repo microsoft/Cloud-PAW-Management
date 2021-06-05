@@ -87,7 +87,7 @@ export class MSGraphClient {
     }
 
     // Todo: build the scope tag creation system
-    async newEndpointScopeTag(scopeTagName: String, description?: String) {
+    async newEndpointScopeTag(scopeTagName: string, description?: string) {
         // Ensure there is less than 1024 characters in the nameDesc
         if (typeof description !== "undefined" && description.length) {
             throw new Error("You cannot have more than 1024 characters in the description!")
@@ -106,7 +106,7 @@ export class MSGraphClient {
     }
 
     // Retrieve Microsoft Endpoint Manager configuration profile list. Can pull individual profile based upon GUID
-    async getDeviceConfig(GUID?: String): Promise<MicrosoftGraphBeta.GroupPolicyConfiguration[]> {
+    async getDeviceConfig(GUID?: string): Promise<MicrosoftGraphBeta.GroupPolicyConfiguration[]> {
         if (typeof GUID === "undefined") {
             // Retrieve a list of device configurations from Endpoint Manager
             const deviceConfigPage: PageCollection = await (await this.client).api("/deviceManagement/deviceConfigurations").version("beta").get();
@@ -135,7 +135,7 @@ export class MSGraphClient {
     }
 
     // Retrieve Microsoft Endpoint Manager Group Policy configuration list. Can pull individual policy based upon GUID
-    async getDeviceGroupPolicyConfig(GUID?: String): Promise<MicrosoftGraphBeta.GroupPolicyConfiguration[]> {
+    async getDeviceGroupPolicyConfig(GUID?: string): Promise<MicrosoftGraphBeta.GroupPolicyConfiguration[]> {
         if (typeof GUID === "undefined") {
             // Retrieve the specified device configurations from Endpoint Manager
             const deviceGroupPolicyPage: PageCollection = await (await this.client).api("/deviceManagement/groupPolicyConfigurations/").version("beta").get();
