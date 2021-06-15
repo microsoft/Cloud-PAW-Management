@@ -106,5 +106,15 @@ export class DebugRouter {
         this.webServer.get('/user/:id', async (request, response) => {
             response.send(await this.graphClient.getAADUser(request.params.id));
         });
+
+        // List all Administrative Units in AAD
+        this.webServer.get('/adminUnit', async (request, response) => {
+            response.send(await this.graphClient.getAADAdminUnit());
+        });
+
+        // Get a specific Administrative Unit in AAD based on the GUID
+        this.webServer.get('/adminUnit/:id', async (request, response) => {
+            response.send(await this.graphClient.getAADAdminUnit(request.params.id));
+        });
     }
 }

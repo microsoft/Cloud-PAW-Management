@@ -231,4 +231,31 @@ export class MSGraphClient {
 
     // Todo: Add group creation functionality
     async newAADGroup() {}
+
+    async getAADAdminUnit(GUID?: string): Promise<MicrosoftGraph.AdministrativeUnit[]> {
+        if (typeof GUID === "undefined") {
+            // Grab an initial group page collection
+            const adminUnitPage: PageCollection = await (await this.client).api("/administrativeUnits").version("beta").get();
+
+            // Process the page collection to its base form (Group)
+            const adminUnitList: MicrosoftGraphBeta.AdministrativeUnit[] = await this.iteratePage(adminUnitPage);
+
+            // Return the processed data
+            return adminUnitList;
+        } else {
+            if (validateGUID(GUID)) {
+                // Retrieve the specified group from AAD
+                const adminUnitPage: MicrosoftGraphBeta.AdministrativeUnit = await (await this.client).api("/administrativeUnits/" + GUID).version("beta").get();
+
+                // Convert the result to an array for type consistency.
+                const adminUnitList = [adminUnitPage];
+
+                // Return the processed data
+                return adminUnitList;
+            } else {
+                // Notify the caller that the GUID isn't right if GUID validation fails.
+                throw new Error("The parameter specified is not a valid GUID!");
+            };
+        }
+    }
 }
