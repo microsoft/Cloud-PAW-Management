@@ -194,7 +194,7 @@ export class MSGraphClient {
 
         // Check to make sure that the description is defined, if it is, configure the description of the group
         if (typeof description !== "undefined") {
-            // Validate that the group is of the correct length
+            // Validate that the description is of the correct length
             if (description.length > 1024) {throw new Error("The description cannot be longer than 1024 characters!")};
             
             // Set the description of the new group
@@ -274,7 +274,50 @@ export class MSGraphClient {
         }
     }
 
-        
+    // Update the specified group
+    async updateAADGroup(GUID: string, name: string, description?: string): Promise<boolean> {
+
+        // Ensure the specified GUID is valid
+        if (validateGUID(GUID)) {
+            // Validate name length is not too long for the graph
+            if (name.length > 120) {throw new Error("The name is too long, can't be longer than 120 chars!")};
+            
+            // These characters cannot be used in the mailNickName: @()\[]";:.<>,SPACE
+            const nicknameRegex = /[\\\]\]@()";:.<>,\s]+/gm;
+
+            // Filter out the non-valid chars from the group name to build a valid nickname
+            const nickName = name.replace(nicknameRegex, "");
+
+            // Build the patch request body
+            const patchBody: MicrosoftGraphBeta.Group = {
+                displayName: name,
+                mailNickname: nickName
+            }
+
+            // Check to make sure that the description is defined, if it is, configure the description of the group
+            if (typeof description !== "undefined") {
+                // Validate that the description is of the correct length
+                if (description.length > 1024) {throw new Error("The description cannot be longer than 1024 characters!")};
+                
+                // Set the description of the group
+                patchBody.description = description;
+            }
+
+            // Attempt to update a group
+            try {
+                // Send update command and new values to the specified post
+                await (await this.client).api("/groups/" + GUID).patch(patchBody);
+
+                // Return true for successful
+                return true;
+            } catch (error) {
+                // If there was an error, return the error details
+                return error;
+            }
+        } else {
+            // If the GUID is not valid, throw an error
+            throw new Error("The GUID specified is not a proper GUID!");
+        }
     }
 
     // Delete the specified Security Group
