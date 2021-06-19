@@ -172,6 +172,51 @@ export class MSGraphClient {
     // Todo: Write the code that removes login restriction configurations
     async removeInteractiveLoginConfiguration() { }
 
+    // Create a new security group with the specified options
+    async newAADGroup(name: string, description?: string, roleAssignable?: boolean): Promise<MicrosoftGraphBeta.Group> {
+
+        // Validate name length is not too long for the graph
+        if (name.length > 120) {throw new Error("The name is too long, can't be longer than 120 chars!")};
+        
+        // These characters cannot be used in the mailNickName: @()\[]";:.<>,SPACE
+        const nicknameRegex = /[\\\]\]@()";:.<>,\s]+/gm;
+
+        // Filter out the non-valid chars from the group name to build a valid nickname
+        const nickName = name.replace(nicknameRegex, "");
+
+        // Build the graph client post body
+        let postBody: MicrosoftGraphBeta.Group = {
+            displayName: name,
+            mailNickname: nickName,
+            mailEnabled: false,
+            securityEnabled: true
+        };
+
+        // Check to make sure that the description is defined, if it is, configure the description of the group
+        if (typeof description !== "undefined") {
+            // Validate that the group is of the correct length
+            if (description.length > 1024) {throw new Error("The description cannot be longer than 1024 characters!")};
+            
+            // Set the description of the new group
+            postBody.description = description;
+        }
+
+        // Validate the role assignable param
+        if (typeof roleAssignable !== "undefined" && typeof roleAssignable === "boolean") {
+            // If the param is present and the correct type, set the post body value for the role assignable
+            postBody.isAssignableToRole = roleAssignable;
+        }
+
+        // Catch any error on group creation
+        try {
+            // Create the group and return the result
+            return await (await this.client).api("/groups").post(postBody);
+        } catch (error) {
+            // If there is an error, return the error details
+            return error
+        }
+    }
+
     // Retrieve Azure Active Directory user list. Can pull individual users based upon GUID or the UPN
     async getAADUser(ID?: string): Promise<MicrosoftGraphBeta.User[]> {
         if (typeof ID === "undefined") {
@@ -229,49 +274,7 @@ export class MSGraphClient {
         }
     }
 
-    // Create a new security group with the specified options
-    async newAADGroup(name: string, description?: string, roleAssignable?: boolean): Promise<MicrosoftGraphBeta.Group> {
-
-        // Validate name length is not too long for the graph
-        if (name.length > 120) {throw new Error("The name is too long, can't be longer than 120 chars!")};
         
-        // These characters cannot be used in the mailNickName: @()\[]";:.<>,SPACE
-        const nicknameRegex = /[\\\]\]@()";:.<>,\s]+/gm;
-
-        // Filter out the non-valid chars from the group name to build a valid nickname
-        const nickName = name.replace(nicknameRegex, "");
-
-        // Build the graph client post body
-        let postBody: MicrosoftGraphBeta.Group = {
-            displayName: name,
-            mailNickname: nickName,
-            mailEnabled: false,
-            securityEnabled: true
-        };
-
-        // Check to make sure that the description is defined, if it is, configure the description of the group
-        if (typeof description !== "undefined") {
-            // Validate that the group is of the correct length
-            if (description.length > 1024) {throw new Error("The description cannot be longer than 1024 characters!")};
-            
-            // Set the description of the new group
-            postBody.description = description;
-        }
-
-        // Validate the role assignable param
-        if (typeof roleAssignable !== "undefined" && typeof roleAssignable === "boolean") {
-            // If the param is present and the correct type, set the post body value for the role assignable
-            postBody.isAssignableToRole = roleAssignable;
-        }
-
-        // Catch any error on group creation
-        try {
-            // Create the group and return the result
-            return await (await this.client).api("/groups").post(postBody);
-        } catch (error) {
-            // If there is an error, return the error details
-            return error
-        }
     }
 
     // Delete the specified Security Group
