@@ -3,7 +3,6 @@ import { validateGUID, validateEmail } from "./Utility";
 import { Client, ClientOptions, PageCollection, PageIterator } from "@microsoft/microsoft-graph-client";
 import "isomorphic-fetch";
 import type { ScopeTagUpdate } from "./Utility";
-import type * as MicrosoftGraph from "@microsoft/microsoft-graph-types";
 import type * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta";
 import type { ChainedTokenCredential } from "@azure/identity"
 
@@ -26,7 +25,8 @@ export class MSGraphClient {
         // Configure teh initialization system to use the custom graph auth provider
         const clientOptions: ClientOptions = {
             // Configure the auth provider property to be the value of the graph auth constant
-            authProvider: graphAuthProvider
+            authProvider: graphAuthProvider,
+            defaultVersion: "beta"
         };
 
         // Connect the graph client to the graph
@@ -63,7 +63,7 @@ export class MSGraphClient {
     async getEndpointScopeTag(ID?: number): Promise<MicrosoftGraphBeta.RoleScopeTag[]> {
         if (typeof ID === "undefined") {
             // Retrieve a list of Scope Tags from Endpoint Manager
-            const tagListPage: PageCollection = await (await this.client).api("/deviceManagement/roleScopeTags").version("beta").get();
+            const tagListPage: PageCollection = await (await this.client).api("/deviceManagement/roleScopeTags").get();
 
             // Extract the values from the returned list and type it for easier processing
             const tagList: MicrosoftGraphBeta.RoleScopeTag[] = await this.iteratePage(tagListPage);
@@ -73,7 +73,7 @@ export class MSGraphClient {
         } else {
             if (typeof ID === "number") {
                 // Retrieve the specified Scope Tag from Endpoint Manager
-                const tagPage: MicrosoftGraphBeta.RoleScopeTag = await (await this.client).api("/deviceManagement/roleScopeTags/" + ID).version("beta").get();
+                const tagPage: MicrosoftGraphBeta.RoleScopeTag = await (await this.client).api("/deviceManagement/roleScopeTags/" + ID).get();
 
                 // Convert the result to an array for type consistency.
                 const tagPageList = [tagPage];
@@ -109,7 +109,7 @@ export class MSGraphClient {
     async getDeviceConfig(GUID?: string): Promise<MicrosoftGraphBeta.GroupPolicyConfiguration[]> {
         if (typeof GUID === "undefined") {
             // Retrieve a list of device configurations from Endpoint Manager
-            const deviceConfigPage: PageCollection = await (await this.client).api("/deviceManagement/deviceConfigurations").version("beta").get();
+            const deviceConfigPage: PageCollection = await (await this.client).api("/deviceManagement/deviceConfigurations").get();
 
             // Process the page collection to its base form (DeviceConfiguration)
             const deviceConfigList: MicrosoftGraphBeta.DeviceConfiguration[] = await this.iteratePage(deviceConfigPage);
@@ -120,7 +120,7 @@ export class MSGraphClient {
             // Validate user input to ensure they don't slip us a mickey
             if (validateGUID(GUID)) {
                 // Retrieve the specified device configurations from Endpoint Manager
-                const deviceConfigPage: MicrosoftGraphBeta.DeviceConfiguration = await (await this.client).api("/deviceManagement/deviceConfigurations/" + GUID).version("beta").get();
+                const deviceConfigPage: MicrosoftGraphBeta.DeviceConfiguration = await (await this.client).api("/deviceManagement/deviceConfigurations/" + GUID).get();
 
                 // Convert the result to an array for type consistency.
                 const deviceConfigList = [deviceConfigPage];
@@ -138,7 +138,7 @@ export class MSGraphClient {
     async getDeviceGroupPolicyConfig(GUID?: string): Promise<MicrosoftGraphBeta.GroupPolicyConfiguration[]> {
         if (typeof GUID === "undefined") {
             // Retrieve the specified device configurations from Endpoint Manager
-            const deviceGroupPolicyPage: PageCollection = await (await this.client).api("/deviceManagement/groupPolicyConfigurations/").version("beta").get();
+            const deviceGroupPolicyPage: PageCollection = await (await this.client).api("/deviceManagement/groupPolicyConfigurations/").get();
             
             // Process the page collection to its base form (DeviceConfiguration)
             const deviceGroupPolicyList: MicrosoftGraphBeta.GroupPolicyConfiguration[] = await this.iteratePage(deviceGroupPolicyPage);
@@ -149,7 +149,7 @@ export class MSGraphClient {
             // Validate user input to ensure they don't slip us a mickey
             if (validateGUID(GUID)) {
                 // Retrieve the specified device configurations from Endpoint Manager
-                const deviceGroupPolicyPage: MicrosoftGraphBeta.GroupPolicyConfiguration = await (await this.client).api("/deviceManagement/groupPolicyConfigurations/" + GUID).version("beta").get();
+                const deviceGroupPolicyPage: MicrosoftGraphBeta.GroupPolicyConfiguration = await (await this.client).api("/deviceManagement/groupPolicyConfigurations/" + GUID).get();
                 
                 // Convert the result to an array for type consistency.
                 const deviceGroupPolicyList = [deviceGroupPolicyPage];
@@ -176,7 +176,7 @@ export class MSGraphClient {
     async getAADUser(ID?: string): Promise<MicrosoftGraphBeta.User[]> {
         if (typeof ID === "undefined") {
             // Grab an initial user page collection
-            const userPage: PageCollection = await (await this.client).api("/users").version("beta").get();
+            const userPage: PageCollection = await (await this.client).api("/users").get();
 
             // Process the page collection to its base form (User)
             const userList: MicrosoftGraphBeta.User[] = await this.iteratePage(userPage);
@@ -187,7 +187,7 @@ export class MSGraphClient {
             // Validate the GUID/UPN to ensure no fishy stuff goes on
             if (validateGUID(ID) || validateEmail(ID)) {
                 // Retrieve the specified user from AAD
-                const userPage: MicrosoftGraphBeta.User = await (await this.client).api("/users/" + ID).version("beta").get();
+                const userPage: MicrosoftGraphBeta.User = await (await this.client).api("/users/" + ID).get();
 
                 // Convert the result to an array for type consistency.
                 const userList = [userPage];
@@ -205,7 +205,7 @@ export class MSGraphClient {
     async getAADGroup(GUID?: string): Promise<MicrosoftGraphBeta.Group[]> {
         if (typeof GUID === "undefined") {
             // Grab an initial group page collection
-            const groupPage: PageCollection = await (await this.client).api("/groups").version("beta").get();
+            const groupPage: PageCollection = await (await this.client).api("/groups").get();
 
             // Process the page collection to its base form (Group)
             const groupList: MicrosoftGraphBeta.Group[] = await this.iteratePage(groupPage);
@@ -215,7 +215,7 @@ export class MSGraphClient {
         } else {
             if (validateGUID(GUID)) {
                 // Retrieve the specified group from AAD
-                const groupPage: MicrosoftGraphBeta.Group = await (await this.client).api("/groups/" + GUID).version("beta").get();
+                const groupPage: MicrosoftGraphBeta.Group = await (await this.client).api("/groups/" + GUID).get();
 
                 // Convert the result to an array for type consistency.
                 const groupList = [groupPage];
@@ -232,10 +232,10 @@ export class MSGraphClient {
     // Todo: Add group creation functionality
     async newAADGroup() {}
 
-    async getAADAdminUnit(GUID?: string): Promise<MicrosoftGraph.AdministrativeUnit[]> {
+    async getAADAdminUnit(GUID?: string): Promise<MicrosoftGraphBeta.AdministrativeUnit[]> {
         if (typeof GUID === "undefined") {
             // Grab an initial group page collection
-            const adminUnitPage: PageCollection = await (await this.client).api("/administrativeUnits").version("beta").get();
+            const adminUnitPage: PageCollection = await (await this.client).api("/administrativeUnits").get();
 
             // Process the page collection to its base form (Group)
             const adminUnitList: MicrosoftGraphBeta.AdministrativeUnit[] = await this.iteratePage(adminUnitPage);
@@ -245,7 +245,7 @@ export class MSGraphClient {
         } else {
             if (validateGUID(GUID)) {
                 // Retrieve the specified group from AAD
-                const adminUnitPage: MicrosoftGraphBeta.AdministrativeUnit = await (await this.client).api("/administrativeUnits/" + GUID).version("beta").get();
+                const adminUnitPage: MicrosoftGraphBeta.AdministrativeUnit = await (await this.client).api("/administrativeUnits/" + GUID).get();
 
                 // Convert the result to an array for type consistency.
                 const adminUnitList = [adminUnitPage];
