@@ -189,7 +189,7 @@ export class DebugRouter {
             // Catch execution errors
             try {
                 // Have the Graph API delete the specified group GUID and send the response to the caller
-                response.send(await this.graphClient.deleteAADGroup(request.params.id));
+                response.send(await this.graphClient.removeAADGroup(request.params.id));
             } catch (error) {
                 // Send the error details if something goes wrong
                 next(error);
