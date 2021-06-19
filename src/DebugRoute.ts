@@ -106,6 +106,17 @@ export class DebugRouter {
         // Create a new group
         this.webServer.post('/group', async (request, response, next) => {
             response.send(await this.graphClient.newAADGroup(request.body.name, request.body.description, request.body.roleAssignable))
+
+        // Update a group's settings
+        this.webServer.patch('/group/:id', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Update the specified group with the specified options
+                response.send(await this.graphClient.updateAADGroup(request.params.id, request.body.name, request.body.description))
+            } catch (error) {
+                // Process the error if one happens
+                next(error);
+            }
         });
 
         // Delete the specified group
