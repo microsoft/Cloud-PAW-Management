@@ -23,7 +23,8 @@ export class DebugRouter {
     // Initialize the routes
     private init(azureAuthSession: Promise<ChainedTokenCredential>) {
         // List access token to manually web request as the app
-        this.webServer.get('/accessToken', async (request, response) => {
+        this.webServer.get('/accessToken', async (request, response, next) => {
+            // Catch execution errors
             try {
                 // grab a token and extract its value
                 const token = await (await azureAuthSession).getToken("https://graph.microsoft.com/.default");
@@ -35,11 +36,12 @@ export class DebugRouter {
                     // If it does not
                 } else {
                     // Send a notice to the caller stating that it does not have value.
-                    response.send("no token data received")
+                    response.send("No token data received")
                 };
             } catch (error) {
-                response.send(error);
-            }
+                // Send the error details if something goes wrong
+                next(error);
+            };
         });
 
         // Send all environmental vars
@@ -48,64 +50,127 @@ export class DebugRouter {
         });
 
         // Validate post body data is being received properly
-        this.webServer.post('/testPost', async (request, response, next) => {
+        this.webServer.post('/testPost', async (request, response) => {
             // Send the body back as a response
             response.send(request.body);
         })
 
         // Lists all of the role scope tags from Endpoint Manager
-        this.webServer.get('/roleScopeTag', async (request, response) => {
-            response.send(await this.graphClient.getEndpointScopeTag());
+        this.webServer.get('/roleScopeTag', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Get all role scope tags
+                response.send(await this.graphClient.getEndpointScopeTag());
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
         });
 
         // Lists all of the role scope tags from Endpoint Manager
-        this.webServer.get('/roleScopeTag/:id', async (request, response) => {
-            // Parse the parameter with the Number parser.
-            const parseID = Number(request.params.id);
+        this.webServer.get('/roleScopeTag/:id', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Parse the parameter with the Number parser.
+                const parseID = Number(request.params.id);
 
-            // Check to make sure that the Number Parser was able to complete successfully.
-            if (Object.is(parseID, NaN)) {
-                // If the Parser failed, send a notice to the caller.
-                response.send("Please send a valid ID for the Role Scope Tag!")
-            } else {
-                // Otherwise use the graph client to query the Scope Tag
-                response.send(await this.graphClient.getEndpointScopeTag(parseID));
+                // Check to make sure that the Number Parser was able to complete successfully.
+                if (Object.is(parseID, NaN)) {
+                    // If the Parser failed, send a notice to the caller.
+                    response.send("Please send a valid ID for the Role Scope Tag!")
+                } else {
+                    // Otherwise use the graph client to query the Scope Tag
+                    response.send(await this.graphClient.getEndpointScopeTag(parseID));
+                };
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
             };
         });
 
         // List the Microsoft Endpoint manager device configurations
-        this.webServer.get('/deviceConfiguration', async (request, response) => {
-            response.send(await this.graphClient.getDeviceConfig());
+        this.webServer.get('/deviceConfiguration', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Get all device configs in Endpoint Manager
+                response.send(await this.graphClient.getDeviceConfig());
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
         });
 
         // Get a specific Device Configuration based on its GUID
-        this.webServer.get('/deviceConfiguration/:id', async (request, response) => {
-            response.send(await this.graphClient.getDeviceConfig(request.params.id));
+        this.webServer.get('/deviceConfiguration/:id', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Get a specific device config based on its unique GUID
+                response.send(await this.graphClient.getDeviceConfig(request.params.id));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
         });
 
         // List the Device Group Policy Configurations
-        this.webServer.get('/deviceGroupPolicyConfiguration', async (request, response) => {
-            response.send(await this.graphClient.getDeviceGroupPolicyConfig());
+        this.webServer.get('/deviceGroupPolicyConfiguration', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Get all Group Policy Configs in Endpoint Manager
+                response.send(await this.graphClient.getDeviceGroupPolicyConfig());
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
         });
 
         // Get a specific Device Group Policy Configuration based on its GUID
-        this.webServer.get('/deviceGroupPolicyConfiguration/:id', async (request, response) => {
-            response.send(await this.graphClient.getDeviceGroupPolicyConfig(request.params.id));
+        this.webServer.get('/deviceGroupPolicyConfiguration/:id', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // get a specific group policy config based on its unique GUID
+                response.send(await this.graphClient.getDeviceGroupPolicyConfig(request.params.id));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
         });
 
         // List all groups in AAD
-        this.webServer.get('/group', async (request, response) => {
-            response.send(await this.graphClient.getAADGroup());
+        this.webServer.get('/group', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // List all groups in AAD
+                response.send(await this.graphClient.getAADGroup());;
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
         });
 
         // Get a specific group in AAD based on its GUID
-        this.webServer.get('/group/:id', async (request, response) => {
-            response.send(await this.graphClient.getAADGroup(request.params.id));
+        this.webServer.get('/group/:id', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // get the specified group by its unique GUID
+                response.send(await this.graphClient.getAADGroup(request.params.id));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
         });
 
         // Create a new group
         this.webServer.post('/group', async (request, response, next) => {
-            response.send(await this.graphClient.newAADGroup(request.body.name, request.body.description, request.body.roleAssignable))
+            // Catch execution errors
+            try {
+                // Have the Graph API delete the specified group GUID and send the response to the caller
+                response.send(await this.graphClient.newAADGroup(request.body.name, request.body.description, request.body.roleAssignable));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
 
         // Update a group's settings
         this.webServer.patch('/group/:id', async (request, response, next) => {
@@ -126,29 +191,57 @@ export class DebugRouter {
                 // Have the Graph API delete the specified group GUID and send the response to the caller
                 response.send(await this.graphClient.deleteAADGroup(request.params.id));
             } catch (error) {
-                // Send the error details if something goes wrong.
-                next(error)
-            }
-        })
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
 
         // List all users in AAD
-        this.webServer.get('/user', async (request, response) => {
-            response.send(await this.graphClient.getAADUser());
+        this.webServer.get('/user', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Get all users
+                response.send(await this.graphClient.getAADUser());
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
         });
 
         // Get a specific user in AAD based on their GUID or UPN
-        this.webServer.get('/user/:id', async (request, response) => {
-            response.send(await this.graphClient.getAADUser(request.params.id));
+        this.webServer.get('/user/:id', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Get a specific user by their GUID or UPN
+                response.send(await this.graphClient.getAADUser(request.params.id));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
         });
 
         // List all Administrative Units in AAD
-        this.webServer.get('/adminUnit', async (request, response) => {
-            response.send(await this.graphClient.getAADAdminUnit());
+        this.webServer.get('/adminUnit', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // List all AAD Administrative Units
+                response.send(await this.graphClient.getAADAdminUnit());
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
         });
 
         // Get a specific Administrative Unit in AAD based on the GUID
-        this.webServer.get('/adminUnit/:id', async (request, response) => {
-            response.send(await this.graphClient.getAADAdminUnit(request.params.id));
+        this.webServer.get('/adminUnit/:id', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Get a specific Administrative unit by its GUID
+                response.send(await this.graphClient.getAADAdminUnit(request.params.id));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
         });
     }
 }
