@@ -2,7 +2,6 @@ import { GraphClientAuthProvider } from "./Authentication";
 import { validateGUID, validateEmail } from "./Utility";
 import { Client, ClientOptions, PageCollection, PageIterator } from "@microsoft/microsoft-graph-client";
 import "isomorphic-fetch";
-import type { ScopeTagUpdate } from "./Utility";
 import type * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta";
 import type { ChainedTokenCredential } from "@azure/identity"
 
@@ -244,15 +243,6 @@ export class MSGraphClient {
         } 
     }
 
-    // Todo: write the code that builds a new login restriction configuration
-    async newInteractiveLoginConfiguration(upn: string, deviceGUID: string) { }
-
-    // Todo: Write the code that updates existing login restriction configurations
-    async updateInteractiveLoginConfiguration() { }
-
-    // Todo: Write the code that removes login restriction configurations
-    async removeInteractiveLoginConfiguration() { }
-
     // Create a new security group with the specified options
     async newAADGroup(name: string, description?: string, roleAssignable?: boolean): Promise<MicrosoftGraphBeta.Group> {
 
@@ -449,4 +439,13 @@ export class MSGraphClient {
             };
         }
     }
+
+    // Todo: write the code that builds a new login restriction configuration
+    async newInteractiveLoginConfiguration(upn: string, deviceGUID: string) { }
+
+    // Todo: Write the code that updates existing login restriction configurations
+    async updateInteractiveLoginConfiguration() { }
+
+    // Todo: Write the code that removes login restriction configurations
+    async removeInteractiveLoginConfiguration() { }
 }
