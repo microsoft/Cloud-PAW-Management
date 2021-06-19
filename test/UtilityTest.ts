@@ -3,7 +3,7 @@ import { expect } from "chai";
 import { validateGUID } from "../src/Utility";
 
 describe("GUID Validator", () => {
-    describe("Validation of Real a GUID", () => {
+    describe("Validation of a Real GUID", () => {
         it("Validates the nil GUID as a GUID", () => {
             // Attempt to validate a nil GUID
             const nullGUID = validateGUID("00000000-0000-0000-0000-000000000000");
