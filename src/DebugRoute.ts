@@ -47,6 +47,12 @@ export class DebugRouter {
             response.send(process.env)
         });
 
+        // Validate post body data is being received properly
+        this.webServer.post('/testPost', async (request, response, next) => {
+            // Send the body back as a response
+            response.send(request.body);
+        })
+
         // Lists all of the role scope tags from Endpoint Manager
         this.webServer.get('/roleScopeTag', async (request, response) => {
             response.send(await this.graphClient.getEndpointScopeTag());
