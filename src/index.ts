@@ -17,6 +17,9 @@ const graphClient = new MSGraphClient(azureAuthSession.credential);
 // Initialize Express
 const webServer = express();
 
+// Parse the request bodies so that they can be used as objects instead of raw text
+webServer.use(express.json());
+
 // If debug mode is enabled, enable the debug routes
 if (debugMode === "true") {
     // Instantiate an instance of the debug router which will add of the debugging routes
