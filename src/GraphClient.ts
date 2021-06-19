@@ -164,7 +164,7 @@ export class MSGraphClient {
     }
 
     // Todo: write the code that builds a new login restriction configuration
-    async newInteractiveLoginConfiguration() { }
+    async newInteractiveLoginConfiguration(upn: string, deviceGUID: string) { }
 
     // Todo: Write the code that updates existing login restriction configurations
     async updateInteractiveLoginConfiguration() { }
