@@ -392,7 +392,7 @@ export class MSGraphClient {
     }
 
     // Delete the specified Security Group
-    async deleteAADGroup(GUID: string): Promise<boolean> {
+    async removeAADGroup(GUID: string): Promise<boolean> {
         // Validate GUID is a proper GUID
         if (validateGUID(GUID)) {
             // Attempt to delete the group
