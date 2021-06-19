@@ -59,6 +59,45 @@ export class MSGraphClient {
         };
     };
 
+    // Create a new role scope tag in Endpoint Manager
+    async newEndpointScopeTag(scopeTagName: string, description?: string): Promise<MicrosoftGraphBeta.RoleScopeTag> {
+        // Validate the name is of appropriate length
+        if (scopeTagName.length > 128) {
+            // If the name is too long, throw an error
+            throw new Error("You can't have a name longer than 128 characters!");
+        // Validate that input is the correct type
+        } else if (typeof scopeTagName !== "string" || typeof description !== "string") {
+            // Throw an error if it is not!
+            throw new Error("Parameter input is string only!");
+        }
+
+        // Build the Post body that will be used to create the new tag.
+        const postBody: MicrosoftGraphBeta.RoleScopeTag = {
+            displayName: scopeTagName
+        }
+
+        // Ensure there is less than 1024 characters in the nameDesc
+        if (typeof description !== "undefined" && typeof description === "string") {
+            // Validate the length of the description
+            if (description.length > 1024) {
+                // If it is too long, throw an error
+                throw new Error("You cannot have more than 1024 characters in the description!")
+            } else {
+                // Otherwise, allow the description and put it into the post body
+                postBody.description = description;
+            }
+        }
+
+        // Catch any error on group creation
+        try {
+            // Create the scope tag and return the result
+            return await (await this.client).api("/deviceManagement/roleScopeTags").post(postBody);
+        } catch (error) {
+            // If there is an error, return the error details
+            return error
+        }
+    }
+
     // Return the instance of the specified scope tag
     async getEndpointScopeTag(ID?: number): Promise<MicrosoftGraphBeta.RoleScopeTag[]> {
         if (typeof ID === "undefined") {
@@ -86,22 +125,64 @@ export class MSGraphClient {
         }
     }
 
-    // Todo: build the scope tag creation system
-    async newEndpointScopeTag(scopeTagName: string, description?: string) {
-        // Ensure there is less than 1024 characters in the nameDesc
-        if (typeof description !== "undefined" && description.length) {
-            throw new Error("You cannot have more than 1024 characters in the description!")
+    // Update the specified role scope tag in Endpoint Manager
+    async updateEndpointScopeTag(id: number, name: string, description?: string): Promise<MicrosoftGraphBeta.RoleScopeTag> {
+        // Validate input
+        if (typeof id !== "number") {
+            // throw an error if the ID is not a number
+            throw new Error("ID must be a number!");
+        } else if (typeof name !== "string") {
+            // Throw an error if the name parameter is not a string
+            throw new Error("The name parameter must be a string!");
+        } else if (name.length > 128) {
+            // Throw an error if the name param is longer than 128 characters
+            throw new Error("Name must be less than 128 characters long!");
+        }
+
+        // Build the patch body
+        let patchBody: MicrosoftGraphBeta.RoleScopeTag = {
+            displayName: name
+        }
+
+        // Validate if the description parameter has been specified
+        if (typeof description !== "undefined") {
+            // Validate the character count of the description field
+            if (description.length > 1024) {
+                // Throw an error if the description is too long
+                throw new Error("Description cannot be longer than 1024 characters long!");
+            } else {
+                // Configure the patch request body's description field to be the value of teh description parameter
+                patchBody.description = description;
+            }
+        }
+
+        // Catch error on execution
+        try {
+            // Update the specified scope tag
+            return await (await this.client).api("/deviceManagement/roleScopeTags/" + id).patch(patchBody);
+        } catch (error) {
+            // If there is an error, return the error details
+            return error
         }
     }
 
-    // Todo: build the scope tag update system
-    async updateEndpointScopeTag(id: number, nameDesc: ScopeTagUpdate) {
-        // Ensure that the method is not being abused by sending nothing in with the update object
-        if (typeof nameDesc.name === "undefined" && typeof nameDesc.description === "undefined") {throw new Error("You cannot send an object that does not contain a name or description!")}
-        
-        // Ensure there is less than 1024 characters in the nameDesc
-        if (typeof nameDesc.description !== "undefined" && nameDesc.description.length) {
-            throw new Error("You cannot have more than 1024 characters in the description!")
+    // Delete the specified scope tag
+    async removeEndpointScopeTag(id: number): Promise<boolean> {
+        // Validate the input is a number
+        if (typeof id !== "number") {
+            // If it isn't a number, throw an error to the caller
+            throw new Error("ID must be a number!");
+        }
+
+        // Catch error on execution
+        try {
+            // Delete the specified scope tag
+            await (await this.client).api("/deviceManagement/roleScopeTags/" + id).delete();
+            // Return true indicating successful operation
+            return true
+        } catch (error) {
+            // If there is an error, return the error details
+            return error
         }
     }
 
