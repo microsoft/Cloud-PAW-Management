@@ -55,6 +55,18 @@ export class DebugRouter {
             response.send(request.body);
         })
 
+        // Create a new role scope tag in Endpoint Manager
+        this.webServer.post('/roleScopeTag', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Use the graph client to create a new role scope tag.
+                response.send(await this.graphClient.newEndpointScopeTag(request.body.name, request.body.description));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
+
         // Lists all of the role scope tags from Endpoint Manager
         this.webServer.get('/roleScopeTag', async (request, response, next) => {
             // Catch execution errors
@@ -81,6 +93,48 @@ export class DebugRouter {
                 } else {
                     // Otherwise use the graph client to query the Scope Tag
                     response.send(await this.graphClient.getEndpointScopeTag(parseID));
+                };
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
+
+        // Update the specified role scope tag
+        this.webServer.patch('/roleScopeTag/:id', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Parse the parameter with the Number parser.
+                const parseID = Number(request.params.id);
+
+                // Check to make sure that the Number Parser was able to complete successfully.
+                if (Object.is(parseID, NaN)) {
+                    // If the Parser failed, send a notice to the caller.
+                    response.send("Please send a valid ID for the Role Scope Tag!")
+                } else {
+                    // Describe the action
+                    response.send(await this.graphClient.updateEndpointScopeTag(parseID, request.body.name, request.body.description));
+                };
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
+
+        // Delete the specified role scope tag from Endpoint Manager
+        this.webServer.delete('/roleScopeTag/:id', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Parse the parameter with the Number parser.
+                const parseID = Number(request.params.id);
+
+                // Check to make sure that the Number Parser was able to complete successfully.
+                if (Object.is(parseID, NaN)) {
+                    // If the Parser failed, send a notice to the caller.
+                    response.send("Please send a valid ID for the Role Scope Tag!")
+                } else {
+                    // Otherwise use the graph client to query the Scope Tag
+                    response.send(await this.graphClient.removeEndpointScopeTag(parseID));
                 };
             } catch (error) {
                 // Send the error details if something goes wrong
