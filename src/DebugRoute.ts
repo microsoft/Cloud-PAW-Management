@@ -103,6 +103,23 @@ export class DebugRouter {
             response.send(await this.graphClient.getAADGroup(request.params.id));
         });
 
+        // Create a new group
+        this.webServer.post('/group', async (request, response, next) => {
+            response.send(await this.graphClient.newAADGroup(request.body.name, request.body.description, request.body.roleAssignable))
+        });
+
+        // Delete the specified group
+        this.webServer.delete('/group/:id', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Have the Graph API delete the specified group GUID and send the response to the caller
+                response.send(await this.graphClient.deleteAADGroup(request.params.id));
+            } catch (error) {
+                // Send the error details if something goes wrong.
+                next(error)
+            }
+        })
+
         // List all users in AAD
         this.webServer.get('/user', async (request, response) => {
             response.send(await this.graphClient.getAADUser());
