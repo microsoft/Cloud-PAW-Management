@@ -1,5 +1,5 @@
 # Introduction
-Privileged Access Workstation ([PAW](https://aka.ms/paw)) management is a cumbersome task. So, this application seeks to simplify that by automating processes to reduce human error.   
+Privileged Access Workstation ([PAW](https://aka.ms/paw)) management is a cumbersome task. So, this application seeks to simplify that by automating processes to reduce human error as well as the advanced security expertiese that ususally is requred to deploy and manage PAWs and [SPA](https://aka.ms/spa) architectures.   
 This application is meant to manage end to end management of PAWs, from lifecycle management (on-board/decommission) to SILO management.
 
 This application is meant to operate with a managed identity but supports multiple authentication methods to access the Microsoft Graph API.   
