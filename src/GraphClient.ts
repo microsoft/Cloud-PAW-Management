@@ -412,20 +412,25 @@ export class MSGraphClient {
         }
     }
 
-    // Retrieve Azure Active Directory Administrative Unit list. Can pull individual users based upon GUID.
+    // TODO: Write new AU creator
+    async newAADAdminUnit(name: string, description?: string) {}
+
+    // Retrieve Azure Active Directory Administrative Unit (AU) list. Can pull individual AUs based upon GUID.
     async getAADAdminUnit(GUID?: string): Promise<MicrosoftGraphBeta.AdministrativeUnit[]> {
+        // If no params are specified, return all objects
         if (typeof GUID === "undefined") {
-            // Grab an initial group page collection
+            // Grab an initial AU page collection
             const adminUnitPage: PageCollection = await (await this.client).api("/administrativeUnits").get();
 
-            // Process the page collection to its base form (Group)
+            // Process the page collection to its base form (AdministrativeUnit)
             const adminUnitList: MicrosoftGraphBeta.AdministrativeUnit[] = await this.iteratePage(adminUnitPage);
 
             // Return the processed data
             return adminUnitList;
         } else {
+            // Validate the string input is a GUID
             if (validateGUID(GUID)) {
-                // Retrieve the specified group from AAD
+                // Retrieve the specified AU from AAD
                 const adminUnitPage: MicrosoftGraphBeta.AdministrativeUnit = await (await this.client).api("/administrativeUnits/" + GUID).get();
 
                 // Convert the result to an array for type consistency.
