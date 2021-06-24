@@ -27,3 +27,55 @@ export function validateEmail(emailToTest: any): boolean {
         return emailRegex.test(emailToTest.toString());
     };
 };
+
+// Define the key value structure for the settings catalog post generator
+interface settingValueStructure {
+    nameID: string,
+    type: string,
+    value: [{
+        value: string,
+        children?: [settingValueStructure]
+    }] | {
+        value: string,
+        children?: [settingValueStructure]
+    }
+}
+
+// TODO: Add data validation to the utility to ensure no funny business happens
+// TODO: Add children support by using recursive function calling itself
+
+// Generate a settings catalog string value object
+export function generateSettingCatalogPost(keyValue: settingValueStructure[]): any {
+    // Validate input
+    if (typeof keyValue === "object" && keyValue.length > 0) {
+        // Define the base object to be manipulated by the specified key value pairs
+        // type: MicrosoftGraphBeta.DeviceManagementConfigurationPolicy
+        let settingsObject: any = {
+            settings: []
+        }
+
+        // Loop over each setting structure in the array
+        for (let index = 0; index < keyValue.length; index++) {
+            // Extract a single value structure from the array of value structures
+            const valueStructure = keyValue[index];
+
+            // Setting instance
+            // type: MicrosoftGraphBeta.DeviceManagementConfigurationSetting
+            let settingInstance: any = {
+                settingInstance: {
+                    settingDefinitionId: valueStructure.nameID
+                }
+            }
+            // Add the type info
+            settingInstance.settingInstance[valueStructure.type] = valueStructure.value
+
+            // Push the setting instance into the setting object
+            settingsObject.settings.push(settingInstance)
+        }
+        
+        // Return the resulting settings object structure
+        return settingsObject;
+    } else {
+        throw new Error("The provided setting value object is not an array or is empty!");
+    }
+}
