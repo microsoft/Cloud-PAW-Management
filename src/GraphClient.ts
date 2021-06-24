@@ -440,12 +440,84 @@ export class MSGraphClient {
         }
     }
 
-    // Todo: write the code that builds a new login restriction configuration
-    async newInteractiveLoginConfiguration(upn: string, deviceGUID: string) { }
+    // TODO: write the AU updater
+    async updateAADAdminUnit(GUID: string, name: string, description?: string) {}
 
-    // Todo: Write the code that updates existing login restriction configurations
-    async updateInteractiveLoginConfiguration() { }
+    // Remove the specified Administrative united based on the GUID
+    async removeAADAdminUnit(GUID: string): Promise<boolean> {
+        // Validate GUID is a proper GUID
+        if (validateGUID(GUID)) {
+            // Attempt to delete the AU
+            try {
+                // Send the delete command for the specified GUID
+                await (await this.client).api("/administrativeUnits/" + GUID).delete();
+                
+                // Return true for a successful operation
+                return true;
+            } catch (error) {
+                // If there is an error, return the error details to the caller
+                return error;
+            }
+        } else {
+            // If the GUID is not in the right format, throw an error
+            throw new Error("The GUID specified is not a proper GUID!");
+        };
+    }
 
-    // Todo: Write the code that removes login restriction configurations
-    async removeInteractiveLoginConfiguration() { }
+    // TODO: write settings catalog creator
+    async newSettingsCatalog() {}
+
+    // Retrieve Endpoint Manager Settings Catalog list. Can pull individual catalogs based upon GUID.
+    async getSettingsCatalog(GUID?: string): Promise<MicrosoftGraphBeta.DeviceManagementConfigurationPolicy[]> {
+        // If no params are specified, return all objects
+        if (typeof GUID === "undefined") {
+            // Grab an initial group page collection
+            const settingsCatalogPage: PageCollection = await (await this.client).api("/deviceManagement/configurationPolicies").expand("settings").get();
+
+            // Process the page collection to its base form (DeviceManagementConfigurationPolicy)
+            const settingsCatalogList: MicrosoftGraphBeta.AdministrativeUnit[] = await this.iteratePage(settingsCatalogPage);
+
+            // Return the processed data
+            return settingsCatalogList;
+        } else {
+            // Validate the string input is a GUID
+            if (validateGUID(GUID)) {
+                // Retrieve the specified ConfigurationPolicy from Endpoint Manager
+                const settingsCatalogPage: MicrosoftGraphBeta.AdministrativeUnit = await (await this.client).api("/deviceManagement/configurationPolicies/" + GUID).expand("settings").get();
+
+                // Convert the result to an array for type consistency.
+                const settingsCatalogList = [settingsCatalogPage];
+
+                // Return the processed data
+                return settingsCatalogList;
+            } else {
+                // Notify the caller that the GUID isn't right if GUID validation fails.
+                throw new Error("The parameter specified is not a valid GUID!");
+            };
+        }
+    }
+
+    // TODO: write the settings catalog updater
+    async updateSettingsCatalog(GUID: string) {}
+
+    // Remove a settings catalog based on its GUID
+    async removeSettingsCatalog(GUID: string): Promise<boolean> {
+        // Validate GUID is a proper GUID
+        if (validateGUID(GUID)) {
+            // Attempt to delete the settings catalog
+            try {
+                // Send the delete command for the specified GUID
+                await (await this.client).api("/deviceManagement/configurationPolicies/" + GUID).delete();
+                
+                // Return true for a successful operation
+                return true;
+            } catch (error) {
+                // If there is an error, return the error details to the caller
+                return error;
+            }
+        } else {
+            // If the GUID is not in the right format, throw an error
+            throw new Error("The GUID specified is not a proper GUID!");
+        };
+    };
 }
