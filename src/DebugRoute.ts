@@ -297,5 +297,53 @@ export class DebugRouter {
                 next(error);
             };
         });
+
+        // Delete the specified AU based on its GUID
+        this.webServer.delete('/adminUnit/:id', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Delete the specified AU from AAD
+                response.send(await this.graphClient.removeAADAdminUnit(request.params.id));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        })
+
+        // List all settings catalogs
+        this.webServer.get('/settingsCatalog', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Get all settings catalogs from Endpoint manager
+                response.send(await this.graphClient.getSettingsCatalog());
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
+
+        // Get a specific settings catalog based on the GUID
+        this.webServer.get('/settingsCatalog/:id', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Get a specific settings catalog from Endpoint manager
+                response.send(await this.graphClient.getSettingsCatalog(request.params.id));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
+
+        // Delete the specified settings catalog based on the GUID
+        this.webServer.delete('/settingsCatalog/:id', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Call the deletion passing the specified GUID
+                response.send(await this.graphClient.removeSettingsCatalog(request.params.id));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        })
     }
 }
