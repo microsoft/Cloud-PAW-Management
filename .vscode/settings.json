@@ -8,5 +8,6 @@
         ".vscode{,/**}"
     ],
     "appService.deploySubpath": ".",
-    "appService.defaultWebAppToDeploy": "None"
+    "appService.defaultWebAppToDeploy": "None",
+    "typescript.tsdk": "node_modules\\typescript\\lib"
 }
