@@ -1,4 +1,4 @@
-[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/5021/badge)](https://bestpractices.coreinfrastructure.org/projects/5021)
+[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/elliot-labs/Cloud-PAW-Management) [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/5021/badge)](https://bestpractices.coreinfrastructure.org/projects/5021)
 
 # Introduction
 Privileged Access Workstation ([PAW](https://aka.ms/paw)) management is a cumbersome task. So, this application seeks to simplify that by automating processes to reduce human error as well as the advanced security expertiese that ususally is requred to deploy and manage PAWs and [SPA](https://aka.ms/spa) architectures.   
