@@ -1,5 +1,5 @@
 import { GraphClientAuthProvider } from "./Authentication";
-import { validateGUID, validateEmail } from "./Utility";
+import { validateGUID, validateEmail, validateSettingCatalogSettings } from "./Utility";
 import { Client, ClientOptions, PageCollection, PageIterator } from "@microsoft/microsoft-graph-client";
 import "isomorphic-fetch";
 import type * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta";
@@ -37,7 +37,7 @@ export class MSGraphClient {
         try {
             // Initialize the collection that will be returned after iteration.
             let collection: Array<any> = [];
-            
+
             // Initialize the iterator to use the existing graph connection and the current response that may need iterated on.
             const pageIterator = new PageIterator(await this.client, graphResponse, (data) => {
                 // Add data gathered from the iterator to the collection
@@ -219,7 +219,7 @@ export class MSGraphClient {
         if (typeof GUID === "undefined") {
             // Retrieve the specified device configurations from Endpoint Manager
             const deviceGroupPolicyPage: PageCollection = await (await this.client).api("/deviceManagement/groupPolicyConfigurations/").get();
-            
+
             // Process the page collection to its base form (DeviceConfiguration)
             const deviceGroupPolicyList: MicrosoftGraphBeta.GroupPolicyConfiguration[] = await this.iteratePage(deviceGroupPolicyPage);
 
@@ -230,7 +230,7 @@ export class MSGraphClient {
             if (validateGUID(GUID)) {
                 // Retrieve the specified device configurations from Endpoint Manager
                 const deviceGroupPolicyPage: MicrosoftGraphBeta.GroupPolicyConfiguration = await (await this.client).api("/deviceManagement/groupPolicyConfigurations/" + GUID).get();
-                
+
                 // Convert the result to an array for type consistency.
                 const deviceGroupPolicyList = [deviceGroupPolicyPage];
 
@@ -240,15 +240,15 @@ export class MSGraphClient {
                 // Notify the caller that the GUID isn't right if GUID validation fails.
                 throw new Error("The parameter specified is not a valid GUID!");
             };
-        } 
+        }
     }
 
     // Create a new security group with the specified options
     async newAADGroup(name: string, description?: string, roleAssignable?: boolean): Promise<MicrosoftGraphBeta.Group> {
 
         // Validate name length is not too long for the graph
-        if (name.length > 120) {throw new Error("The name is too long, can't be longer than 120 chars!")};
-        
+        if (name.length > 120) { throw new Error("The name is too long, can't be longer than 120 chars!") };
+
         // These characters cannot be used in the mailNickName: @()\[]";:.<>,SPACE
         const nicknameRegex = /[\\\]\]@()";:.<>,\s]+/gm;
 
@@ -266,8 +266,8 @@ export class MSGraphClient {
         // Check to make sure that the description is defined, if it is, configure the description of the group
         if (typeof description !== "undefined") {
             // Validate that the description is of the correct length
-            if (description.length > 1024) {throw new Error("The description cannot be longer than 1024 characters!")};
-            
+            if (description.length > 1024) { throw new Error("The description cannot be longer than 1024 characters!") };
+
             // Set the description of the new group
             postBody.description = description;
         }
@@ -351,8 +351,8 @@ export class MSGraphClient {
         // Ensure the specified GUID is valid
         if (validateGUID(GUID)) {
             // Validate name length is not too long for the graph
-            if (name.length > 120) {throw new Error("The name is too long, can't be longer than 120 chars!")};
-            
+            if (name.length > 120) { throw new Error("The name is too long, can't be longer than 120 chars!") };
+
             // These characters cannot be used in the mailNickName: @()\[]";:.<>,SPACE
             const nicknameRegex = /[\\\]\]@()";:.<>,\s]+/gm;
 
@@ -368,8 +368,8 @@ export class MSGraphClient {
             // Check to make sure that the description is defined, if it is, configure the description of the group
             if (typeof description !== "undefined") {
                 // Validate that the description is of the correct length
-                if (description.length > 1024) {throw new Error("The description cannot be longer than 1024 characters!")};
-                
+                if (description.length > 1024) { throw new Error("The description cannot be longer than 1024 characters!") };
+
                 // Set the description of the group
                 patchBody.description = description;
             }
@@ -399,7 +399,7 @@ export class MSGraphClient {
             try {
                 // Send the delete command for the specified GUID
                 await (await this.client).api("/groups/" + GUID).delete();
-                
+
                 // Return true for a successful operation
                 return true;
             } catch (error) {
@@ -413,7 +413,7 @@ export class MSGraphClient {
     }
 
     // TODO: Write new AU creator
-    async newAADAdminUnit(name: string, description?: string) {}
+    async newAADAdminUnit(name: string, description?: string) { }
 
     // Retrieve Azure Active Directory Administrative Unit (AU) list. Can pull individual AUs based upon GUID.
     async getAADAdminUnit(GUID?: string): Promise<MicrosoftGraphBeta.AdministrativeUnit[]> {
@@ -446,7 +446,7 @@ export class MSGraphClient {
     }
 
     // TODO: write the AU updater
-    async updateAADAdminUnit(GUID: string, name: string, description?: string) {}
+    async updateAADAdminUnit(GUID: string, name: string, description?: string) { }
 
     // Remove the specified Administrative united based on the GUID
     async removeAADAdminUnit(GUID: string): Promise<boolean> {
@@ -456,7 +456,7 @@ export class MSGraphClient {
             try {
                 // Send the delete command for the specified GUID
                 await (await this.client).api("/administrativeUnits/" + GUID).delete();
-                
+
                 // Return true for a successful operation
                 return true;
             } catch (error) {
@@ -513,7 +513,7 @@ export class MSGraphClient {
             try {
                 // Send the delete command for the specified GUID
                 await (await this.client).api("/deviceManagement/configurationPolicies/" + GUID).delete();
-                
+
                 // Return true for a successful operation
                 return true;
             } catch (error) {
