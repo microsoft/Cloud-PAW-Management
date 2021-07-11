@@ -29,7 +29,10 @@ if (debugMode === "true") {
     // This can't be in the debug routes as the server instance can't be exposed there.
     webServer.get('/stop', (request, response) => {
         // Notify the caller
-        response.send("Stopping server.");
+        response.send("Stopping Server...");
+
+        // Log to console the server stop status
+        console.log("Stopping Server...");
 
         // Stop the server
         serverInstance.close();
