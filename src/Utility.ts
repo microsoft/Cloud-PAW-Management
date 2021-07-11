@@ -28,11 +28,41 @@ export function validateEmail(emailToTest: any): boolean {
     };
 };
 
+// Validate an array of strings
+export function validateStringArray(stringArray: string[]): boolean {
+    // Validate input is an array
+    if (typeof stringArray !== "object" || stringArray.length == 0) {return false};
+    
+    // Loop over all of the indexes and validate they are strings
+    for (let index = 0; index < stringArray.length; index++) {
+        // Extract the object at the specified index
+        const extractedIndex = stringArray[index];
 
+        // Validate the object is a string
+        if (typeof extractedIndex !== "string") {return false};
+    };
 
+    // If everything checks out, return true
+    return true;
+};
 
+// Validates an array contains only GUIDs at each index
+export function validateGUIDArray(GUIDArray: string[]): boolean {
+    // Validate input is a string array
+    if (!validateStringArray(GUIDArray)) {return false};
+    
+    // Loop over all of the indexes and validate they are GUIDs
+    for (let index = 0; index < GUIDArray.length; index++) {
+        // Extract the string at the specified index
+        const extractedIndex = GUIDArray[index];
 
+        // Validate the string is a GUID
+        if (validateGUID(extractedIndex)) {return false};
+    };
 
+    // If everything checks out, return true
+    return true;
+}
 
 // TODO: Rebuild generator as a validator of data
 // Validate a settings catalog settings object
