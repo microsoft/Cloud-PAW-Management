@@ -573,6 +573,11 @@ export class MSGraphClient {
         }
     }
 
+    // TODO: write the settings catalog settings updater
+    async updateSettingsCatalogSettings(settings: MicrosoftGraphBeta.DeviceManagementConfigurationSetting[]) {
+        return false
+    }
+
     // Remove a settings catalog based on its GUID
     async removeSettingsCatalog(GUID: string): Promise<boolean> {
         // Validate GUID is a proper GUID
