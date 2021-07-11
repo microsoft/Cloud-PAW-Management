@@ -1,5 +1,5 @@
 import { GraphClientAuthProvider } from "./Authentication";
-import { validateGUID, validateEmail, validateSettingCatalogSettings } from "./Utility";
+import { validateGUID, validateEmail, validateSettingCatalogSettings, validateStringArray } from "./Utility";
 import { Client, ClientOptions, PageCollection, PageIterator } from "@microsoft/microsoft-graph-client";
 import "isomorphic-fetch";
 import type * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta";
@@ -469,8 +469,43 @@ export class MSGraphClient {
         };
     }
 
-    // TODO: write settings catalog creator
-    async newSettingsCatalog() {}
+    // Create a new settings catalog with the specified settings
+    async newSettingsCatalog(name: string, description: string, roleScopeTagID: string[] , settings: MicrosoftGraphBeta.DeviceManagementConfigurationSetting[]): Promise<MicrosoftGraphBeta.DeviceManagementConfigurationPolicy> {
+        // Validate input
+        if (typeof name !== "string" || name.length > 1000) { throw new Error("The name is too long, can't be longer than 1000 chars!") };
+        if (typeof description !== "string" || description.length > 1000) { throw new Error("The description is too long, can't be longer than 1000 chars!") };
+        if (typeof roleScopeTagID !== "object" || roleScopeTagID.length == 0) { throw new Error("The role scope tag IDs must be an array of numbers in string format and not be empty!") }
+        // Loop through each of the indexes and ensure that they are parsable to numbers
+        for (let index = 0; index < roleScopeTagID.length; index++) {
+            // Expose a specific ID
+            const ID = roleScopeTagID[index];
+            // Parse the string to a number
+            const parsedNum = Number.parseInt(ID);
+
+            // Check to make sure the string is a parsable number
+            if (typeof parsedNum === "number" && Object.is(parsedNum, NaN)) {throw new Error("Please specify a number for the role scope tag IDs!")};
+        }
+        if (typeof settings !== "object" || settings.length == 0 || !validateSettingCatalogSettings(settings)) { throw new Error("The settings object is not in the right format, please use the correct format!") }
+
+        // Build the post body for the new setting catalog object
+        let postBody: MicrosoftGraphBeta.DeviceManagementConfigurationPolicy = {
+            name: name,
+            description: description,
+            roleScopeTagIds: roleScopeTagID,
+            platforms: "windows10",
+            technologies: "mdm",
+            settings: settings
+        }
+
+        // Catch any error on catalog creation
+        try {
+            // Create the catalog and return the result
+            return await (await this.client).api("/deviceManagement/configurationPolicies").post(postBody);
+        } catch (error) {
+            // If there is an error, return the error details
+            return error
+        }
+    }
 
     // Retrieve Endpoint Manager Settings Catalog list. Can pull individual catalogs based upon GUID.
     async getSettingsCatalog(GUID?: string): Promise<MicrosoftGraphBeta.DeviceManagementConfigurationPolicy[]> {
@@ -502,8 +537,41 @@ export class MSGraphClient {
         }
     }
 
-    // TODO: write the settings catalog updater
-    async updateSettingsCatalog(GUID: string) {}
+    // Update the specified setting catalog's metadata.
+    // The settings are updated in the method "updateSettingsCatalogSettings()".
+    // This is because of how the GraphAPI is designed, two posts are needed to update a settings catalog as the settings property is a nav property instead of an entity.
+    async updateSettingsCatalog(GUID: string, name: string, description: string, roleScopeTagID: string[]): Promise<MicrosoftGraphBeta.DeviceManagementConfigurationPolicy> {
+        // Validate input
+        if (!validateGUID(GUID)) {throw new Error("The GUID is not in the correct format!")};
+        if (typeof name !== "string" || name.length > 1000) { throw new Error("The name is too long, can't be longer than 1000 chars!") };
+        if (typeof description !== "string" || description.length > 1000) { throw new Error("The description is too long, can't be longer than 1000 chars!") };
+        if (!validateStringArray(roleScopeTagID)) { throw new Error("The role scope tag IDs must be an array of numbers in string format and not be empty!") }
+        // Loop through each of the indexes and ensure that they are parsable to numbers
+        for (let index = 0; index < roleScopeTagID.length; index++) {
+            // Expose a specific ID
+            const ID = roleScopeTagID[index];
+            // Parse the string to a number
+            const parsedNum = Number.parseInt(ID);
+
+            // Check to make sure the string is a parsable number
+            if (typeof parsedNum === "number" && Object.is(parsedNum, NaN)) {throw new Error("Please specify a number for the role scope tag IDs!")};
+        }
+
+        // Build the post body for the new setting catalog object
+        let patchBody: MicrosoftGraphBeta.DeviceManagementConfigurationPolicy = {
+            name: name,
+            description: description,
+            roleScopeTagIds: roleScopeTagID
+        }
+
+        // Catch any error on catalog update
+        try {
+            return (await this.client).api("/deviceManagement/configurationPolicies/" + GUID).patch(patchBody);
+        } catch (error) {
+            // If there is an error, return the error details
+            return error
+        }
+    }
 
     // Remove a settings catalog based on its GUID
     async removeSettingsCatalog(GUID: string): Promise<boolean> {
