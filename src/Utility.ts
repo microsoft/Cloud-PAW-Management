@@ -28,54 +28,37 @@ export function validateEmail(emailToTest: any): boolean {
     };
 };
 
-// Define the key value structure for the settings catalog post generator
-interface settingValueStructure {
-    nameID: string,
-    type: string,
-    value: [{
-        value: string,
-        children?: [settingValueStructure]
-    }] | {
-        value: string,
-        children?: [settingValueStructure]
-    }
-}
 
-// TODO: Add data validation to the utility to ensure no funny business happens
-// TODO: Add children support by using recursive function calling itself
 
-// Generate a settings catalog string value object
-export function generateSettingCatalogPost(keyValue: settingValueStructure[]): any {
-    // Validate input
-    if (typeof keyValue === "object" && keyValue.length > 0) {
-        // Define the base object to be manipulated by the specified key value pairs
-        // type: MicrosoftGraphBeta.DeviceManagementConfigurationPolicy
-        let settingsObject: any = {
-            settings: []
+
+
+
+
+// TODO: Rebuild generator as a validator of data
+// Validate a settings catalog settings object
+export function validateSettingCatalogSettings(settingsToValidate: any[]): boolean {
+
+    // interface temp {
+    //     settingInstance: {
+    //         "settingDefinitionId": string,
+    //         [index: string]: {
+    //             "value": string,
+    //             "child"?: [temp]
+    //         }[]
+    //     }
+    // }
+
+    // Validate input is an array
+    if (typeof settingsToValidate === "object" && settingsToValidate.length > 0) {
+        // Loop over every item in the array
+        for (let index = 0; index < settingsToValidate.length; index++) {
+            // Extract the current setting element
+            const settingElement = settingsToValidate[index];
+            
+            // do more validation here...
         }
-
-        // Loop over each setting structure in the array
-        for (let index = 0; index < keyValue.length; index++) {
-            // Extract a single value structure from the array of value structures
-            const valueStructure = keyValue[index];
-
-            // Setting instance
-            // type: MicrosoftGraphBeta.DeviceManagementConfigurationSetting
-            let settingInstance: any = {
-                settingInstance: {
-                    settingDefinitionId: valueStructure.nameID
-                }
-            }
-            // Add the type info
-            settingInstance.settingInstance[valueStructure.type] = valueStructure.value
-
-            // Push the setting instance into the setting object
-            settingsObject.settings.push(settingInstance)
-        }
-        
-        // Return the resulting settings object structure
-        return settingsObject;
+        return true;
     } else {
-        throw new Error("The provided setting value object is not an array or is empty!");
+        return false;
     }
 }
