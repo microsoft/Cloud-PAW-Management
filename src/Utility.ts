@@ -28,6 +28,24 @@ export function validateEmail(emailToTest: any): boolean {
     };
 };
 
+// Validates an array contains only an email address at each index
+export function validateEmailArray(emailArray: string[]): boolean {
+    // Validate input is a string array
+    if (!validateStringArray(emailArray)) {return false};
+    
+    // Loop over all of the indexes and validate they are email addresses
+    for (let index = 0; index < emailArray.length; index++) {
+        // Extract the string at the specified index
+        const extractedIndex = emailArray[index];
+
+        // Validate the string is an email address
+        if (validateEmail(extractedIndex)) {return false};
+    };
+
+    // If everything checks out, return true
+    return true;
+}
+
 // Validate an array of strings
 export function validateStringArray(stringArray: string[]): boolean {
     // Validate input is an array
