@@ -1,6 +1,9 @@
 import type { MSGraphClient } from "./GraphClient";
+import { EndpointPAWUserRightsSettings } from "./RequestGenerator";
+import { validateEmailArray, validateStringArray } from "./Utility";
 import type express from "express";
 import type { ChainedTokenCredential } from "@azure/identity"
+import { response } from "express";
 
 export class DebugRouter {
     // Define the properties that will be available to the class
@@ -310,6 +313,25 @@ export class DebugRouter {
             };
         })
 
+        // TODO: rewrite the update method to use the new validators, generators and graph client method
+        // Generate an example settings catalog with the specified name, description, and scope tag
+        this.webServer.post('/settingsCatalog', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Validate input
+                if (!validateStringArray(request.body.userNames)) {response.send("Please send a valid array usernames!")};
+                
+                // Build the settings
+                const settings = EndpointPAWUserRightsSettings(request.body.userNames);
+
+                // Create the specified settings catalog
+                response.send(await this.graphClient.newSettingsCatalog(request.body.name, request.body.description, request.body.id, settings));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
+
         // List all settings catalogs
         this.webServer.get('/settingsCatalog', async (request, response, next) => {
             // Catch execution errors
@@ -328,6 +350,36 @@ export class DebugRouter {
             try {
                 // Get a specific settings catalog from Endpoint manager
                 response.send(await this.graphClient.getSettingsCatalog(request.params.id));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
+
+        // Updated the specified settings catalog in Endpoint Manager
+        this.webServer.patch('/settingsCatalog/:id', async (request, response, next) => {
+            // Catch execution errors
+            try {               
+                // Update the specified settings catalog
+                response.send(await this.graphClient.updateSettingsCatalog(request.params.id, request.body.name, request.body.description, request.body.id));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
+
+        // Updated the specified settings catalog in Endpoint Manager
+        this.webServer.patch('/settingsCatalog/:id/settings', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Validate input
+                if (!validateStringArray(request.body.userNames)) {response.send("Please send a valid array usernames!")};
+                
+                // Build the settings
+                const settings = EndpointPAWUserRightsSettings(request.body.userNames);
+
+                // Update the specified settings catalog
+                response.send(await this.graphClient.updateSettingsCatalogSettings(settings));
             } catch (error) {
                 // Send the error details if something goes wrong
                 next(error);
