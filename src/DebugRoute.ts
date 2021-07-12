@@ -1,9 +1,8 @@
 import type { MSGraphClient } from "./GraphClient";
 import { EndpointPAWUserRightsSettings } from "./RequestGenerator";
-import { validateEmailArray, validateGUID, validateStringArray } from "./Utility";
+import { validateGUID, validateStringArray } from "./Utility";
 import type express from "express";
 import type { ChainedTokenCredential } from "@azure/identity"
-import { response } from "express";
 
 export class DebugRouter {
     // Define the properties that will be available to the class
