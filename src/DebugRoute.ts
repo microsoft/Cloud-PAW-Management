@@ -115,7 +115,7 @@ export class DebugRouter {
                     // If the Parser failed, send a notice to the caller.
                     response.send("Please send a valid ID for the Role Scope Tag!")
                 } else {
-                    // Describe the action
+                    // Update the specified role scope tag with the provided values
                     response.send(await this.graphClient.updateEndpointScopeTag(parseID, request.body.name, request.body.description));
                 };
             } catch (error) {
