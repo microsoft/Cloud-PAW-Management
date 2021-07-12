@@ -540,12 +540,13 @@ export class MSGraphClient {
     // Update the specified setting catalog's metadata.
     // The settings are updated in the method "updateSettingsCatalogSettings()".
     // This is because of how the GraphAPI is designed, two posts are needed to update a settings catalog as the settings property is a nav property instead of an entity.
-    async updateSettingsCatalog(GUID: string, name: string, description: string, roleScopeTagID: string[]): Promise<MicrosoftGraphBeta.DeviceManagementConfigurationPolicy> {
+    async updateSettingsCatalog(GUID: string, name: string, description: string, roleScopeTagID: string[], settings: MicrosoftGraphBeta.DeviceManagementConfigurationSetting[]): Promise<boolean> {
         // Validate input
         if (!validateGUID(GUID)) {throw new Error("The GUID is not in the correct format!")};
         if (typeof name !== "string" || name.length > 1000) { throw new Error("The name is too long, can't be longer than 1000 chars!") };
         if (typeof description !== "string" || description.length > 1000) { throw new Error("The description is too long, can't be longer than 1000 chars!") };
         if (!validateStringArray(roleScopeTagID)) { throw new Error("The role scope tag IDs must be an array of numbers in string format and not be empty!") }
+        if (!validateSettingCatalogSettings(settings)) {throw new Error("The Settings Catalog Settings aren't in the right format!")};
         // Loop through each of the indexes and ensure that they are parsable to numbers
         for (let index = 0; index < roleScopeTagID.length; index++) {
             // Expose a specific ID
@@ -561,21 +562,21 @@ export class MSGraphClient {
         let patchBody: MicrosoftGraphBeta.DeviceManagementConfigurationPolicy = {
             name: name,
             description: description,
-            roleScopeTagIds: roleScopeTagID
+            roleScopeTagIds: roleScopeTagID,
+            platforms: "windows10",
+            technologies: "mdm",
+            settings: settings
         }
 
         // Catch any error on catalog update
         try {
-            return (await this.client).api("/deviceManagement/configurationPolicies/" + GUID).patch(patchBody);
+            (await this.client).api("/deviceManagement/configurationPolicies/" + GUID).put(patchBody);
+            
+            return true;
         } catch (error) {
             // If there is an error, return the error details
             return error
         }
-    }
-
-    // TODO: write the settings catalog settings updater
-    async updateSettingsCatalogSettings(settings: MicrosoftGraphBeta.DeviceManagementConfigurationSetting[]) {
-        return false
     }
 
     // Remove a settings catalog based on its GUID
