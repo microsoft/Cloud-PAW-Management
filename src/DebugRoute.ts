@@ -1,6 +1,6 @@
 import type { MSGraphClient } from "./GraphClient";
 import { EndpointPAWUserRightsSettings } from "./RequestGenerator";
-import { validateEmailArray, validateStringArray } from "./Utility";
+import { validateEmailArray, validateGUID, validateStringArray } from "./Utility";
 import type express from "express";
 import type { ChainedTokenCredential } from "@azure/identity"
 import { response } from "express";
@@ -357,29 +357,28 @@ export class DebugRouter {
         });
 
         // Updated the specified settings catalog in Endpoint Manager
+        // when this route is executed against a GUID, all current settings are replaced with the specified data.
+        // This is not an update command, this is a replace command in reality.
         this.webServer.patch('/settingsCatalog/:id', async (request, response, next) => {
+            // Validate input
+            if (!validateGUID(request.params.id)) {response.send("Please specify a valid GUID!")};
+            if (!validateStringArray(request.body.userNames)) {response.send("Please send a valid array usernames!")};
+
+            // Build the settings
+            const settings = EndpointPAWUserRightsSettings(request.body.userNames);
+
             // Catch execution errors
             try {               
                 // Update the specified settings catalog
-                response.send(await this.graphClient.updateSettingsCatalog(request.params.id, request.body.name, request.body.description, request.body.id));
-            } catch (error) {
-                // Send the error details if something goes wrong
-                next(error);
-            };
-        });
-
-        // Updated the specified settings catalog in Endpoint Manager
-        this.webServer.patch('/settingsCatalog/:id/settings', async (request, response, next) => {
-            // Catch execution errors
-            try {
-                // Validate input
-                if (!validateStringArray(request.body.userNames)) {response.send("Please send a valid array usernames!")};
-                
-                // Build the settings
-                const settings = EndpointPAWUserRightsSettings(request.body.userNames);
-
-                // Update the specified settings catalog
-                response.send(await this.graphClient.updateSettingsCatalogSettings(settings));
+                const results = await this.graphClient.updateSettingsCatalog(request.params.id, request.body.name, request.body.description, request.body.id, settings);
+                if (results) {
+                    // Since the update settings catalog command does not return any value,
+                    // use the get method to retrieve a complete copy of the current settings
+                    response.send(await this.graphClient.getSettingsCatalog(request.params.id));
+                } else {
+                    // Send a "what the..."
+                    response.send("I am not sure how we got here... (patch settings catalog: " +request.params.id + ")");
+                }
             } catch (error) {
                 // Send the error details if something goes wrong
                 next(error);
