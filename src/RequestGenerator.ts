@@ -8,6 +8,7 @@ export function EndpointPAWUserRightsSettings(userList: string[]) {
 
     // Define object structures
     interface SettingsValueCollection {
+        "@odata.type": string,
         settingInstance: {
             "@odata.type": string;
             settingDefinitionId: string;
@@ -23,6 +24,7 @@ export function EndpointPAWUserRightsSettings(userList: string[]) {
     // Build the initial settings object structure
     let settingsObject: SettingsValueCollection[] = [
         {
+            "@odata.type": "#microsoft.graph.deviceManagementConfigurationSetting",
             "settingInstance": {
                 "@odata.type": "#microsoft.graph.deviceManagementConfigurationSimpleSettingCollectionInstance",
                 "settingDefinitionId": "device_vendor_msft_policy_config_userrights_allowlocallogon",
