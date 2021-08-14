@@ -1,6 +1,6 @@
-import { GraphClientAuthProvider } from "./Authentication";
-import { validateGUID, validateEmail, validateSettingCatalogSettings, validateStringArray } from "./Utility";
+import { validateGUID, validateGUIDArray, validateEmail, validateSettingCatalogSettings, validateStringArray } from "./Utility";
 import { Client, ClientOptions, PageCollection, PageIterator } from "@microsoft/microsoft-graph-client";
+import { TokenCredentialAuthenticationProvider } from "@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials";
 import "isomorphic-fetch";
 import type * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta";
 import type { ChainedTokenCredential } from "@azure/identity"
@@ -19,12 +19,12 @@ export class MSGraphClient {
     // Define the login command that returns a connected instance of the Graph client
     private async init(credential: Promise<ChainedTokenCredential>): Promise<Client> {
         // Instantiate the access token interpreter
-        const graphAuthProvider = new GraphClientAuthProvider(await credential);
+        const tokenCredentialAuthProvider = new TokenCredentialAuthenticationProvider(await credential, {scopes: ["https://graph.microsoft.com/.default"]});
 
         // Configure teh initialization system to use the custom graph auth provider
         const clientOptions: ClientOptions = {
             // Configure the auth provider property to be the value of the graph auth constant
-            authProvider: graphAuthProvider,
+            authProvider: tokenCredentialAuthProvider,
             defaultVersion: "beta"
         };
 
