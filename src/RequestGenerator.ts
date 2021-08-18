@@ -2,7 +2,7 @@ import { validateGUIDArray, validateStringArray } from "./Utility";
 
 // Generate a settings object for the user rights assignment of a PAW.
 // Allows multiple users for potential shared PAW concept in the future.
-export function EndpointPAWUserRightsSettings(userList: string[]) {
+export function endpointPAWUserRightsSettings(userList: string[]) {
     // Validate input is a populated array of strings
     if (!validateStringArray(userList)) {throw new Error("The user list is not an array of strings!")};
 
