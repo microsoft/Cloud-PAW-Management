@@ -53,12 +53,12 @@ export function EndpointPAWUserRightsSettings(userList: string[]) {
 }
 
 // Generate an assignment object for Microsoft Endpoint Manager 
-export function EndpointConfigurationAssignment(includeGUID: string[], excludeGUID?: string[]) {
+export function endpointGroupAssignmentTarget(includeGUID?: string[], excludeGUID?: string[]) {
     // Validate inputs
-    if (!validateGUIDArray(includeGUID)) {throw new Error("The specified array of included group GUIDs is not valid!")};
+    if (typeof includeGUID !== "undefined" && !validateGUIDArray(includeGUID)) {throw new Error("The specified array of included group GUIDs is not valid!")};
     if (typeof excludeGUID !== "undefined" && !validateGUIDArray(excludeGUID)) {throw new Error("The specified array of excluded group GUIDs is not valid!")};
 
-    // Define the assignment structure object
+    // Define the assignment structure object type interface
     interface AssignmentStructure {
         assignments: {
             target: {
@@ -68,26 +68,29 @@ export function EndpointConfigurationAssignment(includeGUID: string[], excludeGU
         }[];
     }
 
-    // Create the assignments object
+    // Create an empty assignment(s) object
     const assignmentObject: AssignmentStructure = {
         "assignments": []
     }
 
-    // Loop over each of the included GUIDs
-    for (let index = 0; index < includeGUID.length; index++) {
-        // Extract one of the GUIDs
-        const groupGUID = includeGUID[index];
-        
-        // Build the target object with the specified GUID
-        const target = {
-            "target": {
-                "@odata.type": "#microsoft.graph.groupAssignmentTarget",
-                "groupId": groupGUID
+    // If groups are included, add them to the assignment object
+    if (typeof includeGUID !== "undefined") {
+        // Loop over each of the included GUIDs
+        for (let index = 0; index < includeGUID.length; index++) {
+            // Extract one of the GUIDs
+            const groupGUID = includeGUID[index];
+            
+            // Build the target object with the specified GUID
+            const target = {
+                "target": {
+                    "@odata.type": "#microsoft.graph.groupAssignmentTarget",
+                    "groupId": groupGUID
+                }
             }
-        }
 
-        // Add the target object to the assignment structure
-        assignmentObject.assignments.push(target);
+            // Add the target object to the assignment structure
+            assignmentObject.assignments.push(target);
+        }
     }
 
     // If group exclusions are specified, add them to the assignment object
