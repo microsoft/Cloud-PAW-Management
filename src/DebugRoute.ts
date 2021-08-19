@@ -1,6 +1,6 @@
 import type { MSGraphClient } from "./GraphClient";
-import { EndpointPAWUserRightsSettings } from "./RequestGenerator";
-import { validateGUID, validateStringArray } from "./Utility";
+import { endpointPAWUserRightsSettings } from "./RequestGenerator";
+import { validateGUID, validateGUIDArray, validateStringArray } from "./Utility";
 import type express from "express";
 import type { ChainedTokenCredential } from "@azure/identity"
 
@@ -321,7 +321,7 @@ export class DebugRouter {
                 if (!validateStringArray(request.body.userNames)) {response.send("Please send a valid array usernames!")};
                 
                 // Build the settings
-                const settings = EndpointPAWUserRightsSettings(request.body.userNames);
+                const settings = endpointPAWUserRightsSettings(request.body.userNames);
 
                 // Create the specified settings catalog
                 response.send(await this.graphClient.newSettingsCatalog(request.body.name, request.body.description, request.body.id, settings));
@@ -364,7 +364,7 @@ export class DebugRouter {
             if (!validateStringArray(request.body.userNames)) {response.send("Please send a valid array usernames!")};
 
             // Build the settings
-            const settings = EndpointPAWUserRightsSettings(request.body.userNames);
+            const settings = endpointPAWUserRightsSettings(request.body.userNames);
 
             // Catch execution errors
             try {               
@@ -390,6 +390,24 @@ export class DebugRouter {
             try {
                 // Call the deletion passing the specified GUID
                 response.send(await this.graphClient.removeSettingsCatalog(request.params.id));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
+
+        // Assign an endpoint manager device configuration
+        this.webServer.post('/deviceConfigurationAssignment/:id', async (request, response, next) => {
+            // Validate input
+            if (typeof request.body.type !== "string" && request.body.type !== "Settings Catalog" && request.body.type !== "Setting Template" && request.body.type !== "Admin Template") {response.send("Please specify a valid assignment type")};
+            if (typeof request.body.includeGUID !== "undefined" && !validateGUIDArray(request.body.includeGUID)) {response.send("The specified array of included group GUIDs is not valid!")};
+            if (typeof request.body.excludeGUID !== "undefined" && !validateGUIDArray(request.body.excludeGUID)) {response.send("The specified array of excluded group GUIDs is not valid!")};
+            if (!validateGUID(request.params.id)) {response.send("Please specify a valid GUID!")};
+
+            // Catch execution errors
+            try {
+                // execute the graph client to assign a device configuration in Endpoint Manager
+                response.send(await this.graphClient.updateConfigurationAssignment(request.body.type, request.params.id, request.body.includeGUID, request.body.excludeGUID));
             } catch (error) {
                 // Send the error details if something goes wrong
                 next(error);
