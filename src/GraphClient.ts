@@ -186,6 +186,10 @@ export class MSGraphClient {
         }
     }
 
+    // TODO: finish the CRUD operations for normal configs
+    async newDeviceConfig() {}
+
+    // TODO: finish the CRUD operations for normal configs
     // Retrieve Microsoft Endpoint Manager configuration profile list. Can pull individual profile based upon GUID
     async getDeviceConfig(GUID?: string): Promise<MicrosoftGraphBeta.GroupPolicyConfiguration[]> {
         if (typeof GUID === "undefined") {
@@ -215,6 +219,14 @@ export class MSGraphClient {
         }
     }
 
+    // TODO: finish the CRUD operations for normal configs
+    async updateDeviceConfig() {}
+    async removeDeviceConfig() {}
+
+    // TODO: finish the CRUD operations for Admin Template policies
+    async newDeviceGroupPolicyConfig() {}
+
+    // TODO: finish the CRUD operations for Admin Template policies
     // Retrieve Microsoft Endpoint Manager Group Policy configuration list. Can pull individual policy based upon GUID
     async getDeviceGroupPolicyConfig(GUID?: string): Promise<MicrosoftGraphBeta.GroupPolicyConfiguration[]> {
         if (typeof GUID === "undefined") {
@@ -243,6 +255,10 @@ export class MSGraphClient {
             };
         }
     }
+
+    // TODO: finish the CRUD operations for Admin Template policies
+    async updateDeviceGroupPolicyConfig() {}
+    async removeDeviceGroupPolicyConfig() {}
 
     // Create a new security group with the specified options
     async newAADGroup(name: string, description?: string, roleAssignable?: boolean): Promise<MicrosoftGraphBeta.Group> {
@@ -633,4 +649,10 @@ export class MSGraphClient {
             return error;
         }
     }
+
+    // TODO: create Conditional Access CRUD operations
+    async newAADCAPolicy(){}
+    async getAADCAPolicy(){}
+    async updateAADCAPolicy(){}
+    async removeAADCAPolicy(){}
 }
