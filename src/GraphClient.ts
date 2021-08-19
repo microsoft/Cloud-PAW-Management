@@ -1,4 +1,5 @@
 import { validateGUID, validateGUIDArray, validateEmail, validateSettingCatalogSettings, validateStringArray } from "./Utility";
+import { endpointGroupAssignmentTarget } from "./RequestGenerator";
 import { Client, ClientOptions, PageCollection, PageIterator } from "@microsoft/microsoft-graph-client";
 import { TokenCredentialAuthenticationProvider } from "@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials";
 import "isomorphic-fetch";
@@ -599,4 +600,37 @@ export class MSGraphClient {
             throw new Error("The GUID specified is not a proper GUID!");
         };
     };
+
+    // Assign the specified device configuration in Endpoint Manager
+    async updateConfigurationAssignment(configType: "Settings Catalog" | "Setting Template" | "Admin Template", configGUID: string, includeGUID?: string[], excludeGUID?: string[]) {
+        // Validate inputs
+        if (typeof configType !== "string" && configType !== "Settings Catalog" && configType !== "Setting Template" && configType !== "Admin Template") {throw new Error("The config type parameter only accepts the strings: 'Settings Catalog', 'Device', and 'Admin Template' as values.")};
+        if (!validateGUID(configGUID)) {throw new Error("The specified GUID for the config GUID is not valid!")}
+        if (typeof includeGUID !== "undefined" && !validateGUIDArray(includeGUID)) {throw new Error("The specified array of included group GUIDs is not valid!")};
+        if (typeof excludeGUID !== "undefined" && !validateGUIDArray(excludeGUID)) {throw new Error("The specified array of excluded group GUIDs is not valid!")};
+    
+        // Build the assignment object post body
+        const postBody = endpointGroupAssignmentTarget(includeGUID, excludeGUID);
+
+        // Attempt execution and catch errors gracefully
+        try {
+            // Route execution based on the config type to be assigned
+            switch (configType) {
+                case "Settings Catalog":
+                    // Assign the specified settings catalog
+                    return await (await this.client).api("/deviceManagement/configurationPolicies/" + configGUID + "/assign").post(postBody);
+                case "Setting Template":
+                    // Assign the specified device settings
+                    return await (await this.client).api("/deviceManagement/deviceConfigurations/" + configGUID + "/assign").post(postBody);
+                case "Admin Template":
+                    // Assign the specified administrative template (GPO)
+                    return await (await this.client).api("/deviceManagement/groupPolicyConfigurations/" + configGUID + "/assign").post(postBody);
+                default:
+                    throw new Error("The switch stopped at the default statement, this should not have happened. configType: " + configType);
+            }
+        // If error occurred, return error to sender.
+        } catch (error) {
+            return error;
+        }
+    }
 }
