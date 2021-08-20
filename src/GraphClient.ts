@@ -221,7 +221,27 @@ export class MSGraphClient {
 
     // TODO: finish the CRUD operations for normal configs
     async updateDeviceConfig() {}
-    async removeDeviceConfig() {}
+
+    // Remove the specified Device Configuration
+    async removeDeviceConfig(GUID: string) {
+        // Validate GUID is a proper GUID
+        if (validateGUID(GUID)) {
+            // Attempt to delete the device configuration
+            try {
+                // Send the delete command for the specified GUID
+                await (await this.client).api("/deviceManagement/deviceConfigurations/" + GUID).delete();
+
+                // Return true for a successful operation
+                return true;
+            } catch (error) {
+                // If there is an error, return the error details to the caller
+                return error;
+            }
+        } else {
+            // If the GUID is not in the right format, throw an error
+            throw new Error("The GUID specified is not a proper GUID!");
+        }
+    }
 
     // TODO: finish the CRUD operations for Admin Template policies
     async newDeviceGroupPolicyConfig() {}
