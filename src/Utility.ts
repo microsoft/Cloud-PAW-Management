@@ -110,3 +110,8 @@ export function validateSettingCatalogSettings(settingsToValidate: any[]): boole
         return false;
     }
 }
+
+// TODO: build a generator that validates device configurations
+export function validateDeviceConfigurationSettings(settingsToValidate: any[]): boolean {
+    return true
+}

@@ -187,7 +187,9 @@ export class MSGraphClient {
     }
 
     // TODO: finish the CRUD operations for normal configs
-    async newDeviceConfig() {}
+    async newDeviceConfig() {
+        // https://docs.microsoft.com/en-us/graph/api/resources/intune-device-cfg-conceptual?view=graph-rest-beta
+    }
 
     // TODO: finish the CRUD operations for normal configs
     // Retrieve Microsoft Endpoint Manager configuration profile list. Can pull individual profile based upon GUID
