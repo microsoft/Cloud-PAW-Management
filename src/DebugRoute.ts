@@ -168,6 +168,18 @@ export class DebugRouter {
             };
         });
 
+        // Delete the specified device configuration
+        this.webServer.delete('/deviceConfiguration/:id', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Describe the action
+                response.send(await this.graphClient.removeDeviceConfig(request.params.id));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        })
+
         // List the Device Group Policy Configurations
         this.webServer.get('/deviceGroupPolicyConfiguration', async (request, response, next) => {
             // Catch execution errors
