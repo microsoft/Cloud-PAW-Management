@@ -5,7 +5,7 @@ import type * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta"
 // Allows multiple users for potential shared PAW concept in the future.
 export function endpointPAWUserRightsSettings(userList: string[]) {
     // Validate input is a populated array of strings
-    if (!validateStringArray(userList)) {throw new Error("The user list is not an array of strings!")};
+    if (!validateStringArray(userList)) { throw new Error("The user list is not an array of strings!") };
 
     // Define object structures
     interface SettingsValueCollection {
@@ -18,8 +18,8 @@ export function endpointPAWUserRightsSettings(userList: string[]) {
     };
 
     interface SettingsValueObject {
-            "@odata.type": string;
-            value: string;
+        "@odata.type": string;
+        value: string;
     };
 
     // Build the initial settings object structure
@@ -38,7 +38,7 @@ export function endpointPAWUserRightsSettings(userList: string[]) {
     for (let index = 0; index < userList.length; index++) {
         // Extract the username from the array
         const userName = userList[index];
-        
+
         // Build the settings value with the username to be added to the settings object 
         const computedValue: SettingsValueObject = {
             "@odata.type": "#microsoft.graph.deviceManagementConfigurationStringSettingValue",
@@ -56,8 +56,8 @@ export function endpointPAWUserRightsSettings(userList: string[]) {
 // Generate an assignment object for Microsoft Endpoint Manager 
 export function endpointGroupAssignmentTarget(includeGUID?: string[], excludeGUID?: string[]) {
     // Validate inputs
-    if (typeof includeGUID !== "undefined" && !validateGUIDArray(includeGUID)) {throw new Error("The specified array of included group GUIDs is not valid!")};
-    if (typeof excludeGUID !== "undefined" && !validateGUIDArray(excludeGUID)) {throw new Error("The specified array of excluded group GUIDs is not valid!")};
+    if (typeof includeGUID !== "undefined" && !validateGUIDArray(includeGUID)) { throw new Error("The specified array of included group GUIDs is not valid!") };
+    if (typeof excludeGUID !== "undefined" && !validateGUIDArray(excludeGUID)) { throw new Error("The specified array of excluded group GUIDs is not valid!") };
 
     // Define the assignment structure object type interface
     interface AssignmentStructure {
@@ -80,7 +80,7 @@ export function endpointGroupAssignmentTarget(includeGUID?: string[], excludeGUI
         for (let index = 0; index < includeGUID.length; index++) {
             // Extract one of the GUIDs
             const groupGUID = includeGUID[index];
-            
+
             // Build the target object with the specified GUID
             const target = {
                 "target": {
@@ -100,7 +100,7 @@ export function endpointGroupAssignmentTarget(includeGUID?: string[], excludeGUI
         for (let index = 0; index < excludeGUID.length; index++) {
             // Extract one of the GUIDs
             const groupGUID = excludeGUID[index];
-            
+
             // Build the target object with the specified GUID
             const target = {
                 "target": {
