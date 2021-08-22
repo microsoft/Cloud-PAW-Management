@@ -1,4 +1,5 @@
-import { validateGUIDArray, validateStringArray } from "./Utility";
+import { validateGUID, validateGUIDArray, validateStringArray } from "./Utility";
+import type * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta";
 
 // Generate a settings object for the user rights assignment of a PAW.
 // Allows multiple users for potential shared PAW concept in the future.
@@ -115,4 +116,46 @@ export function endpointGroupAssignmentTarget(includeGUID?: string[], excludeGUI
 
     // Return the built assignment object
     return assignmentObject;
+}
+
+// Generate the object for conditional access policy to assign a specific user to a device
+export function conditionalAccessPAWUserAssignment(deviceID: string, deviceGroupGUID: string, userGroupListGUID: string[], breakGlassGroupGUID: string): MicrosoftGraphBeta.ConditionalAccessPolicy {
+    // Validate input
+    if (!validateGUID(deviceID) || typeof deviceID !== "string") { throw new Error("The Device ID specified is not a valid GUID!") };
+    if (!validateGUID(deviceGroupGUID) || typeof deviceGroupGUID !== "string") { throw new Error("The device group is not a valid GUID!") };
+    if (!validateGUIDArray(userGroupListGUID) || typeof deviceGroupGUID === "object") { throw new Error("The user group list array is not an array of GUID(s)!") };
+    if (!validateGUID(breakGlassGroupGUID) || typeof breakGlassGroupGUID !== "string") { throw new Error("The Break Glass Group GUID specified is not a valid GUID!") };
+
+    // Create the base object to return later
+    let policyUserAssignment: MicrosoftGraphBeta.ConditionalAccessPolicy = {
+        "conditions": {
+            "users": {
+                "includeGroups": [deviceGroupGUID],
+                "excludeGroups": [breakGlassGroupGUID]
+            },
+            "applications": {
+                "includeApplications": ["All"]
+            },
+            "clientAppTypes": ["all"],
+            "devices": {
+                "deviceFilter": {
+                    "mode": "exclude",
+                    "rule": "device.deviceId -in [\"" + deviceID + "\"]"
+                }
+            }
+
+        },
+        "grantControls": {
+            "builtInControls": ["block"]
+        }
+    }
+
+    // Silence error checker in TS. This check should not be necessary.
+    if (typeof policyUserAssignment.conditions?.users?.includeGroups === "undefined") { throw new Error("If you get this error, I don't know how this happened. File a bug report with Node.JS. (CA PAW assignment)") };
+
+    // Add the user group list GUID to the included groups in the policy assignment object
+    policyUserAssignment.conditions?.users?.includeGroups.push.apply(policyUserAssignment.conditions?.users?.includeGroups, userGroupListGUID);
+
+    // Return the computed results
+    return policyUserAssignment;
 }
