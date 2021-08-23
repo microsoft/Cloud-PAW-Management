@@ -187,7 +187,7 @@ export class MSGraphClient {
     }
 
     // TODO: finish the CRUD operations for normal configs
-    async newDeviceConfig() {
+    async newDeviceConfig(name: string, roleScopeTagID: string[], settingsBase: MicrosoftGraphBeta.DeviceConfiguration, description?: string) {
         // https://docs.microsoft.com/en-us/graph/api/resources/intune-device-cfg-conceptual?view=graph-rest-beta
     }
 
@@ -509,7 +509,7 @@ export class MSGraphClient {
     }
 
     // Create a new settings catalog with the specified settings
-    async newSettingsCatalog(name: string, description: string, roleScopeTagID: string[] , settings: MicrosoftGraphBeta.DeviceManagementConfigurationSetting[]): Promise<MicrosoftGraphBeta.DeviceManagementConfigurationPolicy> {
+    async newSettingsCatalog(name: string, description: string, roleScopeTagID: string[], settings: MicrosoftGraphBeta.DeviceManagementConfigurationSetting[]): Promise<MicrosoftGraphBeta.DeviceManagementConfigurationPolicy> {
         // Validate input
         if (typeof name !== "string" || name.length > 1000) { throw new Error("The name is too long, can't be longer than 1000 chars!") };
         if (typeof description !== "string" || description.length > 1000) { throw new Error("The description is too long, can't be longer than 1000 chars!") };
@@ -672,9 +672,60 @@ export class MSGraphClient {
         }
     }
 
-    // TODO: create Conditional Access CRUD operations
-    async newAADCAPolicy(){}
-    async getAADCAPolicy(){}
-    async updateAADCAPolicy(){}
-    async removeAADCAPolicy(){}
+    // TODO: Finish create CA policy method
+    async newAADCAPolicy(name: string, description: string, settings: MicrosoftGraphBeta.ConditionalAccessPolicy, state: "enabled" | "disabled" | "enabledForReportingButNotEnforced") {}
+
+    // Retrieve Azure AD Conditional Access Policy list. Can pull individual policies based upon GUID.
+    async getAADCAPolicy(GUID?: string): Promise<MicrosoftGraphBeta.ConditionalAccessPolicy[]> {
+        // If no params are specified, return all objects
+        if (typeof GUID === "undefined") {
+            // Grab an initial group page collection
+            const conditionalAccessPolicyPage: PageCollection = await (await this.client).api("/identity/conditionalAccess/policies").get();
+
+            // Process the page collection to its base form (ConditionalAccessPolicy)
+            const conditionalAccessPolicyList: MicrosoftGraphBeta.ConditionalAccessPolicy[] = await this.iteratePage(conditionalAccessPolicyPage);
+
+            // Return the processed data
+            return conditionalAccessPolicyList;
+        } else {
+            // Validate the string input is a GUID
+            if (validateGUID(GUID)) {
+                // Retrieve the specified ConfigurationPolicy from Endpoint Manager
+                const conditionalAccessPolicy: MicrosoftGraphBeta.ConditionalAccessPolicy = await (await this.client).api("/identity/conditionalAccess/policies/" + GUID).get();
+
+                // Convert the result to an array for type consistency.
+                const conditionalAccessPolicyList = [conditionalAccessPolicy];
+
+                // Return the processed data
+                return conditionalAccessPolicyList;
+            } else {
+                // Notify the caller that the GUID isn't right if GUID validation fails.
+                throw new Error("The parameter specified is not a valid GUID!");
+            };
+        }
+    }
+
+    // TODO: Finish the update CA policy method
+    async updateAADCAPolicy() {}
+
+    // Remove the specified conditional access policy
+    async removeAADCAPolicy(GUID: string): Promise<boolean> {
+        // Validate GUID is a proper GUID
+        if (validateGUID(GUID)) {
+            // Attempt to delete the conditional access policy
+            try {
+                // Send the delete command for the specified GUID
+                await (await this.client).api("/identity/conditionalAccess/policies/" + GUID).delete();
+
+                // Return true for a successful operation
+                return true;
+            } catch (error) {
+                // If there is an error, return the error details to the caller
+                return error;
+            }
+        } else {
+            // If the GUID is not in the right format, throw an error
+            throw new Error("The GUID specified is not a proper GUID!");
+        };
+    }
 }
