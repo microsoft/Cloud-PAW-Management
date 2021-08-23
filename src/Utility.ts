@@ -111,7 +111,46 @@ export function validateSettingCatalogSettings(settingsToValidate: any[]): boole
     }
 }
 
-// TODO: build a generator that validates device configurations
+// TODO: build validator for device configurations
 export function validateDeviceConfigurationSettings(settingsToValidate: any[]): boolean {
     return true
+}
+
+// TODO: Continue building out the validator to be more complete
+// Validate the structure of a conditional access policy.
+export function validateConditionalAccessSetting(settingToValidate: any): boolean {
+    // Ensure that the setting being validated is the correct type
+    if (typeof settingToValidate === "object") {
+        // Loop through all of the keys in the settings to validate object
+        for (const key in settingToValidate) {
+            // Validate the 
+            switch (key) {
+                case "displayName":
+                    // Validate string here
+                    break;
+                case "conditions":
+                    // Validate sub-structure here
+                    break;
+                case "grantControls":
+                    // Validate sub-structure here
+                    break;
+                case "sessionControls":
+                    // Validate sub-structure here
+                    break;
+                case "state":
+                    // If the key name is "state", validate the contents and ensure that it is one of the below values.
+                    if (settingToValidate[key] !== "enabled" && settingToValidate[key] !== "disabled" && settingToValidate[key] !== "enabledForReportingButNotEnforced") {return false};
+                    break;
+                default:
+                    // If the case is not matched, an un-known property is present, reject the validation.
+                    return false;
+            }
+        }
+
+        // If all of the above validation is successful, return true to indicate success
+        return true
+    // If it is not the correct type, return false
+    } else {
+        return false;
+    }
 }
