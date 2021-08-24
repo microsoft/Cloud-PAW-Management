@@ -154,3 +154,79 @@ export function validateConditionalAccessSetting(settingToValidate: any): boolea
         return false;
     }
 }
+
+// Parse, validate the Scope Tag data and return it in a well defined object.
+export function parseScopeTag(data: string) {
+
+    // Validate input
+    if (typeof data !== "string") {throw new Error("The data is not in string format!")};
+
+    // Define the Endpoint Manager Role Scope Tag data format
+    interface ScopeTagData {
+        "PAWSecGrp": string,
+        "UsrSecGrp": string,
+        "BrkGls": string,
+        "SILORootGrp": string
+    }
+
+    // Create the returned object
+    let parsedScopeTag: ScopeTagData = {
+        "BrkGls": "",
+        "UsrSecGrp": "",
+        "PAWSecGrp": "",
+        "SILORootGrp": ""
+    }
+
+    // Split out each line
+    const newLines = data.split("\n");
+
+    // Loop through all of the lines and add it to the output after validating the data
+    for (const line in newLines) {
+        // Separate the two parts of the 
+        const splitLine = newLines[line].split("=");
+
+        // Validate keys/values and assign if the key matches
+        switch (splitLine[0]) {
+            case "PAWSecGrp":
+                // Validate the value in the line split
+                if (!validateGUID(splitLine[1])) {throw new Error("The value associated with the PAWSecGrp scope tag key is not a valid GUID!")};
+                
+                // Pull the key from the split line and assign the associated value to the corresponding parsed scope tag data
+                parsedScopeTag.PAWSecGrp = splitLine[1];
+                
+                // Stop switch execution
+                break;
+            case "UsrSecGrp":
+                // Validate the value in the line split
+                if (!validateGUID(splitLine[1])) {throw new Error("The value associated with the UsrSecGrp scope tag key is not a valid GUID!")};
+
+                // Pull the key from the split line and assign the associated value to the corresponding parsed scope tag data
+                parsedScopeTag.UsrSecGrp = splitLine[1];
+                break;
+            case "SiloRootGrp":
+                // Validate the value in the line split
+                if (!validateGUID(splitLine[1])) {throw new Error("The value associated with the SiloRootGrp scope tag key is not a valid GUID!")};
+
+                // Pull the key from the split line and assign the associated value to the corresponding parsed scope tag data
+                parsedScopeTag.SILORootGrp = splitLine[1];
+
+                // Stop switch execution
+                break;
+            case "BrkGls":
+                // Validate the value in the line split
+                if (!validateGUID(splitLine[1])) {throw new Error("The value associated with the BrkGls scope tag key is not a valid GUID!")};
+
+                // Pull the key from the split line and assign the associated value to the corresponding parsed scope tag data
+                parsedScopeTag.BrkGls = splitLine[1];
+
+                // Stop switch execution
+                break;
+            default:
+                // A key provided was not matched to the allowed data format, stop execution and throw an error
+                throw new Error("The given data is not in the correct format! Please see: https://github.com/elliot-labs/Cloud-PAW-Management/wiki/Scope-Tag-Data-Format");
+        }
+    }
+
+    // Return the parsed and validated data
+    return parsedScopeTag;
+}
