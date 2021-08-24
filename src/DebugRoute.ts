@@ -1,5 +1,5 @@
 import type { MSGraphClient } from "./GraphClient";
-import { endpointPAWUserRightsSettings } from "./RequestGenerator";
+import { endpointPAWUserRightsSettings, conditionalAccessPAWUserAssignment } from "./RequestGenerator";
 import { validateGUID, validateGUIDArray, validateStringArray } from "./Utility";
 import type express from "express";
 import type { ChainedTokenCredential } from "@azure/identity"
@@ -420,6 +420,72 @@ export class DebugRouter {
             try {
                 // execute the graph client to assign a device configuration in Endpoint Manager
                 response.send(await this.graphClient.updateConfigurationAssignment(request.body.type, request.params.id, request.body.includeGUID, request.body.excludeGUID));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
+
+        // Create a Conditional Access Policy
+        this.webServer.post('/conditionalAccess', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Build the settings object that will be used with the new AAD CA method.
+                const settingsBody = conditionalAccessPAWUserAssignment(request.body.deviceID, request.body.deviceGroupGUID, request.body.userGroupGUID, request.body.breakGlass);
+
+                // Send the results of the creation operation
+                response.send(await this.graphClient.newAADCAPolicy(request.body.name, settingsBody, "disabled"));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        })
+
+        // Get all Conditional Access Policies
+        this.webServer.get('/conditionalAccess', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Send the response back to the CX with the data
+                response.send(await this.graphClient.getAADCAPolicy());
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
+
+        // Get the specified Conditional Access Policy based on GUID
+        this.webServer.get('/conditionalAccess/:id', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Send the response back to the CX with the data
+                response.send(await this.graphClient.getAADCAPolicy(request.params.id));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
+
+        // Update the specified (already existing) Conditional Access Policy
+        this.webServer.patch('/conditionalAccess/:id', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Build the settings object that will be used with the update AAD CA method.
+                const settingsBody = conditionalAccessPAWUserAssignment(request.body.deviceID, request.body.deviceGroupGUID, request.body.userGroupGUID, request.body.breakGlass);
+
+                // Send the results of the update operation
+                response.send(await this.graphClient.updateAADCAPolicy(request.params.id, request.body.name, settingsBody, "disabled"));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        })
+
+        // Delete the specified Conditional Access Policy based on its GUID.
+        this.webServer.delete('/conditionalAccess/:id', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Send the data back via the response
+                response.send(await this.graphClient.removeAADCAPolicy(request.params.id));
             } catch (error) {
                 // Send the error details if something goes wrong
                 next(error);
