@@ -772,4 +772,75 @@ export class MSGraphClient {
             throw new Error("The GUID specified is not a proper GUID!");
         };
     }
+
+    // Get the specified Microsoft Endpoint Manager Device
+    async getMEMDevice(AADDeviceID?: string): Promise<MicrosoftGraphBeta.ManagedDevice[]> {
+        if (typeof AADDeviceID === "undefined") {
+            // Grab the list of all devices from MEM
+            try {
+                // Grab an initial MEM Device page collection
+                const memDevicePage: PageCollection = await (await this.client).api("/deviceManagement/managedDevices/").get();
+
+                // Process the page collection to its base form (ManagedDevice)
+                const memDeviceList: MicrosoftGraphBeta.ManagedDevice[] = await this.iteratePage(memDevicePage);
+
+                // Return the processed data.
+                return memDeviceList;
+            } catch (error) {
+                // If there is an error, return the error details to the caller.
+                return error;
+            }
+        } else {
+            // Validate GUID is a proper GUID
+            if (validateGUID(AADDeviceID)) {
+                // Grab the specified device from MEM
+                try {
+                    // Grab the specified MEM devices based on its AAD Device ID.
+                    const memDevicePage: PageCollection = await (await this.client).api("/deviceManagement/managedDevices/").filter("azureADDeviceId eq '" + AADDeviceID + "'").get();
+
+                    // Process the page collection to its base form (ManagedDevice)
+                    const memDeviceList: MicrosoftGraphBeta.ManagedDevice[] = await this.iteratePage(memDevicePage);
+
+                    // Return the processed data.
+                    return memDeviceList;
+                } catch (error) {
+                    // If there is an error, return the error details to the caller.
+                    return error;
+                };
+            } else {
+                // If the GUID is not in the right format, throw an error.
+                throw new Error("The GUID specified is not a proper GUID!");
+            };
+        };
+    };
+
+    // Wipe the specified device using Endpoint Manager
+    async wipeMEMDevice(GUID: string): Promise<boolean> {
+        // Validate GUID is a proper GUID
+        if (validateGUID(GUID)) {
+            // Attempt to wipe the device
+            try {
+                // Get MS Endpoint Manager's internal device ID from the specified Azure AD Device ID
+                const memDeviceID = (await this.getMEMDevice(GUID))[0].id
+                // Define the type of wipe that will take place
+                const wipeConfig = {
+                    "keepEnrollmentData": false,
+                    "keepUserData": false,
+                    "useProtectedWipe": true
+                }
+
+                // Send the delete command for the specified MEM Device ID (Not ot be confused with MEM Device ID)
+                await (await this.client).api("/deviceManagement/managedDevices/" + memDeviceID + "/wipe").post(wipeConfig);
+
+                // Return true for a successful operation
+                return true;
+            } catch (error) {
+                // If there is an error, return the error details to the caller
+                return error;
+            }
+        } else {
+            // If the GUID is not in the right format, throw an error
+            throw new Error("The GUID specified is not a proper GUID!");
+        };
+    }
 }
