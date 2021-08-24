@@ -1,4 +1,4 @@
-import { validateGUID, validateGUIDArray, validateEmail, validateSettingCatalogSettings, validateStringArray } from "./Utility";
+import { validateStringArray, validateGUID, validateGUIDArray, validateEmail, validateSettingCatalogSettings, validateConditionalAccessSetting } from "./Utility";
 import { endpointGroupAssignmentTarget } from "./RequestGenerator";
 import { Client, ClientOptions, PageCollection, PageIterator } from "@microsoft/microsoft-graph-client";
 import { TokenCredentialAuthenticationProvider } from "@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials";
@@ -20,7 +20,7 @@ export class MSGraphClient {
     // Define the login command that returns a connected instance of the Graph client
     private async init(credential: Promise<ChainedTokenCredential>): Promise<Client> {
         // Instantiate the access token interpreter
-        const tokenCredentialAuthProvider = new TokenCredentialAuthenticationProvider(await credential, {scopes: ["https://graph.microsoft.com/.default"]});
+        const tokenCredentialAuthProvider = new TokenCredentialAuthenticationProvider(await credential, { scopes: ["https://graph.microsoft.com/.default"] });
 
         // Configure teh initialization system to use the custom graph auth provider
         const clientOptions: ClientOptions = {
@@ -65,7 +65,7 @@ export class MSGraphClient {
         if (scopeTagName.length > 128) {
             // If the name is too long, throw an error
             throw new Error("You can't have a name longer than 128 characters!");
-        // Validate that input is the correct type
+            // Validate that input is the correct type
         } else if (typeof scopeTagName !== "string" || typeof description !== "string") {
             // Throw an error if it is not!
             throw new Error("Parameter input is string only!");
@@ -222,7 +222,7 @@ export class MSGraphClient {
     }
 
     // TODO: finish the CRUD operations for normal configs
-    async updateDeviceConfig() {}
+    async updateDeviceConfig() { }
 
     // Remove the specified Device Configuration
     async removeDeviceConfig(GUID: string) {
@@ -246,7 +246,7 @@ export class MSGraphClient {
     }
 
     // TODO: finish the CRUD operations for Admin Template policies
-    async newDeviceGroupPolicyConfig() {}
+    async newDeviceGroupPolicyConfig() { }
 
     // TODO: finish the CRUD operations for Admin Template policies
     // Retrieve Microsoft Endpoint Manager Group Policy configuration list. Can pull individual policy based upon GUID
@@ -279,8 +279,8 @@ export class MSGraphClient {
     }
 
     // TODO: finish the CRUD operations for Admin Template policies
-    async updateDeviceGroupPolicyConfig() {}
-    async removeDeviceGroupPolicyConfig() {}
+    async updateDeviceGroupPolicyConfig() { }
+    async removeDeviceGroupPolicyConfig() { }
 
     // Create a new security group with the specified options
     async newAADGroup(name: string, description?: string, roleAssignable?: boolean): Promise<MicrosoftGraphBeta.Group> {
@@ -522,7 +522,7 @@ export class MSGraphClient {
             const parsedNum = Number.parseInt(ID);
 
             // Check to make sure the string is a parsable number
-            if (typeof parsedNum === "number" && Object.is(parsedNum, NaN)) {throw new Error("Please specify a number for the role scope tag IDs!")};
+            if (typeof parsedNum === "number" && Object.is(parsedNum, NaN)) { throw new Error("Please specify a number for the role scope tag IDs!") };
         }
         if (typeof settings !== "object" || settings.length == 0 || !validateSettingCatalogSettings(settings)) { throw new Error("The settings object is not in the right format, please use the correct format!") }
 
@@ -581,11 +581,11 @@ export class MSGraphClient {
     // This is because of how the GraphAPI is designed, two posts are needed to update a settings catalog as the settings property is a nav property instead of an entity.
     async updateSettingsCatalog(GUID: string, name: string, description: string, roleScopeTagID: string[], settings: MicrosoftGraphBeta.DeviceManagementConfigurationSetting[]): Promise<boolean> {
         // Validate input
-        if (!validateGUID(GUID)) {throw new Error("The GUID is not in the correct format!")};
+        if (!validateGUID(GUID)) { throw new Error("The GUID is not in the correct format!") };
         if (typeof name !== "string" || name.length > 1000) { throw new Error("The name is too long, can't be longer than 1000 chars!") };
         if (typeof description !== "string" || description.length > 1000) { throw new Error("The description is too long, can't be longer than 1000 chars!") };
         if (!validateStringArray(roleScopeTagID)) { throw new Error("The role scope tag IDs must be an array of numbers in string format and not be empty!") }
-        if (!validateSettingCatalogSettings(settings)) {throw new Error("The Settings Catalog Settings aren't in the right format!")};
+        if (!validateSettingCatalogSettings(settings)) { throw new Error("The Settings Catalog Settings aren't in the right format!") };
         // Loop through each of the indexes and ensure that they are parsable to numbers
         for (let index = 0; index < roleScopeTagID.length; index++) {
             // Expose a specific ID
@@ -594,7 +594,7 @@ export class MSGraphClient {
             const parsedNum = Number.parseInt(ID);
 
             // Check to make sure the string is a parsable number
-            if (typeof parsedNum === "number" && Object.is(parsedNum, NaN)) {throw new Error("Please specify a number for the role scope tag IDs!")};
+            if (typeof parsedNum === "number" && Object.is(parsedNum, NaN)) { throw new Error("Please specify a number for the role scope tag IDs!") };
         }
 
         // Build the post body for the new setting catalog object
@@ -610,7 +610,7 @@ export class MSGraphClient {
         // Catch any error on catalog update
         try {
             (await this.client).api("/deviceManagement/configurationPolicies/" + GUID).put(patchBody);
-            
+
             return true;
         } catch (error) {
             // If there is an error, return the error details
@@ -642,11 +642,11 @@ export class MSGraphClient {
     // Assign the specified device configuration in Endpoint Manager
     async updateConfigurationAssignment(configType: "Settings Catalog" | "Setting Template" | "Admin Template", configGUID: string, includeGUID?: string[], excludeGUID?: string[]) {
         // Validate inputs
-        if (typeof configType !== "string" && configType !== "Settings Catalog" && configType !== "Setting Template" && configType !== "Admin Template") {throw new Error("The config type parameter only accepts the strings: 'Settings Catalog', 'Device', and 'Admin Template' as values.")};
-        if (!validateGUID(configGUID)) {throw new Error("The specified GUID for the config GUID is not valid!")}
-        if (typeof includeGUID !== "undefined" && !validateGUIDArray(includeGUID)) {throw new Error("The specified array of included group GUIDs is not valid!")};
-        if (typeof excludeGUID !== "undefined" && !validateGUIDArray(excludeGUID)) {throw new Error("The specified array of excluded group GUIDs is not valid!")};
-    
+        if (typeof configType !== "string" && configType !== "Settings Catalog" && configType !== "Setting Template" && configType !== "Admin Template") { throw new Error("The config type parameter only accepts the strings: 'Settings Catalog', 'Device', and 'Admin Template' as values.") };
+        if (!validateGUID(configGUID)) { throw new Error("The specified GUID for the config GUID is not valid!") }
+        if (typeof includeGUID !== "undefined" && !validateGUIDArray(includeGUID)) { throw new Error("The specified array of included group GUIDs is not valid!") };
+        if (typeof excludeGUID !== "undefined" && !validateGUIDArray(excludeGUID)) { throw new Error("The specified array of excluded group GUIDs is not valid!") };
+
         // Build the assignment object post body
         const postBody = endpointGroupAssignmentTarget(includeGUID, excludeGUID);
 
@@ -666,14 +666,34 @@ export class MSGraphClient {
                 default:
                     throw new Error("The switch stopped at the default statement, this should not have happened. configType: " + configType);
             }
-        // If error occurred, return error to sender.
+            // If error occurred, return error to sender.
         } catch (error) {
             return error;
         }
     }
 
-    // TODO: Finish create CA policy method
-    async newAADCAPolicy(name: string, description: string, settings: MicrosoftGraphBeta.ConditionalAccessPolicy, state: "enabled" | "disabled" | "enabledForReportingButNotEnforced") {}
+    // Create an Azure AD Conditional Access Policy using the specified settings.
+    async newAADCAPolicy(name: string, settings: MicrosoftGraphBeta.ConditionalAccessPolicy, state: "enabled" | "disabled" | "enabledForReportingButNotEnforced"): Promise<MicrosoftGraphBeta.ConditionalAccessPolicy> {
+        // Validate inputs
+        if (name.length > 256 && typeof name !== "string") { throw new Error("The length of the name can't be longer than 256 characters or the data is not a string!") };
+        if (!validateConditionalAccessSetting(settings) && typeof settings !== "object") { throw new Error("The settings object is not in the correct format!") };
+        if (state !== "enabled" && state !== "disabled" && state !== "enabledForReportingButNotEnforced") { throw new Error("The state parameter must be one of the following values: enabled, disabled, enabledForReportingButNotEnforced!") };
+
+        // Set the name of the CA Policy
+        settings.displayName = name;
+
+        // Set the state of the CA Policy
+        settings.state = state;
+
+        // Attempt the CA Policy creation.
+        try {
+            // Execute the post method against the graph using the specified post body (settings)
+            return await (await this.client).api("/identity/conditionalAccess/policies").post(settings);
+        } catch (error) {
+            // If an error happened, return the error details
+            return error;
+        }
+    }
 
     // Retrieve Azure AD Conditional Access Policy list. Can pull individual policies based upon GUID.
     async getAADCAPolicy(GUID?: string): Promise<MicrosoftGraphBeta.ConditionalAccessPolicy[]> {
@@ -705,10 +725,34 @@ export class MSGraphClient {
         }
     }
 
-    // TODO: Finish the update CA policy method
-    async updateAADCAPolicy() {}
+    // Update the specified Conditional Access Policy.
+    async updateAADCAPolicy(GUID: string, name: string, settings: MicrosoftGraphBeta.ConditionalAccessPolicy, state: "enabled" | "disabled" | "enabledForReportingButNotEnforced"): Promise<boolean> {
+        // Validate inputs
+        if (!validateGUID(GUID) || typeof GUID !== "string") {throw new Error("The specified ID is not a valid GUID!")};
+        if (name.length > 256 || typeof name !== "string") { throw new Error("The length of the name can't be longer than 256 characters or the data is not a string!") };
+        if (!validateConditionalAccessSetting(settings) && typeof settings !== "object") { throw new Error("The settings object is not in the correct format!") };
+        if (state !== "enabled" && state !== "disabled" && state !== "enabledForReportingButNotEnforced") { throw new Error("The state parameter must be one of the following values: enabled, disabled, enabledForReportingButNotEnforced!") };
 
-    // Remove the specified conditional access policy
+        // Set the name of the CA Policy
+        settings.displayName = name;
+
+        // Set the state of the CA Policy
+        settings.state = state;
+
+        // Attempt the CA Policy creation.
+        try {
+            // Execute the post method against the graph using the specified post body (settings)
+            await (await this.client).api("/identity/conditionalAccess/policies/" + GUID).patch(settings);
+
+            // Return true if successful (the try catch will catch unsuccessful patch methods)
+            return true;
+        } catch (error) {
+            // If an error happened, return the error details
+            return error;
+        }
+    }
+
+    // Remove the specified Conditional Access Policy.
     async removeAADCAPolicy(GUID: string): Promise<boolean> {
         // Validate GUID is a proper GUID
         if (validateGUID(GUID)) {
