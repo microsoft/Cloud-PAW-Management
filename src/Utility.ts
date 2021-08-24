@@ -75,7 +75,7 @@ export function validateGUIDArray(GUIDArray: string[]): boolean {
         const extractedIndex = GUIDArray[index];
 
         // Validate the string is a GUID
-        if (validateGUID(extractedIndex)) {return false};
+        if (!validateGUID(extractedIndex)) {return false};
     };
 
     // If everything checks out, return true
