@@ -119,7 +119,7 @@ export function endpointGroupAssignmentTarget(includeGUID?: string[], excludeGUI
 }
 
 // Generate the object for conditional access policy to assign a specific user to a device
-export function conditionalAccessPAWUserAssignment(deviceID: string, deviceGroupGUID: string, userGroupListGUID: string[], breakGlassGroupGUID: string) {
+export function conditionalAccessPAWUserAssignment(deviceID: string, deviceGroupGUID: string, userGroupListGUID: string[], breakGlassGroupGUID: string): MicrosoftGraphBeta.ConditionalAccessPolicy {
     // Validate input
     if (!validateGUID(deviceID) || typeof deviceID !== "string") { throw new Error("The Device ID specified is not a valid GUID!") };
     if (!validateGUID(deviceGroupGUID) || typeof deviceGroupGUID !== "string") { throw new Error("The device group is not a valid GUID!") };
@@ -127,9 +127,8 @@ export function conditionalAccessPAWUserAssignment(deviceID: string, deviceGroup
     if (!validateGUID(breakGlassGroupGUID) || typeof breakGlassGroupGUID !== "string") { throw new Error("The Break Glass Group GUID specified is not a valid GUID!") };
 
     // Create the base object to return later
-    let policyUserAssignment = {
+    let policyUserAssignment: MicrosoftGraphBeta.ConditionalAccessPolicy = {
         "conditions": {
-            "@odata.type": "microsoft.graph.conditionalAccessConditionSet",
             "users": {
                 "includeGroups": [deviceGroupGUID],
                 "excludeGroups": [breakGlassGroupGUID]
@@ -146,10 +145,13 @@ export function conditionalAccessPAWUserAssignment(deviceID: string, deviceGroup
             }
         },
         "grantControls": {
-            "@odata.type": "microsoft.graph.conditionalAccessGrantControls",
+            "operator": "AND",
             "builtInControls": ["block"]
         }
     }
+
+    // Silence error checker in TS. This check should not be necessary.
+    if (typeof policyUserAssignment.conditions?.users?.includeGroups === "undefined") { throw new Error("If you get this error, I don't know how this happened. File a bug report with Node.JS. (CA PAW assignment)") };
 
     // Add the user group list GUID to the included groups in the policy assignment object
     policyUserAssignment.conditions.users.includeGroups.push.apply(policyUserAssignment.conditions.users.includeGroups, userGroupListGUID);
