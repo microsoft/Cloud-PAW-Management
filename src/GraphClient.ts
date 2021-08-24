@@ -814,7 +814,7 @@ export class MSGraphClient {
         };
     };
 
-    // Wipe the specified device using Endpoint Manager
+    // Wipe the specified device using Endpoint Manager (this specific wipe is an autopilot reset)
     async wipeMEMDevice(GUID: string): Promise<boolean> {
         // Validate GUID is a proper GUID
         if (validateGUID(GUID)) {
@@ -824,7 +824,7 @@ export class MSGraphClient {
                 const memDeviceID = (await this.getMEMDevice(GUID))[0].id
                 // Define the type of wipe that will take place
                 const wipeConfig = {
-                    "keepEnrollmentData": false,
+                    "keepEnrollmentData": true,
                     "keepUserData": false,
                     "useProtectedWipe": true
                 }
