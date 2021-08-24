@@ -478,7 +478,7 @@ export class DebugRouter {
                 // Send the error details if something goes wrong
                 next(error);
             };
-        })
+        });
 
         // Delete the specified Conditional Access Policy based on its GUID.
         this.webServer.delete('/conditionalAccess/:id', async (request, response, next) => {
@@ -490,6 +490,42 @@ export class DebugRouter {
                 // Send the error details if something goes wrong
                 next(error);
             };
-        })
+        });
+
+        // Get all devices from Microsoft Endpoint Manager.
+        this.webServer.get('/memDevice', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Send the execution results to the client
+                response.send(await this.graphClient.getMEMDevice());
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
+
+        // Get the specified device from Microsoft Endpoint Manager by using its AAD Device ID.
+        this.webServer.get('/memDevice/:id', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Send the execution results to the client
+                response.send(await this.graphClient.getMEMDevice(request.params.id));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
+
+        // Wipe the specified device using Endpoint Manager
+        this.webServer.get('/wipeDevice/:id', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Send the data back to the caller
+                response.send(await this.graphClient.wipeMEMDevice(request.params.id));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
     }
 }
