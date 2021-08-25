@@ -49,7 +49,7 @@ export function validateEmailArray(emailArray: string[]): boolean {
 // Validate an array of strings
 export function validateStringArray(stringArray: string[]): boolean {
     // Validate input is an array
-    if (typeof stringArray !== "object" || stringArray.length == 0) {return false};
+    if (!(stringArray instanceof Array) || stringArray.length == 0) {return false};
     
     // Loop over all of the indexes and validate they are strings
     for (let index = 0; index < stringArray.length; index++) {
@@ -97,7 +97,7 @@ export function validateSettingCatalogSettings(settingsToValidate: any[]): boole
     // }
 
     // Validate input is an array
-    if (typeof settingsToValidate === "object" && settingsToValidate.length > 0) {
+    if ((settingsToValidate instanceof Array) && settingsToValidate.length > 0) {
         // Loop over every item in the array
         for (let index = 0; index < settingsToValidate.length; index++) {
             // Extract the current setting element

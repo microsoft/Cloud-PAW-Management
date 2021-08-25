@@ -5,6 +5,7 @@ import type * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta"
 // Allows multiple users for potential shared PAW concept in the future.
 export function endpointPAWUserRightsSettings(userList: string[]) {
     // Validate input is a populated array of strings
+    if (!(userList instanceof Array)) { throw new Error("The specified UserList is not an array!") };
     if (!validateStringArray(userList)) { throw new Error("The user list is not an array of strings!") };
 
     // Define object structures
@@ -32,7 +33,7 @@ export function endpointPAWUserRightsSettings(userList: string[]) {
                 "simpleSettingCollectionValue": []
             }
         }
-    ]
+    ];
 
     // Loop through all of the usernames provided in the parameter
     for (let index = 0; index < userList.length; index++) {
@@ -56,8 +57,8 @@ export function endpointPAWUserRightsSettings(userList: string[]) {
 // Generate an assignment object for Microsoft Endpoint Manager 
 export function endpointGroupAssignmentTarget(includeGUID?: string[], excludeGUID?: string[]) {
     // Validate inputs
-    if (typeof includeGUID !== "undefined" && !validateGUIDArray(includeGUID)) { throw new Error("The specified array of included group GUIDs is not valid!") };
-    if (typeof excludeGUID !== "undefined" && !validateGUIDArray(excludeGUID)) { throw new Error("The specified array of excluded group GUIDs is not valid!") };
+    if (!(includeGUID instanceof Array) || !validateGUIDArray(includeGUID)) { throw new Error("The specified array of included group GUIDs is not valid!") };
+    if (!(excludeGUID instanceof Array) || !validateGUIDArray(excludeGUID)) { throw new Error("The specified array of excluded group GUIDs is not valid!") };
 
     // Define the assignment structure object type interface
     interface AssignmentStructure {
