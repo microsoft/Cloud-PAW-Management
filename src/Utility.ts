@@ -155,27 +155,22 @@ export function validateConditionalAccessSetting(settingToValidate: any): boolea
     }
 }
 
-// Parse, validate the Scope Tag data and return it in a well defined object.
+// Define the Endpoint Manager Role Scope Tag data format
+export interface ScopeTagData {
+    "PAWSecGrp"?: string,
+    "UsrSecGrp"?: string,
+    "BrkGls"?: string,
+    "SILORootGrp"?: string
+}
+
+// Parse, validate, and return the Scope Tag data in a well defined object.
 export function parseScopeTag(data: string) {
 
     // Validate input
     if (typeof data !== "string") {throw new Error("The data is not in string format!")};
 
-    // Define the Endpoint Manager Role Scope Tag data format
-    interface ScopeTagData {
-        "PAWSecGrp": string,
-        "UsrSecGrp": string,
-        "BrkGls": string,
-        "SILORootGrp": string
-    }
-
     // Create the returned object
-    let parsedScopeTag: ScopeTagData = {
-        "BrkGls": "",
-        "UsrSecGrp": "",
-        "PAWSecGrp": "",
-        "SILORootGrp": ""
-    }
+    let parsedScopeTag: ScopeTagData = {}
 
     // Split out each line
     const newLines = data.split("\n");
