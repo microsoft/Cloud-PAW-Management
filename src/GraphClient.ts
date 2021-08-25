@@ -60,7 +60,7 @@ export class MSGraphClient {
     };
 
     // Create a new role scope tag in Endpoint Manager
-    async newEndpointScopeTag(scopeTagName: string, description?: string): Promise<MicrosoftGraphBeta.RoleScopeTag> {
+    async newMEMScopeTag(scopeTagName: string, description?: string): Promise<MicrosoftGraphBeta.RoleScopeTag> {
         // Validate the name is of appropriate length
         if (scopeTagName.length > 128) {
             // If the name is too long, throw an error
@@ -96,78 +96,89 @@ export class MSGraphClient {
             // If there is an error, return the error details
             return error
         }
-    }
+    };
 
-    // Return the instance of the specified scope tag
-    async getEndpointScopeTag(ID?: number): Promise<MicrosoftGraphBeta.RoleScopeTag[]> {
-        if (typeof ID === "undefined") {
-            // Retrieve a list of Scope Tags from Endpoint Manager
-            const tagListPage: PageCollection = await (await this.client).api("/deviceManagement/roleScopeTags").get();
+    // Get the specified scope tag or get all scope tags
+    async getMEMScopeTag(name?: string): Promise<MicrosoftGraphBeta.RoleScopeTag[]> {
+        // If no name is specified, return all scope tags
+        if (typeof name === "undefined") {
+            // Grab the list of all Scope Tags from MEM
+            try {
+                // Grab an initial MEM Scope page collection
+                const scopeTagPage: PageCollection = await (await this.client).api("/deviceManagement/roleScopeTags").get();
 
-            // Extract the values from the returned list and type it for easier processing
-            const tagList: MicrosoftGraphBeta.RoleScopeTag[] = await this.iteratePage(tagListPage);
+                // Process the page collection to its base form (RoleScopeTag)
+                const scopeTagList: MicrosoftGraphBeta.RoleScopeTag[] = await this.iteratePage(scopeTagPage);
 
-            // Return the processed data
-            return tagList;
-        } else {
-            if (typeof ID === "number") {
-                // Retrieve the specified Scope Tag from Endpoint Manager
-                const tagPage: MicrosoftGraphBeta.RoleScopeTag = await (await this.client).api("/deviceManagement/roleScopeTags/" + ID).get();
-
-                // Convert the result to an array for type consistency.
-                const tagPageList = [tagPage];
-
-                // Return the processed data
-                return tagPageList;
-            } else {
-                throw new Error("The ID that has been passed is not a number! Only numbers should be passed!");
+                // Return the processed data.
+                return scopeTagList;
+            } catch (error) {
+                // If there is an error, return the error details to the caller.
+                return error;
             }
-        }
-    }
+        } else {
+            // Validate the proper data for the name of the scope tag
+            if (typeof name === "string" && name.length <= 128) {
+                // Grab the specified device from MEM
+                try {
+                    // Grab the specified MEM Scope based on its unique name.
+                    const scopeTagPage: PageCollection = await (await this.client).api("/deviceManagement/roleScopeTags").filter("displayName eq '" + name + "'").get();
+
+                    // Process the page collection to its base form (RoleScopeTag)
+                    const scopeTagList: MicrosoftGraphBeta.RoleScopeTag[] = await this.iteratePage(scopeTagPage);
+
+                    // Return the processed data.
+                    return scopeTagList;
+                } catch (error) {
+                    // If there is an error, return the error details to the caller.
+                    return error;
+                };
+            } else {
+                // If the string is greater than 128 chars or not a string, throw an error.
+                throw new Error("The specified name is not a proper string!");
+            };
+        };
+    };
 
     // Update the specified role scope tag in Endpoint Manager
-    async updateEndpointScopeTag(id: number, name: string, description?: string): Promise<MicrosoftGraphBeta.RoleScopeTag> {
+    async updateMEMScopeTag(name: string, description?: string, ID?: number): Promise<MicrosoftGraphBeta.RoleScopeTag> {
         // Validate input
-        if (typeof id !== "number") {
-            // throw an error if the ID is not a number
-            throw new Error("ID must be a number!");
-        } else if (typeof name !== "string") {
-            // Throw an error if the name parameter is not a string
-            throw new Error("The name parameter must be a string!");
-        } else if (name.length > 128) {
-            // Throw an error if the name param is longer than 128 characters
-            throw new Error("Name must be less than 128 characters long!");
+        if (typeof name !== "string" || name.length > 128) { throw new Error("The name is not a valid string or is greater than 128 chars!") };
+        if (typeof description === "string" && description.length > 1024) { throw new Error("The description can't be longer than 1024 chars!") };
+        if (typeof ID !== "undefined" && typeof ID !== "number") { throw new Error("The ID needs to be a whole number!") };
+        if (typeof ID === "number" && (!Number.isInteger(ID) || ID <= 0)) {throw new Error("The ID has to be a whole number above 0")}; 
+
+        // Build the initial scope tag object for the update process to use
+        let scopeTagBody: MicrosoftGraphBeta.RoleScopeTag = {
+            "displayName": name
         }
 
-        // Build the patch body
-        let patchBody: MicrosoftGraphBeta.RoleScopeTag = {
-            displayName: name
+        // If the description is provided, add it to the scope tag body
+        if (typeof description === "string") {
+            // Create the description property and set it to the function parameter value
+            scopeTagBody.description = description
         }
 
-        // Validate if the description parameter has been specified
-        if (typeof description !== "undefined") {
-            // Validate the character count of the description field
-            if (description.length > 1024) {
-                // Throw an error if the description is too long
-                throw new Error("Description cannot be longer than 1024 characters long!");
-            } else {
-                // Configure the patch request body's description field to be the value of teh description parameter
-                patchBody.description = description;
-            }
-        }
-
-        // Catch error on execution
+        // Catch execution errors
         try {
-            // Update the specified scope tag
-            return await (await this.client).api("/deviceManagement/roleScopeTags/" + id).patch(patchBody);
+            if (typeof ID === "undefined") {
+                // Get an instance of the specified scope tag
+                const scopeTagInstance = (await this.getMEMScopeTag(name))[0];
+
+                // Update the scope tag with the specified data
+                return (await this.client).api("/deviceManagement/roleScopeTags/" + scopeTagInstance.id).patch(scopeTagBody);
+            } else {
+                // Update the scope tag with the specified data
+                return (await this.client).api("/deviceManagement/roleScopeTags/" + ID).patch(scopeTagBody);
+            }
         } catch (error) {
-            // If there is an error, return the error details
-            return error
+            // If an error happens, return the error data
+            return error;
         }
-    }
+    };
 
     // Delete the specified scope tag
-    async removeEndpointScopeTag(id: number): Promise<boolean> {
+    async removeMEMScopeTag(id: number): Promise<boolean> {
         // Validate the input is a number
         if (typeof id !== "number") {
             // If it isn't a number, throw an error to the caller
@@ -184,7 +195,7 @@ export class MSGraphClient {
             // If there is an error, return the error details
             return error
         }
-    }
+    };
 
     // TODO: finish the CRUD operations for normal configs
     async newDeviceConfig(name: string, roleScopeTagID: string[], settingsBase: MicrosoftGraphBeta.DeviceConfiguration, description?: string) {
@@ -219,10 +230,10 @@ export class MSGraphClient {
                 throw new Error("The parameter specified is not a valid GUID!");
             };
         }
-    }
+    };
 
     // TODO: finish the CRUD operations for normal configs
-    async updateDeviceConfig() { }
+    async updateDeviceConfig() { };
 
     // Remove the specified Device Configuration
     async removeDeviceConfig(GUID: string) {
@@ -243,7 +254,7 @@ export class MSGraphClient {
             // If the GUID is not in the right format, throw an error
             throw new Error("The GUID specified is not a proper GUID!");
         }
-    }
+    };
 
     // TODO: finish the CRUD operations for Admin Template policies
     async newDeviceGroupPolicyConfig() { }
@@ -325,7 +336,7 @@ export class MSGraphClient {
             // If there is an error, return the error details
             return error
         }
-    }
+    };
 
     // Retrieve Azure Active Directory user list. Can pull individual users based upon GUID or the UPN
     async getAADUser(ID?: string): Promise<MicrosoftGraphBeta.User[]> {
@@ -354,7 +365,7 @@ export class MSGraphClient {
                 throw new Error("The parameter specified is not a valid ID!");
             };
         }
-    }
+    };
 
     // Retrieve Azure Active Directory (AAD) group list. Can pull individual groups based upon the group's GUID
     async getAADGroup(GUID?: string): Promise<MicrosoftGraphBeta.Group[]> {
@@ -382,7 +393,7 @@ export class MSGraphClient {
                 throw new Error("The parameter specified is not a valid GUID!");
             };
         }
-    }
+    };
 
     // Update the specified group
     async updateAADGroup(GUID: string, name: string, description?: string): Promise<boolean> {
@@ -428,7 +439,7 @@ export class MSGraphClient {
             // If the GUID is not valid, throw an error
             throw new Error("The GUID specified is not a proper GUID!");
         }
-    }
+    };
 
     // Delete the specified Security Group
     async removeAADGroup(GUID: string): Promise<boolean> {
@@ -449,7 +460,7 @@ export class MSGraphClient {
             // If the GUID is not in the right format, throw an error
             throw new Error("The GUID specified is not a proper GUID!");
         }
-    }
+    };
 
     // TODO: Write new AU creator
     async newAADAdminUnit(name: string, description?: string) { }
@@ -482,7 +493,7 @@ export class MSGraphClient {
                 throw new Error("The parameter specified is not a valid GUID!");
             };
         }
-    }
+    };
 
     // TODO: write the AU updater
     async updateAADAdminUnit(GUID: string, name: string, description?: string) { }
@@ -506,7 +517,7 @@ export class MSGraphClient {
             // If the GUID is not in the right format, throw an error
             throw new Error("The GUID specified is not a proper GUID!");
         };
-    }
+    };
 
     // Create a new settings catalog with the specified settings
     async newSettingsCatalog(name: string, description: string, roleScopeTagID: string[], settings: MicrosoftGraphBeta.DeviceManagementConfigurationSetting[]): Promise<MicrosoftGraphBeta.DeviceManagementConfigurationPolicy> {
@@ -544,7 +555,7 @@ export class MSGraphClient {
             // If there is an error, return the error details
             return error
         }
-    }
+    };
 
     // Retrieve Endpoint Manager Settings Catalog list. Can pull individual catalogs based upon GUID.
     async getSettingsCatalog(GUID?: string): Promise<MicrosoftGraphBeta.DeviceManagementConfigurationPolicy[]> {
@@ -574,7 +585,7 @@ export class MSGraphClient {
                 throw new Error("The parameter specified is not a valid GUID!");
             };
         }
-    }
+    };
 
     // Update the specified setting catalog's metadata.
     // The settings are updated in the method "updateSettingsCatalogSettings()".
@@ -616,7 +627,7 @@ export class MSGraphClient {
             // If there is an error, return the error details
             return error
         }
-    }
+    };
 
     // Remove a settings catalog based on its GUID
     async removeSettingsCatalog(GUID: string): Promise<boolean> {
@@ -670,7 +681,7 @@ export class MSGraphClient {
         } catch (error) {
             return error;
         }
-    }
+    };
 
     // Create an Azure AD Conditional Access Policy using the specified settings.
     async newAADCAPolicy(name: string, settings: MicrosoftGraphBeta.ConditionalAccessPolicy, state: "enabled" | "disabled" | "enabledForReportingButNotEnforced"): Promise<MicrosoftGraphBeta.ConditionalAccessPolicy> {
@@ -693,7 +704,7 @@ export class MSGraphClient {
             // If an error happened, return the error details
             return error;
         }
-    }
+    };
 
     // Retrieve Azure AD Conditional Access Policy list. Can pull individual policies based upon GUID.
     async getAADCAPolicy(GUID?: string): Promise<MicrosoftGraphBeta.ConditionalAccessPolicy[]> {
@@ -723,12 +734,12 @@ export class MSGraphClient {
                 throw new Error("The parameter specified is not a valid GUID!");
             };
         }
-    }
+    };
 
     // Update the specified Conditional Access Policy.
     async updateAADCAPolicy(GUID: string, name: string, settings: MicrosoftGraphBeta.ConditionalAccessPolicy, state: "enabled" | "disabled" | "enabledForReportingButNotEnforced"): Promise<boolean> {
         // Validate inputs
-        if (!validateGUID(GUID) || typeof GUID !== "string") {throw new Error("The specified ID is not a valid GUID!")};
+        if (!validateGUID(GUID) || typeof GUID !== "string") { throw new Error("The specified ID is not a valid GUID!") };
         if (name.length > 256 || typeof name !== "string") { throw new Error("The length of the name can't be longer than 256 characters or the data is not a string!") };
         if (!validateConditionalAccessSetting(settings) && typeof settings !== "object") { throw new Error("The settings object is not in the correct format!") };
         if (state !== "enabled" && state !== "disabled" && state !== "enabledForReportingButNotEnforced") { throw new Error("The state parameter must be one of the following values: enabled, disabled, enabledForReportingButNotEnforced!") };
@@ -750,7 +761,7 @@ export class MSGraphClient {
             // If an error happened, return the error details
             return error;
         }
-    }
+    };
 
     // Remove the specified Conditional Access Policy.
     async removeAADCAPolicy(GUID: string): Promise<boolean> {
@@ -822,6 +833,7 @@ export class MSGraphClient {
             try {
                 // Get MS Endpoint Manager's internal device ID from the specified Azure AD Device ID
                 const memDeviceID = (await this.getMEMDevice(GUID))[0].id
+
                 // Define the type of wipe that will take place
                 const wipeConfig = {
                     "keepEnrollmentData": true,

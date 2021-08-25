@@ -11,7 +11,7 @@ export class DebugRouter {
 
     // Define how the class should be instantiated
     constructor(webServer: express.Express, graphClient: MSGraphClient, credential: Promise<ChainedTokenCredential>) {
-        
+
         // Make the express instance available to the class
         this.webServer = webServer;
 
@@ -62,7 +62,7 @@ export class DebugRouter {
             // Catch execution errors
             try {
                 // Use the graph client to create a new role scope tag.
-                response.send(await this.graphClient.newEndpointScopeTag(request.body.name, request.body.description));
+                response.send(await this.graphClient.newMEMScopeTag(request.body.name, request.body.description));
             } catch (error) {
                 // Send the error details if something goes wrong
                 next(error);
@@ -73,8 +73,8 @@ export class DebugRouter {
         this.webServer.get('/roleScopeTag', async (request, response, next) => {
             // Catch execution errors
             try {
-                // Get all role scope tags
-                response.send(await this.graphClient.getEndpointScopeTag());
+                // Send the data back to the caller
+                response.send(await this.graphClient.getMEMScopeTag());
             } catch (error) {
                 // Send the error details if something goes wrong
                 next(error);
@@ -82,20 +82,11 @@ export class DebugRouter {
         });
 
         // Lists all of the role scope tags from Endpoint Manager
-        this.webServer.get('/roleScopeTag/:id', async (request, response, next) => {
+        this.webServer.get('/roleScopeTag/:name', async (request, response, next) => {
             // Catch execution errors
             try {
-                // Parse the parameter with the Number parser.
-                const parseID = Number(request.params.id);
-
-                // Check to make sure that the Number Parser was able to complete successfully.
-                if (Object.is(parseID, NaN)) {
-                    // If the Parser failed, send a notice to the caller.
-                    response.send("Please send a valid ID for the Role Scope Tag!")
-                } else {
-                    // Otherwise use the graph client to query the Scope Tag
-                    response.send(await this.graphClient.getEndpointScopeTag(parseID));
-                };
+                // Send the data back to the caller
+                response.send(await this.graphClient.getMEMScopeTag(request.params.name));
             } catch (error) {
                 // Send the error details if something goes wrong
                 next(error);
@@ -103,20 +94,19 @@ export class DebugRouter {
         });
 
         // Update the specified role scope tag
-        this.webServer.patch('/roleScopeTag/:id', async (request, response, next) => {
+        this.webServer.patch('/roleScopeTag/:name', async (request, response, next) => {
             // Catch execution errors
             try {
-                // Parse the parameter with the Number parser.
-                const parseID = Number(request.params.id);
+                // Validate that the description was provided
+                if (typeof request.body.description === "undefined") { throw new Error("The description needs to be specified when updating a scope tag. An empty string will clear the description from the scope.") };
 
-                // Check to make sure that the Number Parser was able to complete successfully.
-                if (Object.is(parseID, NaN)) {
-                    // If the Parser failed, send a notice to the caller.
-                    response.send("Please send a valid ID for the Role Scope Tag!")
+                // Update the scope tag
+                if (typeof request.body.ID !== "undefined") {
+                    response.send(await this.graphClient.updateMEMScopeTag(request.params.name, request.body.description, request.body.ID));
                 } else {
-                    // Update the specified role scope tag with the provided values
-                    response.send(await this.graphClient.updateEndpointScopeTag(parseID, request.body.name, request.body.description));
+                    response.send(await this.graphClient.updateMEMScopeTag(request.params.name, request.body.description));
                 };
+
             } catch (error) {
                 // Send the error details if something goes wrong
                 next(error);
@@ -136,7 +126,7 @@ export class DebugRouter {
                     response.send("Please send a valid ID for the Role Scope Tag!")
                 } else {
                     // Otherwise use the graph client to query the Scope Tag
-                    response.send(await this.graphClient.removeEndpointScopeTag(parseID));
+                    response.send(await this.graphClient.removeMEMScopeTag(parseID));
                 };
             } catch (error) {
                 // Send the error details if something goes wrong
@@ -330,8 +320,8 @@ export class DebugRouter {
             // Catch execution errors
             try {
                 // Validate input
-                if (!validateStringArray(request.body.userNames)) {response.send("Please send a valid array usernames!")};
-                
+                if (!validateStringArray(request.body.userNames)) { response.send("Please send a valid array usernames!") };
+
                 // Build the settings
                 const settings = endpointPAWUserRightsSettings(request.body.userNames);
 
@@ -372,14 +362,14 @@ export class DebugRouter {
         // This is not an update command, this is a replace command in reality.
         this.webServer.patch('/settingsCatalog/:id', async (request, response, next) => {
             // Validate input
-            if (!validateGUID(request.params.id)) {response.send("Please specify a valid GUID!")};
-            if (!validateStringArray(request.body.userNames)) {response.send("Please send a valid array usernames!")};
+            if (!validateGUID(request.params.id)) { response.send("Please specify a valid GUID!") };
+            if (!validateStringArray(request.body.userNames)) { response.send("Please send a valid array usernames!") };
 
             // Build the settings
             const settings = endpointPAWUserRightsSettings(request.body.userNames);
 
             // Catch execution errors
-            try {               
+            try {
                 // Update the specified settings catalog
                 const results = await this.graphClient.updateSettingsCatalog(request.params.id, request.body.name, request.body.description, request.body.id, settings);
                 if (results) {
@@ -388,7 +378,7 @@ export class DebugRouter {
                     response.send(await this.graphClient.getSettingsCatalog(request.params.id));
                 } else {
                     // Send a "what the..."
-                    response.send("I am not sure how we got here... (patch settings catalog: " +request.params.id + ")");
+                    response.send("I am not sure how we got here... (patch settings catalog: " + request.params.id + ")");
                 }
             } catch (error) {
                 // Send the error details if something goes wrong
@@ -411,10 +401,10 @@ export class DebugRouter {
         // Assign an endpoint manager device configuration
         this.webServer.post('/deviceConfigurationAssignment/:id', async (request, response, next) => {
             // Validate input
-            if (typeof request.body.type !== "string" && request.body.type !== "Settings Catalog" && request.body.type !== "Setting Template" && request.body.type !== "Admin Template") {response.send("Please specify a valid assignment type")};
-            if (typeof request.body.includeGUID !== "undefined" && !validateGUIDArray(request.body.includeGUID)) {response.send("The specified array of included group GUIDs is not valid!")};
-            if (typeof request.body.excludeGUID !== "undefined" && !validateGUIDArray(request.body.excludeGUID)) {response.send("The specified array of excluded group GUIDs is not valid!")};
-            if (!validateGUID(request.params.id)) {response.send("Please specify a valid GUID!")};
+            if (typeof request.body.type !== "string" && request.body.type !== "Settings Catalog" && request.body.type !== "Setting Template" && request.body.type !== "Admin Template") { response.send("Please specify a valid assignment type") };
+            if (typeof request.body.includeGUID !== "undefined" && !validateGUIDArray(request.body.includeGUID)) { response.send("The specified array of included group GUIDs is not valid!") };
+            if (typeof request.body.excludeGUID !== "undefined" && !validateGUIDArray(request.body.excludeGUID)) { response.send("The specified array of excluded group GUIDs is not valid!") };
+            if (!validateGUID(request.params.id)) { response.send("Please specify a valid GUID!") };
 
             // Catch execution errors
             try {
