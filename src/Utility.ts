@@ -1,3 +1,20 @@
+// Write debug data to the console if debug mode is turned on
+export function writeDebugInfo(object: any, message?: any): void {
+    // Gather the debug mode setting from the current environmental variable set
+    const debugMode = process.env.Debug || "false";
+
+    // If the debug mode value is "true" write to the console
+    if (debugMode === "true") {
+        // If the message parameter is not left blank, write it
+        if (typeof message !== "undefined") {
+            // Write the specified message to the console
+            console.log(message);
+        };
+        // The the specified object to the console
+        console.log(object);
+    };
+};
+
 // Create a GUID validation function to ensure GUID data is in correct format
 export function validateGUID(GUIDToTest: any): boolean {
     // If the data is undefined, it is not a GUID
