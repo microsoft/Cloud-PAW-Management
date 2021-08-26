@@ -1,3 +1,4 @@
+// TODO: enhance debug console output with time stamps
 // Write debug data to the console if debug mode is turned on
 export function writeDebugInfo(object: any, message?: any): void {
     // Gather the debug mode setting from the current environmental variable set
