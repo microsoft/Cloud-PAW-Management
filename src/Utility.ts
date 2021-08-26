@@ -9,7 +9,10 @@ export function writeDebugInfo(object: any, message?: any): void {
         // If the message parameter is not left blank, write it
         if (typeof message !== "undefined") {
             // Write the specified message to the console
-            console.log(message);
+            console.log("\n" + message);
+        } else {
+            // If no message was specified, write a whitespace to seperate the object from the line above it
+            console.log("\n")
         };
         // The the specified object to the console
         console.log(object);
