@@ -61,40 +61,32 @@ export class MSGraphClient {
 
     // Create a new role scope tag in Endpoint Manager
     async newMEMScopeTag(scopeTagName: string, description?: string): Promise<MicrosoftGraphBeta.RoleScopeTag> {
-        // Validate the name is of appropriate length
-        if (scopeTagName.length > 128) {
-            // If the name is too long, throw an error
-            throw new Error("You can't have a name longer than 128 characters!");
-            // Validate that input is the correct type
-        } else if (typeof scopeTagName !== "string" || typeof description !== "string") {
-            // Throw an error if it is not!
-            throw new Error("Parameter input is string only!");
-        }
+        // Validate Inputs
+        if (typeof scopeTagName !== "string") { throw new Error("The ScopeTagName has to be a string!") };
+        if (scopeTagName.length > 128) { throw new Error("The ScopeTagName can't be longer than 128 chars!") };
+        if (typeof description !== "undefined" && typeof description !== "string") { throw new Error("The description must be a string!") };
+        if (typeof description === "string" && description.length > 1024) { throw new Error("Description can't be longer than 1024 chars!") };
 
-        // Build the Post body that will be used to create the new tag.
-        const postBody: MicrosoftGraphBeta.RoleScopeTag = {
-            displayName: scopeTagName
-        }
-
-        // Ensure there is less than 1024 characters in the nameDesc
-        if (typeof description !== "undefined" && typeof description === "string") {
-            // Validate the length of the description
-            if (description.length > 1024) {
-                // If it is too long, throw an error
-                throw new Error("You cannot have more than 1024 characters in the description!")
-            } else {
-                // Otherwise, allow the description and put it into the post body
-                postBody.description = description;
-            }
-        }
-
-        // Catch any error on group creation
+        // Catch execution errors
         try {
-            // Create the scope tag and return the result
-            return await (await this.client).api("/deviceManagement/roleScopeTags").post(postBody);
+            // Build the Post body that will be used to create the new tag.
+            const scopeTagBody: MicrosoftGraphBeta.RoleScopeTag = {
+                displayName: scopeTagName
+            };
+
+            // If the description is defined, add it to the scope tag post body.
+            if (typeof description !== "undefined") {
+                // Add the parameter value to the post body property.
+                scopeTagBody.description = description
+            }
+
+            // Create the scope tag and return the result.
+            return await (await this.client).api("/deviceManagement/roleScopeTags").post(scopeTagBody);
+
+        // If something goes wrong, return the error.
         } catch (error) {
-            // If there is an error, return the error details
-            return error
+            // return the error data to the caller.
+            return error;
         }
     };
 
@@ -146,7 +138,7 @@ export class MSGraphClient {
         if (typeof name !== "string" || name.length > 128) { throw new Error("The name is not a valid string or is greater than 128 chars!") };
         if (typeof description === "string" && description.length > 1024) { throw new Error("The description can't be longer than 1024 chars!") };
         if (typeof ID !== "undefined" && typeof ID !== "number") { throw new Error("The ID needs to be a whole number!") };
-        if (typeof ID === "number" && (!Number.isInteger(ID) || ID <= 0)) {throw new Error("The ID has to be a whole number above 0")}; 
+        if (typeof ID === "number" && (!Number.isInteger(ID) || ID <= 0)) { throw new Error("The ID has to be a whole number above 0") };
 
         // Build the initial scope tag object for the update process to use
         let scopeTagBody: MicrosoftGraphBeta.RoleScopeTag = {
@@ -474,7 +466,7 @@ export class MSGraphClient {
                 };
 
                 // Add the specified principal to the specified AAD Group.
-                await (await this.client).api("/groups/"+ groupGUID +"/members/$ref").post(newMemberBody);
+                await (await this.client).api("/groups/" + groupGUID + "/members/$ref").post(newMemberBody);
 
                 // Return the processed data.
                 return true;
@@ -495,7 +487,7 @@ export class MSGraphClient {
             // Grab the specified group membership from AAD
             try {
                 // Grab the specified group membership based on the group's GUID.
-                const groupMemberPage: PageCollection = await (await this.client).api("/groups/"+ groupGUID +"/members").get();
+                const groupMemberPage: PageCollection = await (await this.client).api("/groups/" + groupGUID + "/members").get();
 
                 // Process the page collection to its base form (ManagedDevice)
                 const groupMemberList: MicrosoftGraphBeta.DirectoryObject[] = await this.iteratePage(groupMemberPage);
