@@ -332,29 +332,42 @@ export class MSGraphClient {
 
     // Retrieve Azure Active Directory user list. Can pull individual users based upon GUID or the UPN
     async getAADUser(ID?: string): Promise<MicrosoftGraphBeta.User[]> {
+        // If no users are specified, list all users
         if (typeof ID === "undefined") {
-            // Grab an initial user page collection
-            const userPage: PageCollection = await (await this.client).api("/users").get();
+            // Grab the list of all users from AAD
+            try {
+                // Grab an initial AAD User page collection
+                const aadUserPage: PageCollection = await (await this.client).api("/users").get();
 
-            // Process the page collection to its base form (User)
-            const userList: MicrosoftGraphBeta.User[] = await this.iteratePage(userPage);
+                // Process the page collection to its base form (User)
+                const aadUserList: MicrosoftGraphBeta.User[] = await this.iteratePage(aadUserPage);
 
-            // Return the processed data
-            return userList;
+                // Return the processed data.
+                return aadUserList;
+            } catch (error) {
+                // If there is an error, return the error details to the caller.
+                return error;
+            }
         } else {
-            // Validate the GUID/UPN to ensure no fishy stuff goes on
+            // Validate the GUID or UPN are proper IDs for AAD users
             if (validateGUID(ID) || validateEmail(ID)) {
-                // Retrieve the specified user from AAD
-                const userPage: MicrosoftGraphBeta.User = await (await this.client).api("/users/" + ID).get();
+                // Grab the specified user from AAD
+                try {
+                    // Grab the specified user based on its AAD UPN or GUID.
+                    const aadUserPage: PageCollection = await (await this.client).api("/users/" + ID).get();
 
-                // Convert the result to an array for type consistency.
-                const userList = [userPage];
+                    // Process the page collection to its base form (User)
+                    const aadUserList: MicrosoftGraphBeta.User[] = await this.iteratePage(aadUserPage);
 
-                // Return the processed data
-                return userList;
+                    // Return the processed data.
+                    return aadUserList;
+                } catch (error) {
+                    // If there is an error, return the error details to the caller.
+                    return error;
+                };
             } else {
-                // Notify the caller that the ID isn't right if ID validation fails.
-                throw new Error("The parameter specified is not a valid ID!");
+                // If the GUID is not in the right format, throw an error.
+                throw new Error("The ID specified is not a proper GUID or UPN!");
             };
         };
     };
