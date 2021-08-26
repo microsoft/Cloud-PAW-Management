@@ -176,13 +176,21 @@ export function validateConditionalAccessSetting(settingToValidate: any): boolea
     }
 }
 
-// Define the Endpoint Manager Role Scope Tag data format
+// Define the Endpoint Manager Role Scope Tag data format.
 export interface ScopeTagData {
     "PAWSecGrp"?: string,
     "UsrSecGrp"?: string,
     "BrkGls"?: string,
     "SILORootGrp"?: string
-}
+};
+
+// Define a complete set of data for the Endpoint Manager Role Scope Tag data format.
+export interface ScopeTagDataComplete {
+    "PAWSecGrp": string,
+    "UsrSecGrp": string,
+    "BrkGls": string,
+    "SILORootGrp": string
+};
 
 // Parse, validate, and return the Scope Tag data in a well defined object.
 export function parseScopeTag(description: string) {
