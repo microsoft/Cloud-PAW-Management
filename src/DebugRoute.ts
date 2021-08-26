@@ -23,7 +23,7 @@ export class DebugRouter {
     }
 
     // Initialize the routes
-    private init(azureAuthSession: Promise<ChainedTokenCredential>) {
+    private init(azureAuthSession: Promise<ChainedTokenCredential>): void {
         // List access token to manually web request as the app
         this.webServer.get('/accessToken', async (request, response, next) => {
             // Catch execution errors
@@ -55,7 +55,7 @@ export class DebugRouter {
         this.webServer.post('/testPost', async (request, response) => {
             // Send the body back as a response
             response.send(request.body);
-        })
+        });
 
         // Create a new role scope tag in Endpoint Manager
         this.webServer.post('/roleScopeTag', async (request, response, next) => {
@@ -168,7 +168,7 @@ export class DebugRouter {
                 // Send the error details if something goes wrong
                 next(error);
             };
-        })
+        });
 
         // List the Device Group Policy Configurations
         this.webServer.get('/deviceGroupPolicyConfiguration', async (request, response, next) => {
@@ -553,5 +553,5 @@ export class DebugRouter {
                 next(error);
             };
         });
-    }
-}
+    };
+};
