@@ -182,16 +182,16 @@ export interface ScopeTagData {
 }
 
 // Parse, validate, and return the Scope Tag data in a well defined object.
-export function parseScopeTag(data: string) {
+export function parseScopeTag(description: string) {
 
     // Validate input
-    if (typeof data !== "string") {throw new Error("The data is not in string format!")};
+    if (typeof description !== "string") {throw new Error("The data is not in string format!")};
 
     // Create the returned object
     let parsedScopeTag: ScopeTagData = {}
 
     // Split out each line
-    const newLines = data.split("\n");
+    const newLines = description.split("\n");
 
     // Loop through all of the lines and add it to the output after validating the data
     for (const line in newLines) {
