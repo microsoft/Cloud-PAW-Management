@@ -356,7 +356,7 @@ export class MSGraphClient {
                 // Notify the caller that the ID isn't right if ID validation fails.
                 throw new Error("The parameter specified is not a valid ID!");
             };
-        }
+        };
     };
 
     // Retrieve Azure Active Directory (AAD) group list. Can pull individual groups based upon the group's GUID
@@ -384,7 +384,7 @@ export class MSGraphClient {
                 // Notify the caller that the GUID isn't right if GUID validation fails.
                 throw new Error("The parameter specified is not a valid GUID!");
             };
-        }
+        };
     };
 
     // Update the specified group
@@ -845,7 +845,7 @@ export class MSGraphClient {
             // If the GUID is not in the right format, throw an error
             throw new Error("The GUID specified is not a proper GUID!");
         };
-    }
+    };
 
     // Get the specified Microsoft Endpoint Manager Device
     async getMEMDevice(AADDeviceID?: string): Promise<MicrosoftGraphBeta.ManagedDevice[]> {
@@ -917,5 +917,5 @@ export class MSGraphClient {
             // If the GUID is not in the right format, throw an error
             throw new Error("The GUID specified is not a proper GUID!");
         };
-    }
+    };
 }

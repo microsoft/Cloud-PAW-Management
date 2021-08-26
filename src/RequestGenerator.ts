@@ -48,7 +48,7 @@ export function endpointPAWUserRightsSettings(userList: string[]) {
 
         // Add the value object to the settings object value collection
         settingsObject[0].settingInstance.simpleSettingCollectionValue?.push(computedValue);
-    }
+    };
 
     // Return the computed object to the caller
     return settingsObject;
