@@ -462,6 +462,77 @@ export class MSGraphClient {
         }
     };
 
+    // Add a principal to an AAD Group
+    async newAADGroupMember(groupGUID: string, addGUID: string): Promise<boolean> {
+        // Validate GUID is a proper GUID
+        if (validateGUID(groupGUID) && validateGUID(addGUID)) {
+            // Grab the specified group membership from AAD
+            try {
+                // Build the post body
+                const newMemberBody = {
+                    "@odata.id": "https://graph.microsoft.com/beta/directoryObjects/" + addGUID
+                };
+
+                // Add the specified principal to the specified AAD Group.
+                await (await this.client).api("/groups/"+ groupGUID +"/members/$ref").post(newMemberBody);
+
+                // Return the processed data.
+                return true;
+            } catch (error) {
+                // If there is an error, return the error details to the caller.
+                return error;
+            };
+        } else {
+            // If the GUID is not in the right format, throw an error.
+            throw new Error("The GUID specified is not a proper GUID!");
+        };
+    };
+
+    // List the members of a AAD Group
+    async getAADGroupMember(groupGUID: string): Promise<MicrosoftGraphBeta.DirectoryObject[]> {
+        // Validate GUID is a proper GUID
+        if (validateGUID(groupGUID)) {
+            // Grab the specified group membership from AAD
+            try {
+                // Grab the specified group membership based on the group's GUID.
+                const groupMemberPage: PageCollection = await (await this.client).api("/groups/"+ groupGUID +"/members").get();
+
+                // Process the page collection to its base form (ManagedDevice)
+                const groupMemberList: MicrosoftGraphBeta.DirectoryObject[] = await this.iteratePage(groupMemberPage);
+
+                // Return the processed data.
+                return groupMemberList;
+            } catch (error) {
+                // If there is an error, return the error details to the caller.
+                return error;
+            };
+        } else {
+            // If the GUID is not in the right format, throw an error.
+            throw new Error("The GUID specified is not a proper GUID!");
+        };
+    };
+
+    // Remove the specified group member from the specified AAD group
+    async removeAADGroupMember(groupGUID: string, removeGUID: string): Promise<boolean> {
+        // Validate that the GUIDs are proper GUIDs
+        if (validateGUID(groupGUID) && validateGUID(removeGUID)) {
+            // Grab the specified group membership from AAD
+            try {
+                // Remove the specified group member from the group
+                await (await this.client).api("/groups/" + groupGUID + "/members/" + removeGUID + "/$ref/").delete();
+
+                // Return that the operation was successful
+                return true;
+            } catch (error) {
+                // If there is an error, return the error details to the caller.
+                return error;
+            };
+        } else {
+            // If the GUID is not in the right format, throw an error.
+            throw new Error("The GUID(s) specified is not a proper GUID!");
+        };
+    };
+
     // TODO: Write new AU creator
     async newAADAdminUnit(name: string, description?: string) { }
 

@@ -254,6 +254,42 @@ export class DebugRouter {
             };
         });
 
+        // Add a member to a AAD Group using GUIDs
+        this.webServer.post('/groupMember/:id', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Send the results of the operation back to the client
+                response.send(await this.graphClient.newAADGroupMember(request.params.id, request.body.GUID));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
+
+        // List the members of the specified group
+        this.webServer.get('/groupMember/:id', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Send the results of the operation back to the client
+                response.send(await this.graphClient.getAADGroupMember(request.params.id));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
+
+        // Remove the specified member from the specified AAD group
+        this.webServer.delete('/groupMember/:id', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Send the results of the operation back to the client
+                response.send(await this.graphClient.removeAADGroupMember(request.params.id, request.body.GUID));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
+
         // List all users in AAD
         this.webServer.get('/user', async (request, response, next) => {
             // Catch execution errors
