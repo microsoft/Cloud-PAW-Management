@@ -11,8 +11,8 @@ export function writeDebugInfo(object: any, message?: any): void {
             // Write the specified message to the console
             console.log("\n" + message);
         } else {
-            // If no message was specified, write a whitespace to seperate the object from the line above it
-            console.log("\n")
+            // If no message was specified, write a whitespace to separate the object from the line above it
+            console.log("\n");
         };
         // The the specified object to the console
         console.log(object);
