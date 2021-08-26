@@ -49,15 +49,15 @@ export function validateEmail(emailToTest: any): boolean {
 // Validates an array contains only an email address at each index
 export function validateEmailArray(emailArray: string[]): boolean {
     // Validate input is a string array
-    if (!validateStringArray(emailArray)) {return false};
-    
+    if (!validateStringArray(emailArray)) { return false };
+
     // Loop over all of the indexes and validate they are email addresses
     for (let index = 0; index < emailArray.length; index++) {
         // Extract the string at the specified index
         const extractedIndex = emailArray[index];
 
         // Validate the string is an email address
-        if (validateEmail(extractedIndex)) {return false};
+        if (validateEmail(extractedIndex)) { return false };
     };
 
     // If everything checks out, return true
@@ -67,15 +67,15 @@ export function validateEmailArray(emailArray: string[]): boolean {
 // Validate an array of strings
 export function validateStringArray(stringArray: string[]): boolean {
     // Validate input is an array
-    if (!(stringArray instanceof Array) || stringArray.length == 0) {return false};
-    
+    if (!(stringArray instanceof Array) || stringArray.length == 0) { return false };
+
     // Loop over all of the indexes and validate they are strings
     for (let index = 0; index < stringArray.length; index++) {
         // Extract the object at the specified index
         const extractedIndex = stringArray[index];
 
         // Validate the object is a string
-        if (typeof extractedIndex !== "string") {return false};
+        if (typeof extractedIndex !== "string") { return false };
     };
 
     // If everything checks out, return true
@@ -85,15 +85,15 @@ export function validateStringArray(stringArray: string[]): boolean {
 // Validates an array contains only GUIDs at each index
 export function validateGUIDArray(GUIDArray: string[]): boolean {
     // Validate input is a string array
-    if (!validateStringArray(GUIDArray)) {return false};
-    
+    if (!validateStringArray(GUIDArray)) { return false };
+
     // Loop over all of the indexes and validate they are GUIDs
     for (let index = 0; index < GUIDArray.length; index++) {
         // Extract the string at the specified index
         const extractedIndex = GUIDArray[index];
 
         // Validate the string is a GUID
-        if (!validateGUID(extractedIndex)) {return false};
+        if (!validateGUID(extractedIndex)) { return false };
     };
 
     // If everything checks out, return true
@@ -120,7 +120,7 @@ export function validateSettingCatalogSettings(settingsToValidate: any[]): boole
         for (let index = 0; index < settingsToValidate.length; index++) {
             // Extract the current setting element
             const settingElement = settingsToValidate[index];
-            
+
             // do more validation here...
         }
         return true;
@@ -157,7 +157,7 @@ export function validateConditionalAccessSetting(settingToValidate: any): boolea
                     break;
                 case "state":
                     // If the key name is "state", validate the contents and ensure that it is one of the below values.
-                    if (settingToValidate[key] !== "enabled" && settingToValidate[key] !== "disabled" && settingToValidate[key] !== "enabledForReportingButNotEnforced") {return false};
+                    if (settingToValidate[key] !== "enabled" && settingToValidate[key] !== "disabled" && settingToValidate[key] !== "enabledForReportingButNotEnforced") { return false };
                     break;
                 default:
                     // If the case is not matched, an un-known property is present, reject the validation.
@@ -167,7 +167,7 @@ export function validateConditionalAccessSetting(settingToValidate: any): boolea
 
         // If all of the above validation is successful, return true to indicate success
         return true
-    // If it is not the correct type, return false
+        // If it is not the correct type, return false
     } else {
         return false;
     }
@@ -185,7 +185,7 @@ export interface ScopeTagData {
 export function parseScopeTag(description: string) {
 
     // Validate input
-    if (typeof description !== "string") {throw new Error("The data is not in string format!")};
+    if (typeof description !== "string") { throw new Error("The data is not in string format!") };
 
     // Create the returned object
     let parsedScopeTag: ScopeTagData = {}
@@ -196,29 +196,29 @@ export function parseScopeTag(description: string) {
     // Loop through all of the lines and add it to the output after validating the data
     for (const line in newLines) {
         // Separate the two parts of the 
-        const splitLine = newLines[line].split("=");
+        const splitLine = newLines[line].split(":");
 
         // Validate keys/values and assign if the key matches
         switch (splitLine[0]) {
             case "PAWSecGrp":
                 // Validate the value in the line split
-                if (!validateGUID(splitLine[1])) {throw new Error("The value associated with the PAWSecGrp scope tag key is not a valid GUID!")};
-                
+                if (!validateGUID(splitLine[1])) { throw new Error("The value associated with the PAWSecGrp scope tag key is not a valid GUID!") };
+
                 // Pull the key from the split line and assign the associated value to the corresponding parsed scope tag data
                 parsedScopeTag.PAWSecGrp = splitLine[1];
-                
+
                 // Stop switch execution
                 break;
             case "UsrSecGrp":
                 // Validate the value in the line split
-                if (!validateGUID(splitLine[1])) {throw new Error("The value associated with the UsrSecGrp scope tag key is not a valid GUID!")};
+                if (!validateGUID(splitLine[1])) { throw new Error("The value associated with the UsrSecGrp scope tag key is not a valid GUID!") };
 
                 // Pull the key from the split line and assign the associated value to the corresponding parsed scope tag data
                 parsedScopeTag.UsrSecGrp = splitLine[1];
                 break;
             case "SiloRootGrp":
                 // Validate the value in the line split
-                if (!validateGUID(splitLine[1])) {throw new Error("The value associated with the SiloRootGrp scope tag key is not a valid GUID!")};
+                if (!validateGUID(splitLine[1])) { throw new Error("The value associated with the SiloRootGrp scope tag key is not a valid GUID!") };
 
                 // Pull the key from the split line and assign the associated value to the corresponding parsed scope tag data
                 parsedScopeTag.SILORootGrp = splitLine[1];
@@ -227,7 +227,7 @@ export function parseScopeTag(description: string) {
                 break;
             case "BrkGls":
                 // Validate the value in the line split
-                if (!validateGUID(splitLine[1])) {throw new Error("The value associated with the BrkGls scope tag key is not a valid GUID!")};
+                if (!validateGUID(splitLine[1])) { throw new Error("The value associated with the BrkGls scope tag key is not a valid GUID!") };
 
                 // Pull the key from the split line and assign the associated value to the corresponding parsed scope tag data
                 parsedScopeTag.BrkGls = splitLine[1];
@@ -235,6 +235,9 @@ export function parseScopeTag(description: string) {
                 // Stop switch execution
                 break;
             default:
+                // Write debug info
+                writeDebugInfo(splitLine);
+
                 // A key provided was not matched to the allowed data format, stop execution and throw an error
                 throw new Error("The given data is not in the correct format! Please see: https://github.com/elliot-labs/Cloud-PAW-Management/wiki/Scope-Tag-Data-Format");
         }
