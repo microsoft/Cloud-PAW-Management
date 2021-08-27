@@ -315,10 +315,10 @@ export class MSGraphClient {
         }
 
         // Validate the role assignable param
-        if (typeof roleAssignable !== "undefined" && typeof roleAssignable === "boolean") {
+        if (typeof roleAssignable === "boolean") {
             // If the param is present and the correct type, set the post body value for the role assignable
             postBody.isAssignableToRole = roleAssignable;
-        }
+        };
 
         // Catch any error on group creation
         try {
@@ -326,8 +326,8 @@ export class MSGraphClient {
             return await (await this.client).api("/groups").post(postBody);
         } catch (error) {
             // If there is an error, return the error details
-            return error
-        }
+            return error;
+        };
     };
 
     // Retrieve Azure Active Directory user list. Can pull individual users based upon GUID or the UPN
