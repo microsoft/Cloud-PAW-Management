@@ -55,7 +55,7 @@ export class MSGraphClient {
             return collection;
         } catch (error) {
             // if there is an error, tell us about it...
-            throw new Error("Page iterator breakdown :(");
+            throw new Error("Page iterator breakdown: " + error);
         };
     };
 
