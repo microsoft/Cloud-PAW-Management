@@ -354,13 +354,13 @@ export class MSGraphClient {
                 // Grab the specified user from AAD
                 try {
                     // Grab the specified user based on its AAD UPN or GUID.
-                    const aadUserPage: PageCollection = await (await this.client).api("/users/" + ID).get();
+                    const aadUserPage: MicrosoftGraphBeta.User = await (await this.client).api("/users/" + ID).get();
 
                     // Process the page collection to its base form (User)
-                    const aadUserList: MicrosoftGraphBeta.User[] = await this.iteratePage(aadUserPage);
+                    // const aadUserList: MicrosoftGraphBeta.User[] = await this.iteratePage(aadUserPage);
 
                     // Return the processed data.
-                    return aadUserList;
+                    return [aadUserPage];
                 } catch (error) {
                     // If there is an error, return the error details to the caller.
                     return error;
