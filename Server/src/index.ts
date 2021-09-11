@@ -2,7 +2,7 @@ import express from "express";
 import { MSAzureAccessCredential } from "./Authentication";
 import { MSGraphClient } from "./GraphClient";
 import { DebugRouter } from "./DebugRoute";
-import { CoreRouter } from "./CoreRouter";
+import { LifeCycleRouter } from "./LifeCycleManagement";
 
 // Import environmental variables
 const port = process.env.PORT || 3000;
@@ -41,7 +41,7 @@ if (debugMode === "true") {
 }
 
 // Initialize the core business logic routes
-const coreRouter = new CoreRouter(webServer, graphClient);
+const lifeCycleRouter = new LifeCycleRouter(webServer, graphClient);
 
 // Start the web server
 const serverInstance = webServer.listen(port, () => {

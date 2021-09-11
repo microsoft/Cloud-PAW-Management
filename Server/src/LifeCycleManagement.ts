@@ -4,7 +4,7 @@ import { validateGUIDArray, parseScopeTag, ScopeTagDataIncomplete, writeDebugInf
 import type express from "express";
 import type * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta";
 
-export class CoreRouter {
+export class LifeCycleRouter {
     // Define the properties that will be available to the class
     private webServer: express.Express;
     private graphClient: MSGraphClient;

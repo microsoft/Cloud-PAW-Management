@@ -1,4 +1,4 @@
-import { validateStringArray, validateGUID, validateGUIDArray, validateEmail, validateSettingCatalogSettings, validateConditionalAccessSetting } from "./Utility";
+import { InternalAppError, validateStringArray, validateGUID, validateGUIDArray, validateEmail, validateSettingCatalogSettings, validateConditionalAccessSetting } from "./Utility";
 import { endpointGroupAssignmentTarget } from "./RequestGenerator";
 import { Client, ClientOptions, PageCollection, PageIterator } from "@microsoft/microsoft-graph-client";
 import { TokenCredentialAuthenticationProvider } from "@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials";
@@ -60,7 +60,7 @@ export class MSGraphClient {
     };
 
     // Create a new role scope tag in Endpoint Manager
-    async newMEMScopeTag(scopeTagName: string, description?: string): Promise<MicrosoftGraphBeta.RoleScopeTag> {
+    async newMEMScopeTag(scopeTagName: string, description?: string): Promise<MicrosoftGraphBeta.RoleScopeTag | InternalAppError> {
         // Validate Inputs
         if (typeof scopeTagName !== "string") { throw new Error("The ScopeTagName has to be a string!") };
         if (scopeTagName.length > 128) { throw new Error("The ScopeTagName can't be longer than 128 chars!") };
@@ -78,20 +78,26 @@ export class MSGraphClient {
             if (typeof description !== "undefined") {
                 // Add the parameter value to the post body property.
                 scopeTagBody.description = description
-            }
+            };
 
             // Create the scope tag and return the result.
             return await (await this.client).api("/deviceManagement/roleScopeTags").post(scopeTagBody);
 
         // If something goes wrong, return the error.
         } catch (error) {
-            // return the error data to the caller.
-            return error;
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                return new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                return new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newMEMScopeTag -> catch statement");
+            };
         }
     };
 
     // Get the specified scope tag or get all scope tags
-    async getMEMScopeTag(name?: string): Promise<MicrosoftGraphBeta.RoleScopeTag[]> {
+    async getMEMScopeTag(name?: string): Promise<MicrosoftGraphBeta.RoleScopeTag[] | InternalAppError> {
         // If no name is specified, return all scope tags
         if (typeof name === "undefined") {
             // Grab the list of all Scope Tags from MEM
@@ -122,8 +128,14 @@ export class MSGraphClient {
                     // Return the processed data.
                     return scopeTagList;
                 } catch (error) {
-                    // If there is an error, return the error details to the caller.
-                    return error;
+                    // Check to see if the error parameter is an instance of the Error class.
+                    if (error instanceof Error) {
+                        // Return the error in a well known format using the Internal App Error class
+                        return new InternalAppError(error.message, error.name, error.stack);
+                    } else {
+                        // Return the unknown error in a known format
+                        return new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newMEMScopeTag -> catch statement");
+                    };
                 };
             } else {
                 // If the string is greater than 128 chars or not a string, throw an error.
@@ -133,7 +145,7 @@ export class MSGraphClient {
     };
 
     // Update the specified role scope tag in Endpoint Manager
-    async updateMEMScopeTag(name: string, description?: string, ID?: number): Promise<MicrosoftGraphBeta.RoleScopeTag> {
+    async updateMEMScopeTag(name: string, description?: string, ID?: number): Promise<MicrosoftGraphBeta.RoleScopeTag | InternalAppError> {
         // Validate input
         if (typeof name !== "string" || name.length > 128) { throw new Error("The name is not a valid string or is greater than 128 chars!") };
         if (typeof description === "string" && description.length > 1024) { throw new Error("The description can't be longer than 1024 chars!") };
@@ -164,13 +176,19 @@ export class MSGraphClient {
                 return (await this.client).api("/deviceManagement/roleScopeTags/" + ID).patch(scopeTagBody);
             }
         } catch (error) {
-            // If an error happens, return the error data
-            return error;
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                return new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                return new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newMEMScopeTag -> catch statement");
+            };
         }
     };
 
     // Delete the specified scope tag
-    async removeMEMScopeTag(id: number): Promise<boolean> {
+    async removeMEMScopeTag(id: number): Promise<boolean | InternalAppError> {
         // Validate the input is a number
         if (typeof id !== "number") {
             // If it isn't a number, throw an error to the caller
@@ -184,8 +202,14 @@ export class MSGraphClient {
             // Return true indicating successful operation
             return true
         } catch (error) {
-            // If there is an error, return the error details
-            return error
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                return new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                return new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newMEMScopeTag -> catch statement");
+            };
         }
     };
 
@@ -228,7 +252,7 @@ export class MSGraphClient {
     async updateDeviceConfig() { };
 
     // Remove the specified Device Configuration
-    async removeDeviceConfig(GUID: string) {
+    async removeDeviceConfig(GUID: string): Promise<boolean | InternalAppError> {
         // Validate GUID is a proper GUID
         if (validateGUID(GUID)) {
             // Attempt to delete the device configuration
@@ -239,8 +263,14 @@ export class MSGraphClient {
                 // Return true for a successful operation
                 return true;
             } catch (error) {
-                // If there is an error, return the error details to the caller
-                return error;
+                // Check to see if the error parameter is an instance of the Error class.
+                if (error instanceof Error) {
+                    // Return the error in a well known format using the Internal App Error class
+                    return new InternalAppError(error.message, error.name, error.stack);
+                } else {
+                    // Return the unknown error in a known format
+                    return new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newMEMScopeTag -> catch statement");
+                };
             }
         } else {
             // If the GUID is not in the right format, throw an error
@@ -286,7 +316,7 @@ export class MSGraphClient {
     async removeDeviceGroupPolicyConfig() { }
 
     // Create a new security group with the specified options
-    async newAADGroup(name: string, description?: string, roleAssignable?: boolean): Promise<MicrosoftGraphBeta.Group> {
+    async newAADGroup(name: string, description?: string, roleAssignable?: boolean): Promise<MicrosoftGraphBeta.Group | InternalAppError> {
 
         // Validate name length is not too long for the graph
         if (name.length > 120) { throw new Error("The name is too long, can't be longer than 120 chars!") };
@@ -325,13 +355,19 @@ export class MSGraphClient {
             // Create the group and return the result
             return await (await this.client).api("/groups").post(postBody);
         } catch (error) {
-            // If there is an error, return the error details
-            return error;
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                return new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                return new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newMEMScopeTag -> catch statement");
+            };
         };
     };
 
     // Retrieve Azure Active Directory user list. Can pull individual users based upon GUID or the UPN
-    async getAADUser(ID?: string): Promise<MicrosoftGraphBeta.User[]> {
+    async getAADUser(ID?: string): Promise<MicrosoftGraphBeta.User[] | InternalAppError> {
         // If no users are specified, list all users
         if (typeof ID === "undefined") {
             // Grab the list of all users from AAD
@@ -345,9 +381,15 @@ export class MSGraphClient {
                 // Return the processed data.
                 return aadUserList;
             } catch (error) {
-                // If there is an error, return the error details to the caller.
-                return error;
-            }
+                // Check to see if the error parameter is an instance of the Error class.
+                if (error instanceof Error) {
+                    // Return the error in a well known format using the Internal App Error class
+                    return new InternalAppError(error.message, error.name, error.stack);
+                } else {
+                    // Return the unknown error in a known format
+                    return new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newMEMScopeTag -> catch statement");
+                };
+            };
         } else {
             // Validate the GUID or UPN are proper IDs for AAD users
             if (validateGUID(ID) || validateEmail(ID)) {
@@ -362,8 +404,14 @@ export class MSGraphClient {
                     // Return the processed data.
                     return [aadUserPage];
                 } catch (error) {
-                    // If there is an error, return the error details to the caller.
-                    return error;
+                    // Check to see if the error parameter is an instance of the Error class.
+                    if (error instanceof Error) {
+                        // Return the error in a well known format using the Internal App Error class
+                        return new InternalAppError(error.message, error.name, error.stack);
+                    } else {
+                        // Return the unknown error in a known format
+                        return new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newMEMScopeTag -> catch statement");
+                    };
                 };
             } else {
                 // If the GUID is not in the right format, throw an error.
@@ -401,8 +449,7 @@ export class MSGraphClient {
     };
 
     // Update the specified group
-    async updateAADGroup(GUID: string, name: string, description?: string): Promise<boolean> {
-
+    async updateAADGroup(GUID: string, name: string, description?: string): Promise<boolean | InternalAppError> {
         // Ensure the specified GUID is valid
         if (validateGUID(GUID)) {
             // Validate name length is not too long for the graph
@@ -437,17 +484,23 @@ export class MSGraphClient {
                 // Return true for successful
                 return true;
             } catch (error) {
-                // If there was an error, return the error details
-                return error;
-            }
+                // Check to see if the error parameter is an instance of the Error class.
+                if (error instanceof Error) {
+                    // Return the error in a well known format using the Internal App Error class
+                    return new InternalAppError(error.message, error.name, error.stack);
+                } else {
+                    // Return the unknown error in a known format
+                    return new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newMEMScopeTag -> catch statement");
+                };
+            };
         } else {
-            // If the GUID is not valid, throw an error
-            throw new Error("The GUID specified is not a proper GUID!");
-        }
+            // Complain about GUID not being in the right format...
+            return new InternalAppError("The GUID specified is not a proper GUID!", "Validation Error", "Graph Client -> Update AAD Group -> Validate GUID")
+        };
     };
 
     // Delete the specified Security Group
-    async removeAADGroup(GUID: string): Promise<boolean> {
+    async removeAADGroup(GUID: string): Promise<boolean | InternalAppError> {
         // Validate GUID is a proper GUID
         if (validateGUID(GUID)) {
             // Attempt to delete the group
@@ -458,17 +511,23 @@ export class MSGraphClient {
                 // Return true for a successful operation
                 return true;
             } catch (error) {
-                // If there is an error, return the error details to the caller
-                return error;
-            }
+                // Check to see if the error parameter is an instance of the Error class.
+                if (error instanceof Error) {
+                    // Return the error in a well known format using the Internal App Error class
+                    return new InternalAppError(error.message, error.name, error.stack);
+                } else {
+                    // Return the unknown error in a known format
+                    return new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newMEMScopeTag -> catch statement");
+                };
+            };
         } else {
-            // If the GUID is not in the right format, throw an error
-            throw new Error("The GUID specified is not a proper GUID!");
+            // Complain about GUID not being in the right format...
+            return new InternalAppError("The GUID specified is not a proper GUID!", "Validation Error", "Graph Client -> Update AAD Group -> Validate GUID")
         }
     };
 
     // Add a principal to an AAD Group
-    async newAADGroupMember(groupGUID: string, addGUID: string): Promise<boolean> {
+    async newAADGroupMember(groupGUID: string, addGUID: string): Promise<boolean | InternalAppError> {
         // Validate GUID is a proper GUID
         if (validateGUID(groupGUID) && validateGUID(addGUID)) {
             // Grab the specified group membership from AAD
@@ -484,12 +543,18 @@ export class MSGraphClient {
                 // Return the processed data.
                 return true;
             } catch (error) {
-                // If there is an error, return the error details to the caller.
-                return error;
+                // Check to see if the error parameter is an instance of the Error class.
+                if (error instanceof Error) {
+                    // Return the error in a well known format using the Internal App Error class
+                    return new InternalAppError(error.message, error.name, error.stack);
+                } else {
+                    // Return the unknown error in a known format
+                    return new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> New AAD Group Member -> catch statement");
+                };
             };
         } else {
-            // If the GUID is not in the right format, throw an error.
-            throw new Error("The GUID specified is not a proper GUID!");
+            // Complain about GUID not being in the right format...
+            return new InternalAppError("The GUID specified is not a proper GUID!", "Validation Error", "Graph Client -> New AAD Group -> Validate GUID")
         };
     };
 
