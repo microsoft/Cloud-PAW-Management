@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "Server",
+			"path": "Server"
+		},
+		{
+			"name": "User-Interface",
+			"path": "User-Interface"
+		}
+	],
+	"settings": {}
+}
