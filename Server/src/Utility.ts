@@ -270,18 +270,15 @@ export function parseScopeTag(description: string): ScopeTagDataIncomplete {
 };
 
 // Define the custom error structure for the app so that error handling can be well structured and in the future, automated.
-export class InternalAppError {
-    // Define the properties
-    displayMessage: string;
-    errorName: string | undefined;
-    stackTrace: string | undefined;
-
+export class InternalAppError extends Error {
     // Define the initialization code for the class
     constructor(message: string, name?: string, trace?: string) {
-        // Set the values of the properties
-        this.displayMessage = message;
-        if (typeof name === "string") {this.errorName = name};
-        if (typeof trace === "string") {this.stackTrace = trace};
+        // Satisfy the requirements of the parent class by passing the error message to it upon initialization
+        super(message)
+
+        // If present, set the values
+        if (typeof name === "string") {this.name = name};
+        if (typeof trace === "string") {this.stack = trace};
 
         // Log the error on error creation/instantiation
         this.logError();
@@ -292,6 +289,6 @@ export class InternalAppError {
 
     // TODO: Write the error logging logic (console/disk/wherever)
     private logError() {
-        console.error(this.displayMessage)
+        console.error(this.message)
     };
 };
