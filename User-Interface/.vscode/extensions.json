@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "streetsidesoftware.code-spell-checker",
+        "dbaeumer.vscode-eslint",
+        "ms-azuretools.vscode-azureappservice",
+        "ms-vscode.azure-account",
+        "eamodio.gitlens"
+    ]
+}

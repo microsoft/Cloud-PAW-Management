@@ -1,0 +1,14 @@
+{
+    "cSpell.words": [
+        "Intune",
+        "defaultuser",
+        "keyvault"
+    ],
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.deploySubpath": ".",
+    "appService.defaultWebAppToDeploy": "None",
+    "typescript.tsdk": "node_modules\\typescript\\lib"
+}
