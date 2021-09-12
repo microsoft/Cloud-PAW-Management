@@ -55,17 +55,17 @@ export class MSGraphClient {
             return collection;
         } catch (error) {
             // if there is an error, tell us about it...
-            throw new Error("Page iterator breakdown: " + error);
+            throw new InternalAppError("Page iterator breakdown: " + error);
         };
     };
 
     // Create a new role scope tag in Endpoint Manager
-    async newMEMScopeTag(scopeTagName: string, description?: string): Promise<MicrosoftGraphBeta.RoleScopeTag | InternalAppError> {
+    async newMEMScopeTag(scopeTagName: string, description?: string): Promise<MicrosoftGraphBeta.RoleScopeTag> {
         // Validate Inputs
-        if (typeof scopeTagName !== "string") { throw new Error("The ScopeTagName has to be a string!") };
-        if (scopeTagName.length > 128) { throw new Error("The ScopeTagName can't be longer than 128 chars!") };
-        if (typeof description !== "undefined" && typeof description !== "string") { throw new Error("The description must be a string!") };
-        if (typeof description === "string" && description.length > 1024) { throw new Error("Description can't be longer than 1024 chars!") };
+        if (typeof scopeTagName !== "string") { throw new InternalAppError("The ScopeTagName has to be a string!", "Invalid Input", "GraphClient -> newMEMScopeTag -> Input Validation") };
+        if (scopeTagName.length > 128) { throw new InternalAppError("The ScopeTagName can't be longer than 128 chars!", "Invalid Input", "GraphClient -> newMEMScopeTag -> Input Validation") };
+        if (typeof description !== "undefined" && typeof description !== "string") { throw new InternalAppError("The description must be a string!", "Invalid Input", "GraphClient -> newMEMScopeTag -> Input Validation") };
+        if (typeof description === "string" && description.length > 1024) { throw new InternalAppError("Description can't be longer than 1024 chars!", "Invalid Input", "GraphClient -> newMEMScopeTag -> Input Validation") };
 
         // Catch execution errors
         try {
@@ -83,89 +83,72 @@ export class MSGraphClient {
             // Create the scope tag and return the result.
             return await (await this.client).api("/deviceManagement/roleScopeTags").post(scopeTagBody);
 
-        // If something goes wrong, return the error.
+            // If something goes wrong, return the error.
         } catch (error) {
             // Check to see if the error parameter is an instance of the Error class.
             if (error instanceof Error) {
                 // Return the error in a well known format using the Internal App Error class
-                return new InternalAppError(error.message, error.name, error.stack);
+                throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                return new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newMEMScopeTag -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newMEMScopeTag -> catch statement");
             };
-        }
+        };
     };
 
     // Get the specified scope tag or get all scope tags
-    async getMEMScopeTag(name?: string): Promise<MicrosoftGraphBeta.RoleScopeTag[] | InternalAppError> {
-        // If no name is specified, return all scope tags
-        if (typeof name === "undefined") {
-            // Grab the list of all Scope Tags from MEM
-            try {
+    async getMEMScopeTag(name?: string): Promise<MicrosoftGraphBeta.RoleScopeTag[]> {
+        // Attempt to execute and catch errors
+        try {
+            // Pre-define the scope tag page so that it is available to callers.
+            let scopeTagPage: PageCollection;
+
+            // If no name is specified, return all scope tags
+            if (typeof name === "undefined") {
                 // Grab an initial MEM Scope page collection
-                const scopeTagPage: PageCollection = await (await this.client).api("/deviceManagement/roleScopeTags").get();
-
-                // Process the page collection to its base form (RoleScopeTag)
-                const scopeTagList: MicrosoftGraphBeta.RoleScopeTag[] = await this.iteratePage(scopeTagPage);
-
-                // Return the processed data.
-                return scopeTagList;
-            } catch (error) {
-                // If there is an error, return the error details to the caller.
-                return error;
-            }
-        } else {
-            // Validate the proper data for the name of the scope tag
-            if (typeof name === "string" && name.length <= 128) {
-                // Grab the specified device from MEM
-                try {
-                    // Grab the specified MEM Scope based on its unique name.
-                    const scopeTagPage: PageCollection = await (await this.client).api("/deviceManagement/roleScopeTags").filter("displayName eq '" + name + "'").get();
-
-                    // Process the page collection to its base form (RoleScopeTag)
-                    const scopeTagList: MicrosoftGraphBeta.RoleScopeTag[] = await this.iteratePage(scopeTagPage);
-
-                    // Return the processed data.
-                    return scopeTagList;
-                } catch (error) {
-                    // Check to see if the error parameter is an instance of the Error class.
-                    if (error instanceof Error) {
-                        // Return the error in a well known format using the Internal App Error class
-                        return new InternalAppError(error.message, error.name, error.stack);
-                    } else {
-                        // Return the unknown error in a known format
-                        return new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newMEMScopeTag -> catch statement");
-                    };
-                };
+                scopeTagPage = await (await this.client).api("/deviceManagement/roleScopeTags").get();
+            } else if (typeof name === "string" && name.length <= 128) {
+                // Grab the specified MEM Scope based on its unique name.
+                scopeTagPage = await (await this.client).api("/deviceManagement/roleScopeTags").filter("displayName eq '" + name + "'").get();
             } else {
-                // If the string is greater than 128 chars or not a string, throw an error.
-                throw new Error("The specified name is not a proper string!");
+                // If the name param doesn't match, throw an error
+                throw new InternalAppError("The name parameter is not a string or a valid scope tag name!", "Invalid Input");
+            };
+
+            // Process the page collection to its base form (RoleScopeTag)
+            const scopeTagList: MicrosoftGraphBeta.RoleScopeTag[] = await this.iteratePage(scopeTagPage);
+
+            // Return the processed data.
+            return scopeTagList;
+        } catch (error) {
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> getMEMScopeTag -> catch statement");
             };
         };
     };
 
     // Update the specified role scope tag in Endpoint Manager
-    async updateMEMScopeTag(name: string, description?: string, ID?: number): Promise<MicrosoftGraphBeta.RoleScopeTag | InternalAppError> {
+    async updateMEMScopeTag(name: string, description?: string, id?: number): Promise<MicrosoftGraphBeta.RoleScopeTag> {
         // Validate input
-        if (typeof name !== "string" || name.length > 128) { throw new Error("The name is not a valid string or is greater than 128 chars!") };
-        if (typeof description === "string" && description.length > 1024) { throw new Error("The description can't be longer than 1024 chars!") };
-        if (typeof ID !== "undefined" && typeof ID !== "number") { throw new Error("The ID needs to be a whole number!") };
-        if (typeof ID === "number" && (!Number.isInteger(ID) || ID <= 0)) { throw new Error("The ID has to be a whole number above 0") };
+        if (typeof name !== "string" || name.length > 128) { throw new InternalAppError("The name is not a valid string or is greater than 128 chars!", "Invalid Input", "GraphClient -> updateMEMScopeTag -> Input Validation") };
+        if (typeof description === "string" && description.length > 1024) { throw new InternalAppError("The description can't be longer than 1024 chars!", "Invalid Input", "GraphClient -> updateMEMScopeTag -> Input Validation") };
+        if (typeof id !== "undefined" && typeof id !== "number") { throw new InternalAppError("The ID needs to be a whole number!", "Invalid Input", "GraphClient -> updateMEMScopeTag -> Input Validation") };
+        if (typeof id === "number" && (!Number.isInteger(id) || id <= 0)) { throw new InternalAppError("The ID has to be a whole number above 0", "Invalid Input", "GraphClient -> updateMEMScopeTag -> Input Validation") };
 
         // Build the initial scope tag object for the update process to use
-        let scopeTagBody: MicrosoftGraphBeta.RoleScopeTag = {
-            "displayName": name
-        }
+        let scopeTagBody: MicrosoftGraphBeta.RoleScopeTag = { "displayName": name }
 
         // If the description is provided, add it to the scope tag body
-        if (typeof description === "string") {
-            // Create the description property and set it to the function parameter value
-            scopeTagBody.description = description
-        }
+        if (typeof description === "string") { scopeTagBody.description = description }
 
         // Catch execution errors
         try {
-            if (typeof ID === "undefined") {
+            if (typeof id === "undefined") {
                 // Get an instance of the specified scope tag
                 const scopeTagInstance = (await this.getMEMScopeTag(name))[0];
 
@@ -173,27 +156,25 @@ export class MSGraphClient {
                 return (await this.client).api("/deviceManagement/roleScopeTags/" + scopeTagInstance.id).patch(scopeTagBody);
             } else {
                 // Update the scope tag with the specified data
-                return (await this.client).api("/deviceManagement/roleScopeTags/" + ID).patch(scopeTagBody);
+                return (await this.client).api("/deviceManagement/roleScopeTags/" + id).patch(scopeTagBody);
             }
         } catch (error) {
             // Check to see if the error parameter is an instance of the Error class.
             if (error instanceof Error) {
                 // Return the error in a well known format using the Internal App Error class
-                return new InternalAppError(error.message, error.name, error.stack);
+                throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                return new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newMEMScopeTag -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> updateMEMScopeTag -> catch statement");
             };
-        }
+        };
     };
 
     // Delete the specified scope tag
-    async removeMEMScopeTag(id: number): Promise<boolean | InternalAppError> {
-        // Validate the input is a number
-        if (typeof id !== "number") {
-            // If it isn't a number, throw an error to the caller
-            throw new Error("ID must be a number!");
-        }
+    async removeMEMScopeTag(id: number): Promise<boolean> {
+        // Validate input
+        if (typeof id !== "number") { throw new InternalAppError("The ID parameter needs to be a number!", "Invalid Input", "GraphClient -> removeMEMScopeTag -> Input Validation") };
+        if (typeof id === "number" && (!Number.isInteger(id) || id <= 0)) { throw new InternalAppError("The ID has to be a whole number above 0", "Invalid Input", "GraphClient -> removeMEMScopeTag -> Input Validation") };
 
         // Catch error on execution
         try {
@@ -205,54 +186,61 @@ export class MSGraphClient {
             // Check to see if the error parameter is an instance of the Error class.
             if (error instanceof Error) {
                 // Return the error in a well known format using the Internal App Error class
-                return new InternalAppError(error.message, error.name, error.stack);
+                throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                return new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newMEMScopeTag -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> removeMEMScopeTag -> catch statement");
             };
-        }
+        };
     };
 
-    // TODO: finish the CRUD operations for normal configs
-    async newDeviceConfig(name: string, roleScopeTagID: string[], settingsBase: MicrosoftGraphBeta.DeviceConfiguration, description?: string) {
+    // TODO: finish the CRUD operations for normal configs - create config
+    async newDeviceConfig(name: string, description: string, scopeTagName: string[], settings: MicrosoftGraphBeta.DeviceConfiguration) {
         // https://docs.microsoft.com/en-us/graph/api/resources/intune-device-cfg-conceptual?view=graph-rest-beta
-    }
+    };
 
-    // TODO: finish the CRUD operations for normal configs
     // Retrieve Microsoft Endpoint Manager configuration profile list. Can pull individual profile based upon GUID
-    async getDeviceConfig(GUID?: string): Promise<MicrosoftGraphBeta.GroupPolicyConfiguration[]> {
-        if (typeof GUID === "undefined") {
-            // Retrieve a list of device configurations from Endpoint Manager
-            const deviceConfigPage: PageCollection = await (await this.client).api("/deviceManagement/deviceConfigurations").get();
+    async getDeviceConfig(GUID?: string): Promise<MicrosoftGraphBeta.DeviceConfiguration[]> {
+        // Attempt to execute and catch errors
+        try {
+            // Pre-define the device configuration page so that it is available to callers.
+            let deviceConfigPage: PageCollection;
+
+            // If a GUID is specified, return the specified device configurations.
+            if (validateGUID(GUID)) {
+                // Grab the specified device configuration.
+                return [await (await this.client).api("/deviceManagement/deviceConfigurations/" + GUID).get()];
+                // If no GUID is specified, return all configs
+            } else if (typeof GUID === "undefined") {
+                // Grab all device configs.
+                deviceConfigPage = await (await this.client).api("/deviceManagement/deviceConfigurations").get();
+            } else {
+                // Input is unexpected, throw an error and halt execution.
+                throw new InternalAppError("The GUID parameter is not a string and a valid GUID!", "Invalid Input", "GraphClient -> getDeviceConfig -> Input Validation");
+            };
 
             // Process the page collection to its base form (DeviceConfiguration)
             const deviceConfigList: MicrosoftGraphBeta.DeviceConfiguration[] = await this.iteratePage(deviceConfigPage);
 
-            // Return the processed data
+            // Return the processed data.
             return deviceConfigList;
-        } else {
-            // Validate user input to ensure they don't slip us a mickey
-            if (validateGUID(GUID)) {
-                // Retrieve the specified device configurations from Endpoint Manager
-                const deviceConfigPage: MicrosoftGraphBeta.DeviceConfiguration = await (await this.client).api("/deviceManagement/deviceConfigurations/" + GUID).get();
-
-                // Convert the result to an array for type consistency.
-                const deviceConfigList = [deviceConfigPage];
-
-                // Return the processed data
-                return deviceConfigList;
+        } catch (error) {
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
             } else {
-                // Notify the caller that the GUID isn't right if GUID validation fails.
-                throw new Error("The parameter specified is not a valid GUID!");
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> getDeviceConfig -> catch statement");
             };
-        }
+        };
     };
 
     // TODO: finish the CRUD operations for normal configs
-    async updateDeviceConfig() { };
+    async updateDeviceConfig(GUID: string, name: string, description: string, scopeTagName: string[], settings: MicrosoftGraphBeta.DeviceConfiguration) { };
 
     // Remove the specified Device Configuration
-    async removeDeviceConfig(GUID: string): Promise<boolean | InternalAppError> {
+    async removeDeviceConfig(GUID: string): Promise<boolean> {
         // Validate GUID is a proper GUID
         if (validateGUID(GUID)) {
             // Attempt to delete the device configuration
@@ -266,16 +254,16 @@ export class MSGraphClient {
                 // Check to see if the error parameter is an instance of the Error class.
                 if (error instanceof Error) {
                     // Return the error in a well known format using the Internal App Error class
-                    return new InternalAppError(error.message, error.name, error.stack);
+                    throw new InternalAppError(error.message, error.name, error.stack);
                 } else {
                     // Return the unknown error in a known format
-                    return new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newMEMScopeTag -> catch statement");
+                    throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> removeDeviceConfig -> catch statement");
                 };
-            }
+            };
         } else {
             // If the GUID is not in the right format, throw an error
-            throw new Error("The GUID specified is not a proper GUID!");
-        }
+            throw new InternalAppError("The GUID specified is not a proper GUID!", "Invalid Input", "GraphClient -> removeDeviceConfig -> Input Validation");
+        };
     };
 
     // TODO: finish the CRUD operations for Admin Template policies
@@ -284,42 +272,86 @@ export class MSGraphClient {
     // TODO: finish the CRUD operations for Admin Template policies
     // Retrieve Microsoft Endpoint Manager Group Policy configuration list. Can pull individual policy based upon GUID
     async getDeviceGroupPolicyConfig(GUID?: string): Promise<MicrosoftGraphBeta.GroupPolicyConfiguration[]> {
-        if (typeof GUID === "undefined") {
-            // Retrieve the specified device configurations from Endpoint Manager
-            const deviceGroupPolicyPage: PageCollection = await (await this.client).api("/deviceManagement/groupPolicyConfigurations/").get();
+        // Attempt to execute and catch errors
+        try {
+            // Pre-define the device configuration page so that it is available to callers.
+            let deviceGPConfigPage: PageCollection;
 
-            // Process the page collection to its base form (DeviceConfiguration)
-            const deviceGroupPolicyList: MicrosoftGraphBeta.GroupPolicyConfiguration[] = await this.iteratePage(deviceGroupPolicyPage);
-
-            // Return the processed data
-            return deviceGroupPolicyList;
-        } else {
-            // Validate user input to ensure they don't slip us a mickey
+            // If no GUID is specified, return all device GPO configurations.
             if (validateGUID(GUID)) {
-                // Retrieve the specified device configurations from Endpoint Manager
-                const deviceGroupPolicyPage: MicrosoftGraphBeta.GroupPolicyConfiguration = await (await this.client).api("/deviceManagement/groupPolicyConfigurations/" + GUID).get();
-
-                // Convert the result to an array for type consistency.
-                const deviceGroupPolicyList = [deviceGroupPolicyPage];
-
-                // Return the processed data
-                return deviceGroupPolicyList;
+                // Grab the specified device configuration.
+                return [await (await this.client).api("/deviceManagement/groupPolicyConfigurations/" + GUID).get()];
+            } else if (typeof GUID === "undefined") {
+                // Grab all device configs.
+                deviceGPConfigPage = await (await this.client).api("/deviceManagement/groupPolicyConfigurations").get();
             } else {
-                // Notify the caller that the GUID isn't right if GUID validation fails.
-                throw new Error("The parameter specified is not a valid GUID!");
+                // Input is unexpected, throw an error and halt execution.
+                throw new InternalAppError("The GUID parameter is not a string and a valid GUID!", "Invalid Input");
             };
-        }
-    }
+
+            // Process the page collection to its base form (GroupPolicyConfiguration)
+            const deviceGPConfigList: MicrosoftGraphBeta.GroupPolicyConfiguration[] = await this.iteratePage(deviceGPConfigPage);
+
+            // Return the processed data.
+            return deviceGPConfigList;
+        } catch (error) {
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> getDeviceGroupPolicyConfig -> catch statement");
+            };
+        };
+    };
 
     // TODO: finish the CRUD operations for Admin Template policies
     async updateDeviceGroupPolicyConfig() { }
     async removeDeviceGroupPolicyConfig() { }
 
-    // Create a new security group with the specified options
-    async newAADGroup(name: string, description?: string, roleAssignable?: boolean): Promise<MicrosoftGraphBeta.Group | InternalAppError> {
+    // Retrieve an Azure Active Directory user list. Can pull individual users based upon GUID or the UPN.
+    async getAADUser(ID?: string): Promise<MicrosoftGraphBeta.User[]> {
+        // Attempt to execute and catch errors
+        try {
+            // Pre-define the user page so that it is available to callers.
+            let userPage: PageCollection;
 
+            // If no GUID is specified, return all users.
+            if (typeof ID === "undefined") {
+                // Grab all users.
+                userPage = await (await this.client).api("/users").get();
+                // If a GUID or UPN is specified, return that user.
+            } else if (validateGUID(ID) || validateEmail(ID)) {
+                // Grab the specified user.
+                return [await (await this.client).api("/users/" + ID).get()];
+            } else {
+                // Input is unexpected, throw an error and halt execution.
+                throw new InternalAppError("The ID parameter is not a valid GUID or UPN!", "Invalid Input", "GraphClient -> getAADUser -> Input Validation");
+            };
+
+            // Process the page collection to its base form (User)
+            const userList: MicrosoftGraphBeta.User[] = await this.iteratePage(userPage);
+
+            // Return the processed data.
+            return userList;
+        } catch (error) {
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> getAADUser -> catch statement");
+            };
+        };
+    };
+
+    // Create a new security group with the specified options
+    async newAADGroup(name: string, description?: string, roleAssignable?: boolean): Promise<MicrosoftGraphBeta.Group> {
         // Validate name length is not too long for the graph
-        if (name.length > 120) { throw new Error("The name is too long, can't be longer than 120 chars!") };
+        if (typeof name !== "string") { throw new InternalAppError("The type of name is not a string!", "Invalid Input", "GraphClient -> newAADGroup -> Input Validation") };
+        if (name.length > 120) { throw new InternalAppError("The name is too long, can't be longer than 120 chars!", "Invalid Input", "GraphClient -> newAADGroup -> Input Validation") };
 
         // These characters cannot be used in the mailNickName: @()\[]";:.<>,SPACE
         const nicknameRegex = /[\\\]\]@()";:.<>,\s]+/gm;
@@ -336,9 +368,9 @@ export class MSGraphClient {
         };
 
         // Check to make sure that the description is defined, if it is, configure the description of the group
-        if (typeof description !== "undefined") {
+        if (typeof description === "string") {
             // Validate that the description is of the correct length
-            if (description.length > 1024) { throw new Error("The description cannot be longer than 1024 characters!") };
+            if (description.length > 1024) { throw new InternalAppError("The description cannot be longer than 1024 characters!", "Invalid Input", "GraphClient -> newAADGroup -> Set Description") };
 
             // Set the description of the new group
             postBody.description = description;
@@ -358,248 +390,200 @@ export class MSGraphClient {
             // Check to see if the error parameter is an instance of the Error class.
             if (error instanceof Error) {
                 // Return the error in a well known format using the Internal App Error class
-                return new InternalAppError(error.message, error.name, error.stack);
+                throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                return new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newMEMScopeTag -> catch statement");
-            };
-        };
-    };
-
-    // Retrieve Azure Active Directory user list. Can pull individual users based upon GUID or the UPN
-    async getAADUser(ID?: string): Promise<MicrosoftGraphBeta.User[] | InternalAppError> {
-        // If no users are specified, list all users
-        if (typeof ID === "undefined") {
-            // Grab the list of all users from AAD
-            try {
-                // Grab an initial AAD User page collection
-                const aadUserPage: PageCollection = await (await this.client).api("/users").get();
-
-                // Process the page collection to its base form (User)
-                const aadUserList: MicrosoftGraphBeta.User[] = await this.iteratePage(aadUserPage);
-
-                // Return the processed data.
-                return aadUserList;
-            } catch (error) {
-                // Check to see if the error parameter is an instance of the Error class.
-                if (error instanceof Error) {
-                    // Return the error in a well known format using the Internal App Error class
-                    return new InternalAppError(error.message, error.name, error.stack);
-                } else {
-                    // Return the unknown error in a known format
-                    return new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newMEMScopeTag -> catch statement");
-                };
-            };
-        } else {
-            // Validate the GUID or UPN are proper IDs for AAD users
-            if (validateGUID(ID) || validateEmail(ID)) {
-                // Grab the specified user from AAD
-                try {
-                    // Grab the specified user based on its AAD UPN or GUID.
-                    const aadUserPage: MicrosoftGraphBeta.User = await (await this.client).api("/users/" + ID).get();
-
-                    // Process the page collection to its base form (User)
-                    // const aadUserList: MicrosoftGraphBeta.User[] = await this.iteratePage(aadUserPage);
-
-                    // Return the processed data.
-                    return [aadUserPage];
-                } catch (error) {
-                    // Check to see if the error parameter is an instance of the Error class.
-                    if (error instanceof Error) {
-                        // Return the error in a well known format using the Internal App Error class
-                        return new InternalAppError(error.message, error.name, error.stack);
-                    } else {
-                        // Return the unknown error in a known format
-                        return new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newMEMScopeTag -> catch statement");
-                    };
-                };
-            } else {
-                // If the GUID is not in the right format, throw an error.
-                throw new Error("The ID specified is not a proper GUID or UPN!");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newAADGroup -> catch statement");
             };
         };
     };
 
     // Retrieve Azure Active Directory (AAD) group list. Can pull individual groups based upon the group's GUID
     async getAADGroup(GUID?: string): Promise<MicrosoftGraphBeta.Group[]> {
-        if (typeof GUID === "undefined") {
-            // Grab an initial group page collection
-            const groupPage: PageCollection = await (await this.client).api("/groups").get();
+        // Attempt to execute and catch errors
+        try {
+            // Pre-define the device configuration page so that it is available to callers.
+            let groupPage: PageCollection;
 
-            // Process the page collection to its base form (Group)
+            // If a GUID is specified, return the specified group.
+            if (validateGUID(GUID)) {
+                // Grab and return the specified group.
+                return [await (await this.client).api("/groups/" + GUID).get()];
+                // If no GUID is specified, return all groups.
+            } else if (typeof GUID === "undefined") {
+                // Grab all device configs.
+                groupPage = await (await this.client).api("/groups").get();
+            } else {
+                // Input is unexpected, throw an error and halt execution.
+                throw new InternalAppError("The GUID parameter is not a string and a valid GUID!", "Invalid Input", "GraphClient -> getAADGroup -> Input Validation");
+            };
+
+            // Process the page collection to its base form (DeviceConfiguration)
             const groupList: MicrosoftGraphBeta.Group[] = await this.iteratePage(groupPage);
 
-            // Return the processed data
+            // Return the processed data.
             return groupList;
-        } else {
-            if (validateGUID(GUID)) {
-                // Retrieve the specified group from AAD
-                const groupPage: MicrosoftGraphBeta.Group = await (await this.client).api("/groups/" + GUID).get();
-
-                // Convert the result to an array for type consistency.
-                const groupList = [groupPage];
-
-                // Return the processed data
-                return groupList;
+        } catch (error) {
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
             } else {
-                // Notify the caller that the GUID isn't right if GUID validation fails.
-                throw new Error("The parameter specified is not a valid GUID!");
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> getAADGroup -> catch statement");
             };
         };
     };
 
     // Update the specified group
-    async updateAADGroup(GUID: string, name: string, description?: string): Promise<boolean | InternalAppError> {
-        // Ensure the specified GUID is valid
-        if (validateGUID(GUID)) {
-            // Validate name length is not too long for the graph
-            if (name.length > 120) { throw new Error("The name is too long, can't be longer than 120 chars!") };
+    async updateAADGroup(GUID: string, name: string, description?: string): Promise<boolean> {
+        // Validate Input
+        if (!validateGUID(GUID)) { throw new InternalAppError("The specified GUID is not a valid GUID!", "Invalid Input", "GraphClient -> updateAADGroup -> Input Validation") };
+        if (typeof name !== "string") { throw new InternalAppError("The Name parameter is not a string!", "Invalid Input", "GraphClient -> updateAADGroup -> Input Validation") };
+        if (name.length > 120) { throw new InternalAppError("The name is too long, can't be longer than 120 chars!", "Invalid Input", "GraphClient -> updateAADGroup -> Input Validation") };
 
-            // These characters cannot be used in the mailNickName: @()\[]";:.<>,SPACE
-            const nicknameRegex = /[\\\]\]@()";:.<>,\s]+/gm;
+        // These characters cannot be used in the mailNickName: @()\[]";:.<>,SPACE
+        const nicknameRegex = /[\\\]\]@()";:.<>,\s]+/gm;
 
-            // Filter out the non-valid chars from the group name to build a valid nickname
-            const nickName = name.replace(nicknameRegex, "");
+        // Filter out the non-valid chars from the group name to build a valid nickname
+        const nickName = name.replace(nicknameRegex, "");
 
-            // Build the patch request body
-            const patchBody: MicrosoftGraphBeta.Group = {
-                displayName: name,
-                mailNickname: nickName
-            }
+        // Build the patch request body
+        const patchBody: MicrosoftGraphBeta.Group = {
+            displayName: name,
+            mailNickname: nickName
+        };
 
-            // Check to make sure that the description is defined, if it is, configure the description of the group
-            if (typeof description !== "undefined") {
-                // Validate that the description is of the correct length
-                if (description.length > 1024) { throw new Error("The description cannot be longer than 1024 characters!") };
+        // Check to make sure that the description is defined, if it is, configure the description of the group
+        if (typeof description === "string") {
+            // Validate that the description is of the correct length
+            if (description.length > 1024) { throw new InternalAppError("The description cannot be longer than 1024 characters!", "Invalid Input", "GraphClient -> updateAADGroup -> Description Configuration") };
 
-                // Set the description of the group
-                patchBody.description = description;
-            }
+            // Set the description of the group
+            patchBody.description = description;
+        };
 
-            // Attempt to update a group
-            try {
-                // Send update command and new values to the specified post
-                await (await this.client).api("/groups/" + GUID).patch(patchBody);
+        // Attempt to update a group
+        try {
+            // Send update command and new values to the specified api endpoint
+            await (await this.client).api("/groups/" + GUID).patch(patchBody);
 
-                // Return true for successful
-                return true;
-            } catch (error) {
-                // Check to see if the error parameter is an instance of the Error class.
-                if (error instanceof Error) {
-                    // Return the error in a well known format using the Internal App Error class
-                    return new InternalAppError(error.message, error.name, error.stack);
-                } else {
-                    // Return the unknown error in a known format
-                    return new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newMEMScopeTag -> catch statement");
-                };
+            // Return true for successful
+            return true;
+        } catch (error) {
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newMEMScopeTag -> catch statement");
             };
-        } else {
-            // Complain about GUID not being in the right format...
-            return new InternalAppError("The GUID specified is not a proper GUID!", "Validation Error", "Graph Client -> Update AAD Group -> Validate GUID")
         };
     };
 
     // Delete the specified Security Group
-    async removeAADGroup(GUID: string): Promise<boolean | InternalAppError> {
-        // Validate GUID is a proper GUID
-        if (validateGUID(GUID)) {
-            // Attempt to delete the group
-            try {
-                // Send the delete command for the specified GUID
-                await (await this.client).api("/groups/" + GUID).delete();
+    async removeAADGroup(GUID: string): Promise<boolean> {
+        // Validate Input
+        if (!validateGUID(GUID)) { throw new InternalAppError("The specified GUID is not a valid GUID!", "Invalid Input", "GraphClient -> removeAADGroup -> Input Validation") };
 
-                // Return true for a successful operation
-                return true;
-            } catch (error) {
-                // Check to see if the error parameter is an instance of the Error class.
-                if (error instanceof Error) {
-                    // Return the error in a well known format using the Internal App Error class
-                    return new InternalAppError(error.message, error.name, error.stack);
-                } else {
-                    // Return the unknown error in a known format
-                    return new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newMEMScopeTag -> catch statement");
-                };
+        // Attempt to delete the group
+        try {
+            // Send the delete command for the specified GUID
+            await (await this.client).api("/groups/" + GUID).delete();
+
+            // Return true for a successful operation
+            return true;
+        } catch (error) {
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> removeAADGroup -> catch statement");
             };
-        } else {
-            // Complain about GUID not being in the right format...
-            return new InternalAppError("The GUID specified is not a proper GUID!", "Validation Error", "Graph Client -> Update AAD Group -> Validate GUID")
-        }
+        };
     };
 
     // Add a principal to an AAD Group
-    async newAADGroupMember(groupGUID: string, addGUID: string): Promise<boolean | InternalAppError> {
-        // Validate GUID is a proper GUID
-        if (validateGUID(groupGUID) && validateGUID(addGUID)) {
-            // Grab the specified group membership from AAD
-            try {
-                // Build the post body
-                const newMemberBody = {
-                    "@odata.id": "https://graph.microsoft.com/beta/directoryObjects/" + addGUID
-                };
+    async newAADGroupMember(groupGUID: string, addGUID: string): Promise<boolean> {
+        // Validate Input
+        if (!validateGUID(groupGUID) && !validateGUID(addGUID)) { throw new InternalAppError("The specified GUID is not a valid GUID!", "Invalid Input", "GraphClient -> newAADGroupMember -> Input Validation") };
 
-                // Add the specified principal to the specified AAD Group.
-                await (await this.client).api("/groups/" + groupGUID + "/members/$ref").post(newMemberBody);
-
-                // Return the processed data.
-                return true;
-            } catch (error) {
-                // Check to see if the error parameter is an instance of the Error class.
-                if (error instanceof Error) {
-                    // Return the error in a well known format using the Internal App Error class
-                    return new InternalAppError(error.message, error.name, error.stack);
-                } else {
-                    // Return the unknown error in a known format
-                    return new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> New AAD Group Member -> catch statement");
-                };
+        // Grab the specified group membership from AAD
+        try {
+            // Build the post body
+            const newMemberBody = {
+                "@odata.id": "https://graph.microsoft.com/beta/directoryObjects/" + addGUID
             };
-        } else {
-            // Complain about GUID not being in the right format...
-            return new InternalAppError("The GUID specified is not a proper GUID!", "Validation Error", "Graph Client -> New AAD Group -> Validate GUID")
+
+            // Add the specified principal to the specified AAD Group.
+            await (await this.client).api("/groups/" + groupGUID + "/members/$ref").post(newMemberBody);
+
+            // Return the processed data.
+            return true;
+        } catch (error) {
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newAADGroupMember -> catch statement");
+            };
         };
     };
 
     // List the members of a AAD Group
     async getAADGroupMember(groupGUID: string): Promise<MicrosoftGraphBeta.DirectoryObject[]> {
         // Validate GUID is a proper GUID
-        if (validateGUID(groupGUID)) {
-            // Grab the specified group membership from AAD
-            try {
-                // Grab the specified group membership based on the group's GUID.
-                const groupMemberPage: PageCollection = await (await this.client).api("/groups/" + groupGUID + "/members").get();
+        if (!validateGUID(groupGUID)) { throw new InternalAppError("The GUID specified is not a proper GUID!", "Invalid Input", "GraphClient -> getAADGroupMember -> Input Validation") };
 
-                // Process the page collection to its base form (ManagedDevice)
-                const groupMemberList: MicrosoftGraphBeta.DirectoryObject[] = await this.iteratePage(groupMemberPage);
+        // Grab the specified group membership from AAD
+        try {
+            // Grab the specified group membership based on the group's GUID.
+            const groupMemberPage: PageCollection = await (await this.client).api("/groups/" + groupGUID + "/members").get();
 
-                // Return the processed data.
-                return groupMemberList;
-            } catch (error) {
-                // If there is an error, return the error details to the caller.
-                return error;
+            // Process the page collection to its base form (ManagedDevice)
+            const groupMemberList: MicrosoftGraphBeta.DirectoryObject[] = await this.iteratePage(groupMemberPage);
+
+            // Return the processed data.
+            return groupMemberList;
+        } catch (error) {
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> getAADGroupMember -> catch statement");
             };
-        } else {
-            // If the GUID is not in the right format, throw an error.
-            throw new Error("The GUID specified is not a proper GUID!");
         };
     };
 
     // Remove the specified group member from the specified AAD group
     async removeAADGroupMember(groupGUID: string, removeGUID: string): Promise<boolean> {
-        // Validate that the GUIDs are proper GUIDs
-        if (validateGUID(groupGUID) && validateGUID(removeGUID)) {
-            // Grab the specified group membership from AAD
-            try {
-                // Remove the specified group member from the group
-                await (await this.client).api("/groups/" + groupGUID + "/members/" + removeGUID + "/$ref/").delete();
+        // Validate GUID is a proper GUID
+        if (!validateGUID(groupGUID)) { throw new InternalAppError("The groupGUID specified is not a proper GUID!", "Invalid Input", "GraphClient -> removeAADGroupMember -> Input Validation") };
+        if (!validateGUID(removeGUID)) { throw new InternalAppError("The removeGUID specified is not a proper GUID!", "Invalid Input", "GraphClient -> removeAADGroupMember -> Input Validation") };
 
-                // Return that the operation was successful
-                return true;
-            } catch (error) {
-                // If there is an error, return the error details to the caller.
-                return error;
+        // Grab the specified group membership from AAD
+        try {
+            // Remove the specified group member from the group
+            await (await this.client).api("/groups/" + groupGUID + "/members/" + removeGUID + "/$ref/").delete();
+
+            // Return that the operation was successful
+            return true;
+        } catch (error) {
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> removeAADGroupMember -> catch statement");
             };
-        } else {
-            // If the GUID is not in the right format, throw an error.
-            throw new Error("The GUID(s) specified is not a proper GUID!");
         };
     };
 
@@ -608,32 +592,39 @@ export class MSGraphClient {
 
     // Retrieve Azure Active Directory Administrative Unit (AU) list. Can pull individual AUs based upon GUID.
     async getAADAdminUnit(GUID?: string): Promise<MicrosoftGraphBeta.AdministrativeUnit[]> {
-        // If no params are specified, return all objects
-        if (typeof GUID === "undefined") {
-            // Grab an initial AU page collection
-            const adminUnitPage: PageCollection = await (await this.client).api("/administrativeUnits").get();
+        // Attempt to execute and catch errors
+        try {
+            // Pre-define the administrative unit page so that it is available to callers.
+            let adminUnitPage: PageCollection;
+
+            // If a GUID is specified, return the specified AU.
+            if (validateGUID(GUID)) {
+                // Grab the specified device configuration.
+                return [await (await this.client).api("/administrativeUnits/" + GUID).get()];
+                // If no GUID is specified, return all AUs
+            } else if (typeof GUID === "undefined") {
+                // Grab all device configs.
+                adminUnitPage = await (await this.client).api("/administrativeUnits").get();
+            } else {
+                // Input is unexpected, throw an error and halt execution.
+                throw new InternalAppError("The GUID parameter is not a string and a valid GUID!", "Invalid Input", "GraphClient -> getAADAdminUnit -> Input Validation");
+            };
 
             // Process the page collection to its base form (AdministrativeUnit)
             const adminUnitList: MicrosoftGraphBeta.AdministrativeUnit[] = await this.iteratePage(adminUnitPage);
 
-            // Return the processed data
+            // Return the processed data.
             return adminUnitList;
-        } else {
-            // Validate the string input is a GUID
-            if (validateGUID(GUID)) {
-                // Retrieve the specified AU from AAD
-                const adminUnitPage: MicrosoftGraphBeta.AdministrativeUnit = await (await this.client).api("/administrativeUnits/" + GUID).get();
-
-                // Convert the result to an array for type consistency.
-                const adminUnitList = [adminUnitPage];
-
-                // Return the processed data
-                return adminUnitList;
+        } catch (error) {
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
             } else {
-                // Notify the caller that the GUID isn't right if GUID validation fails.
-                throw new Error("The parameter specified is not a valid GUID!");
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> getAADAdminUnit -> catch statement");
             };
-        }
+        };
     };
 
     // TODO: write the AU updater
@@ -642,30 +633,34 @@ export class MSGraphClient {
     // Remove the specified Administrative united based on the GUID
     async removeAADAdminUnit(GUID: string): Promise<boolean> {
         // Validate GUID is a proper GUID
-        if (validateGUID(GUID)) {
-            // Attempt to delete the AU
-            try {
-                // Send the delete command for the specified GUID
-                await (await this.client).api("/administrativeUnits/" + GUID).delete();
+        if (!validateGUID(GUID)) { throw new InternalAppError("The GUID specified is not a proper GUID!", "Invalid Input", "GraphClient -> removeAADAdminUnit -> Input Validation") };
 
-                // Return true for a successful operation
-                return true;
-            } catch (error) {
-                // If there is an error, return the error details to the caller
-                return error;
-            }
-        } else {
-            // If the GUID is not in the right format, throw an error
-            throw new Error("The GUID specified is not a proper GUID!");
+        // Attempt to delete the AU
+        try {
+            // Send the delete command for the specified GUID
+            await (await this.client).api("/administrativeUnits/" + GUID).delete();
+
+            // Return true for a successful operation
+            return true;
+        } catch (error) {
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> getAADAdminUnit -> catch statement");
+            };
         };
     };
 
     // Create a new settings catalog with the specified settings
     async newSettingsCatalog(name: string, description: string, roleScopeTagID: string[], settings: MicrosoftGraphBeta.DeviceManagementConfigurationSetting[]): Promise<MicrosoftGraphBeta.DeviceManagementConfigurationPolicy> {
         // Validate input
-        if (typeof name !== "string" || name.length > 1000) { throw new Error("The name is too long, can't be longer than 1000 chars!") };
-        if (typeof description !== "string" || description.length > 1000) { throw new Error("The description is too long, can't be longer than 1000 chars!") };
-        if (typeof roleScopeTagID !== "object" || roleScopeTagID.length == 0) { throw new Error("The role scope tag IDs must be an array of numbers in string format and not be empty!") }
+        if (typeof name !== "string" || name.length > 1000) { throw new InternalAppError("The name is too long, can't be longer than 1000 chars!", "Invalid Input", "GraphClient -> newSettingsCatalog -> Input Validation") };
+        if (typeof description !== "string" || description.length > 1000) { throw new InternalAppError("The description is too long, can't be longer than 1000 chars!", "Invalid Input", "GraphClient -> newSettingsCatalog -> Input Validation") };
+        if (typeof roleScopeTagID !== "object" || roleScopeTagID.length == 0) { throw new InternalAppError("The role scope tag IDs must be an array of numbers in string format and not be empty!", "Invalid Input", "GraphClient -> newSettingsCatalog -> Input Validation") };
+        // TODO: Convert to scope tag name instead of the ID of the tag
         // Loop through each of the indexes and ensure that they are parsable to numbers
         for (let index = 0; index < roleScopeTagID.length; index++) {
             // Expose a specific ID
@@ -674,9 +669,9 @@ export class MSGraphClient {
             const parsedNum = Number.parseInt(ID);
 
             // Check to make sure the string is a parsable number
-            if (typeof parsedNum === "number" && Object.is(parsedNum, NaN)) { throw new Error("Please specify a number for the role scope tag IDs!") };
+            if (typeof parsedNum === "number" && Object.is(parsedNum, NaN)) { throw new InternalAppError("Please specify a number for the role scope tag IDs!", "Invalid Input", "GraphClient -> newSettingsCatalog -> Input Validation") };
         }
-        if (typeof settings !== "object" || settings.length == 0 || !validateSettingCatalogSettings(settings)) { throw new Error("The settings object is not in the right format, please use the correct format!") }
+        if (typeof settings !== "object" || settings.length == 0 || !validateSettingCatalogSettings(settings)) { throw new InternalAppError("The settings object is not in the right format, please use the correct format!", "Invalid Input", "GraphClient -> newSettingsCatalog -> Input Validation") }
 
         // Build the post body for the new setting catalog object
         let postBody: MicrosoftGraphBeta.DeviceManagementConfigurationPolicy = {
@@ -686,46 +681,59 @@ export class MSGraphClient {
             platforms: "windows10",
             technologies: "mdm",
             settings: settings
-        }
+        };
 
         // Catch any error on catalog creation
         try {
             // Create the catalog and return the result
             return await (await this.client).api("/deviceManagement/configurationPolicies").post(postBody);
         } catch (error) {
-            // If there is an error, return the error details
-            return error
-        }
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newSettingsCatalog -> catch statement");
+            };
+        };
     };
 
     // Retrieve Endpoint Manager Settings Catalog list. Can pull individual catalogs based upon GUID.
     async getSettingsCatalog(GUID?: string): Promise<MicrosoftGraphBeta.DeviceManagementConfigurationPolicy[]> {
-        // If no params are specified, return all objects
-        if (typeof GUID === "undefined") {
-            // Grab an initial group page collection
-            const settingsCatalogPage: PageCollection = await (await this.client).api("/deviceManagement/configurationPolicies").expand("settings").get();
+        // Attempt to execute and catch errors
+        try {
+            // Pre-define the settings catalog page so that it is available to callers.
+            let settingsCatalogPage: PageCollection;
+
+            // If a GUID is specified, return the specified settings catalog.
+            if (validateGUID(GUID)) {
+                // Grab and return the specified settings catalog.
+                return [await (await this.client).api("/deviceManagement/configurationPolicies/" + GUID).expand("settings").get()];
+                // If no GUID is specified, return all settings catalogs.
+            } else if (typeof GUID === "undefined") {
+                // Grab all device configs.
+                settingsCatalogPage = await (await this.client).api("/deviceManagement/configurationPolicies").expand("settings").get();
+            } else {
+                // Input is unexpected, throw an error and halt execution.
+                throw new InternalAppError("The GUID parameter is not a string and a valid GUID!", "Invalid Input", "GraphClient -> getSettingsCatalog -> Input Validation");
+            };
 
             // Process the page collection to its base form (DeviceManagementConfigurationPolicy)
-            const settingsCatalogList: MicrosoftGraphBeta.AdministrativeUnit[] = await this.iteratePage(settingsCatalogPage);
+            const settingsCatalogList: MicrosoftGraphBeta.DeviceManagementConfigurationPolicy[] = await this.iteratePage(settingsCatalogPage);
 
-            // Return the processed data
+            // Return the processed data.
             return settingsCatalogList;
-        } else {
-            // Validate the string input is a GUID
-            if (validateGUID(GUID)) {
-                // Retrieve the specified ConfigurationPolicy from Endpoint Manager
-                const settingsCatalogPage: MicrosoftGraphBeta.AdministrativeUnit = await (await this.client).api("/deviceManagement/configurationPolicies/" + GUID).expand("settings").get();
-
-                // Convert the result to an array for type consistency.
-                const settingsCatalogList = [settingsCatalogPage];
-
-                // Return the processed data
-                return settingsCatalogList;
+        } catch (error) {
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
             } else {
-                // Notify the caller that the GUID isn't right if GUID validation fails.
-                throw new Error("The parameter specified is not a valid GUID!");
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> getSettingsCatalog -> catch statement");
             };
-        }
+        };
     };
 
     // Update the specified setting catalog's metadata.
@@ -733,11 +741,12 @@ export class MSGraphClient {
     // This is because of how the GraphAPI is designed, two posts are needed to update a settings catalog as the settings property is a nav property instead of an entity.
     async updateSettingsCatalog(GUID: string, name: string, description: string, roleScopeTagID: string[], settings: MicrosoftGraphBeta.DeviceManagementConfigurationSetting[]): Promise<boolean> {
         // Validate input
-        if (!validateGUID(GUID)) { throw new Error("The GUID is not in the correct format!") };
-        if (typeof name !== "string" || name.length > 1000) { throw new Error("The name is too long, can't be longer than 1000 chars!") };
-        if (typeof description !== "string" || description.length > 1000) { throw new Error("The description is too long, can't be longer than 1000 chars!") };
-        if (!validateStringArray(roleScopeTagID)) { throw new Error("The role scope tag IDs must be an array of numbers in string format and not be empty!") }
-        if (!validateSettingCatalogSettings(settings)) { throw new Error("The Settings Catalog Settings aren't in the right format!") };
+        if (!validateGUID(GUID)) { throw new InternalAppError("The GUID is not in the correct format!", "Invalid Input", "GraphClient -> updateSettingsCatalog -> Input Validation") };
+        if (typeof name !== "string" || name.length > 1000) { throw new InternalAppError("The name is too long, can't be longer than 1000 chars!", "Invalid Input", "GraphClient -> updateSettingsCatalog -> Input Validation") };
+        if (typeof description !== "string" || description.length > 1000) { throw new InternalAppError("The description is too long, can't be longer than 1000 chars!", "Invalid Input", "GraphClient -> updateSettingsCatalog -> Input Validation") };
+        if (!validateStringArray(roleScopeTagID)) { throw new InternalAppError("The role scope tag IDs must be an array of numbers in string format and not be empty!", "Invalid Input", "GraphClient -> updateSettingsCatalog -> Input Validation") }
+        if (!validateSettingCatalogSettings(settings)) { throw new InternalAppError("The Settings Catalog Settings aren't in the right format!", "Invalid Input", "GraphClient -> updateSettingsCatalog -> Input Validation") };
+        // TODO: change to scope tag name instead of the ID
         // Loop through each of the indexes and ensure that they are parsable to numbers
         for (let index = 0; index < roleScopeTagID.length; index++) {
             // Expose a specific ID
@@ -746,8 +755,8 @@ export class MSGraphClient {
             const parsedNum = Number.parseInt(ID);
 
             // Check to make sure the string is a parsable number
-            if (typeof parsedNum === "number" && Object.is(parsedNum, NaN)) { throw new Error("Please specify a number for the role scope tag IDs!") };
-        }
+            if (typeof parsedNum === "number" && Object.is(parsedNum, NaN)) { throw new InternalAppError("Please specify a number for the role scope tag IDs!", "Invalid Input", "GraphClient -> updateSettingsCatalog -> Input Validation") };
+        };
 
         // Build the post body for the new setting catalog object
         let patchBody: MicrosoftGraphBeta.DeviceManagementConfigurationPolicy = {
@@ -761,43 +770,54 @@ export class MSGraphClient {
 
         // Catch any error on catalog update
         try {
-            (await this.client).api("/deviceManagement/configurationPolicies/" + GUID).put(patchBody);
+            // Send the updated settings catalog 
+            await (await this.client).api("/deviceManagement/configurationPolicies/" + GUID).put(patchBody);
 
+            // Return true to indicate a successful operation
             return true;
         } catch (error) {
-            // If there is an error, return the error details
-            return error
-        }
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> updateSettingsCatalog -> catch statement");
+            };
+        };
     };
 
     // Remove a settings catalog based on its GUID
     async removeSettingsCatalog(GUID: string): Promise<boolean> {
-        // Validate GUID is a proper GUID
-        if (validateGUID(GUID)) {
-            // Attempt to delete the settings catalog
-            try {
-                // Send the delete command for the specified GUID
-                await (await this.client).api("/deviceManagement/configurationPolicies/" + GUID).delete();
+        // Validate input
+        if (!validateGUID(GUID)) { throw new InternalAppError("The GUID is not in the correct format!", "Invalid Input", "GraphClient -> removeSettingsCatalog -> Input Validation") };
 
-                // Return true for a successful operation
-                return true;
-            } catch (error) {
-                // If there is an error, return the error details to the caller
-                return error;
-            }
-        } else {
-            // If the GUID is not in the right format, throw an error
-            throw new Error("The GUID specified is not a proper GUID!");
+        // Attempt to delete the settings catalog
+        try {
+            // Send the delete command for the specified GUID
+            await (await this.client).api("/deviceManagement/configurationPolicies/" + GUID).delete();
+
+            // Return true for a successful operation
+            return true;
+        } catch (error) {
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> removeSettingsCatalog -> catch statement");
+            };
         };
     };
 
     // Assign the specified device configuration in Endpoint Manager
     async updateConfigurationAssignment(configType: "Settings Catalog" | "Setting Template" | "Admin Template", configGUID: string, includeGUID?: string[], excludeGUID?: string[]) {
         // Validate inputs
-        if (typeof configType !== "string" && configType !== "Settings Catalog" && configType !== "Setting Template" && configType !== "Admin Template") { throw new Error("The config type parameter only accepts the strings: 'Settings Catalog', 'Device', and 'Admin Template' as values.") };
-        if (!validateGUID(configGUID)) { throw new Error("The specified GUID for the config GUID is not valid!") }
-        if (typeof includeGUID !== "undefined" && !validateGUIDArray(includeGUID)) { throw new Error("The specified array of included group GUIDs is not valid!") };
-        if (typeof excludeGUID !== "undefined" && !validateGUIDArray(excludeGUID)) { throw new Error("The specified array of excluded group GUIDs is not valid!") };
+        if (typeof configType !== "string" && configType !== "Settings Catalog" && configType !== "Setting Template" && configType !== "Admin Template") { throw new InternalAppError("The config type parameter only accepts the strings: 'Settings Catalog', 'Device', and 'Admin Template' as values.", "Invalid Input", "GraphClient -> updateConfigurationAssignment -> Input Validation") };
+        if (!validateGUID(configGUID)) { throw new InternalAppError("The specified GUID for the config GUID is not valid!", "Invalid Input", "GraphClient -> updateConfigurationAssignment -> Input Validation") }
+        if (typeof includeGUID !== "undefined" && !validateGUIDArray(includeGUID)) { throw new InternalAppError("The specified array of included group GUIDs is not valid!", "Invalid Input", "GraphClient -> updateConfigurationAssignment -> Input Validation") };
+        if (typeof excludeGUID !== "undefined" && !validateGUIDArray(excludeGUID)) { throw new InternalAppError("The specified array of excluded group GUIDs is not valid!", "Invalid Input", "GraphClient -> updateConfigurationAssignment -> Input Validation") };
 
         // Build the assignment object post body
         const postBody = endpointGroupAssignmentTarget(includeGUID, excludeGUID);
@@ -816,20 +836,27 @@ export class MSGraphClient {
                     // Assign the specified administrative template (GPO)
                     return await (await this.client).api("/deviceManagement/groupPolicyConfigurations/" + configGUID + "/assign").post(postBody);
                 default:
-                    throw new Error("The switch stopped at the default statement, this should not have happened. configType: " + configType);
-            }
+                    throw new InternalAppError("The switch stopped at the default statement, this should not have happened. configType: " + configType, "Unknown", "GraphClient -> updateConfigurationAssignment -> switch statement -> default case");
+            };
             // If error occurred, return error to sender.
         } catch (error) {
-            return error;
-        }
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> updateConfigurationAssignment -> catch statement");
+            };
+        };
     };
 
     // Create an Azure AD Conditional Access Policy using the specified settings.
     async newAADCAPolicy(name: string, settings: MicrosoftGraphBeta.ConditionalAccessPolicy, state: "enabled" | "disabled" | "enabledForReportingButNotEnforced"): Promise<MicrosoftGraphBeta.ConditionalAccessPolicy> {
         // Validate inputs
-        if (name.length > 256 && typeof name !== "string") { throw new Error("The length of the name can't be longer than 256 characters or the data is not a string!") };
-        if (!validateConditionalAccessSetting(settings) && typeof settings !== "object") { throw new Error("The settings object is not in the correct format!") };
-        if (state !== "enabled" && state !== "disabled" && state !== "enabledForReportingButNotEnforced") { throw new Error("The state parameter must be one of the following values: enabled, disabled, enabledForReportingButNotEnforced!") };
+        if (name.length > 256 && typeof name !== "string") { throw new InternalAppError("The length of the name can't be longer than 256 characters or the data is not a string!", "Invalid Input", "GraphClient -> newAADCAPolicy -> Input Validation") };
+        if (!validateConditionalAccessSetting(settings) && typeof settings !== "object") { throw new InternalAppError("The settings object is not in the correct format!", "Invalid Input", "GraphClient -> newAADCAPolicy -> Input Validation") };
+        if (state !== "enabled" && state !== "disabled" && state !== "enabledForReportingButNotEnforced") { throw new InternalAppError("The state parameter must be one of the following values: enabled, disabled, enabledForReportingButNotEnforced!", "Invalid Input", "GraphClient -> newAADCAPolicy -> Input Validation") };
 
         // Set the name of the CA Policy
         settings.displayName = name;
@@ -841,49 +868,63 @@ export class MSGraphClient {
         try {
             // Execute the post method against the graph using the specified post body (settings)
             return await (await this.client).api("/identity/conditionalAccess/policies").post(settings);
+            // Catch any error thrown from the AJAX post call
         } catch (error) {
-            // If an error happened, return the error details
-            return error;
-        }
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newAADCAPolicy -> catch statement");
+            };
+        };
     };
 
     // Retrieve Azure AD Conditional Access Policy list. Can pull individual policies based upon GUID.
     async getAADCAPolicy(GUID?: string): Promise<MicrosoftGraphBeta.ConditionalAccessPolicy[]> {
-        // If no params are specified, return all objects
-        if (typeof GUID === "undefined") {
-            // Grab an initial group page collection
-            const conditionalAccessPolicyPage: PageCollection = await (await this.client).api("/identity/conditionalAccess/policies").get();
+        // Attempt to execute and catch errors
+        try {
+            // Pre-define the AAD CA page so that it is available to callers.
+            let aadCAPage: PageCollection;
+
+            // If a GUID is specified, return the specified AAD CA policy.
+            if (validateGUID(GUID)) {
+                // Grab and return the specified CA Policy.
+                return [await (await this.client).api("/identity/conditionalAccess/policies/" + GUID).get()];
+                // If no GUID is specified, return all AAD CA policies.
+            } else if (typeof GUID === "undefined") {
+                // Grab all AAD CA policies.
+                aadCAPage = await (await this.client).api("/identity/conditionalAccess/policies").get();
+            } else {
+                // Input is unexpected, throw an error and halt execution.
+                throw new InternalAppError("The GUID parameter is not a string and a valid GUID!", "Invalid Input", "GraphClient -> getAADCAPolicy -> Input Validation");
+            };
 
             // Process the page collection to its base form (ConditionalAccessPolicy)
-            const conditionalAccessPolicyList: MicrosoftGraphBeta.ConditionalAccessPolicy[] = await this.iteratePage(conditionalAccessPolicyPage);
+            const aadCAList: MicrosoftGraphBeta.ConditionalAccessPolicy[] = await this.iteratePage(aadCAPage);
 
-            // Return the processed data
-            return conditionalAccessPolicyList;
-        } else {
-            // Validate the string input is a GUID
-            if (validateGUID(GUID)) {
-                // Retrieve the specified ConfigurationPolicy from Endpoint Manager
-                const conditionalAccessPolicy: MicrosoftGraphBeta.ConditionalAccessPolicy = await (await this.client).api("/identity/conditionalAccess/policies/" + GUID).get();
-
-                // Convert the result to an array for type consistency.
-                const conditionalAccessPolicyList = [conditionalAccessPolicy];
-
-                // Return the processed data
-                return conditionalAccessPolicyList;
+            // Return the processed data.
+            return aadCAList;
+        } catch (error) {
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
             } else {
-                // Notify the caller that the GUID isn't right if GUID validation fails.
-                throw new Error("The parameter specified is not a valid GUID!");
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> getAADCAPolicy -> catch statement");
             };
-        }
+        };
     };
 
     // Update the specified Conditional Access Policy.
     async updateAADCAPolicy(GUID: string, name: string, settings: MicrosoftGraphBeta.ConditionalAccessPolicy, state: "enabled" | "disabled" | "enabledForReportingButNotEnforced"): Promise<boolean> {
         // Validate inputs
-        if (!validateGUID(GUID) || typeof GUID !== "string") { throw new Error("The specified ID is not a valid GUID!") };
-        if (name.length > 256 || typeof name !== "string") { throw new Error("The length of the name can't be longer than 256 characters or the data is not a string!") };
-        if (!validateConditionalAccessSetting(settings) && typeof settings !== "object") { throw new Error("The settings object is not in the correct format!") };
-        if (state !== "enabled" && state !== "disabled" && state !== "enabledForReportingButNotEnforced") { throw new Error("The state parameter must be one of the following values: enabled, disabled, enabledForReportingButNotEnforced!") };
+        if (!validateGUID(GUID) || typeof GUID !== "string") { throw new InternalAppError("The specified ID is not a valid GUID!", "Invalid Input", "GraphClient -> updateAADCAPolicy -> Input Validation") };
+        if (name.length > 256 || typeof name !== "string") { throw new InternalAppError("The length of the name can't be longer than 256 characters or the data is not a string!", "Invalid Input", "GraphClient -> updateAADCAPolicy -> Input Validation") };
+        if (!validateConditionalAccessSetting(settings) && typeof settings !== "object") { throw new InternalAppError("The settings object is not in the correct format!", "Invalid Input", "GraphClient -> updateAADCAPolicy -> Input Validation") };
+        if (state !== "enabled" && state !== "disabled" && state !== "enabledForReportingButNotEnforced") { throw new InternalAppError("The state parameter must be one of the following values: enabled, disabled, enabledForReportingButNotEnforced!", "Invalid Input", "GraphClient -> updateAADCAPolicy -> Input Validation") };
 
         // Set the name of the CA Policy
         settings.displayName = name;
@@ -899,101 +940,109 @@ export class MSGraphClient {
             // Return true if successful (the try catch will catch unsuccessful patch methods)
             return true;
         } catch (error) {
-            // If an error happened, return the error details
-            return error;
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> updateAADCAPolicy -> catch statement");
+            };
         }
     };
 
     // Remove the specified Conditional Access Policy.
     async removeAADCAPolicy(GUID: string): Promise<boolean> {
         // Validate GUID is a proper GUID
-        if (validateGUID(GUID)) {
-            // Attempt to delete the conditional access policy
-            try {
-                // Send the delete command for the specified GUID
-                await (await this.client).api("/identity/conditionalAccess/policies/" + GUID).delete();
+        if (!validateGUID(GUID)) { throw new InternalAppError("The specified GUID is not a valid GUID!", "Invalid Input", "GraphClient -> removeAADCAPolicy -> Input Validation") };
 
-                // Return true for a successful operation
-                return true;
-            } catch (error) {
-                // If there is an error, return the error details to the caller
-                return error;
-            }
-        } else {
-            // If the GUID is not in the right format, throw an error
-            throw new Error("The GUID specified is not a proper GUID!");
+        // Attempt to delete the conditional access policy
+        try {
+            // Send the delete command for the specified GUID
+            await (await this.client).api("/identity/conditionalAccess/policies/" + GUID).delete();
+
+            // Return true for a successful operation
+            return true;
+        } catch (error) {
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> removeAADCAPolicy -> catch statement");
+            };
         };
     };
 
     // Get the specified Microsoft Endpoint Manager Device
     async getMEMDevice(AADDeviceID?: string): Promise<MicrosoftGraphBeta.ManagedDevice[]> {
-        if (typeof AADDeviceID === "undefined") {
-            // Grab the list of all devices from MEM
-            try {
-                // Grab an initial MEM Device page collection
-                const memDevicePage: PageCollection = await (await this.client).api("/deviceManagement/managedDevices/").get();
+        // Attempt to execute and catch errors
+        try {
+            // Pre-define the AAD CA page so that it is available to callers.
+            let memDevicePage: PageCollection;
 
-                // Process the page collection to its base form (ManagedDevice)
-                const memDeviceList: MicrosoftGraphBeta.ManagedDevice[] = await this.iteratePage(memDevicePage);
-
-                // Return the processed data.
-                return memDeviceList;
-            } catch (error) {
-                // If there is an error, return the error details to the caller.
-                return error;
-            }
-        } else {
-            // Validate GUID is a proper GUID
+            // If a GUID is specified, return the specified AAD CA policy.
             if (validateGUID(AADDeviceID)) {
-                // Grab the specified device from MEM
-                try {
-                    // Grab the specified MEM devices based on its AAD Device ID.
-                    const memDevicePage: PageCollection = await (await this.client).api("/deviceManagement/managedDevices/").filter("azureADDeviceId eq '" + AADDeviceID + "'").get();
-
-                    // Process the page collection to its base form (ManagedDevice)
-                    const memDeviceList: MicrosoftGraphBeta.ManagedDevice[] = await this.iteratePage(memDevicePage);
-
-                    // Return the processed data.
-                    return memDeviceList;
-                } catch (error) {
-                    // If there is an error, return the error details to the caller.
-                    return error;
-                };
+                // Grab and return the specified CA Policy.
+                return [await (await this.client).api("/deviceManagement/managedDevices").filter("azureADDeviceId eq '" + AADDeviceID + "'").get()];
+                // If no GUID is specified, return all AAD CA policies.
+            } else if (typeof AADDeviceID === "undefined") {
+                // Grab all AAD CA policies.
+                memDevicePage = await (await this.client).api("/deviceManagement/managedDevices").get();
             } else {
-                // If the GUID is not in the right format, throw an error.
-                throw new Error("The GUID specified is not a proper GUID!");
+                // Input is unexpected, throw an error and halt execution.
+                throw new InternalAppError("The GUID parameter is not a string and a valid GUID!", "Invalid Input", "GraphClient -> getMEMDevice -> Input Validation");
+            };
+
+            // Process the page collection to its base form (ManagedDevice)
+            const memDeviceList: MicrosoftGraphBeta.ManagedDevice[] = await this.iteratePage(memDevicePage);
+
+            // Return the processed data.
+            return memDeviceList;
+        } catch (error) {
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> getMEMDevice -> catch statement");
             };
         };
     };
 
-    // Wipe the specified device using Endpoint Manager (this specific wipe is an autopilot reset)
+    // Wipe the specified device using Endpoint Manager (this specific wipe is an Autopilot reset)
     async wipeMEMDevice(GUID: string): Promise<boolean> {
-        // Validate GUID is a proper GUID
-        if (validateGUID(GUID)) {
-            // Attempt to wipe the device
-            try {
-                // Get MS Endpoint Manager's internal device ID from the specified Azure AD Device ID
-                const memDeviceID = (await this.getMEMDevice(GUID))[0].id
+        // Validate input
+        if (!validateGUID(GUID)) { throw new InternalAppError("The GUID specified is not a proper GUID!", "Invalid Input", "GraphClient -> wipeMEMDevice -> Input Validation") };
 
-                // Define the type of wipe that will take place
-                const wipeConfig = {
-                    "keepEnrollmentData": true,
-                    "keepUserData": false,
-                    "useProtectedWipe": true
-                }
+        // Attempt to wipe the device
+        try {
+            // Get MS Endpoint Manager's internal device ID from the specified Azure AD Device ID
+            const memDeviceID = (await this.getMEMDevice(GUID))[0].id
 
-                // Send the delete command for the specified MEM Device ID (Not ot be confused with MEM Device ID)
-                await (await this.client).api("/deviceManagement/managedDevices/" + memDeviceID + "/wipe").post(wipeConfig);
-
-                // Return true for a successful operation
-                return true;
-            } catch (error) {
-                // If there is an error, return the error details to the caller
-                return error;
+            // Define the type of wipe that will take place
+            const wipeConfig = {
+                "keepEnrollmentData": true,
+                "keepUserData": false,
+                "useProtectedWipe": true
             }
-        } else {
-            // If the GUID is not in the right format, throw an error
-            throw new Error("The GUID specified is not a proper GUID!");
+
+            // Send the delete command for the specified MEM Device ID (Not ot be confused with MEM Device ID)
+            await (await this.client).api("/deviceManagement/managedDevices/" + memDeviceID + "/wipe").post(wipeConfig);
+
+            // Return true for a successful operation
+            return true;
+        } catch (error) {
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> wipeMEMDevice -> catch statement");
+            };
         };
     };
-}
+};
