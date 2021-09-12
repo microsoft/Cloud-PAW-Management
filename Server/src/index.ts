@@ -1,4 +1,5 @@
 import express from "express";
+import helmet from "helmet";
 import { MSAzureAccessCredential } from "./Authentication";
 import { MSGraphClient } from "./GraphClient";
 import { DebugRouter } from "./DebugRoute";
@@ -21,6 +22,10 @@ const webServer = express();
 // Parse the request bodies so that they can be used as objects instead of raw text
 webServer.use(express.json());
 
+// TODO: Properly config the CSP settings so they are react compatible to bring more security
+// Quick configure Express to be more secure, disabling the CSP because it breaks react
+webServer.use(helmet({"contentSecurityPolicy": false}));
+
 // If debug mode is enabled, enable the debug routes
 if (debugMode === "true") {
     // Instantiate an instance of the debug router which will add of the debugging routes
@@ -38,7 +43,7 @@ if (debugMode === "true") {
         // Stop the server
         serverInstance.close();
     });
-}
+};
 
 // Initialize the core business logic routes
 const lifeCycleRouter = new LifeCycleRouter(webServer, graphClient);
