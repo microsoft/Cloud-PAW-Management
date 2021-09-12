@@ -1,6 +1,6 @@
 import type { MSGraphClient } from "./GraphClient";
 import { endpointPAWUserRightsSettings, conditionalAccessPAWUserAssignment } from "./RequestGenerator";
-import { validateGUIDArray, parseScopeTag, ScopeTagDataIncomplete, writeDebugInfo } from "./Utility";
+import { validateGUIDArray, parseScopeTag, ScopeTagDataIncomplete, writeDebugInfo, InternalAppError } from "./Utility";
 import type express from "express";
 import type * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta";
 
@@ -69,7 +69,7 @@ export class LifeCycleRouter {
                 // Parse the new description and return the parsed data structure
                 return parseScopeTag(updatedScopeTag.description);
             } catch (error) { // If an error happens, throw a new error
-                throw new Error("Couldn't make a new MEM scope tag during configInit!: " + error);
+                throw new InternalAppError("Couldn't make a new MEM scope tag during configInit!: " + error);
             }
             // Parse and expose the data of the already existing MEM scope tag
         } else {
@@ -98,8 +98,14 @@ export class LifeCycleRouter {
             return results;
 
         } catch (error) { // On error, don't throw, instead pass the error details to a dedicated code block.
-            // Return the error details
-            return error;
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newSettingsCatalog -> catch statement");
+            };
         };
     };
 
@@ -116,9 +122,15 @@ export class LifeCycleRouter {
             // Return the results of the creation operation to the caller
             return results;
 
-        } catch (error) { // On error, don't throw, instead pass the error details to a dedicated code block.
-            // Return the error details
-            return error;
+        } catch (error) {
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newSettingsCatalog -> catch statement");
+            };
         };
     };
 
@@ -135,9 +147,15 @@ export class LifeCycleRouter {
             // Return the results of the creation operation to the caller
             return results;
 
-        } catch (error) { // On error, don't throw, instead pass the error details to a dedicated code block.
-            // Return the error details
-            return error;
+        } catch (error) {
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newSettingsCatalog -> catch statement");
+            };
         };
     };
 
@@ -154,9 +172,15 @@ export class LifeCycleRouter {
             // Return the results of the creation operation to the caller
             return results;
 
-        } catch (error) { // On error, don't throw, instead pass the error details to a dedicated code block.
-            // Return the error details
-            return error;
+        } catch (error) {
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newSettingsCatalog -> catch statement");
+            };
         };
     };
 
@@ -173,8 +197,15 @@ export class LifeCycleRouter {
             // Return the results of the creation operation to the caller
             return results;
 
-        } catch (error) { // On error, don't throw, instead pass the error details to a dedicated code block.
-            return error;
+        } catch (error) { 
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newSettingsCatalog -> catch statement");
+            };
         };
     };
 
