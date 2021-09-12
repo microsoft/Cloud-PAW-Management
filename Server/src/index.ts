@@ -4,6 +4,8 @@ import { MSAzureAccessCredential } from "./Authentication";
 import { MSGraphClient } from "./GraphClient";
 import { DebugRouter } from "./DebugRoute";
 import { LifeCycleRouter } from "./LifeCycleManagement";
+import * as path from "path";
+import { writeDebugInfo } from "./Utility";
 
 // Import environmental variables
 const port = process.env.PORT || 3000;
@@ -25,6 +27,12 @@ webServer.use(express.json());
 // TODO: Properly config the CSP settings so they are react compatible to bring more security
 // Quick configure Express to be more secure, disabling the CSP because it breaks react
 webServer.use(helmet({"contentSecurityPolicy": false}));
+
+// Serve up the UI directory
+webServer.use(express.static(path.join(__dirname, "UI")));
+
+// Write the info about the static files being served
+writeDebugInfo(path.join(__dirname, "UI"), "Static file path:")
 
 // If debug mode is enabled, enable the debug routes
 if (debugMode === "true") {
@@ -50,5 +58,5 @@ const lifeCycleRouter = new LifeCycleRouter(webServer, graphClient);
 
 // Start the web server
 const serverInstance = webServer.listen(port, () => {
-    console.log("Server running on port: " + port);
+    writeDebugInfo("Running on port: " + port, "Server Started");
 });
