@@ -12,6 +12,7 @@ on:
     branches: [ main ]
     paths:
       - User-Interface/**
+  workflow_dispatch:    
 
 jobs:
   build:
