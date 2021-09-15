@@ -14,6 +14,9 @@ steps:
   inputs:
     versionSpec: '14.x'
   displayName: 'Install Node.js'
-
-- task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
-  displayName: ‘Component Detection’
+- task: ComponentGovernanceComponentDetection@0
+  inputs:
+    scanType: 'Register'
+    verbosity: 'Verbose'
+    alertWarningLevel: 'High'
+  displayName: 'Component Detection'
