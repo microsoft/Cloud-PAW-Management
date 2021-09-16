@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { validateGUID, validateGUIDArray, validateStringArray } from "./Utility";
 import type * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta";
 
@@ -52,9 +55,9 @@ export function endpointPAWUserRightsSettings(userList: string[]) {
 
     // Return the computed object to the caller
     return settingsObject;
-}
+};
 
-// Generate an assignment object for Microsoft Endpoint Manager 
+// Generate an assignment object for Microsoft Endpoint Manager (MEM)
 export function endpointGroupAssignmentTarget(includeGUID?: string[], excludeGUID?: string[]) {
     // Validate inputs
     if (!(includeGUID instanceof Array) || !validateGUIDArray(includeGUID)) { throw new Error("The specified array of included group GUIDs is not valid!") };
@@ -117,7 +120,7 @@ export function endpointGroupAssignmentTarget(includeGUID?: string[], excludeGUI
 
     // Return the built assignment object
     return assignmentObject;
-}
+};
 
 // Generate the object for conditional access policy to assign a specific user to a device
 export function conditionalAccessPAWUserAssignment(deviceID: string, deviceGroupGUID: string, userGroupListGUID: string[], breakGlassGroupGUID: string): MicrosoftGraphBeta.ConditionalAccessPolicy {
@@ -159,4 +162,8 @@ export function conditionalAccessPAWUserAssignment(deviceID: string, deviceGroup
 
     // Return the computed results
     return policyUserAssignment;
-}
+};
+
+// TODO: Generate device configuration profiles for the MEM device config CRUD operations
+// Generate a Windows 10 device restriction post body for MEM
+export function win10DevRestriction() {}

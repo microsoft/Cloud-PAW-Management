@@ -1,7 +1,21 @@
 {
   "name": "user-interface",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.0.1",
+  "private": "true",
+  "keywords": [
+    "Intune",
+    "Endpoint Manager",
+    "Microsoft",
+    "PAW",
+    "Web app",
+    "interactive login"
+  ],
+  "author": "Elliot Huffman",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/Cloud-PAW-Management"
+  },
   "dependencies": {
     "@fluentui/react": "^8.34.1",
     "react": "^17.0.2",

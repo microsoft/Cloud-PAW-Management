@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { InternalAppError, validateStringArray, validateGUID, validateGUIDArray, validateEmail, validateSettingCatalogSettings, validateConditionalAccessSetting } from "./Utility";
 import { endpointGroupAssignmentTarget } from "./RequestGenerator";
 import { Client, ClientOptions, PageCollection, PageIterator } from "@microsoft/microsoft-graph-client";

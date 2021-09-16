@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import type { MSGraphClient } from "./GraphClient";
 import { endpointPAWUserRightsSettings, conditionalAccessPAWUserAssignment } from "./RequestGenerator";
 import { validateGUID, validateGUIDArray, validateStringArray } from "./Utility";

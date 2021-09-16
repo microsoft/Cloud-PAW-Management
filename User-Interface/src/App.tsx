@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import React from 'react';
 import logo from './Assets/Cloud PAW Logo - Vector.svg';
 import './App.css';

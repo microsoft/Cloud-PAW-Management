@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import type { MSGraphClient } from "./GraphClient";
 import { endpointPAWUserRightsSettings, conditionalAccessPAWUserAssignment } from "./RequestGenerator";
 import { validateGUIDArray, parseScopeTag, ScopeTagDataIncomplete, writeDebugInfo, InternalAppError } from "./Utility";
@@ -211,6 +214,16 @@ export class LifeCycleRouter {
 
     // Initialize the REST API routes
     private initRoutes(): void {
+
+        // TODO: List all PAW Devices
+        this.webServer.get('/API/Lifecycle/PAW/', async (request, response, next) => {
+            // List all PAW devices
+        });
+
+        // TODO: Assign a PAW to a user or set of users
+        this.webServer.post('/API/Lifecycle/AssignPAW/:deviceID', async (request, response, next) => {
+            // Assign the PAW device
+        });
 
         // Assign a PAW to a user or set of users
         this.webServer.post('/AssignPAW/:deviceID', async (request, response, next) => {

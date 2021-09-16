@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import express from "express";
 import helmet from "helmet";
 import { MSAzureAccessCredential } from "./Authentication";

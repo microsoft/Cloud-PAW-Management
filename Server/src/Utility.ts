@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 // TODO: enhance debug console output with time stamps and other valuable data
 // Write debug data to the console if debug mode is turned on
 export function writeDebugInfo(object: any, message?: any): void {
