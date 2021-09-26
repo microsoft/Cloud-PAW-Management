@@ -22,6 +22,9 @@ const azureAuthSession = new MSAzureAccessCredential();
 // Initialize the graph client
 const graphClient = new MSGraphClient(azureAuthSession.credential);
 
+// Initialize the configuration engine
+const configEngine = new ConfigurationEngine(graphClient);
+
 // Initialize Express
 const webServer = express();
 
