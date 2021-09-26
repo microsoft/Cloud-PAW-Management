@@ -31,5 +31,14 @@
         "    };",
 		"}"
 		]
+	},
+	"Write Debug": {
+		"prefix": "writeDebugInfo",
+		"description": "A prebuilt write debug info snippet that includes the necessary comment.",
+		"scope": "javascript,typescript",
+		"body": [
+			"\/\/ Write debug info",
+			"writeDebugInfo(${1:Data to log}, \"${2:Message header, optional}\");"
+		]
 	}
 }
