@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { InternalAppError, validateStringArray, validateGUID, validateGUIDArray, validateEmail, validateSettingCatalogSettings, validateConditionalAccessSetting } from "./Utility";
-import { endpointGroupAssignmentTarget } from "./RequestGenerator";
+import type { ChainedTokenCredential } from "@azure/identity";
 import { Client, ClientOptions, PageCollection, PageIterator } from "@microsoft/microsoft-graph-client";
 import { TokenCredentialAuthenticationProvider } from "@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials";
-import "isomorphic-fetch";
 import type * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta";
-import type { ChainedTokenCredential } from "@azure/identity"
+import "isomorphic-fetch";
+import { endpointGroupAssignmentTarget } from "./RequestGenerator";
+import { InternalAppError, validateConditionalAccessSetting, validateEmail, validateGUID, validateGUIDArray, validateSettingCatalogSettings, validateStringArray } from "./Utility";
 
 // Define the Graph Client class.
 export class MSGraphClient {

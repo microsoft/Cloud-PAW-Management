@@ -3,11 +3,12 @@
 
 import express from "express";
 import helmet from "helmet";
-import { MSAzureAccessCredential } from "./Authentication";
-import { MSGraphClient } from "./GraphClient";
-import { DebugRouter } from "./DebugRoute";
-import { LifeCycleRouter } from "./LifeCycleManagement";
 import * as path from "path";
+import { MSAzureAccessCredential } from "./Authentication";
+import { ConfigurationEngine } from "./ConfigEngine";
+import { DebugRouter } from "./DebugRoute";
+import { MSGraphClient } from "./GraphClient";
+import { LifeCycleRouter } from "./LifeCycleManagement";
 import { writeDebugInfo } from "./Utility";
 
 // Import environmental variables

@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ClientSecretCredential, ManagedIdentityCredential, ChainedTokenCredential } from "@azure/identity"
+import { ChainedTokenCredential, ClientSecretCredential, ManagedIdentityCredential } from "@azure/identity";
+import type { KeyVaultSecret } from "@azure/keyvault-secrets";
 import { SecretClient } from "@azure/keyvault-secrets";
 import { validateGUID } from "./Utility";
-import type { KeyVaultSecret } from "@azure/keyvault-secrets";
 
 // Create the MS Azure Access Credential handler class.
 export class MSAzureAccessCredential {

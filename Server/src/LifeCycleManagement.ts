@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import type { MSGraphClient } from "./GraphClient";
 import { endpointPAWUserRightsSettings, conditionalAccessPAWUserAssignment } from "./RequestGenerator";
 import { validateGUIDArray, parseScopeTag, ScopeTagDataIncomplete, writeDebugInfo, InternalAppError } from "./Utility";
+import type { MSGraphClient } from "./GraphClient";
 import type express from "express";
 import type * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta";
 
