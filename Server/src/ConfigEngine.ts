@@ -25,16 +25,17 @@ interface CloudSecConfig {
 export class ConfigurationEngine {
     // Define the properties available in the class
     private graphClient: MSGraphClient;
-    private configScratchSpace: Promise<CloudSecConfigIncomplete>;
+    private configScratchSpace: CloudSecConfigIncomplete;
     private scopeTagName: string;
     configInitialized: boolean;
-    config: Promise<CloudSecConfig> | undefined;
+    config: CloudSecConfig | undefined;
 
     // Initialize the class
     constructor(graphClient: MSGraphClient) {
         // Initialize the properties
         this.graphClient = graphClient;
         this.configInitialized = false;
+        this.configScratchSpace = {};
 
         // Write debug info
         writeDebugInfo("Initialized standard class properties");
@@ -46,7 +47,7 @@ export class ConfigurationEngine {
         if (typeof process.env.Scope_Tag !== "string") {
             // Write debug info
             writeDebugInfo((typeof process.env.Scope_Tag), "Scope_Tag env var is not a string:");
-            
+
             // If it isn't set the scope tag name to a predefined tag name
             this.scopeTagName = "Priv Sec Mgmt App"
         } else {
@@ -57,12 +58,16 @@ export class ConfigurationEngine {
             writeDebugInfo(this.scopeTagName, "Set scopeTagName:");
         };
 
-        // Execute configuration read to populate the initialization state
-        this.configScratchSpace = this.readConfig();
+        // Execute configuration read to populate the initialization state to the scratch space.
+        // Use a .then() so that the functions execute in order of operation
+        this.readConfig().then((value) => {
+            // Validate the scratch space status and go live if valid.
+            this.validateConfig();
+        });
     };
 
     // Read the scope tag that the config engine uses;
-    private async readConfig(): Promise<CloudSecConfigIncomplete> {
+    private async readConfig(): Promise<void> {
         // Write debug info
         writeDebugInfo("Get Scope Tag Object from MEM");
 
@@ -75,13 +80,46 @@ export class ConfigurationEngine {
         // Check the presence of the description field of the MEM Scope Tag
         if (typeof scopeTagObject.description === "string") {
             // Parse the description field into something useable.
-            return this.parseConfigString(scopeTagObject.description);
+            this.configScratchSpace = this.parseConfigString(scopeTagObject.description);
+        };
+    };
+
+    // Validates the scratch space and moves it to the live config if valid.
+    private async validateConfig(): Promise<boolean> {
+        // Grab a copy of the scratch space so that other actors can't inject code during validation
+        // This type of json object copy eliminates complex types and executables from the object being copied
+        const scratchSpaceInstance: any = JSON.parse(JSON.stringify(await this.configScratchSpace));
+
+        // Validate object structure by checking the properties exist and the values of the object is what is expected
+        // Validate the Break Glass property
+        if (typeof scratchSpaceInstance.BrkGls === "undefined" || !(validateGUID(scratchSpaceInstance.BrkGls))) {
+            // If validation fails, return false
+            return false;
+            // Validate the PAW Security Group property
+        } else if (typeof scratchSpaceInstance.PAWSecGrp === "undefined" || !(validateGUID(scratchSpaceInstance.PAWSecGrp))) {
+            // If validation fails, return false
+            return false;
+            // Validate the SILO Root Group property
+        } else if (typeof scratchSpaceInstance.SiloRootGrp === "undefined" || !(validateGUID(scratchSpaceInstance.SiloRootGrp))) {
+            // If validation fails, return false
+            return false;
+            // Validate the User Root Group property
+        } else if (typeof scratchSpaceInstance.UsrSecGrp === "undefined" || !(validateGUID(scratchSpaceInstance.UsrSecGrp))) {
+            // If validation fails, return false
+            return false;
+            // Validate the User Tagging property
+        } else if (typeof scratchSpaceInstance.UsrTag === "undefined" || !(validateGUID(scratchSpaceInstance.UsrTag))) {
+            // If validation fails, return false
+            return false;
         } else {
-            // Build an awaited empty "CloudSecConfigIncomplete" to satisfy typescript's type checker
-            const emptyConfig: CloudSecConfigIncomplete = await {};
-            
-            // Return an empty config to the property
-            return emptyConfig;
+            // Set the config to be the value of the
+            this.config = scratchSpaceInstance;
+
+            // Set the config initialized flag to be true
+            this.configInitialized = true;
+
+            // Return true to the caller to symbolize successful execution
+            return true;
         };
     };
 
@@ -157,5 +195,89 @@ export class ConfigurationEngine {
 
         // Set the parsed and validated data into the scratch space property
         return parsedConfig;
+    };
+
+    // Deploy the core security groups
+    async deployConfig(userConcent: boolean): Promise<void> {
+
+        // Validate user concent
+        if (!userConcent) {throw new InternalAppError("User has not consented to the deployment!", "Invalid Input", "ConfigEngine -> deployConfig -> User Concent")};
+
+        // If the Break glass property is not configured, deploy a new BG SG
+        if (typeof this.configScratchSpace.BrkGls === "undefined") {
+            // Create the Break Glass security group
+            const newBGgroup = await this.graphClient.newAADGroup("Break Glass", "Used by the Cloud PAW Management App to exclude the emergency access accounts from being caught in an outage.");
+
+            // Update the Scratch space to reflect the GUID from the new SG that was just created
+            this.configScratchSpace.BrkGls = newBGgroup.id
+
+            // If the PAW Device root group is not configured, deploy a new SG
+        } else if (typeof this.configScratchSpace.PAWSecGrp === "undefined") {
+            // Create the PAW Devices security group
+            const newPAWDevGroup = await this.graphClient.newAADGroup("PAW Devices", "Used by the Cloud PAW Management App to contain the PAW device's Security Group and device hierarchy.");
+
+            // Update the Scratch space to reflect the GUID from the new SG that was just created
+            this.configScratchSpace.PAWSecGrp = newPAWDevGroup.id
+
+            // If the SILO Root group doesn't exist, deploy it
+        } else if (typeof this.configScratchSpace.SiloRootGrp === "undefined") {
+            // Create the SILO Root Group
+            const newSILOGroup = await this.graphClient.newAADGroup("SILO Root", "Used by the Cloud PAW management app to contain the SILO Security Group hierarchy.");
+
+            // Update the Scratch Space SILO Root group data with the new GUID
+            this.configScratchSpace.SiloRootGrp = newSILOGroup.id;
+
+            // If the Privileged Users root group does not exist, deploy a new SG for it.
+        } else if (typeof this.configScratchSpace.UsrSecGrp === "undefined") {
+            // Create the Priv Users Sec Group
+            const newPrivUserGroup = await this.graphClient.newAADGroup("Privileged Users", "Used by the Cloud PAW Management App to contain the Priv Users' Security Group and user hierarchy.");
+
+            // Configure the scratch space Priv Users root group with the new GUID provided
+            this.configScratchSpace.UsrSecGrp = newPrivUserGroup.id;
+
+            // If the Priv Users tagging group doesn't exist, deploy the PAG.
+        } else if (typeof this.configScratchSpace.UsrTag === "undefined") {
+            // Create a new PAG
+            const newUserTagging = await this.graphClient.newAADGroup("Privileged Users - Tagging", "Used to tag priv users to enforce credential partitioning.", true);
+
+            // Configure the UsrTag property of the scratch space with the new GUID provided
+            this.configScratchSpace.UsrTag = newUserTagging.id;
+        };
+
+        // After deploying the needed groups, execute validation.
+        await this.validateConfig();
+
+        // Write the new data to the MEM scope tag.
+        await this.updateConfigTag();
+    };
+
+    // Update the core role scope tag with the settings in the config property
+    private async updateConfigTag(): Promise<boolean> {
+
+        // Write debug info
+        writeDebugInfo(this.configInitialized, "Config Initialization flag value:");
+        writeDebugInfo(this.config, "Config property contents:")
+
+        // Validate that the config is initialized and that the config is not empty
+        if (this.configInitialized && typeof this.config !== "undefined") {
+            // Build the tag description to be sent to the scope tag
+            const tagDescription = "PAWSecGrp=" + this.config.PAWSecGrp + "\nUsrSecGrp=" + this.config.UsrSecGrp + "\nSiloRootGrp=" + this.config.SiloRootGrp + "\nBrkGls=" + this.config.BrkGls + "\nUsrTag=" + this.config.UsrTag;
+
+            // Write debug info
+            writeDebugInfo(tagDescription, "Constructed tag description:");
+
+            // Update the scope tag with the specified options
+            const updateResults = await this.graphClient.updateMEMScopeTag(this.scopeTagName, tagDescription);
+
+            // Write debug info
+            writeDebugInfo(updateResults, "Results of the MEM Scope Tag update operation:");
+
+            // Return that the operation was successful
+            return true;
+
+        } else { // If the config is not initialized, execute the below contents
+            // Return false if the config is not initialized
+            return false;
+        };
     };
 };
