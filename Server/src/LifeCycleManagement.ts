@@ -2,8 +2,9 @@
 // Licensed under the MIT license.
 
 import { endpointPAWUserRightsSettings, conditionalAccessPAWUserAssignment } from "./RequestGenerator";
-import { validateGUIDArray, parseScopeTag, ScopeTagDataIncomplete, writeDebugInfo, InternalAppError } from "./Utility";
+import { validateGUIDArray, writeDebugInfo, InternalAppError } from "./Utility";
 import type { MSGraphClient } from "./GraphClient";
+import type { ConfigurationEngine } from "./ConfigEngine";
 import type express from "express";
 import type * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta";
 
@@ -11,10 +12,10 @@ export class LifeCycleRouter {
     // Define the properties that will be available to the class
     private webServer: express.Express;
     private graphClient: MSGraphClient;
-    private configData: Promise<ScopeTagDataIncomplete>;
+    private configEngine: ConfigurationEngine;
 
     // Define how the class should be instantiated
-    constructor(webServer: express.Express, graphClient: MSGraphClient) {
+    constructor(webServer: express.Express, graphClient: MSGraphClient, configEngine: ConfigurationEngine) {
 
         // Make the express instance available to the class
         this.webServer = webServer;
@@ -22,8 +23,8 @@ export class LifeCycleRouter {
         // Make the graph client instance available to the class
         this.graphClient = graphClient;
 
-        // Initialize the config data that will be used on all of the core routes
-        this.configData = this.configInit();
+        // Make the config engine instance available to the class
+        this.configEngine = configEngine;
 
         // Initialize the routes
         this.initRoutes();
@@ -44,14 +45,16 @@ export class LifeCycleRouter {
 
         // Assign a PAW to a user or set of users
         this.webServer.post('/AssignPAW/:deviceID', async (request, response, next) => {
-            // request.body.userGUIDList - Array of AAD user GUIDs that representthe user account that will be assigned to the specified PAW
+            // request.body.userGUIDList - Array of AAD user GUIDs that represent the user account that will be assigned to the specified PAW
             // request.body.userGroupList - Corresponding SG GUID for the above GUIDs this will have the CA policy applied to it to be PAW enforced
             // Catch execution errors
             try {
+                // Ensure that the config engine is initialized before action is taken
+                if (!this.configEngine.configInitialized || typeof this.configEngine.config === "undefined") {throw new InternalAppError("The configuration engine is not initialized at the time of lifecycle management action!", "Not Initialized")};
                 // Parse the userGUID List and retrieve a user object from AAD for each GUID presented
                 if (!validateGUIDArray(request.body.userGUIDList)) { throw new Error("Please specify a valid array of GUIDs in the body's userGUIDList property!") };
                 // Check to ensure that the configData properties are present and accounted for
-                const configData = await this.configData
+                const configData = this.configEngine.config
                 if (typeof configData.BrkGls === "undefined" || typeof configData.PAWSecGrp === "undefined") {throw new Error("BrkGls is not defined at the class level after an await command, BrkGls is potentially not configured in the scope tag!")};
                 
                 // Initialize blank arrays for users

@@ -61,7 +61,7 @@ if (debugMode === "true") {
 };
 
 // Initialize the core business logic routes
-const lifeCycleRouter = new LifeCycleRouter(webServer, graphClient);
+const lifeCycleRouter = new LifeCycleRouter(webServer, graphClient, configEngine);
 
 // Start the web server
 const serverInstance = webServer.listen(port, () => {
