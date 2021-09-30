@@ -145,7 +145,6 @@ describe("GUID Validator", () => {
 //     });
 // });
 
-// Test Comment - HC3
 
 // Email address examples to be tested in the unit test
 
