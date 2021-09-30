@@ -131,6 +131,12 @@ export class ConfigurationEngine {
         // Create the returned object
         let parsedConfig: CloudSecConfigIncomplete = {}
 
+        // Check to see if the role scope tag exists but has a blank description
+        if (configString === "") {
+            // Return an empty and incomplete cloud config object to the caller
+            return parsedConfig;
+        };
+
         // Split out each line
         const newLines = configString.split("\n");
 
