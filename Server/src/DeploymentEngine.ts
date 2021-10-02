@@ -35,7 +35,7 @@ class DeploymentEngineRouter {
         this.webServer.post("/deploy/core", async (request, response, next) => {
             try {
                 // Send the boolean response of the deployment operation
-                response.send(await this.configEngine.deployConfig(request.body.userConcent));
+                response.send(await this.configEngine.deployConfigTag(request.body.userConcent));
             } catch (error) {
                 // Check to see if the error is an error
                 if (error instanceof InternalAppError) {

@@ -62,7 +62,7 @@ export class ConfigurationEngine {
         // Use a .then() so that the functions execute in order of operation
         this.readConfig().then((value) => {
             // Validate the scratch space status and go live if valid.
-            this.validateConfig();
+            this.validateTagConfig();
         });
     };
 
@@ -80,15 +80,15 @@ export class ConfigurationEngine {
         // Check the presence of the description field of the MEM Scope Tag
         if (typeof scopeTagObject.description === "string") {
             // Parse the description field into something useable.
-            this.configScratchSpace = this.parseConfigString(scopeTagObject.description);
+            this.configScratchSpace = this.parseTagConfigString(scopeTagObject.description);
         };
     };
 
     // Validates the scratch space and moves it to the live config if valid.
-    private async validateConfig(): Promise<boolean> {
+    private async validateTagConfig(): Promise<boolean> {
         // Grab a copy of the scratch space so that other actors can't inject code during validation
         // This type of json object copy eliminates complex types and executables from the object being copied
-        const scratchSpaceInstance: any = JSON.parse(JSON.stringify(await this.configScratchSpace));
+        const scratchSpaceInstance: any = JSON.parse(JSON.stringify(this.configScratchSpace));
 
         // Validate object structure by checking the properties exist and the values of the object is what is expected
         // Validate the Break Glass property
@@ -124,7 +124,7 @@ export class ConfigurationEngine {
     };
 
     // Parse and validate the string data that should be in the config format
-    private parseConfigString(configString: string): CloudSecConfigIncomplete {
+    private parseTagConfigString(configString: string): CloudSecConfigIncomplete {
         // Validate input
         if (typeof configString !== "string") { throw new InternalAppError("The data is not in string format!", "Invalid Input", "ConfigEngine -> ConfigurationEngine -> parseConfigString -> Input Validation") };
 
@@ -204,10 +204,10 @@ export class ConfigurationEngine {
     };
 
     // Deploy the core security groups
-    async deployConfig(userConcent: boolean): Promise<void> {
+    async deployConfigTag(userConcent: boolean): Promise<void> {
 
         // Validate user concent
-        if (!userConcent) {throw new InternalAppError("User has not consented to the deployment!", "Invalid Input", "ConfigEngine -> deployConfig -> User Concent")};
+        if (!userConcent) { throw new InternalAppError("User has not consented to the deployment!", "Invalid Input", "ConfigEngine -> deployConfig -> User Concent") };
 
         // If the Break glass property is not configured, deploy a new BG SG
         if (typeof this.configScratchSpace.BrkGls === "undefined") {
@@ -251,7 +251,7 @@ export class ConfigurationEngine {
         };
 
         // After deploying the needed groups, execute validation.
-        await this.validateConfig();
+        await this.validateTagConfig();
 
         // Write the new data to the MEM scope tag.
         await this.updateConfigTag();
