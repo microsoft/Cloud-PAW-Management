@@ -15,7 +15,7 @@
 	// 	],
 	// 	"description": "Log output to console"
 	// }
-	"Route Callback": {
+	"Route Callback (Custom, Insecure)": {
 		"prefix": "route-callback",
 		"description": "Pre-built callback with error handling",
 		"scope": "javascript,typescript",
@@ -32,13 +32,21 @@
 		"}"
 		]
 	},
-	"Write Debug": {
+	"Write Debug (Custom)": {
 		"prefix": "writeDebugInfo",
 		"description": "A prebuilt write debug info snippet that includes the necessary comment.",
 		"scope": "javascript,typescript",
 		"body": [
 			"\/\/ Write debug info",
 			"writeDebugInfo(${1:Data to log}, \"${2:Message header, optional}\");"
+		]
+	},
+	"Throw Internal App Error (Custom)": {
+		"prefix": "throw InternalAppError",
+		"description": "Throw a new internal app error using the error handler built into the project's utility file.",
+		"scope": "javascript,typescript",
+		"body": [
+			"throw new InternalAppError(\"${1:Error Message}\",\"${2:Error Type}\",\"${3:Stack Trace}\");"
 		]
 	}
 }
