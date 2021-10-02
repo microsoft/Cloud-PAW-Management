@@ -22,6 +22,31 @@ export function writeDebugInfo(object: any, message?: any): void {
     };
 };
 
+// Validate that the specified number, string, or Date object is a valid date and not an invalid object/format.
+export function validateDate(dateToTest: string | number | Date): boolean {
+    // Check to to see if the object is a Date object
+    if (dateToTest instanceof Date) {
+        // If it is, place it in the dateObject var for later testing.
+        // This is inefficient but reduces the amount of testing code necessary later.
+        // Garbage collection will eliminate the waste after done using the function.
+        var dateObject = dateToTest;
+    } else if (typeof dateToTest === "string" || typeof dateToTest === "number") {
+        var dateObject = new Date(dateToTest);
+    } else { // If a type was passed that is not a Date, string or number...
+        // return false as that would not be supported.
+        return false;
+    };
+
+    // Check to make sure the dateObject isn't an invalid date
+    if (dateObject.toString() === "Invalid Date") {
+        // If it is invalid, return false
+        return false;
+    } else { // If it isn't invalid
+        // return true to indicate that it is a valid Date object/format
+        return true;
+    };
+};
+
 // Create a GUID validation function to ensure GUID data is in correct format
 export function validateGUID(GUIDToTest: any): boolean {
     // If the data is undefined, it is not a GUID
