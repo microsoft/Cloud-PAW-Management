@@ -313,7 +313,7 @@ export class ConfigurationEngine {
         let parsedConfig: any = {};
 
         // Split out each line
-        const newLines = groupObject.description.split("\n");
+        const newLines = groupObject.description.split(",");
 
         // Loop through all of the lines and add it to the output after validating the data
         for (const line in newLines) {
@@ -324,7 +324,7 @@ export class ConfigurationEngine {
             switch (splitLine[0]) {
                 case "CommissionedDate":
                     // Validate the value in the line split
-                    if (validateDate(splitLine[1])) { throw new InternalAppError("The value associated with the commissionedDate PAW Config key is not a valid date!", "Invalid Input", "ConfigEngine - ConfigurationEngine - parsePAWGroupConfig - Switch - Date Validator") };
+                    if (!validateDate(splitLine[1])) { throw new InternalAppError("The value associated with the commissionedDate PAW Config key is not a valid date!", "Invalid Input", "ConfigEngine - ConfigurationEngine - parsePAWGroupConfig - Switch - Date Validator") };
 
                     // Pull the key from the split line, convert it to a Date object and set it in the returned object
                     parsedConfig.CommissionedDate = new Date(splitLine[1]);
@@ -349,7 +349,7 @@ export class ConfigurationEngine {
                 case "UserAssignment":
                     // Validate value as a proper GUID
                     if (!validateGUID(splitLine[1])) { throw new InternalAppError("The User assignment value is not a valid GUID!", "Input Validation", "ConfigEngine - ConfigurationEngine - parsePAWGroupConfig - Switch - User Assignment Validator") };
-                    
+
                     // Set value of the user assignment property as the validated value.
                     parsedConfig.UserAssignment = splitLine[1];
 
@@ -361,7 +361,7 @@ export class ConfigurationEngine {
 
                     // A key provided was not matched to the allowed data format, stop execution and throw an error
                     throw new InternalAppError("The given data is not in the correct format!", "Invalid Input", "ConfigEngine -> ConfigurationEngine -> parsePAWGroupConfig -> Switch -> Default Statement");
-                    
+
                     // Stop switch execution
                     break;
             };
@@ -376,11 +376,14 @@ export class ConfigurationEngine {
                 "UserAssignment": parsedConfig.UserAssignment
             };
 
+            // Write debug info
+            writeDebugInfo(validatedConfig, "Validated PAW Group Config Data:");
+
             // Return the PAW Config Object
             return validatedConfig;
         } else {// if all of the necessary properties don't exist
             // Throw an error
-            throw new InternalAppError("All the properties do not exist!", "Invalid Input","ConfigEngine - ConfigurationEngine - parsePAWGroupConfig - final property presence validation");
+            throw new InternalAppError("All the properties do not exist!", "Invalid Input", "ConfigEngine - ConfigurationEngine - parsePAWGroupConfig - final property presence validation");
         };
     };
 };
