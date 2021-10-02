@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import type { MSGraphClient } from "./GraphClient";
-import { InternalAppError, validateGUID, writeDebugInfo } from "./Utility";
+import { InternalAppError, validateGUID, validateDate, writeDebugInfo } from "./Utility";
 
 // Define the Endpoint Manager Role Scope Tag data format.
 interface CloudSecConfigIncomplete {
@@ -19,6 +19,13 @@ interface CloudSecConfig {
     "SiloRootGrp": string,
     "BrkGls": string,
     "UsrTag": string
+};
+
+// Define the PAW Configuration Spec
+interface PAWConfig {
+    Type: "Privileged" | "Developer" | "Tactical-DART" | "Tactical-CR" | "Tactical-RRR",
+    UserAssignment: string,
+    CommissionedDate: Date
 };
 
 // Expose a configuration engine that interfaces with the
@@ -284,6 +291,96 @@ export class ConfigurationEngine {
         } else { // If the config is not initialized, execute the below contents
             // Return false if the config is not initialized
             return false;
+        };
+    };
+
+    // Updates the specified group's description with the provided config info
+    async updatePAWGroupConfig() { };
+
+    // Read the specified commissioned PAW group's description and parse it into
+    async getPAWGroupConfig(groupID: string): Promise<PAWConfig> {
+        // Validate input
+        if (!validateGUID(groupID)) { throw new InternalAppError("The Group ID is not a valid GUID!", "Invalid Input", "ConfigEngine - ConfigurationEngine - parsePAWGroupConfig - Input Validation") };
+
+        // Get the specified group from AAD
+        const groupObject = (await this.graphClient.getAADGroup(groupID))[0];
+
+        // Validate the AAD Group is in good working order
+        if (typeof groupObject.description === "undefined" || groupObject.description == null) { throw new InternalAppError("Group is undefined!", "Retrieval", "ConfigEngine - ConfigurationEngine - parsePAWGroupConfig - AAD Group Retrieval") };
+        if (groupObject.description === "") { throw new InternalAppError("Group description is empty!", "Not Configured", "ConfigEngine - ConfigurationEngine - parsePAWGroupConfig - AAD Group Validation") };
+
+        // Create the returned object
+        let parsedConfig: any = {};
+
+        // Split out each line
+        const newLines = groupObject.description.split("\n");
+
+        // Loop through all of the lines and add it to the output after validating the data
+        for (const line in newLines) {
+            // Separate the two parts of the 
+            const splitLine = newLines[line].split("=");
+
+            // Validate keys/values and assign if the key matches
+            switch (splitLine[0]) {
+                case "CommissionedDate":
+                    // Validate the value in the line split
+                    if (validateDate(splitLine[1])) { throw new InternalAppError("The value associated with the commissionedDate PAW Config key is not a valid date!", "Invalid Input", "ConfigEngine - ConfigurationEngine - parsePAWGroupConfig - Switch - Date Validator") };
+
+                    // Pull the key from the split line, convert it to a Date object and set it in the returned object
+                    parsedConfig.CommissionedDate = new Date(splitLine[1]);
+
+                    // Stop switch execution
+                    break;
+                case "Type":
+                    // Validate string to ensure that the PAW type is allowed
+                    if (splitLine[1] === "Privileged" || splitLine[1] === "Developer" || splitLine[1] === "Tactical-DART" || splitLine[1] === "Tactical-CR" || splitLine[1] === "Tactical-RRR") {
+                        // If validated successfully, set the parsed return as the data that was validated
+                        parsedConfig.Type = splitLine[1];
+                    } else { // If validation failed
+                        // Write debug info
+                        writeDebugInfo(splitLine[1], "PAW Type SplitLine value info:");
+
+                        // Throw an error with the details
+                        throw new InternalAppError("Value is not allowed. For more details, please see https://github.com/microsoft/Cloud-PAW-Management/wiki/PAW-Group-Data-Format", "Invalid Input", "ConfigEngine - ConfigurationEngine - parsePAWGroupConfig - Switch - PAW Type Validation");
+                    };
+
+                    // Stop switch execution
+                    break;
+                case "UserAssignment":
+                    // Validate value as a proper GUID
+                    if (!validateGUID(splitLine[1])) { throw new InternalAppError("The User assignment value is not a valid GUID!", "Input Validation", "ConfigEngine - ConfigurationEngine - parsePAWGroupConfig - Switch - User Assignment Validator") };
+                    
+                    // Set value of the user assignment property as the validated value.
+                    parsedConfig.UserAssignment = splitLine[1];
+
+                    // Stop switch execution
+                    break;
+                default:
+                    // Write debug info
+                    writeDebugInfo(splitLine);
+
+                    // A key provided was not matched to the allowed data format, stop execution and throw an error
+                    throw new InternalAppError("The given data is not in the correct format!", "Invalid Input", "ConfigEngine -> ConfigurationEngine -> parsePAWGroupConfig -> Switch -> Default Statement");
+                    
+                    // Stop switch execution
+                    break;
+            };
+        };
+
+        // Ensure that all of the properties have been initialized
+        if (parsedConfig.CommissionedDate && parsedConfig.Type && parsedConfig.UserAssignment) {
+            // Typecast the loose object to a PAW Config object. (this is to satisfy typescript, the parsed config could actually be returned here instead if typescript were smarter)
+            const validatedConfig: PAWConfig = {
+                "CommissionedDate": parsedConfig.CommissionedDate,
+                "Type": parsedConfig.Type,
+                "UserAssignment": parsedConfig.UserAssignment
+            };
+
+            // Return the PAW Config Object
+            return validatedConfig;
+        } else {// if all of the necessary properties don't exist
+            // Throw an error
+            throw new InternalAppError("All the properties do not exist!", "Invalid Input","ConfigEngine - ConfigurationEngine - parsePAWGroupConfig - final property presence validation");
         };
     };
 };

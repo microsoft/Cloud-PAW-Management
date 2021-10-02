@@ -561,5 +561,17 @@ export class DebugRouter {
                 next(error);
             };
         });
+
+        // Return the PAW's group config in a parsed format
+        this.webServer.get('/configEngine/getPAWGroupConfig/:groupID', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Get the group's config, parse it and send it back to the client
+                response.send(await this.configEngine.getPAWGroupConfig(request.params.groupID));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        })
     };
 };
