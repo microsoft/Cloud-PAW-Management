@@ -179,15 +179,6 @@ export function validateConditionalAccessSetting(settingToValidate: any): boolea
     }
 };
 
-// Define a complete set of data for the Endpoint Manager Role Scope Tag data format.
-export interface ScopeTagData {
-    "PAWSecGrp": string,
-    "UsrSecGrp": string,
-    "SiloRootGrp": string,
-    "BrkGls": string,
-    "UsrTag": string
-};
-
 // Define the custom error structure for the app so that error handling can be well structured and in the future, automated.
 export class InternalAppError extends Error {
     // Define the initialization code for the class
