@@ -286,6 +286,18 @@ export class DebugRouter {
             };
         });
 
+        // List the members of the specified group
+        this.webServer.get('/groupMember/:id/:type', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Send the results of the operation back to the client
+                response.send(await this.graphClient.getAADGroupMember(request.params.id, request.params.type));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
+
         // Remove the specified member from the specified AAD group
         this.webServer.delete('/groupMember/:id', async (request, response, next) => {
             // Catch execution errors

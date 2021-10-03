@@ -539,14 +539,23 @@ export class MSGraphClient {
     };
 
     // List the members of a AAD Group
-    async getAADGroupMember(groupGUID: string): Promise<MicrosoftGraphBeta.DirectoryObject[]> {
+    async getAADGroupMember(groupGUID: string, type?: string): Promise<MicrosoftGraphBeta.DirectoryObject[]> {
         // Validate GUID is a proper GUID
         if (!validateGUID(groupGUID)) { throw new InternalAppError("The GUID specified is not a proper GUID!", "Invalid Input", "GraphClient -> getAADGroupMember -> Input Validation") };
+
+        // Validate the type parameter value is expected
+        if (type === "microsoft.graph.user" || type === "microsoft.graph.device" || type === "microsoft.graph.group") {
+            // Set the type filter value to the type specified with the required URI modifier
+            var typeFilter = "/" + type;
+        } else { // If the type param it not any of the pre-defined types, don't set the type filter
+            var typeFilter = "";
+        };
 
         // Grab the specified group membership from AAD
         try {
             // Grab the specified group membership based on the group's GUID.
-            const groupMemberPage: PageCollection = await (await this.client).api("/groups/" + groupGUID + "/members").get();
+            // The type filter will be added on the end if one is specified. The type filter automatically adds a slash if necessary
+            const groupMemberPage: PageCollection = await (await this.client).api("/groups/" + groupGUID + "/members" + typeFilter).get();
 
             // Process the page collection to its base form (ManagedDevice)
             const groupMemberList: MicrosoftGraphBeta.DirectoryObject[] = await this.iteratePage(groupMemberPage);
