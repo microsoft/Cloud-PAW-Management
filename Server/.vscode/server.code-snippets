@@ -46,7 +46,8 @@
 		"description": "Throw a new internal app error using the error handler built into the project's utility file.",
 		"scope": "javascript,typescript",
 		"body": [
-			"throw new InternalAppError(\"${1:Error Message}\",\"${2:Error Type}\",\"${3:Stack Trace}\");"
+			"\/\/ Throw an error",
+			"throw new InternalAppError(\"${1:Error Message}\", \"${2:Error Type}\", \"${3:Stack Trace}\");"
 		]
 	}
 }
