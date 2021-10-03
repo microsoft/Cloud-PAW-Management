@@ -1,8 +1,9 @@
 {
     "cSpell.words": [
-        "Intune",
         "defaultuser",
-        "keyvault"
+        "Intune",
+        "keyvault",
+        "odata"
     ],
     "appService.zipIgnorePattern": [
         "node_modules{,/**}",
