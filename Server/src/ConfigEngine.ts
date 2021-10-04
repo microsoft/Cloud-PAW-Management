@@ -22,10 +22,16 @@ interface CloudSecConfig {
 };
 
 // Define the PAW Configuration Spec
-interface PAWConfig {
+export interface PAWGroupConfig {
     Type: "Privileged" | "Developer" | "Tactical-DART" | "Tactical-CR" | "Tactical-RRR",
     UserAssignment: string,
     CommissionedDate: Date
+};
+
+// Define the structure of the PAW device object
+export interface PAWObject extends PAWGroupConfig {
+    id: string,
+    parentGroup: string
 };
 
 // Expose a configuration engine that interfaces with the
@@ -298,7 +304,7 @@ export class ConfigurationEngine {
     async updatePAWGroupConfig() { };
 
     // Read the specified commissioned PAW group's description and parse it into
-    async getPAWGroupConfig(groupID: string): Promise<PAWConfig> {
+    async getPAWGroupConfig(groupID: string): Promise<PAWGroupConfig> {
         // Validate input
         if (!validateGUID(groupID)) { throw new InternalAppError("The Group ID is not a valid GUID!", "Invalid Input", "ConfigEngine - ConfigurationEngine - parsePAWGroupConfig - Input Validation") };
 
@@ -370,7 +376,7 @@ export class ConfigurationEngine {
         // Ensure that all of the properties have been initialized
         if (parsedConfig.CommissionedDate && parsedConfig.Type && parsedConfig.UserAssignment) {
             // Typecast the loose object to a PAW Config object. (this is to satisfy typescript, the parsed config could actually be returned here instead if typescript were smarter)
-            const validatedConfig: PAWConfig = {
+            const validatedConfig: PAWGroupConfig = {
                 "CommissionedDate": parsedConfig.CommissionedDate,
                 "Type": parsedConfig.Type,
                 "UserAssignment": parsedConfig.UserAssignment
