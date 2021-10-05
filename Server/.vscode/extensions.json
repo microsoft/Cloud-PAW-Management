@@ -4,6 +4,7 @@
         "dbaeumer.vscode-eslint",
         "ms-azuretools.vscode-azureappservice",
         "ms-vscode.azure-account",
-        "eamodio.gitlens"
+        "eamodio.gitlens",
+        "gruntfuggly.todo-tree"
     ]
 }
