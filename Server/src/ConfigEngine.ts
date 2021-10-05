@@ -31,7 +31,8 @@ export interface PAWGroupConfig {
 // Define the structure of the PAW device object
 export interface PAWObject extends PAWGroupConfig {
     id: string,
-    parentGroup: string
+    parentGroup: string,
+    parentDevice?: string
 };
 
 // Expose a configuration engine that interfaces with the
