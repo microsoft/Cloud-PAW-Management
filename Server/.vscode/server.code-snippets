@@ -49,5 +49,21 @@
 			"\/\/ Throw an error",
 			"throw new InternalAppError(\"${1:Error Message}\", \"${2:Error Type}\", \"${3:Stack Trace}\");"
 		]
+	},
+	"Unit Test - Valid Test":{
+		"prefix": "UTValid",
+		"description": "A template for creating a valid unit test.",
+		"scope": "javascript,typescript",
+		"body": [
+			"\/\/ ",
+			"\/\/"
+		]
+
+
+
+
 	}
+
+
+
 }
