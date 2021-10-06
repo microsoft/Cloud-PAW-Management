@@ -1029,6 +1029,42 @@ export class MSGraphClient {
         };
     };
 
+    // Get all only the specified Autopilot Device from Endpoint Manager
+    async getAutopilotDevice(AADDeviceID?: string): Promise<MicrosoftGraphBeta.WindowsAutopilotDeviceIdentity[]> {
+        // Attempt to execute and catch errors
+        try {
+            // Pre-define the Autopilot device page so that it is available to callers.
+            let autopilotDevicePage: PageCollection;
+
+            // Route the Graph API calls based on the AAD Device ID presence.
+            if (typeof AADDeviceID === "undefined") { // If no GUID is specified.
+                // Request all Autopilot Devices.
+                autopilotDevicePage = await (await this.client).api("/deviceManagement/windowsAutopilotDeviceIdentities").get();
+            } else if (validateGUID(AADDeviceID)) { // If a GUID is specified.
+                // Grab and return the specified Autopilot device.
+                return [await (await this.client).api("/deviceManagement/windowsAutopilotDeviceIdentities").filter("azureActiveDirectoryDeviceId eq '" + AADDeviceID + "'").get()];
+            } else {
+                // Input is unexpected, throw an error and halt execution.
+                throw new InternalAppError("The GUID parameter is a valid GUID!", "Invalid Input", "GraphClient -> getAutopilotDevice -> Input Validation");
+            };
+
+            // Process the page collection to its base form (WindowsAutopilotDeviceIdentity)
+            const autopilotDeviceList: MicrosoftGraphBeta.WindowsAutopilotDeviceIdentity[] = await this.iteratePage(autopilotDevicePage);
+
+            // Return the processed data.
+            return autopilotDeviceList;
+        } catch (error) {
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> getAutopilotDevice -> catch statement");
+            };
+        };
+    };
+
     // Wipe the specified device using Endpoint Manager (this specific wipe is an Autopilot reset)
     async wipeMEMDevice(GUID: string): Promise<boolean> {
         // Validate input

@@ -562,6 +562,30 @@ export class DebugRouter {
             };
         });
 
+        // Get all Autopilot devices from Microsoft Endpoint Manager.
+        this.webServer.get('/autopilotDevice', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Send the execution results to the client
+                response.send(await this.graphClient.getAutopilotDevice());
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
+
+        // Get the specified Autopilot device from Microsoft Endpoint Manager by using its AAD Device ID.
+        this.webServer.get('/autopilotDevice/:id', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Send the execution results to the client
+                response.send(await this.graphClient.getAutopilotDevice(request.params.id));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
+
         // Wipe the specified device using Endpoint Manager
         this.webServer.get('/wipeDevice/:id', async (request, response, next) => {
             // Catch execution errors
