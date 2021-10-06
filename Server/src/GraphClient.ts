@@ -1042,7 +1042,7 @@ export class MSGraphClient {
                 autopilotDevicePage = await (await this.client).api("/deviceManagement/windowsAutopilotDeviceIdentities").get();
             } else if (validateGUID(AADDeviceID)) { // If a GUID is specified.
                 // Grab and return the specified Autopilot device.
-                return [await (await this.client).api("/deviceManagement/windowsAutopilotDeviceIdentities").filter("azureActiveDirectoryDeviceId eq '" + AADDeviceID + "'").get()];
+                autopilotDevicePage = await (await this.client).api("/deviceManagement/windowsAutopilotDeviceIdentities").filter("azureActiveDirectoryDeviceId eq '" + AADDeviceID + "'").get();
             } else {
                 // Input is unexpected, throw an error and halt execution.
                 throw new InternalAppError("The GUID parameter is a valid GUID!", "Invalid Input", "GraphClient -> getAutopilotDevice -> Input Validation");
