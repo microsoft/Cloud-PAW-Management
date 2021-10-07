@@ -20,7 +20,7 @@
     "@fluentui/react": "^8.36.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "web-vitals": "^2.1.0"
+    "web-vitals": "^2.1.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.14.1",
