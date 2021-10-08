@@ -8,7 +8,7 @@ import { MSAzureAccessCredential } from "./Authentication";
 import { ConfigurationEngine } from "./ConfigEngine";
 import { DebugRouter } from "./DebugRoute";
 import { MSGraphClient } from "./GraphClient";
-import { LifeCycleRouter } from "./LifeCycleManagement";
+import { LifecycleRouter } from "./LifecycleManagement";
 import { writeDebugInfo } from "./Utility";
 
 // Import environmental variables
@@ -61,7 +61,7 @@ if (debugMode === "true") {
 };
 
 // Initialize the core business logic routes
-const lifeCycleRouter = new LifeCycleRouter(webServer, graphClient, configEngine);
+const lifeCycleRouter = new LifecycleRouter(webServer, graphClient, configEngine);
 
 // Start the web server
 const serverInstance = webServer.listen(port, () => {
