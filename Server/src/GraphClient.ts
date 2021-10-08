@@ -829,7 +829,10 @@ export class MSGraphClient {
     };
 
     // Assign the specified device configuration in Endpoint Manager
-    async updateConfigurationAssignment(configType: "Settings Catalog" | "Setting Template" | "Admin Template", configGUID: string, includeGUID?: string[], excludeGUID?: string[]) {
+    async updateConfigurationAssignment(configType: "Settings Catalog", configGUID: string, includeGUID?: string[], excludeGUID?: string[]): Promise<MicrosoftGraphBeta.DeviceManagementConfigurationPolicyAssignment>
+    async updateConfigurationAssignment(configType: "Setting Template", configGUID: string, includeGUID?: string[], excludeGUID?: string[]): Promise<MicrosoftGraphBeta.DeviceConfigurationAssignment>
+    async updateConfigurationAssignment(configType: "Admin Template", configGUID: string, includeGUID?: string[], excludeGUID?: string[]): Promise<MicrosoftGraphBeta.GroupPolicyConfigurationAssignment>
+    async updateConfigurationAssignment(configType: string, configGUID: string, includeGUID?: string[], excludeGUID?: string[]) {
         // Validate inputs
         if (typeof configType !== "string" && configType !== "Settings Catalog" && configType !== "Setting Template" && configType !== "Admin Template") { throw new InternalAppError("The config type parameter only accepts the strings: 'Settings Catalog', 'Device', and 'Admin Template' as values.", "Invalid Input", "GraphClient -> updateConfigurationAssignment -> Input Validation") };
         if (!validateGUID(configGUID)) { throw new InternalAppError("The specified GUID for the config GUID is not valid!", "Invalid Input", "GraphClient -> updateConfigurationAssignment -> Input Validation") }
