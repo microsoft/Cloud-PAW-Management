@@ -562,6 +562,18 @@ export class DebugRouter {
             };
         });
 
+        // Edit the Extension Attribute 1 of the specified device
+        this.webServer.patch('/deviceExtensionAttribute/:objectID', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Update the extension attribute of the specified device
+                response.send(await this.graphClient.updateAADDeviceExtensionAttribute(request.params.objectID, request.body.value));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
+
         // Get all Autopilot devices from Microsoft Endpoint Manager.
         this.webServer.get('/autopilotDevice', async (request, response, next) => {
             // Catch execution errors

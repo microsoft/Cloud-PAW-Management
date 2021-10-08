@@ -7,7 +7,7 @@ import { TokenCredentialAuthenticationProvider } from "@microsoft/microsoft-grap
 import type * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta";
 import "isomorphic-fetch";
 import { endpointGroupAssignmentTarget } from "./RequestGenerator";
-import { InternalAppError, validateConditionalAccessSetting, validateEmail, validateGUID, validateGUIDArray, validateSettingCatalogSettings, validateStringArray } from "./Utility";
+import { writeDebugInfo, InternalAppError, validateConditionalAccessSetting, validateEmail, validateGUID, validateGUIDArray, validateSettingCatalogSettings, validateStringArray } from "./Utility";
 
 // Define the Graph Client class.
 export class MSGraphClient {
@@ -1030,6 +1030,42 @@ export class MSGraphClient {
                 throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> getMEMDevice -> catch statement");
             };
         };
+    };
+
+    // Sets extension attribute 1's value on the specified AAD device's Object ID
+    async updateAADDeviceExtensionAttribute(objectID: string, value?: string): Promise<boolean> {
+        // Validate Input
+        if (!validateGUID(objectID)) { throw new InternalAppError("The Device ID is not a valid GUID!", "Invalid Input", "GraphClient - updateAADDeviceExtensionAttribute - Input Validation") };
+        if (typeof value !== "string") { value = "" };
+
+        // Build the patch body for the XHR to use
+        let patchBody: MicrosoftGraphBeta.Device = {
+            "extensionAttributes": {
+                "extensionAttribute1": value
+            }
+        };
+
+        // Write debug info
+        writeDebugInfo(objectID, "Extension Attribute device ID:");
+        writeDebugInfo(patchBody, "Extension Attribute Patch Body:");
+
+        // Catch execution errors
+        try {
+            // Update the Extension Attribute for the specified device
+            await (await this.client).api("/devices/" + objectID).patch(patchBody);
+        } catch (error) {
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - updateAADDeviceExtensionAttribute - API PATCH Operation");
+            };
+        };
+
+        // Return true for successful operation
+        return true;
     };
 
     // Get all only the specified Autopilot Device from Endpoint Manager
