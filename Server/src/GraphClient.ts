@@ -65,10 +65,10 @@ export class MSGraphClient {
     // Create a new role scope tag in Endpoint Manager
     async newMEMScopeTag(scopeTagName: string, description?: string): Promise<MicrosoftGraphBeta.RoleScopeTag> {
         // Validate Inputs
-        if (typeof scopeTagName !== "string") { throw new InternalAppError("The ScopeTagName has to be a string!", "Invalid Input", "GraphClient -> newMEMScopeTag -> Input Validation") };
-        if (scopeTagName.length > 128) { throw new InternalAppError("The ScopeTagName can't be longer than 128 chars!", "Invalid Input", "GraphClient -> newMEMScopeTag -> Input Validation") };
-        if (typeof description !== "undefined" && typeof description !== "string") { throw new InternalAppError("The description must be a string!", "Invalid Input", "GraphClient -> newMEMScopeTag -> Input Validation") };
-        if (typeof description === "string" && description.length > 1024) { throw new InternalAppError("Description can't be longer than 1024 chars!", "Invalid Input", "GraphClient -> newMEMScopeTag -> Input Validation") };
+        if (typeof scopeTagName !== "string") { throw new InternalAppError("The ScopeTagName has to be a string!", "Invalid Input", "GraphClient - newMEMScopeTag - Input Validation") };
+        if (scopeTagName.length > 128) { throw new InternalAppError("The ScopeTagName can't be longer than 128 chars!", "Invalid Input", "GraphClient - newMEMScopeTag - Input Validation") };
+        if (typeof description !== "undefined" && typeof description !== "string") { throw new InternalAppError("The description must be a string!", "Invalid Input", "GraphClient - newMEMScopeTag - Input Validation") };
+        if (typeof description === "string" && description.length > 1024) { throw new InternalAppError("Description can't be longer than 1024 chars!", "Invalid Input", "GraphClient - newMEMScopeTag - Input Validation") };
 
         // Catch execution errors
         try {
@@ -94,7 +94,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newMEMScopeTag -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - newMEMScopeTag - catch statement");
             };
         };
     };
@@ -130,7 +130,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> getMEMScopeTag -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - getMEMScopeTag - catch statement");
             };
         };
     };
@@ -138,10 +138,10 @@ export class MSGraphClient {
     // Update the specified role scope tag in Endpoint Manager
     async updateMEMScopeTag(name: string, description?: string, id?: number): Promise<MicrosoftGraphBeta.RoleScopeTag> {
         // Validate input
-        if (typeof name !== "string" || name.length > 128) { throw new InternalAppError("The name is not a valid string or is greater than 128 chars!", "Invalid Input", "GraphClient -> updateMEMScopeTag -> Input Validation") };
-        if (typeof description === "string" && description.length > 1024) { throw new InternalAppError("The description can't be longer than 1024 chars!", "Invalid Input", "GraphClient -> updateMEMScopeTag -> Input Validation") };
-        if (typeof id !== "undefined" && typeof id !== "number") { throw new InternalAppError("The ID needs to be a whole number!", "Invalid Input", "GraphClient -> updateMEMScopeTag -> Input Validation") };
-        if (typeof id === "number" && (!Number.isInteger(id) || id <= 0)) { throw new InternalAppError("The ID has to be a whole number above 0", "Invalid Input", "GraphClient -> updateMEMScopeTag -> Input Validation") };
+        if (typeof name !== "string" || name.length > 128) { throw new InternalAppError("The name is not a valid string or is greater than 128 chars!", "Invalid Input", "GraphClient - updateMEMScopeTag - Input Validation") };
+        if (typeof description === "string" && description.length > 1024) { throw new InternalAppError("The description can't be longer than 1024 chars!", "Invalid Input", "GraphClient - updateMEMScopeTag - Input Validation") };
+        if (typeof id !== "undefined" && typeof id !== "number") { throw new InternalAppError("The ID needs to be a whole number!", "Invalid Input", "GraphClient - updateMEMScopeTag - Input Validation") };
+        if (typeof id === "number" && (!Number.isInteger(id) || id <= 0)) { throw new InternalAppError("The ID has to be a whole number above 0", "Invalid Input", "GraphClient - updateMEMScopeTag - Input Validation") };
 
         // Build the initial scope tag object for the update process to use
         let scopeTagBody: MicrosoftGraphBeta.RoleScopeTag = { "displayName": name }
@@ -168,7 +168,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> updateMEMScopeTag -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - updateMEMScopeTag - catch statement");
             };
         };
     };
@@ -176,8 +176,8 @@ export class MSGraphClient {
     // Delete the specified scope tag
     async removeMEMScopeTag(id: number): Promise<boolean> {
         // Validate input
-        if (typeof id !== "number") { throw new InternalAppError("The ID parameter needs to be a number!", "Invalid Input", "GraphClient -> removeMEMScopeTag -> Input Validation") };
-        if (typeof id === "number" && (!Number.isInteger(id) || id <= 0)) { throw new InternalAppError("The ID has to be a whole number above 0", "Invalid Input", "GraphClient -> removeMEMScopeTag -> Input Validation") };
+        if (typeof id !== "number") { throw new InternalAppError("The ID parameter needs to be a number!", "Invalid Input", "GraphClient - removeMEMScopeTag - Input Validation") };
+        if (typeof id === "number" && (!Number.isInteger(id) || id <= 0)) { throw new InternalAppError("The ID has to be a whole number above 0", "Invalid Input", "GraphClient - removeMEMScopeTag - Input Validation") };
 
         // Catch error on execution
         try {
@@ -192,7 +192,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> removeMEMScopeTag -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - removeMEMScopeTag - catch statement");
             };
         };
     };
@@ -219,7 +219,7 @@ export class MSGraphClient {
                 deviceConfigPage = await (await this.client).api("/deviceManagement/deviceConfigurations").get();
             } else {
                 // Input is unexpected, throw an error and halt execution.
-                throw new InternalAppError("The GUID parameter is not a string and a valid GUID!", "Invalid Input", "GraphClient -> getDeviceConfig -> Input Validation");
+                throw new InternalAppError("The GUID parameter is not a string and a valid GUID!", "Invalid Input", "GraphClient - getDeviceConfig - Input Validation");
             };
 
             // Process the page collection to its base form (DeviceConfiguration)
@@ -234,7 +234,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> getDeviceConfig -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - getDeviceConfig - catch statement");
             };
         };
     };
@@ -260,12 +260,12 @@ export class MSGraphClient {
                     throw new InternalAppError(error.message, error.name, error.stack);
                 } else {
                     // Return the unknown error in a known format
-                    throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> removeDeviceConfig -> catch statement");
+                    throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - removeDeviceConfig - catch statement");
                 };
             };
         } else {
             // If the GUID is not in the right format, throw an error
-            throw new InternalAppError("The GUID specified is not a proper GUID!", "Invalid Input", "GraphClient -> removeDeviceConfig -> Input Validation");
+            throw new InternalAppError("The GUID specified is not a proper GUID!", "Invalid Input", "GraphClient - removeDeviceConfig - Input Validation");
         };
     };
 
@@ -304,7 +304,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> getDeviceGroupPolicyConfig -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - getDeviceGroupPolicyConfig - catch statement");
             };
         };
     };
@@ -330,7 +330,7 @@ export class MSGraphClient {
                 return [await (await this.client).api("/users/" + ID).get()];
             } else {
                 // Input is unexpected, throw an error and halt execution.
-                throw new InternalAppError("The ID parameter is not a valid GUID or UPN!", "Invalid Input", "GraphClient -> getAADUser -> Input Validation");
+                throw new InternalAppError("The ID parameter is not a valid GUID or UPN!", "Invalid Input", "GraphClient - getAADUser - Input Validation");
             };
 
             // Process the page collection to its base form (User)
@@ -345,7 +345,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> getAADUser -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - getAADUser - catch statement");
             };
         };
     };
@@ -353,8 +353,8 @@ export class MSGraphClient {
     // Create a new security group with the specified options
     async newAADGroup(name: string, description?: string, roleAssignable?: boolean): Promise<MicrosoftGraphBeta.Group> {
         // Validate name length is not too long for the graph
-        if (typeof name !== "string") { throw new InternalAppError("The type of name is not a string!", "Invalid Input", "GraphClient -> newAADGroup -> Input Validation") };
-        if (name.length > 120) { throw new InternalAppError("The name is too long, can't be longer than 120 chars!", "Invalid Input", "GraphClient -> newAADGroup -> Input Validation") };
+        if (typeof name !== "string") { throw new InternalAppError("The type of name is not a string!", "Invalid Input", "GraphClient - newAADGroup - Input Validation") };
+        if (name.length > 120) { throw new InternalAppError("The name is too long, can't be longer than 120 chars!", "Invalid Input", "GraphClient - newAADGroup - Input Validation") };
 
         // These characters cannot be used in the mailNickName: @()\[]";:.<>,SPACE
         const nicknameRegex = /[\\\]\]@()";:.<>,\s]+/gm;
@@ -373,7 +373,7 @@ export class MSGraphClient {
         // Check to make sure that the description is defined, if it is, configure the description of the group
         if (typeof description === "string") {
             // Validate that the description is of the correct length
-            if (description.length > 1024) { throw new InternalAppError("The description cannot be longer than 1024 characters!", "Invalid Input", "GraphClient -> newAADGroup -> Set Description") };
+            if (description.length > 1024) { throw new InternalAppError("The description cannot be longer than 1024 characters!", "Invalid Input", "GraphClient - newAADGroup - Set Description") };
 
             // Set the description of the new group
             postBody.description = description;
@@ -396,7 +396,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newAADGroup -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - newAADGroup - catch statement");
             };
         };
     };
@@ -418,7 +418,7 @@ export class MSGraphClient {
                 groupPage = await (await this.client).api("/groups").get();
             } else {
                 // Input is unexpected, throw an error and halt execution.
-                throw new InternalAppError("The GUID parameter is not a string and a valid GUID!", "Invalid Input", "GraphClient -> getAADGroup -> Input Validation");
+                throw new InternalAppError("The GUID parameter is not a string and a valid GUID!", "Invalid Input", "GraphClient - getAADGroup - Input Validation");
             };
 
             // Process the page collection to its base form (DeviceConfiguration)
@@ -433,7 +433,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> getAADGroup -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - getAADGroup - catch statement");
             };
         };
     };
@@ -441,9 +441,9 @@ export class MSGraphClient {
     // Update the specified group
     async updateAADGroup(GUID: string, name: string, description?: string): Promise<boolean> {
         // Validate Input
-        if (!validateGUID(GUID)) { throw new InternalAppError("The specified GUID is not a valid GUID!", "Invalid Input", "GraphClient -> updateAADGroup -> Input Validation") };
-        if (typeof name !== "string") { throw new InternalAppError("The Name parameter is not a string!", "Invalid Input", "GraphClient -> updateAADGroup -> Input Validation") };
-        if (name.length > 120) { throw new InternalAppError("The name is too long, can't be longer than 120 chars!", "Invalid Input", "GraphClient -> updateAADGroup -> Input Validation") };
+        if (!validateGUID(GUID)) { throw new InternalAppError("The specified GUID is not a valid GUID!", "Invalid Input", "GraphClient - updateAADGroup - Input Validation") };
+        if (typeof name !== "string") { throw new InternalAppError("The Name parameter is not a string!", "Invalid Input", "GraphClient - updateAADGroup - Input Validation") };
+        if (name.length > 120) { throw new InternalAppError("The name is too long, can't be longer than 120 chars!", "Invalid Input", "GraphClient - updateAADGroup - Input Validation") };
 
         // These characters cannot be used in the mailNickName: @()\[]";:.<>,SPACE
         const nicknameRegex = /[\\\]\]@()";:.<>,\s]+/gm;
@@ -460,7 +460,7 @@ export class MSGraphClient {
         // Check to make sure that the description is defined, if it is, configure the description of the group
         if (typeof description === "string") {
             // Validate that the description is of the correct length
-            if (description.length > 1024) { throw new InternalAppError("The description cannot be longer than 1024 characters!", "Invalid Input", "GraphClient -> updateAADGroup -> Description Configuration") };
+            if (description.length > 1024) { throw new InternalAppError("The description cannot be longer than 1024 characters!", "Invalid Input", "GraphClient - updateAADGroup - Description Configuration") };
 
             // Set the description of the group
             patchBody.description = description;
@@ -480,7 +480,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newMEMScopeTag -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - newMEMScopeTag - catch statement");
             };
         };
     };
@@ -488,7 +488,7 @@ export class MSGraphClient {
     // Delete the specified Security Group
     async removeAADGroup(GUID: string): Promise<boolean> {
         // Validate Input
-        if (!validateGUID(GUID)) { throw new InternalAppError("The specified GUID is not a valid GUID!", "Invalid Input", "GraphClient -> removeAADGroup -> Input Validation") };
+        if (!validateGUID(GUID)) { throw new InternalAppError("The specified GUID is not a valid GUID!", "Invalid Input", "GraphClient - removeAADGroup - Input Validation") };
 
         // Attempt to delete the group
         try {
@@ -504,7 +504,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> removeAADGroup -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - removeAADGroup - catch statement");
             };
         };
     };
@@ -512,7 +512,7 @@ export class MSGraphClient {
     // Add a principal to an AAD Group
     async newAADGroupMember(groupGUID: string, addGUID: string): Promise<boolean> {
         // Validate Input
-        if (!validateGUID(groupGUID) && !validateGUID(addGUID)) { throw new InternalAppError("The specified GUID is not a valid GUID!", "Invalid Input", "GraphClient -> newAADGroupMember -> Input Validation") };
+        if (!validateGUID(groupGUID) && !validateGUID(addGUID)) { throw new InternalAppError("The specified GUID is not a valid GUID!", "Invalid Input", "GraphClient - newAADGroupMember - Input Validation") };
 
         // Grab the specified group membership from AAD
         try {
@@ -533,7 +533,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newAADGroupMember -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - newAADGroupMember - catch statement");
             };
         };
     };
@@ -546,7 +546,7 @@ export class MSGraphClient {
     async getAADGroupMember(groupGUID: string, type?: string): Promise<MicrosoftGraphBeta.DirectoryObject[]>;
     async getAADGroupMember(groupGUID: string, type?: string) {
         // Validate GUID is a proper GUID
-        if (!validateGUID(groupGUID)) { throw new InternalAppError("The GUID specified is not a proper GUID!", "Invalid Input", "GraphClient -> getAADGroupMember -> Input Validation") };
+        if (!validateGUID(groupGUID)) { throw new InternalAppError("The GUID specified is not a proper GUID!", "Invalid Input", "GraphClient - getAADGroupMember - Input Validation") };
 
         // Validate the type parameter value is expected
         if (type === "microsoft.graph.user" || type === "microsoft.graph.device" || type === "microsoft.graph.group") {
@@ -574,7 +574,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> getAADGroupMember -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - getAADGroupMember - catch statement");
             };
         };
     };
@@ -582,8 +582,8 @@ export class MSGraphClient {
     // Remove the specified group member from the specified AAD group
     async removeAADGroupMember(groupGUID: string, removeGUID: string): Promise<boolean> {
         // Validate GUID is a proper GUID
-        if (!validateGUID(groupGUID)) { throw new InternalAppError("The groupGUID specified is not a proper GUID!", "Invalid Input", "GraphClient -> removeAADGroupMember -> Input Validation") };
-        if (!validateGUID(removeGUID)) { throw new InternalAppError("The removeGUID specified is not a proper GUID!", "Invalid Input", "GraphClient -> removeAADGroupMember -> Input Validation") };
+        if (!validateGUID(groupGUID)) { throw new InternalAppError("The groupGUID specified is not a proper GUID!", "Invalid Input", "GraphClient - removeAADGroupMember - Input Validation") };
+        if (!validateGUID(removeGUID)) { throw new InternalAppError("The removeGUID specified is not a proper GUID!", "Invalid Input", "GraphClient - removeAADGroupMember - Input Validation") };
 
         // Grab the specified group membership from AAD
         try {
@@ -599,7 +599,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> removeAADGroupMember -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - removeAADGroupMember - catch statement");
             };
         };
     };
@@ -624,7 +624,7 @@ export class MSGraphClient {
                 adminUnitPage = await (await this.client).api("/administrativeUnits").get();
             } else {
                 // Input is unexpected, throw an error and halt execution.
-                throw new InternalAppError("The GUID parameter is not a string and a valid GUID!", "Invalid Input", "GraphClient -> getAADAdminUnit -> Input Validation");
+                throw new InternalAppError("The GUID parameter is not a string and a valid GUID!", "Invalid Input", "GraphClient - getAADAdminUnit - Input Validation");
             };
 
             // Process the page collection to its base form (AdministrativeUnit)
@@ -639,7 +639,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> getAADAdminUnit -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - getAADAdminUnit - catch statement");
             };
         };
     };
@@ -650,7 +650,7 @@ export class MSGraphClient {
     // Remove the specified Administrative united based on the GUID
     async removeAADAdminUnit(GUID: string): Promise<boolean> {
         // Validate GUID is a proper GUID
-        if (!validateGUID(GUID)) { throw new InternalAppError("The GUID specified is not a proper GUID!", "Invalid Input", "GraphClient -> removeAADAdminUnit -> Input Validation") };
+        if (!validateGUID(GUID)) { throw new InternalAppError("The GUID specified is not a proper GUID!", "Invalid Input", "GraphClient - removeAADAdminUnit - Input Validation") };
 
         // Attempt to delete the AU
         try {
@@ -666,7 +666,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> getAADAdminUnit -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - getAADAdminUnit - catch statement");
             };
         };
     };
@@ -674,9 +674,9 @@ export class MSGraphClient {
     // Create a new settings catalog with the specified settings
     async newSettingsCatalog(name: string, description: string, roleScopeTagID: string[], settings: MicrosoftGraphBeta.DeviceManagementConfigurationSetting[]): Promise<MicrosoftGraphBeta.DeviceManagementConfigurationPolicy> {
         // Validate input
-        if (typeof name !== "string" || name.length > 1000) { throw new InternalAppError("The name is too long, can't be longer than 1000 chars!", "Invalid Input", "GraphClient -> newSettingsCatalog -> Input Validation") };
-        if (typeof description !== "string" || description.length > 1000) { throw new InternalAppError("The description is too long, can't be longer than 1000 chars!", "Invalid Input", "GraphClient -> newSettingsCatalog -> Input Validation") };
-        if (typeof roleScopeTagID !== "object" || roleScopeTagID.length == 0) { throw new InternalAppError("The role scope tag IDs must be an array of numbers in string format and not be empty!", "Invalid Input", "GraphClient -> newSettingsCatalog -> Input Validation") };
+        if (typeof name !== "string" || name.length > 1000) { throw new InternalAppError("The name is too long, can't be longer than 1000 chars!", "Invalid Input", "GraphClient - newSettingsCatalog - Input Validation") };
+        if (typeof description !== "string" || description.length > 1000) { throw new InternalAppError("The description is too long, can't be longer than 1000 chars!", "Invalid Input", "GraphClient - newSettingsCatalog - Input Validation") };
+        if (typeof roleScopeTagID !== "object" || roleScopeTagID.length == 0) { throw new InternalAppError("The role scope tag IDs must be an array of numbers in string format and not be empty!", "Invalid Input", "GraphClient - newSettingsCatalog - Input Validation") };
         // TODO: Convert to scope tag name instead of the ID of the tag
         // Loop through each of the indexes and ensure that they are parsable to numbers
         for (let index = 0; index < roleScopeTagID.length; index++) {
@@ -686,9 +686,9 @@ export class MSGraphClient {
             const parsedNum = Number.parseInt(ID);
 
             // Check to make sure the string is a parsable number
-            if (typeof parsedNum === "number" && Object.is(parsedNum, NaN)) { throw new InternalAppError("Please specify a number for the role scope tag IDs!", "Invalid Input", "GraphClient -> newSettingsCatalog -> Input Validation") };
+            if (typeof parsedNum === "number" && Object.is(parsedNum, NaN)) { throw new InternalAppError("Please specify a number for the role scope tag IDs!", "Invalid Input", "GraphClient - newSettingsCatalog - Input Validation") };
         }
-        if (typeof settings !== "object" || settings.length == 0 || !validateSettingCatalogSettings(settings)) { throw new InternalAppError("The settings object is not in the right format, please use the correct format!", "Invalid Input", "GraphClient -> newSettingsCatalog -> Input Validation") }
+        if (typeof settings !== "object" || settings.length == 0 || !validateSettingCatalogSettings(settings)) { throw new InternalAppError("The settings object is not in the right format, please use the correct format!", "Invalid Input", "GraphClient - newSettingsCatalog - Input Validation") }
 
         // Build the post body for the new setting catalog object
         let postBody: MicrosoftGraphBeta.DeviceManagementConfigurationPolicy = {
@@ -711,7 +711,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newSettingsCatalog -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - newSettingsCatalog - catch statement");
             };
         };
     };
@@ -733,7 +733,7 @@ export class MSGraphClient {
                 settingsCatalogPage = await (await this.client).api("/deviceManagement/configurationPolicies").expand("settings").get();
             } else {
                 // Input is unexpected, throw an error and halt execution.
-                throw new InternalAppError("The GUID parameter is not a string and a valid GUID!", "Invalid Input", "GraphClient -> getSettingsCatalog -> Input Validation");
+                throw new InternalAppError("The GUID parameter is not a string and a valid GUID!", "Invalid Input", "GraphClient - getSettingsCatalog - Input Validation");
             };
 
             // Process the page collection to its base form (DeviceManagementConfigurationPolicy)
@@ -748,7 +748,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> getSettingsCatalog -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - getSettingsCatalog - catch statement");
             };
         };
     };
@@ -758,11 +758,11 @@ export class MSGraphClient {
     // This is because of how the GraphAPI is designed, two posts are needed to update a settings catalog as the settings property is a nav property instead of an entity.
     async updateSettingsCatalog(GUID: string, name: string, description: string, roleScopeTagID: string[], settings: MicrosoftGraphBeta.DeviceManagementConfigurationSetting[]): Promise<boolean> {
         // Validate input
-        if (!validateGUID(GUID)) { throw new InternalAppError("The GUID is not in the correct format!", "Invalid Input", "GraphClient -> updateSettingsCatalog -> Input Validation") };
-        if (typeof name !== "string" || name.length > 1000) { throw new InternalAppError("The name is too long, can't be longer than 1000 chars!", "Invalid Input", "GraphClient -> updateSettingsCatalog -> Input Validation") };
-        if (typeof description !== "string" || description.length > 1000) { throw new InternalAppError("The description is too long, can't be longer than 1000 chars!", "Invalid Input", "GraphClient -> updateSettingsCatalog -> Input Validation") };
-        if (!validateStringArray(roleScopeTagID)) { throw new InternalAppError("The role scope tag IDs must be an array of numbers in string format and not be empty!", "Invalid Input", "GraphClient -> updateSettingsCatalog -> Input Validation") }
-        if (!validateSettingCatalogSettings(settings)) { throw new InternalAppError("The Settings Catalog Settings aren't in the right format!", "Invalid Input", "GraphClient -> updateSettingsCatalog -> Input Validation") };
+        if (!validateGUID(GUID)) { throw new InternalAppError("The GUID is not in the correct format!", "Invalid Input", "GraphClient - updateSettingsCatalog - Input Validation") };
+        if (typeof name !== "string" || name.length > 1000) { throw new InternalAppError("The name is too long, can't be longer than 1000 chars!", "Invalid Input", "GraphClient - updateSettingsCatalog - Input Validation") };
+        if (typeof description !== "string" || description.length > 1000) { throw new InternalAppError("The description is too long, can't be longer than 1000 chars!", "Invalid Input", "GraphClient - updateSettingsCatalog - Input Validation") };
+        if (!validateStringArray(roleScopeTagID)) { throw new InternalAppError("The role scope tag IDs must be an array of numbers in string format and not be empty!", "Invalid Input", "GraphClient - updateSettingsCatalog - Input Validation") }
+        if (!validateSettingCatalogSettings(settings)) { throw new InternalAppError("The Settings Catalog Settings aren't in the right format!", "Invalid Input", "GraphClient - updateSettingsCatalog - Input Validation") };
         // TODO: change to scope tag name instead of the ID
         // Loop through each of the indexes and ensure that they are parsable to numbers
         for (let index = 0; index < roleScopeTagID.length; index++) {
@@ -772,7 +772,7 @@ export class MSGraphClient {
             const parsedNum = Number.parseInt(ID);
 
             // Check to make sure the string is a parsable number
-            if (typeof parsedNum === "number" && Object.is(parsedNum, NaN)) { throw new InternalAppError("Please specify a number for the role scope tag IDs!", "Invalid Input", "GraphClient -> updateSettingsCatalog -> Input Validation") };
+            if (typeof parsedNum === "number" && Object.is(parsedNum, NaN)) { throw new InternalAppError("Please specify a number for the role scope tag IDs!", "Invalid Input", "GraphClient - updateSettingsCatalog - Input Validation") };
         };
 
         // Build the post body for the new setting catalog object
@@ -799,7 +799,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> updateSettingsCatalog -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - updateSettingsCatalog - catch statement");
             };
         };
     };
@@ -807,7 +807,7 @@ export class MSGraphClient {
     // Remove a settings catalog based on its GUID
     async removeSettingsCatalog(GUID: string): Promise<boolean> {
         // Validate input
-        if (!validateGUID(GUID)) { throw new InternalAppError("The GUID is not in the correct format!", "Invalid Input", "GraphClient -> removeSettingsCatalog -> Input Validation") };
+        if (!validateGUID(GUID)) { throw new InternalAppError("The GUID is not in the correct format!", "Invalid Input", "GraphClient - removeSettingsCatalog - Input Validation") };
 
         // Attempt to delete the settings catalog
         try {
@@ -823,7 +823,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> removeSettingsCatalog -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - removeSettingsCatalog - catch statement");
             };
         };
     };
@@ -834,10 +834,10 @@ export class MSGraphClient {
     async updateConfigurationAssignment(configType: "Admin Template", configGUID: string, includeGUID?: string[], excludeGUID?: string[]): Promise<MicrosoftGraphBeta.GroupPolicyConfigurationAssignment>
     async updateConfigurationAssignment(configType: string, configGUID: string, includeGUID?: string[], excludeGUID?: string[]) {
         // Validate inputs
-        if (typeof configType !== "string" && configType !== "Settings Catalog" && configType !== "Setting Template" && configType !== "Admin Template") { throw new InternalAppError("The config type parameter only accepts the strings: 'Settings Catalog', 'Device', and 'Admin Template' as values.", "Invalid Input", "GraphClient -> updateConfigurationAssignment -> Input Validation") };
-        if (!validateGUID(configGUID)) { throw new InternalAppError("The specified GUID for the config GUID is not valid!", "Invalid Input", "GraphClient -> updateConfigurationAssignment -> Input Validation") }
-        if (typeof includeGUID !== "undefined" && !validateGUIDArray(includeGUID)) { throw new InternalAppError("The specified array of included group GUIDs is not valid!", "Invalid Input", "GraphClient -> updateConfigurationAssignment -> Input Validation") };
-        if (typeof excludeGUID !== "undefined" && !validateGUIDArray(excludeGUID)) { throw new InternalAppError("The specified array of excluded group GUIDs is not valid!", "Invalid Input", "GraphClient -> updateConfigurationAssignment -> Input Validation") };
+        if (typeof configType !== "string" && configType !== "Settings Catalog" && configType !== "Setting Template" && configType !== "Admin Template") { throw new InternalAppError("The config type parameter only accepts the strings: 'Settings Catalog', 'Device', and 'Admin Template' as values.", "Invalid Input", "GraphClient - updateConfigurationAssignment - Input Validation") };
+        if (!validateGUID(configGUID)) { throw new InternalAppError("The specified GUID for the config GUID is not valid!", "Invalid Input", "GraphClient - updateConfigurationAssignment - Input Validation") }
+        if (typeof includeGUID !== "undefined" && !validateGUIDArray(includeGUID)) { throw new InternalAppError("The specified array of included group GUIDs is not valid!", "Invalid Input", "GraphClient - updateConfigurationAssignment - Input Validation") };
+        if (typeof excludeGUID !== "undefined" && !validateGUIDArray(excludeGUID)) { throw new InternalAppError("The specified array of excluded group GUIDs is not valid!", "Invalid Input", "GraphClient - updateConfigurationAssignment - Input Validation") };
 
         // Build the assignment object post body
         const postBody = endpointGroupAssignmentTarget(includeGUID, excludeGUID);
@@ -856,7 +856,7 @@ export class MSGraphClient {
                     // Assign the specified administrative template (GPO)
                     return await (await this.client).api("/deviceManagement/groupPolicyConfigurations/" + configGUID + "/assign").post(postBody);
                 default:
-                    throw new InternalAppError("The switch stopped at the default statement, this should not have happened. configType: " + configType, "Unknown", "GraphClient -> updateConfigurationAssignment -> switch statement -> default case");
+                    throw new InternalAppError("The switch stopped at the default statement, this should not have happened. configType: " + configType, "Unknown", "GraphClient - updateConfigurationAssignment - switch statement - default case");
             };
             // If error occurred, return error to sender.
         } catch (error) {
@@ -866,7 +866,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> updateConfigurationAssignment -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - updateConfigurationAssignment - catch statement");
             };
         };
     };
@@ -874,9 +874,9 @@ export class MSGraphClient {
     // Create an Azure AD Conditional Access Policy using the specified settings.
     async newAADCAPolicy(name: string, settings: MicrosoftGraphBeta.ConditionalAccessPolicy, state: "enabled" | "disabled" | "enabledForReportingButNotEnforced"): Promise<MicrosoftGraphBeta.ConditionalAccessPolicy> {
         // Validate inputs
-        if (name.length > 256 && typeof name !== "string") { throw new InternalAppError("The length of the name can't be longer than 256 characters or the data is not a string!", "Invalid Input", "GraphClient -> newAADCAPolicy -> Input Validation") };
-        if (!validateConditionalAccessSetting(settings) && typeof settings !== "object") { throw new InternalAppError("The settings object is not in the correct format!", "Invalid Input", "GraphClient -> newAADCAPolicy -> Input Validation") };
-        if (state !== "enabled" && state !== "disabled" && state !== "enabledForReportingButNotEnforced") { throw new InternalAppError("The state parameter must be one of the following values: enabled, disabled, enabledForReportingButNotEnforced!", "Invalid Input", "GraphClient -> newAADCAPolicy -> Input Validation") };
+        if (name.length > 256 && typeof name !== "string") { throw new InternalAppError("The length of the name can't be longer than 256 characters or the data is not a string!", "Invalid Input", "GraphClient - newAADCAPolicy - Input Validation") };
+        if (!validateConditionalAccessSetting(settings) && typeof settings !== "object") { throw new InternalAppError("The settings object is not in the correct format!", "Invalid Input", "GraphClient - newAADCAPolicy - Input Validation") };
+        if (state !== "enabled" && state !== "disabled" && state !== "enabledForReportingButNotEnforced") { throw new InternalAppError("The state parameter must be one of the following values: enabled, disabled, enabledForReportingButNotEnforced!", "Invalid Input", "GraphClient - newAADCAPolicy - Input Validation") };
 
         // Set the name of the CA Policy
         settings.displayName = name;
@@ -896,7 +896,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> newAADCAPolicy -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - newAADCAPolicy - catch statement");
             };
         };
     };
@@ -918,7 +918,7 @@ export class MSGraphClient {
                 aadCAPage = await (await this.client).api("/identity/conditionalAccess/policies").get();
             } else {
                 // Input is unexpected, throw an error and halt execution.
-                throw new InternalAppError("The GUID parameter is not a string and a valid GUID!", "Invalid Input", "GraphClient -> getAADCAPolicy -> Input Validation");
+                throw new InternalAppError("The GUID parameter is not a string and a valid GUID!", "Invalid Input", "GraphClient - getAADCAPolicy - Input Validation");
             };
 
             // Process the page collection to its base form (ConditionalAccessPolicy)
@@ -933,7 +933,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> getAADCAPolicy -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - getAADCAPolicy - catch statement");
             };
         };
     };
@@ -941,10 +941,10 @@ export class MSGraphClient {
     // Update the specified Conditional Access Policy.
     async updateAADCAPolicy(GUID: string, name: string, settings: MicrosoftGraphBeta.ConditionalAccessPolicy, state: "enabled" | "disabled" | "enabledForReportingButNotEnforced"): Promise<boolean> {
         // Validate inputs
-        if (!validateGUID(GUID) || typeof GUID !== "string") { throw new InternalAppError("The specified ID is not a valid GUID!", "Invalid Input", "GraphClient -> updateAADCAPolicy -> Input Validation") };
-        if (name.length > 256 || typeof name !== "string") { throw new InternalAppError("The length of the name can't be longer than 256 characters or the data is not a string!", "Invalid Input", "GraphClient -> updateAADCAPolicy -> Input Validation") };
-        if (!validateConditionalAccessSetting(settings) && typeof settings !== "object") { throw new InternalAppError("The settings object is not in the correct format!", "Invalid Input", "GraphClient -> updateAADCAPolicy -> Input Validation") };
-        if (state !== "enabled" && state !== "disabled" && state !== "enabledForReportingButNotEnforced") { throw new InternalAppError("The state parameter must be one of the following values: enabled, disabled, enabledForReportingButNotEnforced!", "Invalid Input", "GraphClient -> updateAADCAPolicy -> Input Validation") };
+        if (!validateGUID(GUID) || typeof GUID !== "string") { throw new InternalAppError("The specified ID is not a valid GUID!", "Invalid Input", "GraphClient - updateAADCAPolicy - Input Validation") };
+        if (name.length > 256 || typeof name !== "string") { throw new InternalAppError("The length of the name can't be longer than 256 characters or the data is not a string!", "Invalid Input", "GraphClient - updateAADCAPolicy - Input Validation") };
+        if (!validateConditionalAccessSetting(settings) && typeof settings !== "object") { throw new InternalAppError("The settings object is not in the correct format!", "Invalid Input", "GraphClient - updateAADCAPolicy - Input Validation") };
+        if (state !== "enabled" && state !== "disabled" && state !== "enabledForReportingButNotEnforced") { throw new InternalAppError("The state parameter must be one of the following values: enabled, disabled, enabledForReportingButNotEnforced!", "Invalid Input", "GraphClient - updateAADCAPolicy - Input Validation") };
 
         // Set the name of the CA Policy
         settings.displayName = name;
@@ -966,7 +966,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> updateAADCAPolicy -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - updateAADCAPolicy - catch statement");
             };
         }
     };
@@ -974,7 +974,7 @@ export class MSGraphClient {
     // Remove the specified Conditional Access Policy.
     async removeAADCAPolicy(GUID: string): Promise<boolean> {
         // Validate GUID is a proper GUID
-        if (!validateGUID(GUID)) { throw new InternalAppError("The specified GUID is not a valid GUID!", "Invalid Input", "GraphClient -> removeAADCAPolicy -> Input Validation") };
+        if (!validateGUID(GUID)) { throw new InternalAppError("The specified GUID is not a valid GUID!", "Invalid Input", "GraphClient - removeAADCAPolicy - Input Validation") };
 
         // Attempt to delete the conditional access policy
         try {
@@ -990,7 +990,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> removeAADCAPolicy -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - removeAADCAPolicy - catch statement");
             };
         };
     };
@@ -1012,7 +1012,7 @@ export class MSGraphClient {
                 memDevicePage = await (await this.client).api("/deviceManagement/managedDevices").get();
             } else {
                 // Input is unexpected, throw an error and halt execution.
-                throw new InternalAppError("The GUID parameter is not a string and a valid GUID!", "Invalid Input", "GraphClient -> getMEMDevice -> Input Validation");
+                throw new InternalAppError("The GUID parameter is not a string and a valid GUID!", "Invalid Input", "GraphClient - getMEMDevice - Input Validation");
             };
 
             // Process the page collection to its base form (ManagedDevice)
@@ -1027,7 +1027,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> getMEMDevice -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - getMEMDevice - catch statement");
             };
         };
     };
@@ -1084,7 +1084,7 @@ export class MSGraphClient {
                 autopilotDevicePage = await (await this.client).api("/deviceManagement/windowsAutopilotDeviceIdentities").filter("azureActiveDirectoryDeviceId eq '" + AADDeviceID + "'").get();
             } else {
                 // Input is unexpected, throw an error and halt execution.
-                throw new InternalAppError("The GUID parameter is a valid GUID!", "Invalid Input", "GraphClient -> getAutopilotDevice -> Input Validation");
+                throw new InternalAppError("The GUID parameter is a valid GUID!", "Invalid Input", "GraphClient - getAutopilotDevice - Input Validation");
             };
 
             // Process the page collection to its base form (WindowsAutopilotDeviceIdentity)
@@ -1099,7 +1099,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> getAutopilotDevice -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - getAutopilotDevice - catch statement");
             };
         };
     };
@@ -1107,7 +1107,7 @@ export class MSGraphClient {
     // Wipe the specified device using Endpoint Manager (this specific wipe is an Autopilot reset)
     async wipeMEMDevice(GUID: string): Promise<boolean> {
         // Validate input
-        if (!validateGUID(GUID)) { throw new InternalAppError("The GUID specified is not a proper GUID!", "Invalid Input", "GraphClient -> wipeMEMDevice -> Input Validation") };
+        if (!validateGUID(GUID)) { throw new InternalAppError("The GUID specified is not a proper GUID!", "Invalid Input", "GraphClient - wipeMEMDevice - Input Validation") };
 
         // Attempt to wipe the device
         try {
@@ -1133,7 +1133,7 @@ export class MSGraphClient {
                 throw new InternalAppError(error.message, error.name, error.stack);
             } else {
                 // Return the unknown error in a known format
-                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient -> wipeMEMDevice -> catch statement");
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - wipeMEMDevice - catch statement");
             };
         };
     };
