@@ -1032,8 +1032,6 @@ export class MSGraphClient {
         };
     };
 
-    // Sets extension attribute 1's value on the specified AAD device's Object ID
-    async updateAADDeviceExtensionAttribute(objectID: string, value?: string): Promise<boolean> {
     // Returns the device ID from the
     async getAADDevice(deviceID?: string): Promise<MicrosoftGraphBeta.Device[]> {
         // Attempt to execute and catch errors
@@ -1073,8 +1071,12 @@ export class MSGraphClient {
     // Sets extension attribute 1's value on the specified AAD device's device ID
     async updateAADDeviceExtensionAttribute(deviceID: string, value?: string): Promise<boolean> {
         // Validate Input
-        if (!validateGUID(objectID)) { throw new InternalAppError("The Device ID is not a valid GUID!", "Invalid Input", "GraphClient - updateAADDeviceExtensionAttribute - Input Validation") };
+        if (!validateGUID(deviceID)) { throw new InternalAppError("The Device ID is not a valid GUID!", "Invalid Input", "GraphClient - updateAADDeviceExtensionAttribute - Input Validation") };
         if (typeof value !== "string") { value = "" };
+
+        // initialize variables
+        let aadDeviceObject: MicrosoftGraphBeta.Device[];
+
 
         // Build the patch body for the XHR to use
         let patchBody: MicrosoftGraphBeta.Device = {
@@ -1084,13 +1086,25 @@ export class MSGraphClient {
         };
 
         // Write debug info
-        writeDebugInfo(objectID, "Extension Attribute device ID:");
+        writeDebugInfo(deviceID, "Extension Attribute device ID:");
         writeDebugInfo(patchBody, "Extension Attribute Patch Body:");
+
+        // Kill execution errors
+        try {
+            // Convert the Object ID to a Device ID
+            aadDeviceObject = await this.getAADDevice(deviceID);
+        } catch (error) {
+            // Throw an error
+            throw new InternalAppError("Unable to get device object", "Request Failed", "GraphClient - updateAADDeviceExtensionAttribute - Get AAD Device Object");
+        };
 
         // Catch execution errors
         try {
+            // Write debug info
+            writeDebugInfo(aadDeviceObject, "AAD Device Object:");
+
             // Update the Extension Attribute for the specified device
-            await (await this.client).api("/devices/" + objectID).patch(patchBody);
+            await (await this.client).api("/devices/" + aadDeviceObject[0].id).patch(patchBody);
         } catch (error) {
             // Check to see if the error parameter is an instance of the Error class.
             if (error instanceof Error) {
