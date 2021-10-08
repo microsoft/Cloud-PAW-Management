@@ -32,7 +32,7 @@ class DeploymentEngineRouter {
     // Initialize the web server's deployment routes
     private initRoutes(): void {
         // Trigger the core security group deployment
-        this.webServer.post("/deploy/core", async (request, response, next) => {
+        this.webServer.post("/API/Deploy", async (request, response, next) => {
             try {
                 // Send the boolean response of the deployment operation
                 response.send(await this.configEngine.deployConfigTag(request.body.userConcent));
