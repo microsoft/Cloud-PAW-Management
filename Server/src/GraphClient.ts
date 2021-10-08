@@ -1157,14 +1157,14 @@ export class MSGraphClient {
     };
 
     // Wipe the specified device using Endpoint Manager (this specific wipe is an Autopilot reset)
-    async wipeMEMDevice(GUID: string): Promise<boolean> {
+    async wipeMEMDevice(deviceID: string): Promise<boolean> {
         // Validate input
-        if (!validateGUID(GUID)) { throw new InternalAppError("The GUID specified is not a proper GUID!", "Invalid Input", "GraphClient - wipeMEMDevice - Input Validation") };
+        if (!validateGUID(deviceID)) { throw new InternalAppError("The GUID specified is not a proper GUID!", "Invalid Input", "GraphClient - wipeMEMDevice - Input Validation") };
 
         // Attempt to wipe the device
         try {
             // Get MS Endpoint Manager's internal device ID from the specified Azure AD Device ID
-            const memDeviceID = (await this.getMEMDevice(GUID))[0].id
+            const memDeviceID = (await this.getMEMDevice(deviceID))[0].id
 
             // Define the type of wipe that will take place
             const wipeConfig = {
