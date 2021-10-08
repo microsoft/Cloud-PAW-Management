@@ -20,16 +20,16 @@
 		"description": "Pre-built callback with error handling",
 		"scope": "javascript,typescript",
 		"body": [
-		"async (request, response, next) => {",
-		"    \/\/ Catch execution errors",
-		"    try {",
-		"        \/\/ ${2:Describe the action}",
-		"        ${1:\/\/Action to execute};",
-		"    } catch (error) {",
-        "        \/\/ Send the error details if something goes wrong",
-		"        next(error);",
-        "    };",
-		"}"
+			"async (request, response, next) => {",
+			"    \/\/ Catch execution errors",
+			"    try {",
+			"        \/\/ ${2:Describe the action}",
+			"        ${1:\/\/Action to execute};",
+			"    } catch (error) {",
+			"        \/\/ Send the error details if something goes wrong",
+			"        next(error);",
+			"    };",
+			"}"
 		]
 	},
 	"Write Debug (Custom)": {
@@ -38,7 +38,8 @@
 		"scope": "javascript,typescript",
 		"body": [
 			"\/\/ Write debug info",
-			"writeDebugInfo(${1:Data to log}, \"${2:Message header, optional}\");"
+			"writeDebugInfo(${1:Data to log}, \"${2:Message header, optional}\");",
+			""
 		]
 	},
 	"Throw Internal App Error (Custom)": {
@@ -50,7 +51,7 @@
 			"throw new InternalAppError(\"${1:Error Message}\", \"${2:Error Type}\", \"${3:Stack Trace}\");"
 		]
 	},
-	"Unit Test - Valid Test":{
+	"Unit Test - Valid Test": {
 		"prefix": "UTValid",
 		"description": "A template for creating a valid unit test.",
 		"scope": "javascript,typescript",
@@ -58,12 +59,5 @@
 			"\/\/ ",
 			"\/\/"
 		]
-
-
-
-
 	}
-
-
-
 }
