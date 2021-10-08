@@ -60,13 +60,24 @@ export class LifecycleRouter {
             };
         });
 
-        // TODO write the commission paw endpoint
+        // TODO: Commissions a PAW device based on its AAD Device ID
         this.webServer.post('/API/Lifecycle/PAW/:deviceID/Commission', async (request, response, next) => {
+            // Coming Soon!
+        });
+
+        // TODO: Decommissions the PAW into a normal enterprise device
+        this.webServer.delete('/API/Lifecycle/PAW/:deviceID/Commission', async (request, response, next) => {
             // Coming Soon!
         });
 
         // TODO: Assign a PAW to a user or set of users
         this.webServer.post('/API/Lifecycle/PAW/:deviceID/Assign', async (request, response, next) => {
+            // Coming Soon!
+        });
+
+        // TODO: Remove an assignment of a principal or set of principals from a PAW.
+        // If no user assignments are left, a wipe command is issued to prepare it for the next user(s).
+        this.webServer.delete('/API/Lifecycle/PAW/:deviceID/Assign', async (request, response, next) => {
             // Coming Soon!
         });
 
