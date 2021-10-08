@@ -41,20 +41,33 @@ export class LifeCycleRouter {
 
             // Ensure that the config is initialized before executing the PAW Group recurse command
             if (this.configEngine.configInitialized && typeof this.configEngine.config !== "undefined") {
-                // Retrieve a list of all PAWs starting at the root PAW group
-                const PAWList = await this.recursePAWGroup(this.configEngine.config.PAWSecGrp);
+                try {
+                    // Retrieve a list of all PAWs starting at the root PAW group
+                    const PAWList = await this.recursePAWGroup(this.configEngine.config.PAWSecGrp);
 
-                // Send the PAW list back to the client
-                response.send(PAWList);
+                    // Send the PAW list back to the client
+                    response.send(PAWList);
+                } catch (error) { // TODO Better error handling
+                    // Write debug info
+                    writeDebugInfo(error, "List PAW Devices error:");
+
+                    // Send a hard coded response
+                    response.send("An error occurred while retrieving the PAW list.");
+                }
             } else { // Configuration is not initialized
                 // Send the response notifying the client as such
                 response.send("Config is not initialized!");
             };
         });
 
+        // TODO write the commission paw endpoint
+        this.webServer.post('/API/Lifecycle/PAW/:deviceID/Commission', async (request, response, next) => {
+            // Coming Soon!
+        });
+
         // TODO: Assign a PAW to a user or set of users
-        this.webServer.post('/API/Lifecycle/PAW/:deviceID/Assign/', async (request, response, next) => {
-            // Assign the PAW device
+        this.webServer.post('/API/Lifecycle/PAW/:deviceID/Assign', async (request, response, next) => {
+            // Coming Soon!
         });
 
         // Assign a PAW to a user or set of users
