@@ -23,7 +23,7 @@ interface CloudSecConfig {
 
 // Define the PAW Configuration Spec
 export interface PAWGroupConfig {
-    Type: "Privileged" | "Developer" | "Tactical-DART" | "Tactical-CR" | "Tactical-RRR",
+    Type: "Privileged" | "Developer" | "Tactical-DART" | "Tactical-RRR",
     UserAssignment: string,
     CommissionedDate: Date
 };
