@@ -562,6 +562,30 @@ export class DebugRouter {
             };
         });
 
+        // Get all devices from Azure Active Directory.
+        this.webServer.get('/device', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Send the execution results to the client
+                response.send(await this.graphClient.getAADDevice());
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
+
+        // Get the specified device from Azure Active Directory by using its Device ID.
+        this.webServer.get('/device/:id', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Send the execution results to the client
+                response.send(await this.graphClient.getAADDevice(request.params.id));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
+
         // Edit the Extension Attribute 1 of the specified device
         this.webServer.patch('/deviceExtensionAttribute/:objectID', async (request, response, next) => {
             // Catch execution errors

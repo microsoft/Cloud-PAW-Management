@@ -1034,6 +1034,44 @@ export class MSGraphClient {
 
     // Sets extension attribute 1's value on the specified AAD device's Object ID
     async updateAADDeviceExtensionAttribute(objectID: string, value?: string): Promise<boolean> {
+    // Returns the device ID from the
+    async getAADDevice(deviceID?: string): Promise<MicrosoftGraphBeta.Device[]> {
+        // Attempt to execute and catch errors
+        try {
+            // Pre-define the device page so that it is available to callers.
+            let devicePage: PageCollection;
+
+            // Check the presence of the device ID parameter
+            if (typeof deviceID === "undefined") { // If no device ID is specified, return all devices
+                // Grab an initial device page collection
+                devicePage = await (await this.client).api("/devices").get();
+            } else if (validateGUID(deviceID)) {
+                // Grab the specified device based on its AAD Device ID.
+                devicePage = await (await this.client).api("/devices").filter("deviceId eq '" + deviceID + "'").get();
+            } else {
+                // If the deviceID is specified and it isn't a GUID, throw an error
+                throw new InternalAppError("The Object ID is not a valid GUID!", "Invalid Input", "GraphClient - getAADDevice - Input Validation")
+            };
+
+            // Process the page collection to its base form (Device)
+            const deviceList: MicrosoftGraphBeta.RoleScopeTag[] = await this.iteratePage(devicePage);
+
+            // Return the processed data.
+            return deviceList;
+        } catch (error) {
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - getAADDevice - catch statement");
+            };
+        };
+    };
+
+    // Sets extension attribute 1's value on the specified AAD device's device ID
+    async updateAADDeviceExtensionAttribute(deviceID: string, value?: string): Promise<boolean> {
         // Validate Input
         if (!validateGUID(objectID)) { throw new InternalAppError("The Device ID is not a valid GUID!", "Invalid Input", "GraphClient - updateAADDeviceExtensionAttribute - Input Validation") };
         if (typeof value !== "string") { value = "" };
