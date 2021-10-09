@@ -33,7 +33,7 @@ export class DebugRouter {
     // Initialize the routes
     private init(azureAuthSession: Promise<ChainedTokenCredential>): void {
         // List access token to manually web request as the app
-        this.webServer.get('/accessToken', async (request, response, next) => {
+        this.webServer.get('/Debug/accessToken', async (request, response, next) => {
             // Catch execution errors
             try {
                 // grab a token and extract its value
@@ -55,18 +55,18 @@ export class DebugRouter {
         });
 
         // Send all environmental vars
-        this.webServer.get('/envVar', (request, response) => {
+        this.webServer.get('/Debug/envVar', (request, response) => {
             response.send(process.env)
         });
 
         // Validate post body data is being received properly
-        this.webServer.post('/testPost', async (request, response) => {
+        this.webServer.post('/Debug/testPost', async (request, response) => {
             // Send the body back as a response
             response.send(request.body);
         });
 
         // Create a new role scope tag in Endpoint Manager
-        this.webServer.post('/roleScopeTag', async (request, response, next) => {
+        this.webServer.post('/Debug/roleScopeTag', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Use the graph client to create a new role scope tag.
@@ -78,7 +78,7 @@ export class DebugRouter {
         });
 
         // Lists all of the role scope tags from Endpoint Manager
-        this.webServer.get('/roleScopeTag', async (request, response, next) => {
+        this.webServer.get('/Debug/roleScopeTag', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Send the data back to the caller
@@ -90,7 +90,7 @@ export class DebugRouter {
         });
 
         // Lists all of the role scope tags from Endpoint Manager
-        this.webServer.get('/roleScopeTag/:name', async (request, response, next) => {
+        this.webServer.get('/Debug/roleScopeTag/:name', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Send the data back to the caller
@@ -102,7 +102,7 @@ export class DebugRouter {
         });
 
         // Update the specified role scope tag
-        this.webServer.patch('/roleScopeTag/:name', async (request, response, next) => {
+        this.webServer.patch('/Debug/roleScopeTag/:name', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Validate that the description was provided
@@ -122,7 +122,7 @@ export class DebugRouter {
         });
 
         // Delete the specified role scope tag from Endpoint Manager
-        this.webServer.delete('/roleScopeTag/:id', async (request, response, next) => {
+        this.webServer.delete('/Debug/roleScopeTag/:id', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Parse the parameter with the Number parser.
@@ -143,7 +143,7 @@ export class DebugRouter {
         });
 
         // List the Microsoft Endpoint manager device configurations
-        this.webServer.get('/deviceConfiguration', async (request, response, next) => {
+        this.webServer.get('/Debug/deviceConfiguration', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Get all device configs in Endpoint Manager
@@ -155,7 +155,7 @@ export class DebugRouter {
         });
 
         // Get a specific Device Configuration based on its GUID
-        this.webServer.get('/deviceConfiguration/:id', async (request, response, next) => {
+        this.webServer.get('/Debug/deviceConfiguration/:id', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Get a specific device config based on its unique GUID
@@ -167,7 +167,7 @@ export class DebugRouter {
         });
 
         // Delete the specified device configuration
-        this.webServer.delete('/deviceConfiguration/:id', async (request, response, next) => {
+        this.webServer.delete('/Debug/deviceConfiguration/:id', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Describe the action
@@ -179,7 +179,7 @@ export class DebugRouter {
         });
 
         // List the Device Group Policy Configurations
-        this.webServer.get('/deviceGroupPolicyConfiguration', async (request, response, next) => {
+        this.webServer.get('/Debug/deviceGroupPolicyConfiguration', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Get all Group Policy Configs in Endpoint Manager
@@ -191,7 +191,7 @@ export class DebugRouter {
         });
 
         // Get a specific Device Group Policy Configuration based on its GUID
-        this.webServer.get('/deviceGroupPolicyConfiguration/:id', async (request, response, next) => {
+        this.webServer.get('/Debug/deviceGroupPolicyConfiguration/:id', async (request, response, next) => {
             // Catch execution errors
             try {
                 // get a specific group policy config based on its unique GUID
@@ -203,7 +203,7 @@ export class DebugRouter {
         });
 
         // List all groups in AAD
-        this.webServer.get('/group', async (request, response, next) => {
+        this.webServer.get('/Debug/group', async (request, response, next) => {
             // Catch execution errors
             try {
                 // List all groups in AAD
@@ -215,7 +215,7 @@ export class DebugRouter {
         });
 
         // Get a specific group in AAD based on its GUID
-        this.webServer.get('/group/:id', async (request, response, next) => {
+        this.webServer.get('/Debug/group/:id', async (request, response, next) => {
             // Catch execution errors
             try {
                 // get the specified group by its unique GUID
@@ -227,7 +227,7 @@ export class DebugRouter {
         });
 
         // Create a new group
-        this.webServer.post('/group', async (request, response, next) => {
+        this.webServer.post('/Debug/group', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Have the Graph API delete the specified group GUID and send the response to the caller
@@ -239,7 +239,7 @@ export class DebugRouter {
         });
 
         // Update a group's settings
-        this.webServer.patch('/group/:id', async (request, response, next) => {
+        this.webServer.patch('/Debug/group/:id', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Update the specified group with the specified options
@@ -251,7 +251,7 @@ export class DebugRouter {
         });
 
         // Delete the specified group
-        this.webServer.delete('/group/:id', async (request, response, next) => {
+        this.webServer.delete('/Debug/group/:id', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Have the Graph API delete the specified group GUID and send the response to the caller
@@ -263,7 +263,7 @@ export class DebugRouter {
         });
 
         // Add a member to a AAD Group using GUIDs
-        this.webServer.post('/groupMember/:id', async (request, response, next) => {
+        this.webServer.post('/Debug/groupMember/:id', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Send the results of the operation back to the client
@@ -275,7 +275,7 @@ export class DebugRouter {
         });
 
         // List the members of the specified group
-        this.webServer.get('/groupMember/:id', async (request, response, next) => {
+        this.webServer.get('/Debug/groupMember/:id', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Send the results of the operation back to the client
@@ -287,7 +287,7 @@ export class DebugRouter {
         });
 
         // List the members of the specified group
-        this.webServer.get('/groupMember/:id/:type', async (request, response, next) => {
+        this.webServer.get('/Debug/groupMember/:id/:type', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Send the results of the operation back to the client
@@ -299,7 +299,7 @@ export class DebugRouter {
         });
 
         // Remove the specified member from the specified AAD group
-        this.webServer.delete('/groupMember/:id', async (request, response, next) => {
+        this.webServer.delete('/Debug/groupMember/:id', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Send the results of the operation back to the client
@@ -311,7 +311,7 @@ export class DebugRouter {
         });
 
         // List all users in AAD
-        this.webServer.get('/user', async (request, response, next) => {
+        this.webServer.get('/Debug/user', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Get all users
@@ -323,7 +323,7 @@ export class DebugRouter {
         });
 
         // Get a specific user in AAD based on their GUID or UPN
-        this.webServer.get('/user/:id', async (request, response, next) => {
+        this.webServer.get('/Debug/user/:id', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Get a specific user by their GUID or UPN
@@ -335,7 +335,7 @@ export class DebugRouter {
         });
 
         // List all Administrative Units in AAD
-        this.webServer.get('/adminUnit', async (request, response, next) => {
+        this.webServer.get('/Debug/adminUnit', async (request, response, next) => {
             // Catch execution errors
             try {
                 // List all AAD Administrative Units
@@ -347,7 +347,7 @@ export class DebugRouter {
         });
 
         // Get a specific Administrative Unit in AAD based on the GUID
-        this.webServer.get('/adminUnit/:id', async (request, response, next) => {
+        this.webServer.get('/Debug/adminUnit/:id', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Get a specific Administrative unit by its GUID
@@ -359,7 +359,7 @@ export class DebugRouter {
         });
 
         // Delete the specified AU based on its GUID
-        this.webServer.delete('/adminUnit/:id', async (request, response, next) => {
+        this.webServer.delete('/Debug/adminUnit/:id', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Delete the specified AU from AAD
@@ -372,7 +372,7 @@ export class DebugRouter {
 
         // TODO: rewrite the update method to use the new validators, generators and graph client method
         // Generate an example settings catalog with the specified name, description, and scope tag
-        this.webServer.post('/settingsCatalog', async (request, response, next) => {
+        this.webServer.post('/Debug/settingsCatalog', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Validate input
@@ -390,7 +390,7 @@ export class DebugRouter {
         });
 
         // List all settings catalogs
-        this.webServer.get('/settingsCatalog', async (request, response, next) => {
+        this.webServer.get('/Debug/settingsCatalog', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Get all settings catalogs from Endpoint manager
@@ -402,7 +402,7 @@ export class DebugRouter {
         });
 
         // Get a specific settings catalog based on the GUID
-        this.webServer.get('/settingsCatalog/:id', async (request, response, next) => {
+        this.webServer.get('/Debug/settingsCatalog/:id', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Get a specific settings catalog from Endpoint manager
@@ -416,7 +416,7 @@ export class DebugRouter {
         // Updated the specified settings catalog in Endpoint Manager
         // when this route is executed against a GUID, all current settings are replaced with the specified data.
         // This is not an update command, this is a replace command in reality.
-        this.webServer.patch('/settingsCatalog/:id', async (request, response, next) => {
+        this.webServer.patch('/Debug/settingsCatalog/:id', async (request, response, next) => {
             // Validate input
             if (!validateGUID(request.params.id)) { response.send("Please specify a valid GUID!") };
             if (!validateStringArray(request.body.userNames)) { response.send("Please send a valid array usernames!") };
@@ -443,7 +443,7 @@ export class DebugRouter {
         });
 
         // Delete the specified settings catalog based on the GUID
-        this.webServer.delete('/settingsCatalog/:id', async (request, response, next) => {
+        this.webServer.delete('/Debug/settingsCatalog/:id', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Call the deletion passing the specified GUID
@@ -455,7 +455,7 @@ export class DebugRouter {
         });
 
         // Assign an endpoint manager device configuration
-        this.webServer.post('/deviceConfigurationAssignment/:id', async (request, response, next) => {
+        this.webServer.post('/Debug/deviceConfigurationAssignment/:id', async (request, response, next) => {
             // Validate input
             if (typeof request.body.type !== "string" && request.body.type !== "Settings Catalog" && request.body.type !== "Setting Template" && request.body.type !== "Admin Template") { response.send("Please specify a valid assignment type") };
             if (typeof request.body.includeGUID !== "undefined" && !validateGUIDArray(request.body.includeGUID)) { response.send("The specified array of included group GUIDs is not valid!") };
@@ -473,7 +473,7 @@ export class DebugRouter {
         });
 
         // Create a Conditional Access Policy
-        this.webServer.post('/conditionalAccess', async (request, response, next) => {
+        this.webServer.post('/Debug/conditionalAccess', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Build the settings object that will be used with the new AAD CA method.
@@ -488,7 +488,7 @@ export class DebugRouter {
         })
 
         // Get all Conditional Access Policies
-        this.webServer.get('/conditionalAccess', async (request, response, next) => {
+        this.webServer.get('/Debug/conditionalAccess', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Send the response back to the CX with the data
@@ -500,7 +500,7 @@ export class DebugRouter {
         });
 
         // Get the specified Conditional Access Policy based on GUID
-        this.webServer.get('/conditionalAccess/:id', async (request, response, next) => {
+        this.webServer.get('/Debug/conditionalAccess/:id', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Send the response back to the CX with the data
@@ -512,7 +512,7 @@ export class DebugRouter {
         });
 
         // Update the specified (already existing) Conditional Access Policy
-        this.webServer.patch('/conditionalAccess/:id', async (request, response, next) => {
+        this.webServer.patch('/Debug/conditionalAccess/:id', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Build the settings object that will be used with the update AAD CA method.
@@ -527,7 +527,7 @@ export class DebugRouter {
         });
 
         // Delete the specified Conditional Access Policy based on its GUID.
-        this.webServer.delete('/conditionalAccess/:id', async (request, response, next) => {
+        this.webServer.delete('/Debug/conditionalAccess/:id', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Send the data back via the response
@@ -539,7 +539,7 @@ export class DebugRouter {
         });
 
         // Get all devices from Microsoft Endpoint Manager.
-        this.webServer.get('/memDevice', async (request, response, next) => {
+        this.webServer.get('/Debug/memDevice', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Send the execution results to the client
@@ -551,7 +551,7 @@ export class DebugRouter {
         });
 
         // Get the specified device from Microsoft Endpoint Manager by using its AAD Device ID.
-        this.webServer.get('/memDevice/:id', async (request, response, next) => {
+        this.webServer.get('/Debug/memDevice/:id', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Send the execution results to the client
@@ -563,7 +563,7 @@ export class DebugRouter {
         });
 
         // Get all devices from Azure Active Directory.
-        this.webServer.get('/device', async (request, response, next) => {
+        this.webServer.get('/Debug/device', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Send the execution results to the client
@@ -575,7 +575,7 @@ export class DebugRouter {
         });
 
         // Get the specified device from Azure Active Directory by using its Device ID.
-        this.webServer.get('/device/:id', async (request, response, next) => {
+        this.webServer.get('/Debug/device/:id', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Send the execution results to the client
@@ -587,7 +587,7 @@ export class DebugRouter {
         });
 
         // Edit the Extension Attribute 1 of the specified device
-        this.webServer.patch('/deviceExtensionAttribute/:objectID', async (request, response, next) => {
+        this.webServer.patch('/Debug/deviceExtensionAttribute/:objectID', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Update the extension attribute of the specified device
@@ -599,7 +599,7 @@ export class DebugRouter {
         });
 
         // Get all Autopilot devices from Microsoft Endpoint Manager.
-        this.webServer.get('/autopilotDevice', async (request, response, next) => {
+        this.webServer.get('/Debug/autopilotDevice', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Send the execution results to the client
@@ -611,7 +611,7 @@ export class DebugRouter {
         });
 
         // Get the specified Autopilot device from Microsoft Endpoint Manager by using its AAD Device ID.
-        this.webServer.get('/autopilotDevice/:id', async (request, response, next) => {
+        this.webServer.get('/Debug/autopilotDevice/:id', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Send the execution results to the client
@@ -623,7 +623,7 @@ export class DebugRouter {
         });
 
         // Wipe the specified device using Endpoint Manager
-        this.webServer.get('/wipeDevice/:id', async (request, response, next) => {
+        this.webServer.get('/Debug/wipeDevice/:id', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Send the data back to the caller
@@ -635,7 +635,7 @@ export class DebugRouter {
         });
 
         // Return the PAW's group config in a parsed format
-        this.webServer.get('/configEngine/getPAWGroupConfig/:groupID', async (request, response, next) => {
+        this.webServer.get('/Debug/configEngine/getPAWGroupConfig/:groupID', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Get the group's config, parse it and send it back to the client
