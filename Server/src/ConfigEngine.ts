@@ -10,7 +10,8 @@ interface CloudSecConfigIncomplete {
     "UsrSecGrp"?: string,
     "SiloRootGrp"?: string,
     "BrkGls"?: string,
-    "UsrTag"?: string
+    "UsrTag"?: string,
+    "ScopeTagID"?: string
 };
 
 interface CloudSecConfig {
@@ -18,7 +19,8 @@ interface CloudSecConfig {
     "UsrSecGrp": string,
     "SiloRootGrp": string,
     "BrkGls": string,
-    "UsrTag": string
+    "UsrTag": string,
+    "ScopeTagID": string
 };
 
 // Define the PAW Configuration Spec
@@ -95,6 +97,9 @@ export class ConfigurationEngine {
         if (typeof scopeTagObject.description === "string") {
             // Parse the description field into something useable.
             this.configScratchSpace = this.parseTagConfigString(scopeTagObject.description);
+
+            // Set the scope tag id property id in the scratch space for later validation
+            this.configScratchSpace.ScopeTagID = scopeTagObject.id;
         };
     };
 
@@ -123,6 +128,9 @@ export class ConfigurationEngine {
             return false;
             // Validate the User Tagging property
         } else if (typeof scratchSpaceInstance.UsrTag === "undefined" || !(validateGUID(scratchSpaceInstance.UsrTag))) {
+            // If validation fails, return false
+            return false;
+        } else if (typeof scratchSpaceInstance.ScopeTagID !== "string") {
             // If validation fails, return false
             return false;
         } else {
