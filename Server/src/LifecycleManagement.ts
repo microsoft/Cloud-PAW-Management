@@ -150,7 +150,7 @@ export class LifecycleRouter {
     };
 
     // Commission the specified PAW with no user(s)
-    private async commissionPAW(deviceID: string, type?: string): Promise<boolean> {
+    private async commissionPAW(deviceID: string, type?: string): Promise<PAWObject> {
         // Validate Input
         if (!validateGUID(deviceID)) { throw new InternalAppError("The specified Device ID is not a valid device ID!", "Invalid Input", "LifecycleManagement - LifecycleRouter - commissionPAW - Input Validation") };
 
@@ -276,7 +276,16 @@ export class LifecycleRouter {
             throw new InternalAppError("Unknown error", "Unknown", "LifecycleManagement - LifecycleRouter - commissionPAW - Add Dev to Dev Grp");
         };
 
-        // Return true for successful operation
-        return true;
+        // Build the object that will be returned on successful execution.
+        const returnObject: PAWObject = {
+            "CommissionedDate": devGroupDescription.CommissionedDate,
+            "Type": devGroupDescription.Type,
+            "UserAssignment": devGroupDescription.UserAssignment,
+            "id": deviceID,
+            "ParentGroup": devGroup.id
+        }
+
+        // Return the newly commissioned PAW object on successful operation
+        return returnObject;
     };
 };
