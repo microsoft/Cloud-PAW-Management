@@ -52,7 +52,7 @@ export class LifecycleRouter {
                     writeDebugInfo(error, "List PAW Devices error:");
 
                     // Send a hard coded response
-                    response.send("An error occurred while retrieving the PAW list.");
+                    next("An error occurred while retrieving the PAW list.");
                 }
             } else { // Configuration is not initialized
                 // Send the response notifying the client as such
