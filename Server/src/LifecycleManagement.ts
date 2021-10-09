@@ -179,7 +179,7 @@ export class LifecycleRouter {
             pawType = type
         } else { // a string was specified but it doesn't match the expected types allowed
             // Throw an error
-            throw new InternalAppError("Type is not a valid option", "Invalid Input", "LifecycleManagement - LifecycleRouter - commissionPAW - Input Validation");
+            throw new InternalAppError("The type parameter is not a valid value", "Invalid Input", "LifecycleManagement - LifecycleRouter - commissionPAW - Input Validation");
         };
 
         // Ensure that the config engine is initialized
@@ -197,11 +197,17 @@ export class LifecycleRouter {
             throw new InternalAppError("Device is not autopilot enabled!", "Invalid Input", "LifecycleManagement - LifecycleRouter - commissionPAW - Validate PAW Autopilot Status not present");
         } else if (deviceAutopilot.length > 1) {// if there is more than one autopilot device for the AAD device id, throw an error
             // Throw an error
-            throw new InternalAppError("More than one device returned!", "Invalid Input", "LifecycleManagement - LifecycleRouter - commissionPAW - Validate PAW Autopilot Status too many");
+            throw new InternalAppError("More than one autopilot device returned!", "Invalid Input", "LifecycleManagement - LifecycleRouter - commissionPAW - Validate PAW Autopilot Status too many");
         };
 
+        // Write debug info
+        writeDebugInfo("Starting PAW recurse on the root group");
+        
         // Get the list of PAWs
         const pawList = await this.recursePAWGroup(this.configEngine.config.PAWSecGrp);
+
+        // Write debug info
+        writeDebugInfo("Completed PAW recurse on the root group");
 
         // Loop through the PAW list and ensure that the device doesn't already exist
         for (const paw of pawList) {
@@ -222,19 +228,38 @@ export class LifecycleRouter {
 
         // Catch execution errors
         try {
+            // Write debug info
+            writeDebugInfo("Updating ExtensionAttribute1 of the Device");
+            
             // Set the device extension attribute 1 value to "PAW" on the PAW device
             await this.graphClient.updateAADDeviceExtensionAttribute(deviceID, "PAW");
+
+            // Write debug info
+            writeDebugInfo(deviceID, "Completed update of ExtensionAttribute1 for device:");
         } catch (error) {
             // Throw an error
             throw new InternalAppError("Error setting Extension Attribute", "Unknown Error", "LifecycleManagement - LifecycleRouter - commissionPAW - Add Extension Attribute");
         };
 
+        // Write debug info
+        writeDebugInfo("Generating user rights post body");
+        
         // Make the defaultuser0 assignment object so that the PAW can complete Autopilot even if the device isn't assigned
         const userAssignmentSettings = endpointPAWUserRightsSettings(["defaultuser0"]);
 
+        // Write debug info
+        writeDebugInfo("Completed generating user rights post body");
+
+        // Write debug info
+        writeDebugInfo("Creating settings catalog");
+        
         // Create the user assignment settings catalog.
         const userAssignmentConfig = await this.graphClient.newSettingsCatalog("PAW - Login - " + deviceID, "Allow only the defaultuser0 user to login to the specified PAW. This allows it to complete", [this.configEngine.scopeTagName], userAssignmentSettings);
 
+        // Write debug info
+        writeDebugInfo(userAssignmentConfig.id, "Created settings catalog:");
+
+        // Check that all the expected data is present from the Graph API call
         if (typeof userAssignmentConfig.id !== "string") {
             // Throw an error
             throw new InternalAppError("Incomplete Data!", "Invalid Return", "LifecycleManagement - LifecycleRouter - commissionPAW - User Assignment Settings Catalog ID Null Check");
@@ -252,8 +277,14 @@ export class LifecycleRouter {
 
         // Catch Execution Errors
         try {
+            // Write debug info
+            writeDebugInfo("Creating device's unique group");
+
             // Create the device group
             devGroup = await this.graphClient.newAADGroup(deviceAutopilot[0].serialNumber, groupDescription);
+
+            // Write debug info
+            writeDebugInfo(devGroup.id, "Created device's unique group:");
         } catch (error) {
             // Throw an error
             throw new InternalAppError("Unknown error", "Unknown", "LifecycleManagement - LifecycleRouter - commissionPAW - Device Group Creation");
@@ -265,8 +296,14 @@ export class LifecycleRouter {
             throw new InternalAppError("Incomplete Data!", "Invalid Return", "LifecycleManagement - LifecycleRouter - commissionPAW - Device Group ID Null Check");
         };
 
+        // Write debug info
+        writeDebugInfo(devGroup.id, "Starting assignment of user rights to:");
+        
         // Assign the user rights configuration to the device security group
         const assignmentResults = await this.graphClient.updateConfigurationAssignment("Settings Catalog", userAssignmentConfig.id, [devGroup.id], [this.configEngine.config.BrkGls]);
+
+        // Write debug info
+        writeDebugInfo(devGroup.id, "Completed assignment of user rights to:");
 
         // Catch Execution Errors
         try {
@@ -279,8 +316,14 @@ export class LifecycleRouter {
 
         // Catch Execution Errors
         try {
+            // Write debug info
+            writeDebugInfo(devGroup.id, "Adding PAW (" + deviceID + ") to its exclusive SG:");
+
             // Add the PAW device to the PAW SG
             devGroupMemberResult = await this.graphClient.newAADGroupMember(devGroup.id, deviceID);
+
+            // Write debug info
+            writeDebugInfo(devGroup.id, "Completed membership addition of PAW (" + deviceID + ") to its exclusive SG:");
         } catch (error) {
             // Throw an error
             throw new InternalAppError("Unknown error", "Unknown", "LifecycleManagement - LifecycleRouter - commissionPAW - Add Dev to Dev Grp");
@@ -293,7 +336,7 @@ export class LifecycleRouter {
             "UserAssignment": devGroupDescription.UserAssignment,
             "id": deviceID,
             "ParentGroup": devGroup.id
-        }
+        };
 
         // Return the newly commissioned PAW object on successful operation
         return returnObject;
