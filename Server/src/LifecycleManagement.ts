@@ -254,7 +254,7 @@ export class LifecycleRouter {
         writeDebugInfo("Creating settings catalog");
         
         // Create the user assignment settings catalog.
-        const userAssignmentConfig = await this.graphClient.newSettingsCatalog("PAW - Login - " + deviceID, "Allow only the defaultuser0 user to login to the specified PAW. This allows it to complete", [this.configEngine.scopeTagName], userAssignmentSettings);
+        const userAssignmentConfig = await this.graphClient.newSettingsCatalog("PAW - Login - " + deviceID, "Allow only the defaultuser0 user to login to the specified PAW. This allows it to complete", [this.configEngine.config.ScopeTagID], userAssignmentSettings);
 
         // Write debug info
         writeDebugInfo(userAssignmentConfig.id, "Created settings catalog:");
@@ -273,7 +273,7 @@ export class LifecycleRouter {
         };
 
         // Generate the description string to be use for the PAW's device group
-        const groupDescription = "CommissionedDate=" + devGroupDescription.CommissionedDate + ",Type=" + devGroupDescription.Type + ",UserAssignment=" + devGroupDescription.UserAssignment
+        const groupDescription = "CommissionedDate=" + devGroupDescription.CommissionedDate.toJSON() + ",Type=" + devGroupDescription.Type + ",UserAssignment=" + devGroupDescription.UserAssignment
 
         // Catch Execution Errors
         try {
@@ -281,7 +281,7 @@ export class LifecycleRouter {
             writeDebugInfo("Creating device's unique group");
 
             // Create the device group
-            devGroup = await this.graphClient.newAADGroup(deviceAutopilot[0].serialNumber, groupDescription);
+            devGroup = await this.graphClient.newAADGroup("PAW - " + deviceAutopilot[0].serialNumber, groupDescription);
 
             // Write debug info
             writeDebugInfo(devGroup.id, "Created device's unique group:");
@@ -320,7 +320,7 @@ export class LifecycleRouter {
             writeDebugInfo(devGroup.id, "Adding PAW (" + deviceID + ") to its exclusive SG:");
 
             // Add the PAW device to the PAW SG
-            devGroupMemberResult = await this.graphClient.newAADGroupMember(devGroup.id, deviceID);
+            devGroupMemberResult = await this.graphClient.newAADGroupMember(devGroup.id, deviceID, true);
 
             // Write debug info
             writeDebugInfo(devGroup.id, "Completed membership addition of PAW (" + deviceID + ") to its exclusive SG:");
