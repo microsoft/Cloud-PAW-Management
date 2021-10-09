@@ -70,8 +70,32 @@ export class LifecycleRouter {
             try {
                 // Send the PAW Object of the commission operation back to the caller as a sign of successful execution
                 response.send(await this.commissionPAW(request.params.deviceID, request.body.type));
-            } catch (error) { // On error, send back a generic error statement that isn't user editable
-                next("There was an error commissioning the specified autopilot device as a PAW");
+            } catch (error) { // On error, process known errors or send back a generic error statement that isn't user editable
+                // Check if the error is known
+                if (error instanceof InternalAppError) {
+                    if (error.name === "Invalid Input") {
+                        // Set the response code of 400 to indicate a bad request
+                        response.statusCode = 400;
+
+                        // All internal app errors are hard coded, no tricky business here from the end user :)
+                        response.send(error.message)
+                    } else if (error.name === "Misconfigured Structure") {
+                        // Set the response code of 500 to indicate an internal error
+                        response.statusCode = 500;
+
+                        // All internal app errors are hard coded, no tricky business here from the end user :)
+                        response.send(error.message);
+                    } else {
+                        // Set the response code of 500 to indicate an internal error
+                        response.statusCode = 500;
+
+                        // Send a generic error to the next middleware in the line for processing
+                        next("An error was thrown and handled internally, operation failed. Please see server console for more info.")
+                    };
+                } else { // The error is unknown, treat it as such
+                    // Send a generic error to the next middleware in the line for processing
+                    next("There was an error commissioning the specified autopilot device as a PAW");
+                }
             };
         });
 
