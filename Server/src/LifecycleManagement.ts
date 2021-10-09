@@ -60,9 +60,19 @@ export class LifecycleRouter {
             };
         });
 
-        // TODO: Commissions a PAW device based on its AAD Device ID
+        // Commissions an Autopilot device as a PAW device based on its AAD Device ID
         this.webServer.post('/API/Lifecycle/PAW/:deviceID/Commission', async (request, response, next) => {
-            // Coming Soon!
+            // Write debug info
+            writeDebugInfo(request.params.deviceID, "Commission PAW - Device ID URL Param:")
+            writeDebugInfo(request.body, "Commission PAW - Body of the XHR:");
+            
+            // Catch execution errors
+            try {
+                // Send the PAW Object of the commission operation back to the caller as a sign of successful execution
+                response.send(await this.commissionPAW(request.params.deviceID, request.body.type));
+            } catch (error) { // On error, send back a generic error statement that isn't user editable
+                next("There was an error commissioning the specified autopilot device as a PAW");
+            };
         });
 
         // TODO: Decommissions the PAW into a normal enterprise device
