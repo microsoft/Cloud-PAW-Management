@@ -510,12 +510,28 @@ export class MSGraphClient {
     };
 
     // Add a principal to an AAD Group
-    async newAADGroupMember(groupGUID: string, addGUID: string): Promise<boolean> {
+    async newAADGroupMember(groupGUID: string, addGUID: string, isDeviceID?: boolean): Promise<boolean> {
         // Validate Input
-        if (!validateGUID(groupGUID) && !validateGUID(addGUID)) { throw new InternalAppError("The specified GUID is not a valid GUID!", "Invalid Input", "GraphClient - newAADGroupMember - Input Validation") };
+        if (!validateGUID(groupGUID) || !validateGUID(addGUID)) { throw new InternalAppError("The specified GUID is not a valid GUID!", "Invalid Input", "GraphClient - newAADGroupMember - Input Validation") };
+        if (typeof isDeviceID !== "undefined" && typeof isDeviceID !== "boolean") { throw new InternalAppError("The isDeviceID Parameter has to be a boolean!", "Invalid Input", "GraphClient - newAADGroupMember - Input Validation") }
 
         // Grab the specified group membership from AAD
         try {
+            // If the GUID to add is a device ID, convert it to an Object ID for the below query.
+            if (isDeviceID) {
+                // Get the first device object based on it's device ID and extract its Object ID into a variable
+                const objectID = (await this.getAADDevice(addGUID))[0].id;
+
+                // If the objectID is not returned, throw an error
+                if (typeof objectID !== "string") {
+                    // Throw an error
+                    throw new InternalAppError("Missing Data", "Unknown", "GraphClient - newAADGroupMember - DeviceID to Object ID conversion");
+                };
+
+                // Set the value of the addGUID parameter to be the objectID value just retrieved
+                addGUID = objectID
+            };
+
             // Build the post body
             const newMemberBody = {
                 "@odata.id": "https://graph.microsoft.com/beta/directoryObjects/" + addGUID
@@ -580,13 +596,29 @@ export class MSGraphClient {
     };
 
     // Remove the specified group member from the specified AAD group
-    async removeAADGroupMember(groupGUID: string, removeGUID: string): Promise<boolean> {
+    async removeAADGroupMember(groupGUID: string, removeGUID: string, isDeviceID?: boolean): Promise<boolean> {
         // Validate GUID is a proper GUID
         if (!validateGUID(groupGUID)) { throw new InternalAppError("The groupGUID specified is not a proper GUID!", "Invalid Input", "GraphClient - removeAADGroupMember - Input Validation") };
         if (!validateGUID(removeGUID)) { throw new InternalAppError("The removeGUID specified is not a proper GUID!", "Invalid Input", "GraphClient - removeAADGroupMember - Input Validation") };
+        if (typeof isDeviceID !== "undefined" && typeof isDeviceID !== "boolean") { throw new InternalAppError("The isDeviceID Parameter has to be a boolean!", "Invalid Input", "GraphClient - removeAADGroupMember - Input Validation") }
 
         // Grab the specified group membership from AAD
         try {
+            // If the GUID to add is a device ID, convert it to an Object ID for the below query.
+            if (isDeviceID) {
+                // Get the first device object based on it's device ID and extract its Object ID into a variable
+                const objectID = (await this.getAADDevice(removeGUID))[0].id;
+
+                // If the objectID is not returned, throw an error
+                if (typeof objectID !== "string") {
+                    // Throw an error
+                    throw new InternalAppError("Missing Data", "Unknown", "GraphClient - newAADGroupMember - DeviceID to Object ID conversion");
+                };
+
+                // Set the value of the addGUID parameter to be the objectID value just retrieved
+                removeGUID = objectID
+            };
+
             // Remove the specified group member from the group
             await (await this.client).api("/groups/" + groupGUID + "/members/" + removeGUID + "/$ref/").delete();
 

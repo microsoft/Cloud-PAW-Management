@@ -267,7 +267,7 @@ export class DebugRouter {
             // Catch execution errors
             try {
                 // Send the results of the operation back to the client
-                response.send(await this.graphClient.newAADGroupMember(request.params.id, request.body.GUID));
+                response.send(await this.graphClient.newAADGroupMember(request.params.id, request.body.GUID, request.body.idDeviceId));
             } catch (error) {
                 // Send the error details if something goes wrong
                 next(error);
@@ -303,7 +303,7 @@ export class DebugRouter {
             // Catch execution errors
             try {
                 // Send the results of the operation back to the client
-                response.send(await this.graphClient.removeAADGroupMember(request.params.id, request.body.GUID));
+                response.send(await this.graphClient.removeAADGroupMember(request.params.id, request.body.GUID, request.body.idDeviceId));
             } catch (error) {
                 // Send the error details if something goes wrong
                 next(error);
