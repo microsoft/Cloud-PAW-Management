@@ -99,7 +99,7 @@ export class LifecycleRouter {
             };
         });
 
-        // TODO: Decommissions the PAW into a normal enterprise device
+        // Decommissions the PAW into a normal enterprise device
         this.webServer.delete('/API/Lifecycle/PAW/:deviceID/Commission', async (request, response, next) => {
             // Write debug info
             writeDebugInfo(request.params.deviceID, "Decommission PAW - Device ID URL Param:")
