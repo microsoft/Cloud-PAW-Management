@@ -623,7 +623,7 @@ export class DebugRouter {
         });
 
         // Wipe the specified device using Endpoint Manager
-        this.webServer.get('/Debug/wipeDevice/:id', async (request, response, next) => {
+        this.webServer.post('/Debug/wipeDevice/:id', async (request, response, next) => {
             // Catch execution errors
             try {
                 // Send the data back to the caller
