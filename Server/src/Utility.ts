@@ -204,6 +204,9 @@ export function validateConditionalAccessSetting(settingToValidate: any): boolea
     }
 };
 
+// TODO: Validate the structure of a given PAW Object.
+export function validatePawObject(objectToValidate: any) {}
+
 // Define the custom error structure for the app so that error handling can be well structured and in the future, automated.
 export class InternalAppError extends Error {
     // Define the initialization code for the class
