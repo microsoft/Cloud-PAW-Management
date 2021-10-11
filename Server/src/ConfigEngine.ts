@@ -23,6 +23,11 @@ interface CloudSecConfig {
     "ScopeTagID": string
 };
 
+/* 
+Type = Is the commission type of PAW
+UserAssignment = The ID of the Settings Catalog that contains the user rights assignment of the specified PAW device
+CommissionedDate = is the ISO 8601 string format of the time representing the commission date of the PAW
+*/
 // Define the PAW Configuration Spec
 export interface PAWGroupConfig {
     Type: "Privileged" | "Developer" | "Tactical-CR" | "Tactical-RRR",
@@ -30,6 +35,11 @@ export interface PAWGroupConfig {
     CommissionedDate: Date
 };
 
+/* 
+id = DeviceID of the PAW Device
+ParentGroup = the ObjectID of the unique PAW group that the PAW is a member of
+ParentDevice = is an optional property that is the DeviceID of the parent PAW device
+*/
 // Define the structure of the PAW device object
 export interface PAWObject extends PAWGroupConfig {
     id: string,
