@@ -1028,18 +1028,18 @@ export class MSGraphClient {
     };
 
     // Get the specified Microsoft Endpoint Manager Device
-    async getMEMDevice(AADDeviceID?: string): Promise<MicrosoftGraphBeta.ManagedDevice[]> {
+    async getMEMDevice(deviceID?: string): Promise<MicrosoftGraphBeta.ManagedDevice[]> {
         // Attempt to execute and catch errors
         try {
             // Pre-define the AAD CA page so that it is available to callers.
             let memDevicePage: PageCollection;
 
             // If a GUID is specified, return the specified AAD CA policy.
-            if (validateGUID(AADDeviceID)) {
+            if (validateGUID(deviceID)) {
                 // Grab and return the specified CA Policy.
-                return [await (await this.client).api("/deviceManagement/managedDevices").filter("azureADDeviceId eq '" + AADDeviceID + "'").get()];
+                memDevicePage = await (await this.client).api("/deviceManagement/managedDevices").filter("azureADDeviceId eq '" + deviceID + "'").get();
                 // If no GUID is specified, return all AAD CA policies.
-            } else if (typeof AADDeviceID === "undefined") {
+            } else if (typeof deviceID === "undefined") {
                 // Grab all AAD CA policies.
                 memDevicePage = await (await this.client).api("/deviceManagement/managedDevices").get();
             } else {
