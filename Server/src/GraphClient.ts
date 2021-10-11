@@ -1195,8 +1195,20 @@ export class MSGraphClient {
 
         // Attempt to wipe the device
         try {
-            // Get MS Endpoint Manager's internal device ID from the specified Azure AD Device ID
-            const memDeviceID = (await this.getMEMDevice(deviceID))[0].id
+            // Get MS Endpoint Manager's internal device object from the specified Azure AD Device ID
+            const memDeviceObject = await this.getMEMDevice(deviceID);
+
+            // Check to make sure we have an expected MEM Device Object and it is not empty or has more than one
+            if (memDeviceObject.length === 0) { // If no devices were returned, don't execute
+                // Throw an error
+                throw new InternalAppError("The specified device does not exist", "Retrieval Error", "GraphClient - wipeMEMDevice - mem Device Count Check");
+            } else if (memDeviceObject.length > 1) { // Check for more than one mem device on the aad device id
+                // Throw an error
+                throw new InternalAppError("There was more than one device mapped to that device ID", "Retrieval Error", "GraphClient - wipeMEMDevice - mem Device Count Check");
+            };
+
+            // Extract the ID from the mem device object
+            const memDeviceID = memDeviceObject[0].id;
 
             // Define the type of wipe that will take place
             const wipeConfig = {
