@@ -78,13 +78,13 @@ export class LifecycleRouter {
                         response.statusCode = 400;
 
                         // All internal app errors are hard coded, no tricky business here from the end user :)
-                        response.send(error.message)
+                        next(error.message);
                     } else if (error.name === "Misconfigured Structure") {
                         // Set the response code of 500 to indicate an internal error
                         response.statusCode = 500;
 
                         // All internal app errors are hard coded, no tricky business here from the end user :)
-                        response.send(error.message);
+                        next(error.message);
                     } else {
                         // Set the response code of 500 to indicate an internal error
                         response.statusCode = 500;
