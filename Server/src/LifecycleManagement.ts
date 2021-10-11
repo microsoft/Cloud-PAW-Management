@@ -101,7 +101,40 @@ export class LifecycleRouter {
 
         // TODO: Decommissions the PAW into a normal enterprise device
         this.webServer.delete('/API/Lifecycle/PAW/:deviceID/Commission', async (request, response, next) => {
-            // Coming Soon!
+            // Write debug info
+            writeDebugInfo(request.params.deviceID, "Decommission PAW - Device ID URL Param:")
+
+            // Catch execution errors
+            try {
+                // Send the boolean result of the decommission operation back to the caller as a sign of successful execution
+                response.send(await this.decommissionPAW(request.params.deviceID));
+            } catch (error) { // On error, process known errors or send back a generic error statement that isn't user editable
+                // Check if the error is known
+                if (error instanceof InternalAppError) {
+                    if (error.name === "Invalid Input") {
+                        // Set the response code of 400 to indicate a bad request
+                        response.statusCode = 400;
+
+                        // All internal app errors are hard coded, no tricky business here from the end user :)
+                        next(error.message);
+                    } else if (error.name === "Misconfigured Structure") {
+                        // Set the response code of 500 to indicate an internal error
+                        response.statusCode = 500;
+
+                        // All internal app errors are hard coded, no tricky business here from the end user :)
+                        next(error.message);
+                    } else {
+                        // Set the response code of 500 to indicate an internal error
+                        response.statusCode = 500;
+
+                        // Send a generic error to the next middleware in the line for processing
+                        next("An error was thrown and handled internally, operation failed. Please see server console for more info.");
+                    };
+                } else { // The error is unknown, treat it as such
+                    // Send a generic error to the next middleware in the line for processing
+                    next("There was an error commissioning the specified autopilot device as a PAW");
+                };
+            };
         });
 
         // TODO: Assign a PAW to a user or set of users
@@ -364,5 +397,106 @@ export class LifecycleRouter {
 
         // Return the newly commissioned PAW object on successful operation
         return returnObject;
+    };
+
+    // Decommission the specified PAW
+    private async decommissionPAW(deviceID: string): Promise<boolean> {
+        // Validate input
+        if (!validateGUID(deviceID)) { throw new InternalAppError("The specified Device ID is not a valid device ID!", "Invalid Input", "LifecycleManagement - LifecycleRouter - decommissionPAW - Input Validation") };
+
+        // Ensure that the config engine is initialized
+        if (!this.configEngine.configInitialized || typeof this.configEngine.config === "undefined") {
+            // Throw an error
+            throw new InternalAppError("Config engine is not initialized", "Not Initialized", "LifecycleManagement - LifecycleRouter - decommissionPAW - Input Validation");
+        };
+
+        // Write debug info
+        writeDebugInfo("Getting PAW list");
+
+        // Get the list of PAWs
+        const pawList = await this.recursePAWGroup(this.configEngine.config.PAWSecGrp);
+
+        // Write debug info
+        writeDebugInfo(pawList, "Got PAW list:");
+
+        // Recurse over the PAW List and pull out the specified PAW device instance
+        const pawObject = pawList.find(paw => paw.id === deviceID);
+
+        // Write debug info
+        writeDebugInfo(pawObject, "PAW to decommission from list matched by ID:");
+
+        // If the PAW Object var is undefined, then the find command didn't find any commissioned PAWs with the specified device ID
+        if (typeof pawObject === "undefined") {
+            // Throw an error
+            throw new InternalAppError("PAW is not commissioned!", "Invalid Input", "LifecycleManagement - LifecycleRouter - decommissionPAW - Validate PAW Commission Status");
+        };
+
+        // Loop through the PAWs and check for children PAWs
+        for (const paw of pawList) {
+            // Check if the current PAW lists the PAW to be decommissioned as its parent
+            if (paw.ParentDevice === deviceID) { // If it does list it
+                // Write debug info
+                writeDebugInfo(paw.id, "Found child PAW, recursing function against child:");
+                
+                // Decommission the child PAW
+                await this.decommissionPAW(paw.id);
+            };
+        };
+
+        // Write debug info
+        writeDebugInfo(pawObject.id, "Starting extension attribute removal against:");
+
+        // Remove the PAW's extension attribute
+        await this.graphClient.updateAADDeviceExtensionAttribute(pawObject.id);
+
+        // Write debug info
+        writeDebugInfo(pawObject.id, "Finished extension attribute removal against:");
+
+        // Write debug info
+        writeDebugInfo(pawObject.ParentGroup, "Starting SG removal:");
+
+        // Remove the PAW's unique device group
+        await this.graphClient.removeAADGroup(pawObject.ParentGroup);
+
+        // Write debug info
+        writeDebugInfo(pawObject.ParentGroup, "Finished SG removal:");
+
+        // Write debug info
+        writeDebugInfo(pawObject.UserAssignment, "Starting settings catalog removal:");
+
+        // Remove the PAW's user rights assignment
+        await this.graphClient.removeSettingsCatalog(pawObject.UserAssignment);
+
+        // Write debug info
+        writeDebugInfo(pawObject.UserAssignment, "Finished settings catalog removal:");
+
+        // Write debug info
+        writeDebugInfo(pawObject.id, "Sending wipe device command:");
+
+        // Catch execution errors
+        try {
+            // Wipe the device after decommission
+            await this.graphClient.wipeMEMDevice(pawObject.id);
+
+            // Write debug info
+            writeDebugInfo(pawObject.id, "Sent wipe device command:");
+        } catch (error) {
+            // If the error is unknown device, ignore it, otherwise bubble it up
+            if (error instanceof InternalAppError && error.message === "The specified device does not exist" && error.name === "Retrieval Error") {
+                // Write debug info
+                writeDebugInfo("This is ok as it indicates the device was never booted.","Skipped sending wipe command as device was not present in MEM.");
+                
+                // Do nothing because this is ok, it means the device hasn't booted up and registered into Endpoint Manager yet.
+            }  else {
+                // Write debug info
+                writeDebugInfo(error, "Unexpected exception during decommission:");
+                
+                // Throw an error
+                throw new InternalAppError("An unknown error occurred, please see console for details", "Unknown Error", "LifecycleManagement - LifecycleRouter - decommissionPAW - Input Validation");
+            };
+        };
+
+        // Return true for a successful operation
+        return true;
     };
 };
