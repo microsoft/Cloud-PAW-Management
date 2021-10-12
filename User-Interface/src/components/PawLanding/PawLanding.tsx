@@ -1,5 +1,6 @@
 import { DefaultPalette, IStackStyles, Stack, StackItem } from '@fluentui/react';
 import React from 'react';
+import { Header } from '../Header/Header';
 
 export const PawLanding = () => {
     const stackStyles: IStackStyles = {
@@ -9,7 +10,7 @@ export const PawLanding = () => {
       };
     return (
     <>
-    <Stack>Header Here</Stack>
+    <Stack><Header/></Stack>
     <Stack styles={stackStyles} horizontal>
         <Stack.Item>
             <h1>Menu</h1>
