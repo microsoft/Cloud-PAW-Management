@@ -164,6 +164,27 @@ export function conditionalAccessPAWUserAssignment(deviceID: string, deviceGroup
     return policyUserAssignment;
 };
 
+// Generate the OMA Setting for MS Hyper-V, and local admin rights assignments. Assigned users are allowed to be Hyper-V admins but not local even if they are global admins.
+export function localGroupMembershipString(upnList: string[]) {
+    // Validate Input
+    if (!validateEmailArray(upnList)) { throw new InternalAppError("upnList is not a valid list of ", "Invalid Input", "RequestGenerator - hyperVRightsAssignment - Input Validation") };
+
+    // Initialize variable
+    const settingStart = "<GroupConfiguration><accessgroup desc = \"S-1-5-32-578\"><group action = \"R\" />";
+    let settingMiddle = "";
+    const settingEnd = "</accessgroup><accessgroup desc = \"Administrators\"><group action = \"R\" /><add member = \"Administrator\"/></accessgroup></GroupConfiguration>";
+
+    // Loop through all of the users in the user list
+    for (const user of upnList) {
+
+        // Add a user line to grant that user hyper-v admin rights
+        settingMiddle += "<add member = \"AzureAD\\" + user + "\"/>";
+    };
+
+    // Return the compiled Hyper-V permissions assignment XML string
+    return settingStart + settingMiddle + settingEnd;
+};
+
 // TODO: Generate device configuration profiles for the MEM device config CRUD operations
 // Generate a Windows 10 device restriction post body for MEM
 export function win10DevRestriction() { }
