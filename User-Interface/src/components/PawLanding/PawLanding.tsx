@@ -4,6 +4,7 @@ import { PawActions } from '../PawActions';
 import { PawService } from '../../services';
 import { IPawItem } from '../../models';
 import { PawItemList } from '../PawItemList/PawItemList';
+import { Header } from '../Header/Header';
 
 export const PawLanding = () => {
     const [paws, setPaws] = useState<IPawItem[]>([]);
@@ -37,7 +38,7 @@ export const PawLanding = () => {
       };
     return (
     <>
-    <Stack>Header Here</Stack>
+    <Stack><Header/></Stack>
     <Stack styles={stackStyles} horizontal>
         <Stack.Item styles={leftNavStyles}>
             <h1>Menu</h1>
