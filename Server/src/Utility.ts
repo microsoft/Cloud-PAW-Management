@@ -160,10 +160,53 @@ export function validateSettingCatalogSettings(settingsToValidate: any[]): boole
     }
 }
 
-// TODO: build validator for device configurations
-export function validateDeviceConfigurationSettings(settingsToValidate: any[]): boolean {
-    return true
-}
+// Validate Custom Device configurations using strings for the OMA-URI payload
+export function validateOmaString(OmaObject: any): boolean {
+    if (typeof OmaObject !== "object") {
+        return false;
+    };
+
+    // Ensure the required OData Type is present as the GraphAPI won't know how to handle an object that doesn't have this property and value.
+    if (OmaObject["@odata.type"] !== "#microsoft.graph.omaSettingString") {
+        return false;
+    };
+
+    // Check to make sure that the displayName (required) is a string.
+    if (typeof OmaObject.displayName !== "string") {
+        // Return false if the displayName present and not a string
+        return false;
+    } else if (typeof OmaObject.displayName !== "undefined" && OmaObject.displayName.length > 1000) {
+        // Return false if the displayName is present and over 1000 chars
+        return false;
+    };
+
+    // Check to make sure that if the description (optional) is specified, that it is a string.
+    if (typeof OmaObject.description !== "undefined" && typeof OmaObject.description !== "string") {
+        // Return false if the description is present and not a string
+        return false;
+    } else if (typeof OmaObject.description !== "undefined" && OmaObject.description.length > 1000) {
+        // Return false if the description is present and over 1000 chars
+        return false;
+    };
+
+    // Check to make sure that the omaUri (required) is a string.
+    if (typeof OmaObject.omaUri !== "string") {
+        // Return false if the omaUri present and not a string
+        return false;
+    } else if (typeof OmaObject.omaUri !== "undefined" && OmaObject.omaUri.length > 1000) {
+        // Return false if the omaUri is not present and over 1000 chars
+        return false;
+    };
+
+    // Check to make sure that the OMA value (required) is a string.
+    if (typeof OmaObject.value !== "string") {
+        // Return false if the OMA value present and not a string
+        return false;
+    };
+
+    // For successful validation, return true
+    return true;
+};
 
 // TODO: Continue building out the validator to be more complete
 // Validate the structure of a conditional access policy.
@@ -227,6 +270,6 @@ export class InternalAppError extends Error {
 
     // TODO: Write the error logging logic (console/disk/wherever)
     private logError() {
-        console.error(this.message)
+        console.error(this.message);
     };
 };
