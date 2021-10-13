@@ -5,6 +5,9 @@ import { PawService } from '../../services';
 import { IPawItem } from '../../models';
 import { PawItemList } from '../PawItemList/PawItemList';
 import { Header } from '../Header/Header';
+import { initializeIcons } from '@fluentui/react/lib/Icons';
+
+initializeIcons(/* optional base url */);
 
 export const PawLanding = () => {
     const [paws, setPaws] = useState<IPawItem[]>([]);
