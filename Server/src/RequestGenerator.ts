@@ -165,24 +165,37 @@ export function conditionalAccessPAWUserAssignment(deviceID: string, deviceGroup
 };
 
 // Generate the OMA Setting for MS Hyper-V, and local admin rights assignments. Assigned users are allowed to be Hyper-V admins but not local even if they are global admins.
-export function localGroupMembershipString(upnList: string[]) {
-    // Validate Input
-    if (!validateEmailArray(upnList)) { throw new InternalAppError("upnList is not a valid list of ", "Invalid Input", "RequestGenerator - hyperVRightsAssignment - Input Validation") };
+export function localGroupMembershipUserRights(upnList?: string[]) {
+    // Validate Input    
+    if (typeof upnList !== "undefined" && !validateEmailArray(upnList)) { throw new InternalAppError("upnList is not a valid list of user principal names!", "Invalid Input", "RequestGenerator - localGroupMembershipUserRights - Input Validation") };
 
-    // Initialize variable
+    // Build the initial XML configuration
     const settingStart = "<GroupConfiguration><accessgroup desc = \"S-1-5-32-578\"><group action = \"R\" />";
     let settingMiddle = "";
-    const settingEnd = "</accessgroup><accessgroup desc = \"Administrators\"><group action = \"R\" /><add member = \"Administrator\"/></accessgroup></GroupConfiguration>";
+    const settingEnd = "</accessgroup><accessgroup desc = \"S-1-5-32-544\"><group action = \"R\" /><add member = \"Administrator\"/></accessgroup></GroupConfiguration>";
 
-    // Loop through all of the users in the user list
-    for (const user of upnList) {
+    // If the UPN List is specified, add the users to the list
+    if (typeof upnList !== "undefined") {
+        // Loop through all of the users in the user list
+        for (const user of upnList) {
+            // Add a user line to grant that user hyper-v admin rights
+            settingMiddle += "<add member = \"AzureAD\\" + user + "\"/>";
+        };
+    };
+    // If the UPN List is un-specified, don't add any users to the list.
+    // This will force no users in that group, effectively eliminating control of hyper-v.
 
-        // Add a user line to grant that user hyper-v admin rights
-        settingMiddle += "<add member = \"AzureAD\\" + user + "\"/>";
+    // Build the settings object to return
+    const settingsBody = {
+        "@odata.type": "#microsoft.graph.omaSettingString",
+        "displayName": "Admin Groups Config",
+        "description": "Configures the Administrators and Hyper-V Admins groups",
+        "omaUri": "./Device/Vendor/MSFT/Policy/Config/LocalUsersAndGroups/Configure",
+        "value": settingStart + settingMiddle + settingEnd
     };
 
-    // Return the compiled Hyper-V permissions assignment XML string
-    return settingStart + settingMiddle + settingEnd;
+    // Return the compiled local groups permissions assignment XML string
+    return settingsBody;
 };
 
 // TODO: Generate device configuration profiles for the MEM device config CRUD operations
