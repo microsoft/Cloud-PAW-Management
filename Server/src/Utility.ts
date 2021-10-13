@@ -83,17 +83,14 @@ export function validateEmailArray(emailArray: string[]): boolean {
     if (!validateStringArray(emailArray)) { return false };
 
     // Loop over all of the indexes and validate they are email addresses
-    for (let index = 0; index < emailArray.length; index++) {
-        // Extract the string at the specified index
-        const extractedIndex = emailArray[index];
-
+    for (const email of emailArray) {
         // Validate the string is an email address
-        if (validateEmail(extractedIndex)) { return false };
+        if (!validateEmail(email)) { return false };
     };
 
     // If everything checks out, return true
     return true;
-}
+};
 
 // Validate an array of strings
 export function validateStringArray(stringArray: string[]): boolean {
@@ -107,6 +104,24 @@ export function validateStringArray(stringArray: string[]): boolean {
 
         // Validate the object is a string
         if (typeof extractedIndex !== "string") { return false };
+    };
+
+    // If everything checks out, return true
+    return true;
+};
+
+// Validate an array of strings
+export function validateOmaStringObjectArray(omaArray: any[]): boolean {
+    // Validate input is an array
+    if (!(omaArray instanceof Array) || omaArray.length == 0) { return false };
+
+    // Loop through the objects in the array
+    for (const object of omaArray) {
+        // Check to see if the objects are actually OMA objects
+        if (!validateOmaStringObject(object)) { // If they aren't
+            // Return false to indicate not working out...
+            return false;
+        };
     };
 
     // If everything checks out, return true
@@ -161,45 +176,45 @@ export function validateSettingCatalogSettings(settingsToValidate: any[]): boole
 }
 
 // Validate Custom Device configurations using strings for the OMA-URI payload
-export function validateOmaString(OmaObject: any): boolean {
-    if (typeof OmaObject !== "object") {
+export function validateOmaStringObject(omaObject: any): boolean {
+    if (typeof omaObject !== "object") {
         return false;
     };
 
     // Ensure the required OData Type is present as the GraphAPI won't know how to handle an object that doesn't have this property and value.
-    if (OmaObject["@odata.type"] !== "#microsoft.graph.omaSettingString") {
+    if (omaObject["@odata.type"] !== "#microsoft.graph.omaSettingString") {
         return false;
     };
 
     // Check to make sure that the displayName (required) is a string.
-    if (typeof OmaObject.displayName !== "string") {
+    if (typeof omaObject.displayName !== "string") {
         // Return false if the displayName present and not a string
         return false;
-    } else if (typeof OmaObject.displayName !== "undefined" && OmaObject.displayName.length > 1000) {
+    } else if (typeof omaObject.displayName !== "undefined" && omaObject.displayName.length > 1000) {
         // Return false if the displayName is present and over 1000 chars
         return false;
     };
 
     // Check to make sure that if the description (optional) is specified, that it is a string.
-    if (typeof OmaObject.description !== "undefined" && typeof OmaObject.description !== "string") {
+    if (typeof omaObject.description !== "undefined" && typeof omaObject.description !== "string") {
         // Return false if the description is present and not a string
         return false;
-    } else if (typeof OmaObject.description !== "undefined" && OmaObject.description.length > 1000) {
+    } else if (typeof omaObject.description !== "undefined" && omaObject.description.length > 1000) {
         // Return false if the description is present and over 1000 chars
         return false;
     };
 
     // Check to make sure that the omaUri (required) is a string.
-    if (typeof OmaObject.omaUri !== "string") {
+    if (typeof omaObject.omaUri !== "string") {
         // Return false if the omaUri present and not a string
         return false;
-    } else if (typeof OmaObject.omaUri !== "undefined" && OmaObject.omaUri.length > 1000) {
+    } else if (typeof omaObject.omaUri !== "undefined" && omaObject.omaUri.length > 1000) {
         // Return false if the omaUri is not present and over 1000 chars
         return false;
     };
 
     // Check to make sure that the OMA value (required) is a string.
-    if (typeof OmaObject.value !== "string") {
+    if (typeof omaObject.value !== "string") {
         // Return false if the OMA value present and not a string
         return false;
     };

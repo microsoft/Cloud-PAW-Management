@@ -1,15 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { validateGUID, validateGUIDArray, validateStringArray } from "./Utility";
 import type * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta";
+import { InternalAppError, validateEmailArray, validateGUID, validateGUIDArray, validateStringArray } from "./Utility";
 
 // Generate a settings object for the user rights assignment of a PAW.
 // Allows multiple users for potential shared PAW concept in the future.
 export function endpointPAWUserRightsSettings(userList: string[]) {
     // Validate input is a populated array of strings
-    if (!(userList instanceof Array)) { throw new Error("The specified UserList is not an array!") };
-    if (!validateStringArray(userList)) { throw new Error("The user list is not an array of strings!") };
+    if (!(userList instanceof Array)) { throw new InternalAppError("The specified UserList is not an array!") };
+    if (!validateStringArray(userList)) { throw new InternalAppError("The user list is not an array of strings!") };
 
     // Define object structures
     interface SettingsValueCollection {
@@ -60,8 +60,8 @@ export function endpointPAWUserRightsSettings(userList: string[]) {
 // Generate an assignment object for Microsoft Endpoint Manager (MEM)
 export function endpointGroupAssignmentTarget(includeGUID?: string[], excludeGUID?: string[]) {
     // Validate inputs
-    if (!(includeGUID instanceof Array) || !validateGUIDArray(includeGUID)) { throw new Error("The specified array of included group GUIDs is not valid!") };
-    if (!(excludeGUID instanceof Array) || !validateGUIDArray(excludeGUID)) { throw new Error("The specified array of excluded group GUIDs is not valid!") };
+    if (!(includeGUID instanceof Array) || !validateGUIDArray(includeGUID)) { throw new InternalAppError("The specified array of included group GUIDs is not valid!") };
+    if (!(excludeGUID instanceof Array) || !validateGUIDArray(excludeGUID)) { throw new InternalAppError("The specified array of excluded group GUIDs is not valid!") };
 
     // Define the assignment structure object type interface
     interface AssignmentStructure {
@@ -125,10 +125,10 @@ export function endpointGroupAssignmentTarget(includeGUID?: string[], excludeGUI
 // Generate the object for conditional access policy to assign a specific user to a device
 export function conditionalAccessPAWUserAssignment(deviceID: string, deviceGroupGUID: string, userGroupListGUID: string[], breakGlassGroupGUID: string): MicrosoftGraphBeta.ConditionalAccessPolicy {
     // Validate input
-    if (!validateGUID(deviceID) || typeof deviceID !== "string") { throw new Error("The Device ID specified is not a valid GUID!") };
-    if (!validateGUID(deviceGroupGUID) || typeof deviceGroupGUID !== "string") { throw new Error("The device group is not a valid GUID!") };
-    if (!validateGUIDArray(userGroupListGUID)) { throw new Error("The user group list array is not an array of GUID(s)!") };
-    if (!validateGUID(breakGlassGroupGUID) || typeof breakGlassGroupGUID !== "string") { throw new Error("The Break Glass Group GUID specified is not a valid GUID!") };
+    if (!validateGUID(deviceID) || typeof deviceID !== "string") { throw new InternalAppError("The Device ID specified is not a valid GUID!") };
+    if (!validateGUID(deviceGroupGUID) || typeof deviceGroupGUID !== "string") { throw new InternalAppError("The device group is not a valid GUID!") };
+    if (!validateGUIDArray(userGroupListGUID)) { throw new InternalAppError("The user group list array is not an array of GUID(s)!") };
+    if (!validateGUID(breakGlassGroupGUID) || typeof breakGlassGroupGUID !== "string") { throw new InternalAppError("The Break Glass Group GUID specified is not a valid GUID!") };
 
     // Create the base object to return later
     let policyUserAssignment: MicrosoftGraphBeta.ConditionalAccessPolicy = {
@@ -155,7 +155,7 @@ export function conditionalAccessPAWUserAssignment(deviceID: string, deviceGroup
     }
 
     // Silence error checker in TS. This check should not be necessary.
-    if (typeof policyUserAssignment.conditions?.users?.includeGroups === "undefined") { throw new Error("If you get this error, I don't know how this happened. File a bug report with Node.JS. (CA PAW assignment)") };
+    if (typeof policyUserAssignment.conditions?.users?.includeGroups === "undefined") { throw new InternalAppError("If you get this error, I don't know how this happened. File a bug report with Node.JS. (CA PAW assignment)") };
 
     // Add the user group list GUID to the included groups in the policy assignment object
     policyUserAssignment.conditions.users.includeGroups.push.apply(policyUserAssignment.conditions.users.includeGroups, userGroupListGUID);
@@ -164,6 +164,40 @@ export function conditionalAccessPAWUserAssignment(deviceID: string, deviceGroup
     return policyUserAssignment;
 };
 
+// Generate the OMA Setting for MS Hyper-V, and local admin rights assignments. Assigned users are allowed to be Hyper-V admins but not local even if they are global admins.
+export function localGroupMembershipUserRights(upnList?: string[]) {
+    // Validate Input    
+    if (typeof upnList !== "undefined" && !validateEmailArray(upnList)) { throw new InternalAppError("upnList is not a valid list of user principal names!", "Invalid Input", "RequestGenerator - localGroupMembershipUserRights - Input Validation") };
+
+    // Build the initial XML configuration
+    const settingStart = "<GroupConfiguration><accessgroup desc = \"S-1-5-32-578\"><group action = \"R\" />";
+    let settingMiddle = "";
+    const settingEnd = "</accessgroup><accessgroup desc = \"S-1-5-32-544\"><group action = \"R\" /><add member = \"Administrator\"/></accessgroup></GroupConfiguration>";
+
+    // If the UPN List is specified, add the users to the list
+    if (typeof upnList !== "undefined") {
+        // Loop through all of the users in the user list
+        for (const user of upnList) {
+            // Add a user line to grant that user hyper-v admin rights
+            settingMiddle += "<add member = \"AzureAD\\" + user + "\"/>";
+        };
+    };
+    // If the UPN List is un-specified, don't add any users to the list.
+    // This will force no users in that group, effectively eliminating control of hyper-v.
+
+    // Build the settings object to return
+    const settingsBody = {
+        "@odata.type": "#microsoft.graph.omaSettingString",
+        "displayName": "Admin Groups Config",
+        "description": "Configures the Administrators and Hyper-V Admins groups",
+        "omaUri": "./Device/Vendor/MSFT/Policy/Config/LocalUsersAndGroups/Configure",
+        "value": settingStart + settingMiddle + settingEnd
+    };
+
+    // Return the compiled local groups permissions assignment XML string
+    return settingsBody;
+};
+
 // TODO: Generate device configuration profiles for the MEM device config CRUD operations
 // Generate a Windows 10 device restriction post body for MEM
-export function win10DevRestriction() {}
+export function win10DevRestriction() { }
