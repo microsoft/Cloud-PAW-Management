@@ -21,7 +21,7 @@ export const commissionPaws = (state = initialState, action: any) => {
         case DECOMMISSIONING_PAW_SELECTED:
             return {
                 ...state,
-                pawsToDecommission: [...state.pawsToDecommission, action.payload],
+                pawsToDecommission: [...action.payload],
             };
         case DECOMMISSIONING_PAWS_REQUEST:
             return {

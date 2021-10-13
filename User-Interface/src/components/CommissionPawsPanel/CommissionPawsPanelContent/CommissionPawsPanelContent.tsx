@@ -28,6 +28,7 @@ export const CommissionPawsPanelContent = () => {
         marginTop: 20
       },
     };
+  
   const getKey = (item: IDeviceItem, index?: number): string => {
     return item.deviceId;
   };
