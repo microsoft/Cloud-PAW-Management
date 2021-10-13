@@ -198,7 +198,7 @@ export class MSGraphClient {
     };
 
     // Create a custom Windows 10 Setting that uses a string xml (non-uploaded) format.
-    async newMEMCustomDeviceConfigString(name: string, description: string, scopeTagID: string[], omaSetting: MicrosoftGraphBeta.OmaSettingString[]) {
+    async newMEMCustomDeviceConfigString(name: string, description: string, scopeTagID: string[], omaSetting: MicrosoftGraphBeta.OmaSettingString[]): Promise<MicrosoftGraphBeta.Windows10CustomConfiguration> {
         // Validate Input
         if (typeof name !== "string") { throw new InternalAppError("The type of the name parameter is not a string!", "Invalid Input", "GraphClient - MSGraphClient - newCustomDeviceConfig - Input Validation") };
         if (name.length > 200) { throw new InternalAppError("The char count for the name parameter is more than 200!", "Invalid Input", "GraphClient - MSGraphClient - newCustomDeviceConfig - Input Validation") };
