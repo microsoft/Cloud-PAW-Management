@@ -945,7 +945,7 @@ export class MSGraphClient {
     };
 
     // Create an Azure AD Conditional Access Policy using the specified settings.
-    async newAADCAPolicy(name: string, settings: MicrosoftGraphBeta.ConditionalAccessPolicy, state: "enabled" | "disabled" | "enabledForReportingButNotEnforced"): Promise<MicrosoftGraphBeta.ConditionalAccessPolicy> {
+    async newAadCaPolicy(name: string, settings: MicrosoftGraphBeta.ConditionalAccessPolicy, state: "enabled" | "disabled" | "enabledForReportingButNotEnforced"): Promise<MicrosoftGraphBeta.ConditionalAccessPolicy> {
         // Validate inputs
         if (name.length > 256 && typeof name !== "string") { throw new InternalAppError("The length of the name can't be longer than 256 characters or the data is not a string!", "Invalid Input", "GraphClient - newAADCAPolicy - Input Validation") };
         if (!validateConditionalAccessSetting(settings) && typeof settings !== "object") { throw new InternalAppError("The settings object is not in the correct format!", "Invalid Input", "GraphClient - newAADCAPolicy - Input Validation") };
@@ -975,7 +975,7 @@ export class MSGraphClient {
     };
 
     // Retrieve Azure AD Conditional Access Policy list. Can pull individual policies based upon GUID.
-    async getAADCAPolicy(GUID?: string): Promise<MicrosoftGraphBeta.ConditionalAccessPolicy[]> {
+    async getAadCaPolicy(GUID?: string): Promise<MicrosoftGraphBeta.ConditionalAccessPolicy[]> {
         // Attempt to execute and catch errors
         try {
             // Pre-define the AAD CA page so that it is available to callers.
@@ -1012,7 +1012,7 @@ export class MSGraphClient {
     };
 
     // Update the specified Conditional Access Policy.
-    async updateAADCAPolicy(GUID: string, name: string, settings: MicrosoftGraphBeta.ConditionalAccessPolicy, state: "enabled" | "disabled" | "enabledForReportingButNotEnforced"): Promise<boolean> {
+    async updateAadCaPolicy(GUID: string, name: string, settings: MicrosoftGraphBeta.ConditionalAccessPolicy, state: "enabled" | "disabled" | "enabledForReportingButNotEnforced"): Promise<boolean> {
         // Validate inputs
         if (!validateGUID(GUID) || typeof GUID !== "string") { throw new InternalAppError("The specified ID is not a valid GUID!", "Invalid Input", "GraphClient - updateAADCAPolicy - Input Validation") };
         if (name.length > 256 || typeof name !== "string") { throw new InternalAppError("The length of the name can't be longer than 256 characters or the data is not a string!", "Invalid Input", "GraphClient - updateAADCAPolicy - Input Validation") };
@@ -1045,7 +1045,7 @@ export class MSGraphClient {
     };
 
     // Remove the specified Conditional Access Policy.
-    async removeAADCAPolicy(GUID: string): Promise<boolean> {
+    async removeAadCaPolicy(GUID: string): Promise<boolean> {
         // Validate GUID is a proper GUID
         if (!validateGUID(GUID)) { throw new InternalAppError("The specified GUID is not a valid GUID!", "Invalid Input", "GraphClient - removeAADCAPolicy - Input Validation") };
 
