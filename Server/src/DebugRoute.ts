@@ -3,7 +3,7 @@
 
 import type { MSGraphClient } from "./GraphClient";
 import type { ConfigurationEngine } from "./ConfigEngine";
-import { endpointPAWUserRightsSettings, conditionalAccessPAWUserAssignment } from "./RequestGenerator";
+import { endpointPAWUserRightsSettings, conditionalAccessPAWUserAssignment, localGroupMembershipUserRights } from "./RequestGenerator";
 import { validateGUID, validateGUIDArray, validateStringArray } from "./Utility";
 import type express from "express";
 import type { ChainedTokenCredential } from "@azure/identity"
@@ -136,6 +136,21 @@ export class DebugRouter {
                     // Otherwise use the graph client to query the Scope Tag
                     response.send(await this.graphClient.removeMEMScopeTag(parseID));
                 };
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
+
+        // Create a Windows 10 Custom Device string configuration
+        this.webServer.post('/Debug/customStringDeviceConfiguration/', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Generate the oma settings
+                const omaSettings = localGroupMembershipUserRights();
+
+                // Create a new custom config
+                response.send(await this.graphClient.newMEMCustomDeviceConfigString(request.body.name, request.body.description, request.body.tagId, [omaSettings]));
             } catch (error) {
                 // Send the error details if something goes wrong
                 next(error);
