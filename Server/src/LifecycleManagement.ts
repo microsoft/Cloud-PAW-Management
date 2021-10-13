@@ -181,17 +181,24 @@ export class LifecycleRouter {
                 throw new InternalAppError("PAW ID is undefined!", "No Data", "LifecycleManagement - LifeCycleRouter - recursePAWGroup - Validate device ID presence");
             };
 
+            // Check to make sure that the name data is present for the retrieved device.
+            if (typeof deviceMemberList[0].name === "undefined" || deviceMemberList[0].name == null) {
+                // Throw an error
+                throw new InternalAppError("Incomplete Data!", "Invalid Return", "LifecycleManagement - LifecycleRouter - commissionPAW - AAD Device Object Validation");
+            };
+
             // Parse the group's description
             const parsedDescription = await this.configEngine.getPAWGroupConfig(groupID);
 
             // Compile the data into a PAW object
             const pawObject: PAWObject = {
                 "id": deviceMemberList[0].deviceId,
+                "DisplayName": deviceMemberList[0].name,
                 "ParentGroup": groupID,
                 "CommissionedDate": parsedDescription.CommissionedDate,
+                "GroupAssignment": parsedDescription.GroupAssignment,
                 "Type": parsedDescription.Type,
-                "UserAssignment": parsedDescription.UserAssignment,
-                "GroupAssignment": parsedDescription.GroupAssignment
+                "UserAssignment": parsedDescription.UserAssignment
             };
 
             // Add the processed PAW object to the processed members list
@@ -228,6 +235,7 @@ export class LifecycleRouter {
         let devGroup: MicrosoftGraphBeta.Group;
         let rootGroupMemberResult: boolean;
         let devGroupMemberResult: boolean;
+        let deviceObject: MicrosoftGraphBeta.Device;
         let pawType: "Privileged" | "Developer" | "Tactical-CR" | "Tactical-RRR";
 
         // If the type param is not specified, default it to standard PAW.
@@ -332,7 +340,7 @@ export class LifecycleRouter {
         const omaSettings = localGroupMembershipUserRights();
 
         // Create the local users and groups custom OMA setting.
-        const localGroupsConfig = await this.graphClient.newMEMCustomDeviceConfigString("PAW - Groups - " + deviceID, "Restrict Admins and Hyper-V admin group membership.", [this.configEngine.config.ScopeTagID], [omaSettings]);
+        const localGroupsConfig = await this.graphClient.newMEMCustomDeviceConfigString("PAW - Groups - " + deviceID, "Restrict Admins and Hyper-V admin group memberships.", [this.configEngine.config.ScopeTagID], [omaSettings]);
 
         // Write debug info
         writeDebugInfo(localGroupsConfig.id, "Created settings catalog:");
@@ -360,7 +368,7 @@ export class LifecycleRouter {
             writeDebugInfo("Creating device's unique group");
 
             // Create the device group
-            devGroup = await this.graphClient.newAADGroup("PAW - " + deviceAutopilot[0].serialNumber, groupDescription);
+            devGroup = await this.graphClient.newAADGroup("PAW - " + deviceID, groupDescription);
 
             // Write debug info
             writeDebugInfo(devGroup.id, "Created device's unique group:");
@@ -429,13 +437,29 @@ export class LifecycleRouter {
             throw new InternalAppError("Unknown error", "Unknown", "LifecycleManagement - LifecycleRouter - commissionPAW - Add Dev to Dev Grp");
         };
 
+        // Catch Execution Errors
+        try {
+            // Get the device object from AAD
+            deviceObject = (await this.graphClient.getAADDevice(deviceID))[0];
+        } catch (error) {
+            // Throw an error
+            throw new InternalAppError("Unknown error", "Unknown", "LifecycleManagement - LifecycleRouter - commissionPAW - Get AAD Device Object");
+        };
+
+        // Check to make sure that the name data is present for the retrieved device.
+        if (typeof deviceObject.name === "undefined" || deviceObject.name == null) {
+            // Throw an error
+            throw new InternalAppError("Incomplete Data!", "Invalid Return", "LifecycleManagement - LifecycleRouter - commissionPAW - AAD Device Object Validation");
+        };
+
         // Build the object that will be returned on successful execution.
         const returnObject: PAWObject = {
+            "id": deviceID,
+            "DisplayName": deviceObject.name,
+            "ParentGroup": devGroup.id,
             "CommissionedDate": devGroupDescription.CommissionedDate,
             "Type": devGroupDescription.Type,
             "UserAssignment": devGroupDescription.UserAssignment,
-            "id": deviceID,
-            "ParentGroup": devGroup.id,
             "GroupAssignment": devGroupDescription.GroupAssignment
         };
 

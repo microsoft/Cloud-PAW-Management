@@ -24,17 +24,17 @@ interface CloudSecConfig {
 };
 
 /*
- * Type = Is the commission type of PAW
- * UserAssignment = The ID of the Settings Catalog that contains the user rights assignment of the specified PAW device
- * CommissionedDate = is the ISO 8601 string format of the time representing the commission date of the PAW
- * GroupAssignment = This is the ID of the Custom CSP Device Configuration that configures the local admin and local hyper-v group memberships
+ * CommissionedDate = is the ISO 8601 string format of the time representing the commission date of the PAW.
+ * GroupAssignment = This is the ID of the Custom CSP Device Configuration that configures the local admin and local hyper-v group memberships.
+ * Type = Is the commission type of PAW.
+ * UserAssignment = The ID of the Settings Catalog that contains the user rights assignment of the specified PAW device.
  */
 // Define the PAW Configuration Spec
 export interface PAWGroupConfig {
-    Type: "Privileged" | "Developer" | "Tactical-CR" | "Tactical-RRR",
-    UserAssignment: string,
+    CommissionedDate: Date,
     GroupAssignment: string,
-    CommissionedDate: Date
+    Type: "Privileged" | "Developer" | "Tactical-CR" | "Tactical-RRR",
+    UserAssignment: string
 };
 
 /* 
@@ -45,8 +45,9 @@ ParentDevice = is an optional property that is the DeviceID of the parent PAW de
 // Define the structure of the PAW device object
 export interface PAWObject extends PAWGroupConfig {
     id: string,
-    ParentGroup: string,
-    ParentDevice?: string
+    DisplayName: string,
+    ParentDevice?: string,
+    ParentGroup: string
 };
 
 // Expose a configuration engine that interfaces with the
