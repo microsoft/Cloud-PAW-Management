@@ -17,7 +17,7 @@ export class PawService {
             };
         });
     }
-    public commissionPaw = async () => {
+    public static commissionPaw = async () => {
         // call api
         // get response
     }

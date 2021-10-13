@@ -1,23 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { DefaultPalette, IStackStyles, Stack, } from '@fluentui/react';
 import { PawActions } from '../PawActions';
-import { PawService } from '../../services';
-import { IPawItem } from '../../models';
 import { PawItemList } from '../PawItemList/PawItemList';
 import { Header } from '../Header/Header';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import { getPaws } from '../../store/actions/pawActions';
 
 initializeIcons(/* optional base url */);
 
 export const PawLanding = () => {
-    const [paws, setPaws] = useState<IPawItem[]>([]);
+    const dispatch = useDispatch();
+    const paws = useSelector((state: RootStateOrAny) => state.paw.getPaws.paws)
     useEffect(() => {
-        const getPaws = async () => {
-            const pawsFromApi: IPawItem[] = await PawService.getPaws();
-            setPaws(pawsFromApi);
-        };
-        getPaws();
-    }, []);
+      dispatch(getPaws())
+    }, [dispatch]);
     const stackStyles: IStackStyles = {
         root: {
 
