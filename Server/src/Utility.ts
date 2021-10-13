@@ -113,6 +113,24 @@ export function validateStringArray(stringArray: string[]): boolean {
     return true;
 };
 
+// Validate an array of strings
+export function validateOmaStringObjectArray(omaArray: any[]): boolean {
+    // Validate input is an array
+    if (!(omaArray instanceof Array) || omaArray.length == 0) { return false };
+
+    // Loop through the objects in the array
+    for (const object of omaArray) {
+        // Check to see if the objects are actually OMA objects
+        if (!validateOmaStringObject(object)) { // If they aren't
+            // Return false to indicate not working out...
+            return false;
+        };
+    };
+
+    // If everything checks out, return true
+    return true;
+};
+
 // Validates an array contains only GUIDs at each index
 export function validateGUIDArray(GUIDArray: string[]): boolean {
     // Validate input is a string array
