@@ -1,17 +1,21 @@
 import React, { useEffect } from 'react';
 import { DefaultPalette, IStackStyles, Stack, } from '@fluentui/react';
+import { useBoolean } from '@fluentui/react-hooks';
 import { PawActions } from '../PawActions';
 import { PawItemList } from '../PawItemList/PawItemList';
 import { Header } from '../Header/Header';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { getPaws } from '../../store/actions/pawActions';
+import { CommissionPawsPanel } from '../CommissionPawsPanel';
 
 initializeIcons(/* optional base url */);
 
 export const PawLanding = () => {
     const dispatch = useDispatch();
-    const paws = useSelector((state: RootStateOrAny) => state.paw.getPaws.paws)
+    const paws = useSelector((state: RootStateOrAny) => state.paw.getPaws.paws);
+    const [isCommissionPawsPanelOpen, { setTrue: openCommissionPawsPanel, setFalse: dismissCommissionPawsPanel }] = useBoolean(false);
+
     useEffect(() => {
       dispatch(getPaws())
     }, [dispatch]);
@@ -46,7 +50,7 @@ export const PawLanding = () => {
         <Stack.Item>
             <Stack styles={contentStyles}>
                 <Stack>
-                    <PawActions />
+                    <PawActions onCommissionPaws={openCommissionPawsPanel} />
                 </Stack>
                 <Stack styles={contentStyles}>
                     <PawItemList items={paws} />
@@ -54,6 +58,7 @@ export const PawLanding = () => {
             </Stack>
         </Stack.Item>
     </Stack>
+    <CommissionPawsPanel isOpen={isCommissionPawsPanelOpen} onDismissPanel={dismissCommissionPawsPanel} />
     </>
     );
 };

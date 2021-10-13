@@ -6,6 +6,18 @@ export const PawItemList = (props: IPawItemListProps) => {
     const [isCompactMode, ] = useState(false);
     const onColumnClick = (ev: React.MouseEvent<HTMLElement>, column: IColumn): void => {
       };
+      const pawDisplayNameColumn: IColumn =       {
+        key: 'pawDisplayName',
+        name: 'Display Name',
+        fieldName: 'displayName',
+        minWidth: 100,
+        maxWidth: 150,
+        isRowHeader: true,
+        isResizable: true,
+        onColumnClick: onColumnClick,
+        data: 'string',
+        isPadded: true,
+      };
     const pawIdColumn: IColumn =       {
         key: 'pawId',
         name: 'PAW ID',
@@ -19,7 +31,7 @@ export const PawItemList = (props: IPawItemListProps) => {
         isPadded: true,
       };
 
-      const pawTypeColumn: IColumn =       {
+      const pawTypeColumn: IColumn = {
         key: 'pawType',
         name: 'PAW Type',
         fieldName: 'pawType',
@@ -57,7 +69,7 @@ export const PawItemList = (props: IPawItemListProps) => {
         isPadded: true,
       };
 
-    const columns: IColumn[] = [pawIdColumn, pawTypeColumn, commissionDateColumn, parentDeviceIdColumn];
+    const columns: IColumn[] = [pawDisplayNameColumn, pawIdColumn, pawTypeColumn, commissionDateColumn, parentDeviceIdColumn];
 
     return <DetailsList
                 items={props.items}

@@ -1,384 +1,481 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-export const paws = [
-    {
-      "id": "e4324ed3-1f66-4233-8dce-16d0ae858d47",
-      "ParentDevice": "d2cce768-b437-440d-8d84-a495c1056037",
-      "Type": "Developer",
-      "ParentGroup": "92fb980e-5db1-4a6b-ad9d-dda811f5d9ad",
-      "CommissionedDate": "2021-11-06T21:21:07.671Z",
-      "UserAssignment": "a8f54d2a-92d6-4554-8d6c-009653ddc7c1"
-    },
-    {
-      "id": "af1f971b-b42c-4f5f-b45e-f7eba7cb0484",
-      "ParentDevice": "3cc83412-07fb-4bcd-ab20-4b2406da4220",
-      "Type": "Tactical-DART",
-      "ParentGroup": "b4a3b3b6-56f3-4e34-bf10-a5cf63828a19",
-      "CommissionedDate": "2021-08-14T21:21:07.671Z",
-      "UserAssignment": "619cc1a5-8498-4bdc-b6b0-ab7e8ede6dcb"
-    },
-    {
-      "UserAssignment": "71125de8-056f-4b25-a518-d4093643d083",
-      "ParentGroup": "f03de6ee-5e61-4f16-906d-d84df400106c",
-      "CommissionedDate": "2021-03-20T21:21:07.671Z",
-      "Type": "Privileged",
-      "id": "7c6e176f-7e8e-4610-8723-6a44f93a06d7"
-    },
-    {
-      "UserAssignment": "4319f65d-bf48-405e-84de-0befc6c0e83b",
-      "ParentGroup": "e1259b47-c421-415a-8e51-f360c4c99bdc",
-      "CommissionedDate": "2021-04-16T21:21:07.672Z",
-      "Type": "Privileged",
-      "id": "87644d4a-e470-4403-acdb-676da241769a"
-    },
-    {
-      "id": "4fe8eccf-6718-42e3-b638-35a710722ab1",
-      "ParentDevice": "79a30a9d-98ae-4faf-ba60-ebddb82a7033",
-      "Type": "Tactical-DART",
-      "ParentGroup": "2ad01f8b-5c3f-48f2-83da-874a38915607",
-      "CommissionedDate": "2021-05-11T21:21:07.672Z",
-      "UserAssignment": "e4c1c6e5-0152-4397-8602-2d8266f5d696"
-    },
-    {
-      "UserAssignment": "ccf8c9e8-488c-46e9-a84c-79cebacd91c6",
-      "ParentGroup": "7eb411d7-fb00-4bf0-81aa-571258fdfcdc",
-      "CommissionedDate": "2021-11-01T21:21:07.672Z",
-      "Type": "Developer",
-      "id": "c5cce777-c2fe-44af-b04f-bcd6095301ea"
-    },
-    {
-      "UserAssignment": "4b77d1cc-92d8-4aad-a850-2f9cf9b6fba6",
-      "ParentGroup": "688c6d3c-dc37-4603-8a99-7c7436771ff5",
-      "CommissionedDate": "2021-05-19T21:21:07.672Z",
-      "Type": "Tactical-CR",
-      "id": "0481b386-0715-4838-acca-2069a3779ba6"
-    },
-    {
-      "UserAssignment": "4a0e6464-71a1-42e0-9d6a-90437dd8f327",
-      "ParentGroup": "8e872880-df8b-40f3-90ef-4a9599bad254",
-      "CommissionedDate": "2021-01-04T21:21:07.673Z",
-      "Type": "Tactical-CR",
-      "id": "b95187d0-031d-4b41-83ab-123dfb091e1c"
-    },
-    {
-      "id": "17deaa2c-0df5-415d-b696-5108d9c636da",
-      "ParentDevice": "f889e7c2-cb21-4526-9c2d-1288e02cc4de",
-      "Type": "Privileged",
-      "ParentGroup": "ba23944b-8362-461e-bd0a-7c37fcbbbdf8",
-      "CommissionedDate": "2021-04-23T21:21:07.673Z",
-      "UserAssignment": "4fd6c65f-88f1-4497-afb7-f045a8045737"
-    },
-    {
-      "UserAssignment": "fe1c68f2-930e-479b-94dc-a266441642c2",
-      "ParentGroup": "ec444ba7-03bc-4367-bcd6-72bfada51079",
-      "CommissionedDate": "2021-07-02T21:21:07.673Z",
-      "Type": "Developer",
-      "id": "0b4ab5c4-0bc9-4ee2-a438-716a4d82f56e"
-    },
-    {
-      "UserAssignment": "35c04de8-dc44-432c-a32f-b81c58094919",
-      "ParentGroup": "cd8a6d20-c80e-42bb-902e-58cfa574d6d9",
-      "CommissionedDate": "2021-10-10T21:21:07.673Z",
-      "Type": "Tactical-CR",
-      "id": "c4fbbb46-fd80-4fe2-a05b-7039595da431"
-    },
-    {
-      "id": "72751ce3-1fe1-48e2-89f7-11b7667b8bfe",
-      "ParentDevice": "3fdc72c0-3894-479a-b65c-35e6cd29752f",
-      "Type": "Tactical-CR",
-      "ParentGroup": "4186079c-bb75-485e-ad76-c04999d6e2e8",
-      "CommissionedDate": "2021-06-26T21:21:07.674Z",
-      "UserAssignment": "cb949d82-88d8-4129-9ed7-15c5236ab380"
-    },
-    {
-      "id": "337414b1-898f-47d1-9afe-78679145b7e6",
-      "ParentDevice": "8e3caa23-930d-45fa-8795-d846739c34e3",
-      "Type": "Developer",
-      "ParentGroup": "48859da9-3605-40e9-b634-6ea9826df511",
-      "CommissionedDate": "2021-04-18T21:21:07.674Z",
-      "UserAssignment": "89f91d9d-2c3c-4185-a2c1-4e6bebc2ef4c"
-    },
-    {
-      "id": "5fc61b5e-a4d1-4013-b5fc-738e64e994ee",
-      "ParentDevice": "b176d9ed-4ef3-4a69-860f-5edc51870087",
-      "Type": "Privileged",
-      "ParentGroup": "40d64a76-88dd-46bd-8617-6c5f703d570c",
-      "CommissionedDate": "2021-08-21T21:21:07.675Z",
-      "UserAssignment": "5a60205b-3e0b-4c65-8c2c-7a7faf7c4fea"
-    },
-    {
-      "id": "fa1c2525-9045-4d66-a2be-f9f3c09f8048",
-      "ParentDevice": "a34ff657-ddd6-4da6-860f-f62809694400",
-      "Type": "Developer",
-      "ParentGroup": "0076af0f-d21a-46cd-b459-29687bf9780e",
-      "CommissionedDate": "2021-11-01T21:21:07.675Z",
-      "UserAssignment": "fe7435f7-6afc-495b-86ea-93e7904e7935"
-    },
-    {
-      "id": "adcc622c-099e-4d37-a791-a27d5cbcbf33",
-      "ParentDevice": "c4f190de-dc50-4dd4-a842-321cb142d89a",
-      "Type": "Privileged",
-      "ParentGroup": "fda513d9-cfcd-4ad1-ad56-19e99a78a198",
-      "CommissionedDate": "2021-05-22T21:21:07.676Z",
-      "UserAssignment": "53e52e83-9357-4d4b-977e-981cb90231f4"
-    },
-    {
-      "id": "32254647-3277-4a3b-a601-dbf4c30899d1",
-      "ParentDevice": "b99bfdaf-0139-4737-9fb3-b57f15e9a938",
-      "Type": "Tactical-DART",
-      "ParentGroup": "37d6733d-b390-461c-b7f4-0e56ebc239a6",
-      "CommissionedDate": "2021-03-15T21:21:07.676Z",
-      "UserAssignment": "1a0f8556-f005-4fea-9b30-3ec29551f3fc"
-    },
-    {
-      "id": "9b0283a7-b46d-44d8-a722-8d8ca21a3b91",
-      "ParentDevice": "d8482a93-3e7d-4650-8daf-46af3c5623a8",
-      "Type": "Tactical-CR",
-      "ParentGroup": "1ede4031-4733-4795-9798-348d37ba603e",
-      "CommissionedDate": "2021-02-25T21:21:07.677Z",
-      "UserAssignment": "00e558ca-b270-424f-addb-e76b822af2a6"
-    },
-    {
-      "UserAssignment": "07263d8d-b4f0-45ac-8230-99903ea211df",
-      "ParentGroup": "2a305819-80fb-40fa-bdb1-c60633dba72b",
-      "CommissionedDate": "2021-01-05T21:21:07.677Z",
-      "Type": "Tactical-DART",
-      "id": "395d2c8c-c11c-4679-bc7e-a3b84e7ceb20"
-    },
-    {
-      "id": "f06d8b35-1838-4738-b117-2b61a93148db",
-      "ParentDevice": "b5e2e484-bd02-4b7b-a9f6-9e6dadb1009a",
-      "Type": "Tactical-CR",
-      "ParentGroup": "f42d1139-cb35-41b0-b2c2-822ac3eacb17",
-      "CommissionedDate": "2021-08-04T21:21:07.678Z",
-      "UserAssignment": "7d03cf6e-7d64-491d-93e6-509f1ff3ccb7"
-    },
-    {
-      "id": "6040a237-758c-4ec1-a0b5-5457b34658fd",
-      "ParentDevice": "02277964-1b03-4015-969e-c6cd929864de",
-      "Type": "Privileged",
-      "ParentGroup": "580e3deb-b5dd-42fc-8c6e-9316c02261a7",
-      "CommissionedDate": "2021-01-09T21:21:07.678Z",
-      "UserAssignment": "3a69a957-58e9-407e-bc0c-e9370b2d9218"
-    },
-    {
-      "id": "73f4dc13-823b-4271-a271-19a10607f393",
-      "ParentDevice": "337a2d3b-1051-426a-b3bc-c901fce13933",
-      "Type": "Privileged",
-      "ParentGroup": "b2e1dcbd-6f2e-4982-8c9f-914d86faed53",
-      "CommissionedDate": "2021-04-13T21:21:07.678Z",
-      "UserAssignment": "f4636c6f-7b65-49d6-b2c3-ac21cf03069b"
-    },
-    {
-      "UserAssignment": "6a0e5b82-cce7-4519-a73a-66fed4bba6c1",
-      "ParentGroup": "5638d5fa-eded-4fef-8260-e396c80fa14b",
-      "CommissionedDate": "2021-04-11T21:21:07.679Z",
-      "Type": "Privileged",
-      "id": "ef884b45-192f-4ec1-ba08-aa7339b12b5f"
-    },
-    {
-      "UserAssignment": "a39d9d75-808d-436e-ab9d-14c6102772dd",
-      "ParentGroup": "834e52d6-a1bb-4b04-91f0-53486b5bd1ba",
-      "CommissionedDate": "2021-03-04T21:21:07.679Z",
-      "Type": "Developer",
-      "id": "3828b121-22a6-4ae3-9447-df77101f99da"
-    },
-    {
-      "id": "d9f5108c-1a2a-417c-a795-2a641b8a653e",
-      "ParentDevice": "e629c3a3-16cd-460a-be47-b0e67c64f99d",
-      "Type": "Tactical-CR",
-      "ParentGroup": "13e4c061-c573-4f3a-aed8-7d9e06f480ac",
-      "CommissionedDate": "2021-07-25T21:21:07.679Z",
-      "UserAssignment": "8c9f94a4-a404-4e3f-ad2c-dc4ce48d8316"
-    },
-    {
-      "id": "9bf47347-f48b-4b59-8b96-98f185def577",
-      "ParentDevice": "2235ec06-3321-48e4-b968-8cb927376e43",
-      "Type": "Developer",
-      "ParentGroup": "a2af1955-ca7a-4a89-8a11-35ca049b5518",
-      "CommissionedDate": "2021-11-02T21:21:07.679Z",
-      "UserAssignment": "cc710d93-5162-41df-99e7-1d7d8ddc3c41"
-    },
-    {
-      "UserAssignment": "5dcda115-daf3-414f-aff9-d71559f21e01",
-      "ParentGroup": "a6c2a143-0994-462a-a4cc-3dcd57f50805",
-      "CommissionedDate": "2021-01-21T21:21:07.680Z",
-      "Type": "Tactical-CR",
-      "id": "e15cb151-5a6a-49e9-ae5e-f7078bf521d6"
-    },
-    {
-      "UserAssignment": "686d1fd2-a9a8-4327-a2f2-13f9492b6e1d",
-      "ParentGroup": "82442c6b-dd7f-4293-894a-7b2d2a3d6051",
-      "CommissionedDate": "2021-08-14T21:21:07.680Z",
-      "Type": "Tactical-CR",
-      "id": "050fcf68-0cef-4287-85a0-eba2e2c8cbb6"
-    },
-    {
-      "UserAssignment": "858aa7d3-46da-4efb-b5a4-9703120056d5",
-      "ParentGroup": "84d30624-1f73-4ab7-bb3c-1abbf7535bbc",
-      "CommissionedDate": "2021-01-13T21:21:07.681Z",
-      "Type": "Tactical-CR",
-      "id": "a5928825-bfd7-4bc4-a40a-72e26e8bac69"
-    },
-    {
-      "id": "a66aeb94-f816-49df-941f-6d702b5a1bb2",
-      "ParentDevice": "033ee258-b2a9-4a5f-b28d-34cfe68ece12",
-      "Type": "Tactical-DART",
-      "ParentGroup": "f3edf1cc-9e6a-46d7-9134-58dfdae680ac",
-      "CommissionedDate": "2021-05-19T21:21:07.681Z",
-      "UserAssignment": "de7eda5b-8876-48f6-bbb5-5ed1bb50f747"
-    },
-    {
-      "UserAssignment": "cdb0524c-ae57-4100-8ebb-0bcdf1d223c7",
-      "ParentGroup": "74dc874a-f76f-4138-8ade-fa3508a69747",
-      "CommissionedDate": "2021-02-06T21:21:07.681Z",
-      "Type": "Tactical-DART",
-      "id": "b99a0a54-5a7f-4dea-b676-42613fcc6e77"
-    },
-    {
-      "id": "34a7402d-a9e9-4b84-9179-c0d84f5398cb",
-      "ParentDevice": "e0d4e498-fb78-4d5c-870e-52b22660d3d0",
-      "Type": "Tactical-CR",
-      "ParentGroup": "bcf8c66e-d970-4499-8b82-5e64da8298ed",
-      "CommissionedDate": "2021-05-23T21:21:07.681Z",
-      "UserAssignment": "d0d44e27-b7be-412d-a848-9e4e6349c6cb"
-    },
-    {
-      "id": "6ea16c87-0949-4753-9a3c-ba0e2cf330b4",
-      "ParentDevice": "b1f81e02-f476-40e8-90bd-b14bc05105ea",
-      "Type": "Tactical-DART",
-      "ParentGroup": "6b57245d-9ad6-4f75-a4c4-0260ac7efdd2",
-      "CommissionedDate": "2021-11-17T21:21:07.681Z",
-      "UserAssignment": "2d49839f-e3a8-48be-a3c8-7d0479a19c6d"
-    },
-    {
-      "UserAssignment": "607ec3db-52d7-4d15-b865-6351c7eeb27b",
-      "ParentGroup": "1afa5ced-d0a8-4938-b4a0-f52bccced3ca",
-      "CommissionedDate": "2021-04-05T21:21:07.682Z",
-      "Type": "Tactical-DART",
-      "id": "c83c647e-1d12-4361-8a41-c5f1e57d2c36"
-    },
-    {
-      "UserAssignment": "c12dc3f2-2869-47f8-80f0-7baf9ffabefe",
-      "ParentGroup": "9afe3227-5517-40f9-9250-7d98072e223c",
-      "CommissionedDate": "2021-02-10T21:21:07.682Z",
-      "Type": "Privileged",
-      "id": "269ddb9d-5f08-419e-b74c-48f68356a120"
-    },
-    {
-      "id": "a4745769-53fc-478e-97e6-5270b29e58b7",
-      "ParentDevice": "98ba3ea4-9ffe-43b3-adf6-270d49da8307",
-      "Type": "Privileged",
-      "ParentGroup": "9f7c511d-dc12-49f9-b307-9e2813001e61",
-      "CommissionedDate": "2021-10-23T21:21:07.682Z",
-      "UserAssignment": "084a1d0f-5a06-4c58-a12e-f8c7b6f5a5d3"
-    },
-    {
-      "id": "799ec7c8-aba1-46bd-ae53-bbd71066e779",
-      "ParentDevice": "aa74bd7c-4db6-4ac8-b4e4-1701819412af",
-      "Type": "Tactical-CR",
-      "ParentGroup": "8e8d5ac8-2c52-4f8e-8255-c973f8927bed",
-      "CommissionedDate": "2021-01-01T21:21:07.682Z",
-      "UserAssignment": "0e268ff9-56d4-40e7-97f0-4631a4b4223e"
-    },
-    {
-      "id": "78f8a1fc-8768-4908-918b-f9a5a3ec7018",
-      "ParentDevice": "c6cee210-308f-4eba-af75-d60fe112571e",
-      "Type": "Tactical-DART",
-      "ParentGroup": "478e1516-68b2-47e0-b2b2-c548374a3d8c",
-      "CommissionedDate": "2021-11-19T21:21:07.683Z",
-      "UserAssignment": "a355b75e-a2bd-4ba5-8391-c0ab520358d6"
-    },
-    {
-      "id": "801a30ee-6a56-45f8-b7d0-f9b9bb4fd959",
-      "ParentDevice": "cc6b9ff2-67eb-4b2b-8fa7-ac6023afe244",
-      "Type": "Privileged",
-      "ParentGroup": "62a2312b-7da6-4271-afdd-0b2225b26de1",
-      "CommissionedDate": "2021-04-06T21:21:07.685Z",
-      "UserAssignment": "17c60395-766d-4a7f-a98f-02bf9e80c6c1"
-    },
-    {
-      "id": "8036d0e0-2e35-435a-b601-54612c4d4c48",
-      "ParentDevice": "3ed212be-999c-4284-a16f-7effe93158e7",
-      "Type": "Tactical-CR",
-      "ParentGroup": "1f87cc7f-7580-4347-8d38-d9ead99d98f3",
-      "CommissionedDate": "2021-05-02T21:21:07.685Z",
-      "UserAssignment": "a02ba87a-fabe-4b0c-8ae8-cab0cf843414"
-    },
-    {
-      "id": "09e038e7-406e-4b4e-987f-c977d06c1994",
-      "ParentDevice": "9aaa413d-a6ca-47d6-9b3d-cf7f9362cefb",
-      "Type": "Developer",
-      "ParentGroup": "311e5770-175d-4def-9eb0-e7f97380165d",
-      "CommissionedDate": "2021-01-05T21:21:07.685Z",
-      "UserAssignment": "df4029c5-21ba-4784-bb7d-dc9645228bd8"
-    },
-    {
-      "id": "8f3c3110-abbf-4dc1-83fd-3ccd1d034db8",
-      "ParentDevice": "e95a2cbe-1d36-427d-84de-4ddcc6c640e3",
-      "Type": "Privileged",
-      "ParentGroup": "44245d0b-0b46-42c4-b72e-b76fc1c384ef",
-      "CommissionedDate": "2021-06-07T21:21:07.686Z",
-      "UserAssignment": "f3560460-353b-4626-96ad-3f72f44fb6f7"
-    },
-    {
-      "id": "72b1e14b-649d-4362-8f33-28c05692e28e",
-      "ParentDevice": "883cc248-f1f5-4a6a-bceb-81c86327c8a3",
-      "Type": "Privileged",
-      "ParentGroup": "e9c6032e-0b30-43bf-b2c2-f4e164017198",
-      "CommissionedDate": "2021-01-19T21:21:07.686Z",
-      "UserAssignment": "cd9fd07a-2096-46dd-921d-3036b59de41b"
-    },
-    {
-      "UserAssignment": "3619ed74-f283-4d26-bf43-65bf89d6dd0f",
-      "ParentGroup": "80a6d78c-5ffc-4459-a3b4-e4af48bb9c5f",
-      "CommissionedDate": "2021-09-26T21:21:07.686Z",
-      "Type": "Tactical-DART",
-      "id": "9445b8df-5b39-4c16-bc67-c58ff34ba33a"
-    },
-    {
-      "id": "3e78238a-ca97-4ebf-b702-5e33d05d2b9b",
-      "ParentDevice": "1713a967-4d0c-4e41-9a9a-a4738f77fb7b",
-      "Type": "Tactical-CR",
-      "ParentGroup": "f99176ac-5b19-484d-97b7-85f839f6d395",
-      "CommissionedDate": "2021-03-03T21:21:07.686Z",
-      "UserAssignment": "32a6a423-04d0-4cdd-a827-59355cfc79c7"
-    },
-    {
-      "UserAssignment": "f854cd5d-470d-4d61-b175-8342b95cac2c",
-      "ParentGroup": "bf6291d4-9877-4e41-b077-bb284a80f4cc",
-      "CommissionedDate": "2021-01-19T21:21:07.687Z",
-      "Type": "Developer",
-      "id": "c264158a-6197-424b-8cfc-a08f6f155f20"
-    },
-    {
-      "UserAssignment": "c3c5d7e7-6aa9-40f1-8886-ec7a4dee08d0",
-      "ParentGroup": "cabfa82e-2c90-461c-a210-9151937d7f8b",
-      "CommissionedDate": "2021-05-23T21:21:07.687Z",
-      "Type": "Developer",
-      "id": "3add8047-b9af-46bf-9ad5-61675cca37ea"
-    },
-    {
-      "id": "3966393b-0816-4a8d-8032-cd3081ce5151",
-      "ParentDevice": "1104a731-d9ef-47df-aac5-146c96e39e2a",
-      "Type": "Tactical-CR",
-      "ParentGroup": "c2b04675-b95c-4838-b0c7-048b74551ee0",
-      "CommissionedDate": "2021-08-13T21:21:07.687Z",
-      "UserAssignment": "8a83e639-8f62-4e25-b847-1c6257ed895a"
-    },
-    {
-      "UserAssignment": "baed9b7b-3c5b-481b-a078-f86ead330c60",
-      "ParentGroup": "68822147-6a83-495b-ae41-e2df1cd9d553",
-      "CommissionedDate": "2021-03-17T21:21:07.687Z",
-      "Type": "Tactical-DART",
-      "id": "f8d3dfe8-7812-4edb-b1c5-7d886dd9a53a"
-    },
-    {
-      "id": "b8821fa0-b5fd-446a-9206-4a214c8944a6",
-      "ParentDevice": "964c1d7e-1550-486d-8908-466cc78184cd",
-      "Type": "Privileged",
-      "ParentGroup": "cf2b3eb2-d52a-4367-8991-3a95aef3c13a",
-      "CommissionedDate": "2021-09-14T21:21:07.687Z",
-      "UserAssignment": "9734c654-0332-4b52-adf4-7418bd4134f7"
-    }
-  ]
-  
+export const paws =[
+  {
+    "DisplayName": "PAW - 1390822535",
+    "GroupAssignment": "62f8edc5-8fb4-48d4-9fcb-d9d24e2d635e",
+    "Type": "Privileged",
+    "CommissionedDate": "2021-06-25T00:10:27.061Z",
+    "ParentGroup": "b5bc15de-0c0d-4ac4-b383-fbe6ebadac67",
+    "id": "e5ea2a8f-6d48-43a2-acb3-b2aad7bca572",
+    "UserAssignment": "a083ac5c-b10d-4fef-8fe9-09b856036395"
+  },
+  {
+    "DisplayName": "PAW - 520068961",
+    "GroupAssignment": "6c9d3259-a7df-495d-96cd-284a15f6f549",
+    "Type": "Developer",
+    "CommissionedDate": "2021-07-17T00:10:27.070Z",
+    "ParentGroup": "48da8bd1-4477-47a4-b41f-4ab4902ec1f3",
+    "id": "6df018bc-41a8-49c1-8b82-89d79376f3b4",
+    "UserAssignment": "930e2dab-dcd4-4e7b-b841-7141c073e638"
+  },
+  {
+    "Type": "Tactical-CR",
+    "id": "7a4f05a2-630c-474f-8e42-65749b042bf6",
+    "ParentGroup": "16dbe62a-277e-4ae8-b0cd-2158d956be6e",
+    "GroupAssignment": "812ebd96-f3cd-4624-ada8-2ca17abeb007",
+    "DisplayName": "PAW - 1333632532",
+    "UserAssignment": "aed05298-ca59-4f71-bfa3-ff3a2298ed12",
+    "ParentDevice": "50843d99-a91d-43d6-9ca9-ec5ddfcc021e",
+    "CommissionedDate": "2021-09-22T00:10:27.070Z"
+  },
+  {
+    "DisplayName": "PAW - 88001052",
+    "GroupAssignment": "5b926d90-a31f-4553-819c-cc1c970fd107",
+    "Type": "Tactical-CR",
+    "CommissionedDate": "2021-10-25T00:10:27.072Z",
+    "ParentGroup": "84b4c2c3-1ad5-4d3b-9e93-3baa1a8473e5",
+    "id": "d807eafd-5a4c-427e-bfa0-df1085fbfe34",
+    "UserAssignment": "add101a0-d83d-4230-86f0-65fd5a27410a"
+  },
+  {
+    "Type": "Tactical-CR",
+    "id": "986d1bfb-d69c-4337-93ef-491ddabefeae",
+    "ParentGroup": "ff5d66f1-28b9-40ce-be3e-40631a002008",
+    "GroupAssignment": "bf87773e-6fee-47d1-9bf2-bee421ed3dcf",
+    "DisplayName": "PAW - 102690993",
+    "UserAssignment": "558de6bf-ffb8-43ab-ab0e-e8fb9f7308ba",
+    "ParentDevice": "6edcf5d3-e62b-4acb-ada7-621bbac77d53",
+    "CommissionedDate": "2021-02-03T00:10:27.072Z"
+  },
+  {
+    "Type": "Tactical-CR",
+    "id": "795a2e56-61f3-43af-8a12-9e80ff757c48",
+    "ParentGroup": "4a2b68e2-b314-40c5-8feb-f1679d66f129",
+    "GroupAssignment": "38191946-7bc3-4914-b569-bafa2fee6cf4",
+    "DisplayName": "PAW - 1608637154",
+    "UserAssignment": "b398daea-6788-4cc8-9ee2-999285bbdcb7",
+    "ParentDevice": "502b7cfe-37fd-4630-b1fd-a65b585168a6",
+    "CommissionedDate": "2021-02-28T00:10:27.082Z"
+  },
+  {
+    "DisplayName": "PAW - 1398295044",
+    "GroupAssignment": "6b903a45-c5be-407a-9a3c-268ba78fe5bc",
+    "Type": "Tactical-CR",
+    "CommissionedDate": "2021-09-03T00:10:27.082Z",
+    "ParentGroup": "9dd53afb-6941-42b8-a846-f4ef3de7d969",
+    "id": "c0429b53-04a9-4190-84d9-08eb265488b8",
+    "UserAssignment": "4b306bc5-6b16-445e-ad5d-a200654601eb"
+  },
+  {
+    "DisplayName": "PAW - 2104608059",
+    "GroupAssignment": "fd1980a5-a7bb-47f5-a40f-7f8a6351cb13",
+    "Type": "Developer",
+    "CommissionedDate": "2021-04-09T00:10:27.082Z",
+    "ParentGroup": "456bb7da-efa2-41a3-b0aa-f1efbca388c7",
+    "id": "d0957eb5-066a-4b69-b820-5b7dcfdc5d53",
+    "UserAssignment": "26626ed1-7fb8-469b-8e25-3ff5d8fd0b71"
+  },
+  {
+    "Type": "Tactical-CR",
+    "id": "13848a47-8a3d-47ea-8d45-a915e35926bf",
+    "ParentGroup": "11ce08f6-987d-4ca8-bd26-35278dbafee1",
+    "GroupAssignment": "9749e3ec-c243-4bd9-99e4-79ad2d02c971",
+    "DisplayName": "PAW - 565059299",
+    "UserAssignment": "e9ff7954-0cfe-4bad-95f5-fc4fdc1bf4a3",
+    "ParentDevice": "0e986d04-6ed5-4660-9aa2-acae4622be9a",
+    "CommissionedDate": "2021-09-26T00:10:27.083Z"
+  },
+  {
+    "DisplayName": "PAW - 1884491206",
+    "GroupAssignment": "570ec22e-002d-4399-b1b8-019c2957569d",
+    "Type": "Tactical-CR",
+    "CommissionedDate": "2021-06-28T00:10:27.083Z",
+    "ParentGroup": "25727d65-a608-4edc-a983-e58d41542984",
+    "id": "7e391f84-41d9-4a58-8a35-335fa6fcfeec",
+    "UserAssignment": "88fc0659-6714-4a24-9571-faf4b3eec574"
+  },
+  {
+    "Type": "Developer",
+    "id": "6f9f4801-f825-4d07-a4b1-edc74090b056",
+    "ParentGroup": "4835704b-b3e0-47b3-9c1a-e6bc5f2c3a4e",
+    "GroupAssignment": "cc409468-74e9-4166-b638-73a9a557768e",
+    "DisplayName": "PAW - 938926783",
+    "UserAssignment": "82cb9327-c39e-42ea-a918-57d6516936d0",
+    "ParentDevice": "f447f965-27e2-411b-a734-e44daed1b6f3",
+    "CommissionedDate": "2021-08-23T00:10:27.083Z"
+  },
+  {
+    "DisplayName": "PAW - 528381031",
+    "GroupAssignment": "65896d0a-d52d-46ac-a77b-3e423b5f245d",
+    "Type": "Tactical-CR",
+    "CommissionedDate": "2021-11-02T00:10:27.084Z",
+    "ParentGroup": "7e5e8302-e113-4159-8ce8-3a55565afad7",
+    "id": "63db4a82-8bf4-4c91-8eb4-80ba6b255359",
+    "UserAssignment": "b88b867d-2d1d-4863-8e46-c9f51f09f0b2"
+  },
+  {
+    "Type": "Developer",
+    "id": "073d2b9d-9b0b-409d-aad7-af3001240bbd",
+    "ParentGroup": "9657383e-b8ee-4f55-bbaf-9bb87d05bf4a",
+    "GroupAssignment": "ab95992a-bdb0-4272-9abb-09f810d79c00",
+    "DisplayName": "PAW - 263962726",
+    "UserAssignment": "ff19b4ac-b78e-4209-824f-62814cdbf45d",
+    "ParentDevice": "9d59ddb0-3004-4132-975e-3b81fced54a1",
+    "CommissionedDate": "2021-06-10T00:10:27.084Z"
+  },
+  {
+    "Type": "Developer",
+    "id": "f8f43462-d079-4f70-93cd-be6319518f09",
+    "ParentGroup": "12fccc0a-304b-4b1e-8363-85db7023658d",
+    "GroupAssignment": "206437c6-62c4-4578-9fe8-7fd7b95d8225",
+    "DisplayName": "PAW - 600390461",
+    "UserAssignment": "f9d32f1a-d33e-4b99-975e-4bbbd9e4b2dd",
+    "ParentDevice": "032e52be-1870-42ea-a826-3330b3ee2467",
+    "CommissionedDate": "2021-09-21T00:10:27.085Z"
+  },
+  {
+    "Type": "Privileged",
+    "id": "f4159a82-6203-483f-96c3-52397958f11a",
+    "ParentGroup": "0c3cf6bb-c28f-46df-8441-8b5048948a04",
+    "GroupAssignment": "fd5a6997-d2d1-4c0e-b60d-d1919c0a4be8",
+    "DisplayName": "PAW - 946389015",
+    "UserAssignment": "a9cb490a-ef06-49bf-af08-c60bc2ca0b94",
+    "ParentDevice": "c154d99d-c280-4a03-85d1-bd28a5063ed5",
+    "CommissionedDate": "2021-09-27T00:10:27.085Z"
+  },
+  {
+    "DisplayName": "PAW - 1732520184",
+    "GroupAssignment": "0d87b35d-4677-49b4-96e9-86f2d9bfae52",
+    "Type": "Developer",
+    "CommissionedDate": "2021-09-02T00:10:27.085Z",
+    "ParentGroup": "52592e40-91b2-4092-a202-d39387878dc8",
+    "id": "213c16dd-1438-42be-84a8-b342077b9154",
+    "UserAssignment": "881d4ce1-773b-44f9-bfef-f1c977ad1f18"
+  },
+  {
+    "Type": "Developer",
+    "id": "167d62eb-a57c-45e7-b711-94c8e802b346",
+    "ParentGroup": "6b4d5623-8d91-4b3d-9c57-70c94346d77a",
+    "GroupAssignment": "8596648b-5633-405c-a0d0-f2a7f46b4eec",
+    "DisplayName": "PAW - 708396311",
+    "UserAssignment": "16363205-cbe3-45f8-91d8-d3b4e7deba36",
+    "ParentDevice": "4c218d3c-e5df-4849-b4db-12377df7fa74",
+    "CommissionedDate": "2021-11-16T00:10:27.086Z"
+  },
+  {
+    "Type": "Developer",
+    "id": "bdb1684f-73fa-4c6a-a181-411bf4d43c64",
+    "ParentGroup": "2e7a0daa-f8d8-4952-b956-084fdc532ecb",
+    "GroupAssignment": "a11b15ec-2025-4b9f-9da0-64d62ae01f51",
+    "DisplayName": "PAW - 747197188",
+    "UserAssignment": "a2561ca6-b154-43aa-90dd-227adca00316",
+    "ParentDevice": "98a5652c-ea66-4b23-833a-4b70b41a9a22",
+    "CommissionedDate": "2021-11-26T00:10:27.086Z"
+  },
+  {
+    "Type": "Tactical-CR",
+    "id": "6cd4dbdb-d621-4969-9141-6b3267621e69",
+    "ParentGroup": "5a8a47fa-d194-46ee-9c3b-b10b2ab889d2",
+    "GroupAssignment": "11b382ab-e922-45bf-a778-6c6545953a1c",
+    "DisplayName": "PAW - 1419998262",
+    "UserAssignment": "10629336-63f9-4206-bcaa-2204587470f7",
+    "ParentDevice": "2ceb20d5-8f12-4e4a-b755-f5ec9f5b8a5d",
+    "CommissionedDate": "2021-02-17T00:10:27.086Z"
+  },
+  {
+    "DisplayName": "PAW - 1144997821",
+    "GroupAssignment": "9eb38f1b-0e19-4fb0-a77e-0f62c66ddfd9",
+    "Type": "Developer",
+    "CommissionedDate": "2021-01-08T00:10:27.087Z",
+    "ParentGroup": "76541771-faa8-495f-bccd-64470240f79e",
+    "id": "7ee452c9-66f1-44a0-bfd5-d49e8e636c88",
+    "UserAssignment": "8412047c-8da7-4a9b-9b02-e14123fb0467"
+  },
+  {
+    "DisplayName": "PAW - 1068707513",
+    "GroupAssignment": "33085027-0aa8-41bf-9cb2-c044d853568c",
+    "Type": "Privileged",
+    "CommissionedDate": "2021-09-05T00:10:27.087Z",
+    "ParentGroup": "51371594-bd02-4664-a065-171798d3c2ac",
+    "id": "ef670299-884f-48f8-91ba-10de8ac547ba",
+    "UserAssignment": "702efa80-c733-4c55-969d-768306a21c7e"
+  },
+  {
+    "DisplayName": "PAW - 971494567",
+    "GroupAssignment": "d821e3f6-443f-4fc7-a30a-12fc01ee99d1",
+    "Type": "Privileged",
+    "CommissionedDate": "2021-03-18T00:10:27.088Z",
+    "ParentGroup": "f4341432-06d5-448a-9b69-8dc818fcb741",
+    "id": "12e44aaf-f12b-4b0e-a7f2-efd70e2b1dc6",
+    "UserAssignment": "4067336a-2a25-452f-a67a-41f776574603"
+  },
+  {
+    "Type": "Developer",
+    "id": "50b15284-1600-4c92-b593-e957f838c9c1",
+    "ParentGroup": "8cf159bd-8c67-4ae1-affa-40c62d3c8692",
+    "GroupAssignment": "787caf9a-79fa-4567-8470-ac1ec50a4847",
+    "DisplayName": "PAW - 249042713",
+    "UserAssignment": "04ec009d-6399-4458-b25c-f9bffdcb1112",
+    "ParentDevice": "60372253-5d59-4101-9a92-e24d5518368e",
+    "CommissionedDate": "2021-08-09T00:10:27.088Z"
+  },
+  {
+    "Type": "Tactical-CR",
+    "id": "9a11c229-f4cf-45cd-8948-de3e1d14e086",
+    "ParentGroup": "2024b4f8-8733-4586-bcc1-c83159ca2f7d",
+    "GroupAssignment": "6bd6b4f2-afad-458c-97fc-7f3a4179cb43",
+    "DisplayName": "PAW - 1633470750",
+    "UserAssignment": "d94bf6b0-2066-4c65-a5b7-3e3b8b2de250",
+    "ParentDevice": "27c977f5-8bca-4acd-9297-415ce1a9a195",
+    "CommissionedDate": "2021-08-12T00:10:27.089Z"
+  },
+  {
+    "Type": "Developer",
+    "id": "5d71cd1a-b7a4-4c57-bde6-b7ee9b026cd5",
+    "ParentGroup": "a6314b3b-0d6c-463d-8d95-6e5d294d7d0e",
+    "GroupAssignment": "343fb1c7-de7e-4ce5-aaf8-2b30a55c143c",
+    "DisplayName": "PAW - 1683327498",
+    "UserAssignment": "f86d88ff-8188-45dc-abdf-2f6390e64e11",
+    "ParentDevice": "1f96bac9-b5c3-4692-b15d-e6f9bc1d5598",
+    "CommissionedDate": "2021-10-03T00:10:27.089Z"
+  },
+  {
+    "Type": "Developer",
+    "id": "599d7445-c321-4cdf-86c2-f4fa6a4d70ff",
+    "ParentGroup": "46a11bd5-1ac2-4f60-bcfb-de74149276ed",
+    "GroupAssignment": "d81bfd78-b4a4-469a-9474-ad11ae74e4d1",
+    "DisplayName": "PAW - 1095788243",
+    "UserAssignment": "a6d80a6b-eb7b-438f-9209-be7c0e4a84a2",
+    "ParentDevice": "40d1d0f1-8330-44a4-ba7d-13d4402938c7",
+    "CommissionedDate": "2021-11-01T00:10:27.090Z"
+  },
+  {
+    "DisplayName": "PAW - 1609266320",
+    "GroupAssignment": "82dd59e1-2537-4032-b712-e19a6fb0a148",
+    "Type": "Privileged",
+    "CommissionedDate": "2021-11-24T00:10:27.090Z",
+    "ParentGroup": "f5e0aa8c-a76c-4599-b007-150cf08f8060",
+    "id": "b29811b4-5ce3-458c-8ca3-d0fe5d639491",
+    "UserAssignment": "cce47761-5447-496c-9c85-a98284ad5c7b"
+  },
+  {
+    "DisplayName": "PAW - 1545669561",
+    "GroupAssignment": "ed8a29bd-5db6-47ae-813d-e564feaf7439",
+    "Type": "Tactical-CR",
+    "CommissionedDate": "2021-08-12T00:10:27.091Z",
+    "ParentGroup": "bf63949b-3d89-4868-b987-e0d0dca8d3ba",
+    "id": "1955a72b-ac02-4134-8131-05ec37f033c4",
+    "UserAssignment": "09fb8918-5cd5-4d01-a5e6-d382513af558"
+  },
+  {
+    "Type": "Privileged",
+    "id": "b70b4302-307a-4948-8dc7-28dfa19e7497",
+    "ParentGroup": "a3ffb8fa-0833-401b-bac8-e3179a5bd4b5",
+    "GroupAssignment": "9264fe5e-2390-497f-bc62-910d41582ee2",
+    "DisplayName": "PAW - 148695959",
+    "UserAssignment": "cde5f787-48b1-4149-915c-6f09436037e4",
+    "ParentDevice": "e0c448df-2aa7-4c0b-b675-412ef7683c7d",
+    "CommissionedDate": "2021-08-24T00:10:27.091Z"
+  },
+  {
+    "Type": "Tactical-CR",
+    "id": "5471a054-4945-4ebd-baf0-ce08c76bb58a",
+    "ParentGroup": "32a7facb-8ffd-419b-a16c-6e68ac2255bb",
+    "GroupAssignment": "81ee5585-f5e6-4c5e-892c-c11fcc655d9c",
+    "DisplayName": "PAW - 1153368508",
+    "UserAssignment": "9e75dd9a-1d0e-48cf-a8c7-f7bafe905f51",
+    "ParentDevice": "38fca8da-306c-4144-bc56-7f3d2131f7b3",
+    "CommissionedDate": "2021-08-04T00:10:27.092Z"
+  },
+  {
+    "Type": "Developer",
+    "id": "458f02dd-073a-4e70-a497-e6424d76bfe7",
+    "ParentGroup": "c086cb19-9883-4277-b97d-47747ee6f207",
+    "GroupAssignment": "4537732d-97e6-48cf-9af6-bac0bec1c112",
+    "DisplayName": "PAW - 160581058",
+    "UserAssignment": "6a0e5921-e459-41f6-b8d3-4a737aa0a5fa",
+    "ParentDevice": "56cf04d4-0b9a-4fa9-b7e5-45414f118878",
+    "CommissionedDate": "2021-01-25T00:10:27.092Z"
+  },
+  {
+    "Type": "Privileged",
+    "id": "84e0f845-e14a-4a1f-bb5d-6e46ca2d9480",
+    "ParentGroup": "649d7676-96e2-4d11-8852-29dc2f2105c1",
+    "GroupAssignment": "fd763f80-28a4-49d8-8e30-dda038eaa4c8",
+    "DisplayName": "PAW - 885908940",
+    "UserAssignment": "97535816-4f81-42d7-a859-c93c4d7b7792",
+    "ParentDevice": "18c2831a-4cec-40ce-b2d6-defcf8da0a00",
+    "CommissionedDate": "2021-08-05T00:10:27.092Z"
+  },
+  {
+    "Type": "Developer",
+    "id": "a799c7bb-091d-413e-85de-705cbd093c12",
+    "ParentGroup": "ebd40f38-185b-4858-af69-82604b56b253",
+    "GroupAssignment": "872c5d75-da5e-4449-b852-2b062289ceb8",
+    "DisplayName": "PAW - 1131040179",
+    "UserAssignment": "92f76a6d-ac56-4d0f-9713-5ca0724e4710",
+    "ParentDevice": "080b93d5-28a4-4650-b437-3f2a1ada656e",
+    "CommissionedDate": "2021-01-24T00:10:27.093Z"
+  },
+  {
+    "DisplayName": "PAW - 374383845",
+    "GroupAssignment": "f68f3b4a-7d0a-4dfd-a874-8e1a6e425f45",
+    "Type": "Developer",
+    "CommissionedDate": "2021-03-02T00:10:27.093Z",
+    "ParentGroup": "d1e3fbe4-77c9-4c02-a830-988aca294a4c",
+    "id": "94d6f8df-2867-4f4d-b91f-9112aef0d1f2",
+    "UserAssignment": "b23b2b67-8a21-47e3-b630-e68f6d6b410d"
+  },
+  {
+    "Type": "Developer",
+    "id": "d491740b-6bde-420f-af0d-93e4c05c9c54",
+    "ParentGroup": "50ef364f-5f05-43bb-8c39-a0b96d57a328",
+    "GroupAssignment": "ef9a4812-846e-44e8-abe8-e6e78e4d2a1e",
+    "DisplayName": "PAW - 1245660845",
+    "UserAssignment": "58aa61c5-c055-4962-84a2-29d32cee0ecb",
+    "ParentDevice": "3acca4b5-f2fe-4ae9-b1af-383404bab75c",
+    "CommissionedDate": "2021-10-18T00:10:27.094Z"
+  },
+  {
+    "DisplayName": "PAW - 556523436",
+    "GroupAssignment": "61efe9dd-2815-4f81-a595-bd5ff160e42e",
+    "Type": "Developer",
+    "CommissionedDate": "2021-07-28T00:10:27.094Z",
+    "ParentGroup": "abcd5dca-4625-4fde-9556-248918d740a0",
+    "id": "037e74b2-8851-40dd-afb2-b447dfb76ca5",
+    "UserAssignment": "65936613-82a0-4e96-a1a3-dddda02b9fe1"
+  },
+  {
+    "Type": "Tactical-CR",
+    "id": "f99c474d-5883-44b1-a551-305c28cc0c4d",
+    "ParentGroup": "3777a133-11eb-441c-abdd-baa30ffc9523",
+    "GroupAssignment": "50b3f4c1-715b-4caf-9184-fe7cdca13d11",
+    "DisplayName": "PAW - 797694198",
+    "UserAssignment": "d6c19e0f-57fd-48c2-adf9-ec0ee19e1286",
+    "ParentDevice": "5d27c602-0b0e-4f1c-ac91-6b5c02f5ffc0",
+    "CommissionedDate": "2021-06-16T00:10:27.095Z"
+  },
+  {
+    "Type": "Tactical-CR",
+    "id": "7c551e96-85c1-44bf-8022-ea5a897fa13c",
+    "ParentGroup": "57cfd5da-e7b1-4eb5-8daa-6ddf75f9cfa9",
+    "GroupAssignment": "4ab2319d-7ed2-4cd4-b678-0bd7efac0100",
+    "DisplayName": "PAW - 1952705763",
+    "UserAssignment": "ee8224f1-ad63-4d15-9aa6-7e4af005cbb5",
+    "ParentDevice": "9a0dcb04-b6cd-42eb-889b-51f468143ff2",
+    "CommissionedDate": "2021-05-14T00:10:27.095Z"
+  },
+  {
+    "DisplayName": "PAW - 1963012561",
+    "GroupAssignment": "0c880d23-2475-43cb-a2fe-8dbe89ce96bf",
+    "Type": "Privileged",
+    "CommissionedDate": "2021-03-25T00:10:27.096Z",
+    "ParentGroup": "1a26d03f-2549-49d4-9aed-9e5514e6dbb4",
+    "id": "c0e4bee2-3585-4e75-9bb7-58db1e25fa51",
+    "UserAssignment": "18abb55b-31cf-4019-8c8d-5a0917e8806c"
+  },
+  {
+    "DisplayName": "PAW - 1167630752",
+    "GroupAssignment": "fd4d1a9e-b96f-4544-8826-dc3f03278c66",
+    "Type": "Tactical-CR",
+    "CommissionedDate": "2021-04-10T00:10:27.096Z",
+    "ParentGroup": "03a5222f-9601-4836-8a33-0862a21e1d6b",
+    "id": "cf4e05e9-85d5-4c3c-af72-d05cfb760c06",
+    "UserAssignment": "13fcaaba-6853-4529-8029-5baa631146f1"
+  },
+  {
+    "DisplayName": "PAW - 235020357",
+    "GroupAssignment": "b4cd8156-8ca4-4252-8c0e-07564211e252",
+    "Type": "Developer",
+    "CommissionedDate": "2021-01-03T00:10:27.097Z",
+    "ParentGroup": "378b3344-f23c-43bf-9048-94536a657db9",
+    "id": "4615ebe9-6c5f-47ef-94de-3d48d2f833ad",
+    "UserAssignment": "3f6ce077-cd0c-40a8-b62e-fd40cfa74c27"
+  },
+  {
+    "DisplayName": "PAW - 881512506",
+    "GroupAssignment": "e92b1fc0-abd8-41c1-95bf-6b39cbc2a323",
+    "Type": "Tactical-CR",
+    "CommissionedDate": "2021-02-03T00:10:27.097Z",
+    "ParentGroup": "04f53123-0c58-4995-bcb4-78ac08e5ff61",
+    "id": "79df2bed-575c-4ea5-9934-b3c88c5b6555",
+    "UserAssignment": "73a0d5ad-fdff-4b91-ae45-62543b4c4241"
+  },
+  {
+    "Type": "Tactical-CR",
+    "id": "7ffa1cb2-0fc5-410c-9954-bc0292b8fd1a",
+    "ParentGroup": "f30f4637-e70b-4ddb-958c-7b426b56db55",
+    "GroupAssignment": "bedf7d03-2fa5-45af-8bac-3cb482406af1",
+    "DisplayName": "PAW - 414010807",
+    "UserAssignment": "d75f1356-2028-4b33-a1bd-abd3d3da07db",
+    "ParentDevice": "10ba0513-e5d9-4635-8fbc-df169df175ee",
+    "CommissionedDate": "2021-07-08T00:10:27.097Z"
+  },
+  {
+    "Type": "Developer",
+    "id": "0ab9107a-f896-49c0-a788-f8a7d47f262e",
+    "ParentGroup": "801a7b2f-ffab-4537-96bc-d2ebc14b8391",
+    "GroupAssignment": "0f12256f-3f61-44bd-ac4d-74f41b39e64b",
+    "DisplayName": "PAW - 1260295756",
+    "UserAssignment": "5987ff7c-a136-41d8-a11f-09c49b62a506",
+    "ParentDevice": "04864813-e494-4c4b-bb2f-201062a2b8bd",
+    "CommissionedDate": "2021-11-23T00:10:27.098Z"
+  },
+  {
+    "Type": "Developer",
+    "id": "18c6ac20-1be8-471c-81b9-2fbc9b452a39",
+    "ParentGroup": "4c43e5f4-9fe2-49e2-a46b-9117766955ae",
+    "GroupAssignment": "c1a8cd25-a192-4699-a9cb-b96a9e74b111",
+    "DisplayName": "PAW - 1961219821",
+    "UserAssignment": "713ae4b8-1804-45d8-aa7a-f259939a34d6",
+    "ParentDevice": "13caaba5-f3b6-4064-ae97-70139c31ed3c",
+    "CommissionedDate": "2021-08-14T00:10:27.098Z"
+  },
+  {
+    "Type": "Developer",
+    "id": "e2ea8319-25db-4b69-9e7e-b0914ec1893c",
+    "ParentGroup": "64992f09-74c7-4bf9-a42f-0b3ed5ed3f62",
+    "GroupAssignment": "416d7b92-805e-48c0-9b19-74446b9a11ec",
+    "DisplayName": "PAW - 741599689",
+    "UserAssignment": "5e7ccd15-d941-4d65-ad39-d57c9af71091",
+    "ParentDevice": "66b8adeb-e583-4e80-8aaa-d1bdd6c4001c",
+    "CommissionedDate": "2021-11-21T00:10:27.099Z"
+  },
+  {
+    "DisplayName": "PAW - 1187629943",
+    "GroupAssignment": "21372776-6113-4a05-875b-6d0e14036efd",
+    "Type": "Tactical-CR",
+    "CommissionedDate": "2021-10-24T00:10:27.099Z",
+    "ParentGroup": "846c3c99-d1f4-46f6-b415-6ddff4d8fd77",
+    "id": "bf0a1a35-084e-432c-8ae1-43ddd56915bf",
+    "UserAssignment": "2522d8c0-4061-4e72-aa97-df32f06a29f4"
+  },
+  {
+    "DisplayName": "PAW - 2081303712",
+    "GroupAssignment": "e4683886-cd57-4ecf-9f00-6d4ace1fc389",
+    "Type": "Tactical-CR",
+    "CommissionedDate": "2021-04-09T00:10:27.099Z",
+    "ParentGroup": "d15b3cd0-eb86-4d2c-8190-38f3c2d35fa4",
+    "id": "226c8233-8016-40ca-ae4c-0031b1931ca0",
+    "UserAssignment": "0c6dd26a-0512-46a8-bd90-09daee93d1a1"
+  },
+  {
+    "Type": "Tactical-CR",
+    "id": "2c0ffa1b-5dfe-4932-86af-10f92fb35b1f",
+    "ParentGroup": "380c7d1f-9fc6-4506-9cf9-6e0f18580c35",
+    "GroupAssignment": "43fca3f1-694d-4e6f-a5c9-966a7d803dc7",
+    "DisplayName": "PAW - 234522288",
+    "UserAssignment": "9939b74c-a063-46a7-b971-67577d3155ee",
+    "ParentDevice": "64446c0e-c03f-41da-943d-03edd316be14",
+    "CommissionedDate": "2021-06-18T00:10:27.100Z"
+  },
+  {
+    "DisplayName": "PAW - 1592685293",
+    "GroupAssignment": "e0385b65-3e5a-499c-81d2-9c8505bb547a",
+    "Type": "Developer",
+    "CommissionedDate": "2021-05-27T00:10:27.100Z",
+    "ParentGroup": "5f73c4c4-5422-4f4b-878c-3206ee2628d9",
+    "id": "1beff0f3-4ab7-4d46-ad49-22c7aa4bd3b8",
+    "UserAssignment": "a83cc7e5-be20-42aa-abee-439ac1bc653a"
+  }
+]

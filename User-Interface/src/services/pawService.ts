@@ -10,10 +10,11 @@ export class PawService {
     public static async getPaws(): Promise<IPawItem[]> {
         return paws.map((paw) => {
             return {
+                displayName: paw.DisplayName,
                 pawId: paw.id,
                 pawType: paw.Type,
-               commissionDate: paw.CommissionedDate,
-               parentDeviceId: paw.ParentDevice,
+                commissionDate: paw.CommissionedDate,
+                parentDeviceId: paw.ParentDevice,
             };
         });
     }

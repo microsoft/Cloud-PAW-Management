@@ -1,12 +1,17 @@
 import React from 'react';
 import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
 
-const _items: ICommandBarItemProps[] = [
+interface IPawActionsProps {
+  onCommissionPaws: () => void;
+  onDecommissionPaws?: () => void;
+}
+export const PawActions = (props: IPawActionsProps) => {
+  const _items: ICommandBarItemProps[] = [
     {
       key: 'addGroup',
       text: 'Commission PAW',
       iconProps: { iconName: 'AddGroup' },
-      onClick: () => console.log('Commissioning PAW'),
+      onClick: () => props.onCommissionPaws(),
     },
     {
       key: 'delete',
@@ -21,9 +26,6 @@ const _items: ICommandBarItemProps[] = [
       onClick: () => console.log('Refreshing PAW'),
     },
   ];
-
-  
-export const PawActions: React.FunctionComponent = () => {
     return (
       <div>
         <CommandBar
