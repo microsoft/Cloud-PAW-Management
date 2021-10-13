@@ -1,8 +1,11 @@
-import { DetailsList, DetailsListLayoutMode, IColumn, SelectionMode } from '@fluentui/react';
+import { CheckboxVisibility, DetailsList, DetailsListLayoutMode, IColumn, SelectionMode } from '@fluentui/react';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { IPawItem } from '../../models';
 import { IPawItemListProps } from './PawItemList.types';
-
+import { DECOMMISSIONING_PAW_SELECTED } from '../../store/actions/pawActions'; 
 export const PawItemList = (props: IPawItemListProps) => {
+    const dispatch = useDispatch();
     const [isCompactMode, ] = useState(false);
     const onColumnClick = (ev: React.MouseEvent<HTMLElement>, column: IColumn): void => {
       };
@@ -11,7 +14,7 @@ export const PawItemList = (props: IPawItemListProps) => {
         name: 'Display Name',
         fieldName: 'displayName',
         minWidth: 100,
-        maxWidth: 150,
+        maxWidth: 120,
         isRowHeader: true,
         isResizable: true,
         onColumnClick: onColumnClick,
@@ -71,8 +74,16 @@ export const PawItemList = (props: IPawItemListProps) => {
 
     const columns: IColumn[] = [pawDisplayNameColumn, pawIdColumn, pawTypeColumn, commissionDateColumn, parentDeviceIdColumn];
 
+    const  onActiveItemChanged = (item: IPawItem, other) => {
+      dispatch({
+        type: DECOMMISSIONING_PAW_SELECTED,
+        payload: item
+      })
+    };
     return <DetailsList
                 items={props.items}
+                checkboxVisibility={CheckboxVisibility.always}
+                onActiveItemChanged={onActiveItemChanged}
                 compact={isCompactMode}
                 columns={columns}
                 selectionMode={SelectionMode.multiple}

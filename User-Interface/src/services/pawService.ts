@@ -1,3 +1,4 @@
+import dateformat from 'dateformat';
 import { IPawItem } from "../models";
 import { paws } from './mocks/pawMocks';
 
@@ -13,7 +14,7 @@ export class PawService {
                 displayName: paw.DisplayName,
                 pawId: paw.id,
                 pawType: paw.Type,
-                commissionDate: paw.CommissionedDate,
+                commissionDate: dateformat(paw.CommissionedDate,'yyyy/mm/dd H:mm'),
                 parentDeviceId: paw.ParentDevice,
             };
         });
