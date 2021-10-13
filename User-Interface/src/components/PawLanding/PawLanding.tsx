@@ -8,6 +8,7 @@ import { initializeIcons } from '@fluentui/react/lib/Icons';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { getPaws } from '../../store/actions/pawActions';
 import { CommissionPawsPanel } from '../CommissionPawsPanel';
+import {LeftNav} from '../LeftNav/LeftNav';
 
 initializeIcons(/* optional base url */);
 
@@ -45,7 +46,7 @@ export const PawLanding = () => {
     <Stack><Header/></Stack>
     <Stack styles={stackStyles} horizontal>
         <Stack.Item styles={leftNavStyles}>
-            <h1>Menu</h1>
+            <h1><LeftNav/></h1>
         </Stack.Item>
         <Stack.Item>
             <Stack styles={contentStyles}>
