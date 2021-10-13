@@ -23,15 +23,17 @@ interface CloudSecConfig {
     "ScopeTagID": string
 };
 
-/* 
-Type = Is the commission type of PAW
-UserAssignment = The ID of the Settings Catalog that contains the user rights assignment of the specified PAW device
-CommissionedDate = is the ISO 8601 string format of the time representing the commission date of the PAW
-*/
+/*
+ * Type = Is the commission type of PAW
+ * UserAssignment = The ID of the Settings Catalog that contains the user rights assignment of the specified PAW device
+ * CommissionedDate = is the ISO 8601 string format of the time representing the commission date of the PAW
+ * GroupAssignment = This is the ID of the Custom CSP Device Configuration that configures the local admin and local hyper-v group memberships
+ */
 // Define the PAW Configuration Spec
 export interface PAWGroupConfig {
     Type: "Privileged" | "Developer" | "Tactical-CR" | "Tactical-RRR",
     UserAssignment: string,
+    GroupAssignment: string,
     CommissionedDate: Date
 };
 
@@ -319,6 +321,7 @@ export class ConfigurationEngine {
         };
     };
 
+    // TODO: Write a group config updater.
     // Updates the specified group's description with the provided config info
     async updatePAWGroupConfig() { };
 
@@ -380,6 +383,15 @@ export class ConfigurationEngine {
 
                     // Stop switch execution
                     break;
+                case "GroupAssignment":
+                    // Validate value as a proper GUID
+                    if (!validateGUID(splitLine[1])) { throw new InternalAppError("The group assignment value is not a valid GUID!", "Input Validation", "ConfigEngine - ConfigurationEngine - parsePAWGroupConfig - Switch - Group Assignment Validator") };
+
+                    // Set value of the user assignment property as the validated value.
+                    parsedConfig.GroupAssignment = splitLine[1];
+
+                    // Stop switch execution
+                    break;
                 default:
                     // Write debug info
                     writeDebugInfo(splitLine);
@@ -393,12 +405,13 @@ export class ConfigurationEngine {
         };
 
         // Ensure that all of the properties have been initialized
-        if (parsedConfig.CommissionedDate && parsedConfig.Type && parsedConfig.UserAssignment) {
+        if (parsedConfig.CommissionedDate && parsedConfig.Type && parsedConfig.UserAssignment && parsedConfig.GroupAssignment) {
             // Typecast the loose object to a PAW Config object. (this is to satisfy typescript, the parsed config could actually be returned here instead if typescript were smarter)
             const validatedConfig: PAWGroupConfig = {
                 "CommissionedDate": parsedConfig.CommissionedDate,
                 "Type": parsedConfig.Type,
-                "UserAssignment": parsedConfig.UserAssignment
+                "UserAssignment": parsedConfig.UserAssignment,
+                "GroupAssignment": parsedConfig.GroupAssignment
             };
 
             // Write debug info
