@@ -1,5 +1,5 @@
 import { IPawItem } from "../models";
-import { paws } from './mocks';
+import { paws } from './mocks/pawMocks';
 
 export interface IPawService {
     getPaws: () => Promise<IPawItem[]>,
