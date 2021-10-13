@@ -243,7 +243,53 @@ export class MSGraphClient {
                 throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - MSGraphClient - newCustomDeviceConfig - catch statement");
             };
         };
+    };
 
+    // Update the specified Windows custom setting (string)
+    async updateMEMCustomDeviceConfigString(id: string, name: string, description: string, scopeTagID: string[], omaSetting: MicrosoftGraphBeta.OmaSettingString[]) {
+        // Validate Input
+        if (!validateGUID(id)) { throw new InternalAppError("The ID is not a valid GUID!", "Invalid Input", "GraphClient - MSGraphClient - updateMEMCustomDeviceConfigString - Input Validation")};
+        if (typeof name !== "string") { throw new InternalAppError("The type of the name parameter is not a string!", "Invalid Input", "GraphClient - MSGraphClient - updateMEMCustomDeviceConfigString - Input Validation") };
+        if (name.length > 200) { throw new InternalAppError("The char count for the name parameter is more than 200!", "Invalid Input", "GraphClient - MSGraphClient - updateMEMCustomDeviceConfigString - Input Validation") };
+        if (typeof description !== "string") { throw new InternalAppError("The type of the description parameter is not a string!", "Invalid Input", "GraphClient - MSGraphClient - updateMEMCustomDeviceConfigString - Input Validation") };
+        if (description.length > 1500) { throw new InternalAppError("The char count for the description parameter is more than 1500!", "Invalid Input", "GraphClient - MSGraphClient - updateMEMCustomDeviceConfigString - Input Validation") };
+        if (!validateOmaStringObjectArray(omaSetting)) { throw new InternalAppError("The specified omaSetting is not the correct structure!", "Invalid Input", "GraphClient - MSGraphClient - updateMEMCustomDeviceConfigString - Input Validation") };
+        if (typeof scopeTagID !== "object" || scopeTagID.length == 0) { throw new InternalAppError("The role scope tag IDs must be an array of numbers in string format and not be empty!", "Invalid Input", "GraphClient - MSGraphClient - updateMEMCustomDeviceConfigString - Input Validation") };
+        /*
+         * TODO: Convert to scope tag name instead of the ID of the tag
+         * Loop through each of the indexes and ensure that they are parsable to numbers
+         */
+        for (const scopeTag of scopeTagID) {
+            // Parse the string to a number
+            const parsedNum = Number.parseInt(scopeTag);
+
+            // Check to make sure the string is a parsable number
+            if (typeof parsedNum === "number" && Object.is(parsedNum, NaN)) { throw new InternalAppError("Please specify a number for the role scope tag IDs!", "Invalid Input", "GraphClient - MSGraphClient - updateMEMCustomDeviceConfigString - Input Validation") };
+        };
+
+        // Create the post body to be used for the resource configuration
+        const postBody = {
+            "@odata.type": "#microsoft.graph.windows10CustomConfiguration",
+            "displayName": name,
+            "description": description,
+            "roleScopeTagIds": scopeTagID,
+            "omaSettings": omaSetting
+        };
+
+        // Catch any error on custom setting (string) update
+        try {
+            // Create the custom settings and return the result
+            return await (await this.client).api("/deviceManagement/deviceConfigurations/" + id).patch(postBody);
+        } catch (error) {
+            // Check to see if the error parameter is an instance of the Error class.
+            if (error instanceof Error) {
+                // Return the error in a well known format using the Internal App Error class
+                throw new InternalAppError(error.message, error.name, error.stack);
+            } else {
+                // Return the unknown error in a known format
+                throw new InternalAppError("Thrown error is not an error", "Unknown", "GraphClient - MSGraphClient - newCustomDeviceConfig - catch statement");
+            };
+        };
     };
 
     // Retrieve Microsoft Endpoint Manager configuration profile list. Can pull individual profile based upon GUID

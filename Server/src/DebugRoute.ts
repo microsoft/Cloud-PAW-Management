@@ -157,6 +157,21 @@ export class DebugRouter {
             };
         });
 
+        // Create a Windows 10 Custom Device string configuration
+        this.webServer.patch('/Debug/customStringDeviceConfiguration/:id', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Generate the oma settings
+                const omaSettings = localGroupMembershipUserRights();
+
+                // Create a new custom config
+                response.send(await this.graphClient.updateMEMCustomDeviceConfigString(request.params.id, request.body.name, request.body.description, request.body.tagId, [omaSettings]));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
+
         // List the Microsoft Endpoint manager device configurations
         this.webServer.get('/Debug/deviceConfiguration', async (request, response, next) => {
             // Catch execution errors
