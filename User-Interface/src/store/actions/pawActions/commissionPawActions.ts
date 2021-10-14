@@ -1,3 +1,4 @@
+import { getPaws } from '.';
 import { IDeviceItem, IPawItem } from '../../../models';
 import { PawService } from '../../../services';
 import {
@@ -25,7 +26,10 @@ export const commissionPaws = (paws: IDeviceItem[], pawTypeToCommission: string)
     return async (dispatch) => {
         dispatch(commissioningPawsRequest());
         PawService.commissionPaw(paws, pawTypeToCommission) // Implement this please
-        .then(paws => dispatch(commissioningPawsSuccess([])))
+        .then(paws => {
+            dispatch(commissioningPawsSuccess([]));
+            dispatch(getPaws());
+        })
         .catch(error => dispatch(commissioningPawsFailure(error)))
     };
 }
@@ -48,7 +52,10 @@ export const decommissionPaws = (paws: IPawItem[]) => {
     return async (dispatch) => {
         dispatch(decommissioningPawsRequest())
         PawService.decommissionPaw(paws)
-        .then(paws => dispatch(decommissioningPawsSuccess([])))
+        .then(paws => {
+            dispatch(decommissioningPawsSuccess([]));
+            dispatch(getPaws())
+        })
         .catch(error => dispatch(decommissioningPawsFailure(error)))
     };
 }
