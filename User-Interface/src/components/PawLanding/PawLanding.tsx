@@ -9,7 +9,7 @@ import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { getPaws } from '../../store/actions/pawActions';
 import { CommissionPawsPanel } from '../CommissionPawsPanel';
 import {LeftNav} from '../LeftNav/LeftNav';
-import {darkTheme, lightTheme} from '../../themes';
+import {darkTheme} from '../../themes';
 
 initializeIcons(/* optional base url */);
 
