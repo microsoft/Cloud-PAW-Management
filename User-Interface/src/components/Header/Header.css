@@ -24,7 +24,7 @@
     float: left;
     color: #f2f2f2;
     text-align: center;
-    padding: 14px 16px;
+    padding: 6px 15px 1px 15px;
     text-decoration: none;
     font-weight: 600;
     font-size: 24px;
@@ -33,14 +33,14 @@
     margin-right: 16px;
   }
 
-  .titleheader span {
+  .titleheaderspan {
     float: left;
     color: #a1a0a3;
-   
     font-size: 10px;
     line-height: 28px;
     flex: 0 1 auto;
-    margin-right: 16px;
+    margin-left: 17px;
+    margin-top: 1px;
   }
   
   /* Style the search box inside the navigation bar */
