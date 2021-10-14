@@ -17,14 +17,14 @@ export const Header = () => {
     return (
         <div className="header">
             <div className="topnav">
-                <a href="#home">Microsoft Azure (Preview)</a>
-                <AzureSearchBox />
+                <a href="#home">Cloud PAW Management (Private Preview)</a>
+                {/* <AzureSearchBox /> */}
             </div>
-            <div className = "breadcrumb">
+            {/* <div className = "breadcrumb">
                 <ul className="breadcrumb">
                     <li><a href="#">Home &#62;</a></li>
                 </ul>
-            </div>
+            </div> */}
             <div className="titleheader">
    <table>
       <tr><td><span className="fxs-blade-header-icon" id="_weave_e_411">
@@ -33,7 +33,7 @@ export const Header = () => {
          </svg>
       </span></td><td>
       <a href="#home">Lifecycle Management | All PAWs </a><br/></td></tr>
-      <tr><td></td><td><span className="titleheaderspan">Microsoft - Azure Active Directory</span></td></tr>
+      {/* <tr><td></td><td><span className="titleheaderspan">Microsoft - Azure Active Directory</span></td></tr> */}
    </table>
 </div>    
 </div>         
