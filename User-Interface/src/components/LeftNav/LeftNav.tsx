@@ -5,31 +5,26 @@ const navStyles: Partial<INavStyles> = { root: { width: 300 } };
 
 const navLinkGroups: INavLinkGroup[] = [
   {
-    name: '',
-    expandAriaLabel: 'Expand Basic components section',
-    collapseAriaLabel: 'Collapse Basic components section',
+    name: 'Main',
+    expandAriaLabel: 'Expand Main section',
+    collapseAriaLabel: 'Collapse Main section',
     links: [
       {
-        key: 'All groups',
-        name: 'All groups',
-        url: '#',
-      },
-      {
-        key: 'Deleted groups',
-        name: 'Deleted groups',
-        url: '#',
+        key: 'All PAWs',
+        name: 'All PAWs',
+        url: '/',
       },
       {
         key: 'Diagnose and solve problems',
         name: 'Diagnose and solve problems',
         url: '#',
-      },
+      }
     ],
   },
   {
     name: 'Settings',
-    expandAriaLabel: 'Expand Extended components section',
-    collapseAriaLabel: 'Collapse Extended components section',
+    expandAriaLabel: 'Expand Settings section',
+    collapseAriaLabel: 'Collapse Settings section',
     links: [
       {
         key: 'General',
@@ -37,56 +32,24 @@ const navLinkGroups: INavLinkGroup[] = [
         url: '#',
       },
       {
-        key: 'Expiration',
-        name: 'Expiration',
-        url: '#',
-      },
-      {
-        key: 'Naming policy',
-        name: 'Naming policy',
-        url: '#',
-      },
-    ],
-  },
-  {
-    name: 'Activity',
-    expandAriaLabel: 'Expand Utilities section',
-    collapseAriaLabel: 'Collapse Utilities section',
-    links: [
-      {
-        key: 'Previleged access groups (Preview)',
-        name: 'FocusTrapZone',
-        url: '#',
-      },
-      {
-        key: 'Access reviews',
-        name: 'FocusZone',
-        url: '#',
-      },
-      {
-        key: 'Audit logs',
-        name: 'MarqueeSelection',
-        url: '#',
-      },
-      {
-         key: 'Bulk operation results',
-         name: 'MarqueeSelection',
-         url: '#',
-       }
-    ],
-  },
-  {
-   name: 'Troubleshooting + Support',
-   expandAriaLabel: 'Expand Utilities section',
-   collapseAriaLabel: 'Collapse Utilities section',
-   links: [
-     {
-        key: 'New support request',
-        name: 'New support request',
+        key: 'Naming Format',
+        name: 'Naming Format',
         url: '#',
       }
-   ],
- },
+    ],
+  },
+  {
+    name: 'Troubleshooting + Support',
+    expandAriaLabel: 'Expand Troubleshooting + Support section',
+    collapseAriaLabel: 'Collapse Troubleshooting + Support section',
+    links: [
+      {
+        key: 'New support request',
+        name: 'New support request',
+        url: 'mailto:elliot.huffman@microsoft.com',
+      }
+    ],
+  },
 ];
 
 export const LeftNav: React.FunctionComponent = () => {
