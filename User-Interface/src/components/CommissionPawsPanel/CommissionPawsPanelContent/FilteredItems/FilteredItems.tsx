@@ -1,8 +1,8 @@
-import React from "react";
-import { DetailsList, IColumn, IconButton, Label, Stack, Selection } from "@fluentui/react";
+import React, { useCallback, useMemo } from "react";
+import { DetailsList, IColumn, IconButton, Label, Stack, Selection, Dropdown, FocusZone } from "@fluentui/react";
 import { useDispatch } from "react-redux";
 import { IDeviceItem } from "../../../../models";
-import { SELECT_DEVICES_TO_COMMISSION_PAW } from "../../../../store/actions/pawActions";
+import { SELECT_DEVICES_TO_COMMISSION_PAW, SELECT_PAW_TYPE_TO_COMMISSION } from "../../../../store/actions/pawActions";
 
 interface IFilteredItemsProps {
   items: IDeviceItem[];
@@ -28,6 +28,27 @@ export const FilteredItems = ({ items }: IFilteredItemsProps) => {
     },
   });
 
+  const onPawTypeChange = useCallback((event, option) => {
+    dispatch({
+        type: SELECT_PAW_TYPE_TO_COMMISSION,
+        payload: option.key
+    })
+  }, [dispatch]);
+
+  const PawTypeDropDown = useMemo(() => {
+    const dropdownStyles = { dropdown: { marginTop: 20 } };
+    return <Dropdown
+    placeholder="Select PAW Type"
+    options={[
+      { key: 'Privileged', text: 'Privileged' },
+      { key: 'Developer', text: 'Developer' },
+      { key: 'Tactical-CR', text: 'Tactical-CR' },
+      { key: 'Tactical-RRR', text: 'Tactical-RRR' },
+    ]}
+    onChange = {onPawTypeChange}
+    styles={dropdownStyles}
+  />;
+  }, [onPawTypeChange])
   const deviceSummaryColumn: IColumn = {
     key: 'deviceId',
     name: 'Select to commission',
@@ -52,12 +73,16 @@ export const FilteredItems = ({ items }: IFilteredItemsProps) => {
   };
     // show max of 4 search result
     return (
-      <DetailsList
-      items={items.slice(0,4) || []}
-      columns={[deviceSummaryColumn]}
-      selection={selection}
-      getKey={getKey}
-      selectionPreservedOnEmptyClick={true}
-      />
+      <FocusZone>
+        <DetailsList
+        items={items.slice(0,4) || []}
+        columns={[deviceSummaryColumn]}
+        selection={selection}
+        getKey={getKey}
+        selectionPreservedOnEmptyClick={true}
+        isHeaderVisible={false}
+        />
+        <Stack>{PawTypeDropDown}</Stack>
+      </FocusZone>
     )
 };

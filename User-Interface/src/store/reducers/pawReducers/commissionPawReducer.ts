@@ -5,12 +5,14 @@ import {
     DECOMMISSIONING_PAWS_SUCCESS,
     DECOMMISSIONING_PAWS_FAILURE,
     SELECT_DEVICES_TO_COMMISSION_PAW,
-    REMOVE_DEVICE_FROM_COMMISSION_PAW_LIST
+    REMOVE_DEVICE_FROM_COMMISSION_PAW_LIST,
+    SELECT_PAW_TYPE_TO_COMMISSION
 } from '../../actions/pawActions';
 
 const initialState = {
     pawsToDecommission: [],
     devicesToCommission: [],
+    pawTypeToCommission: undefined,
     isPawCommissioning: false,
     isPawDecommissioning: false,
     message: undefined,
@@ -46,11 +48,16 @@ export const commissionPaws = (state = initialState, action: any) => {
                 ...state,
                 devicesToCommission: [...action.payload]
             };
-            case REMOVE_DEVICE_FROM_COMMISSION_PAW_LIST:
-                return {
-                    ...state,
-                    devicesToCommission: state.devicesToCommission.filter((device: IDeviceItem) => device.deviceId !== action.payload.deviceId)
-                };
+        case SELECT_PAW_TYPE_TO_COMMISSION:
+            return {
+                ...state,
+                pawTypeToCommission: action.payload
+            };            
+        case REMOVE_DEVICE_FROM_COMMISSION_PAW_LIST:
+            return {
+                ...state,
+                devicesToCommission: state.devicesToCommission.filter((device: IDeviceItem) => device.deviceId !== action.payload.deviceId)
+            };
         default:
             return state;
     }
