@@ -3,7 +3,7 @@
 
 import type { MSGraphClient } from "./GraphClient";
 import type { ConfigurationEngine } from "./ConfigEngine";
-import { endpointPAWUserRightsSettings, conditionalAccessPAWUserAssignment } from "./RequestGenerator";
+import { endpointPAWUserRightsSettings, conditionalAccessPAWUserAssignment, localGroupMembershipUserRights } from "./RequestGenerator";
 import { validateGUID, validateGUIDArray, validateStringArray } from "./Utility";
 import type express from "express";
 import type { ChainedTokenCredential } from "@azure/identity"
@@ -136,6 +136,36 @@ export class DebugRouter {
                     // Otherwise use the graph client to query the Scope Tag
                     response.send(await this.graphClient.removeMEMScopeTag(parseID));
                 };
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
+
+        // Create a Windows 10 Custom Device string configuration
+        this.webServer.post('/Debug/customStringDeviceConfiguration/', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Generate the oma settings
+                const omaSettings = localGroupMembershipUserRights();
+
+                // Create a new custom config
+                response.send(await this.graphClient.newMEMCustomDeviceConfigString(request.body.name, request.body.description, request.body.tagId, [omaSettings]));
+            } catch (error) {
+                // Send the error details if something goes wrong
+                next(error);
+            };
+        });
+
+        // Create a Windows 10 Custom Device string configuration
+        this.webServer.patch('/Debug/customStringDeviceConfiguration/:id', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Generate the oma settings
+                const omaSettings = localGroupMembershipUserRights();
+
+                // Create a new custom config
+                response.send(await this.graphClient.updateMEMCustomDeviceConfigString(request.params.id, request.body.name, request.body.description, request.body.tagId, [omaSettings]));
             } catch (error) {
                 // Send the error details if something goes wrong
                 next(error);
@@ -480,7 +510,7 @@ export class DebugRouter {
                 const settingsBody = conditionalAccessPAWUserAssignment(request.body.deviceID, request.body.deviceGroupGUID, request.body.userGroupGUID, request.body.breakGlass);
 
                 // Send the results of the creation operation
-                response.send(await this.graphClient.newAADCAPolicy(request.body.name, settingsBody, "disabled"));
+                response.send(await this.graphClient.newAadCaPolicy(request.body.name, settingsBody, "disabled"));
             } catch (error) {
                 // Send the error details if something goes wrong
                 next(error);
@@ -492,7 +522,7 @@ export class DebugRouter {
             // Catch execution errors
             try {
                 // Send the response back to the CX with the data
-                response.send(await this.graphClient.getAADCAPolicy());
+                response.send(await this.graphClient.getAadCaPolicy());
             } catch (error) {
                 // Send the error details if something goes wrong
                 next(error);
@@ -504,7 +534,7 @@ export class DebugRouter {
             // Catch execution errors
             try {
                 // Send the response back to the CX with the data
-                response.send(await this.graphClient.getAADCAPolicy(request.params.id));
+                response.send(await this.graphClient.getAadCaPolicy(request.params.id));
             } catch (error) {
                 // Send the error details if something goes wrong
                 next(error);
@@ -519,7 +549,7 @@ export class DebugRouter {
                 const settingsBody = conditionalAccessPAWUserAssignment(request.body.deviceID, request.body.deviceGroupGUID, request.body.userGroupGUID, request.body.breakGlass);
 
                 // Send the results of the update operation
-                response.send(await this.graphClient.updateAADCAPolicy(request.params.id, request.body.name, settingsBody, "disabled"));
+                response.send(await this.graphClient.updateAadCaPolicy(request.params.id, request.body.name, settingsBody, "disabled"));
             } catch (error) {
                 // Send the error details if something goes wrong
                 next(error);
@@ -531,7 +561,7 @@ export class DebugRouter {
             // Catch execution errors
             try {
                 // Send the data back via the response
-                response.send(await this.graphClient.removeAADCAPolicy(request.params.id));
+                response.send(await this.graphClient.removeAadCaPolicy(request.params.id));
             } catch (error) {
                 // Send the error details if something goes wrong
                 next(error);

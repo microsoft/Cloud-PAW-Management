@@ -1,8 +1,11 @@
-import { DetailsList, DetailsListLayoutMode, IColumn, SelectionMode } from '@fluentui/react';
+import { CheckboxVisibility, DetailsList, Selection, DetailsListLayoutMode, IColumn, SelectionMode } from '@fluentui/react';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { IDeviceItem, IPawItem } from '../../models';
 import { IPawItemListProps } from './PawItemList.types';
-
+import { DECOMMISSIONING_PAW_SELECTED } from '../../store/actions/pawActions'; 
 export const PawItemList = (props: IPawItemListProps) => {
+    const dispatch = useDispatch();
     const [isCompactMode, ] = useState(false);
     const onColumnClick = (ev: React.MouseEvent<HTMLElement>, column: IColumn): void => {
       };
@@ -11,7 +14,7 @@ export const PawItemList = (props: IPawItemListProps) => {
         name: 'Display Name',
         fieldName: 'displayName',
         minWidth: 100,
-        maxWidth: 150,
+        maxWidth: 120,
         isRowHeader: true,
         isResizable: true,
         onColumnClick: onColumnClick,
@@ -71,15 +74,33 @@ export const PawItemList = (props: IPawItemListProps) => {
 
     const columns: IColumn[] = [pawDisplayNameColumn, pawIdColumn, pawTypeColumn, commissionDateColumn, parentDeviceIdColumn];
 
+    const  onPawSelected = (item: IPawItem[]) => {
+      dispatch({
+        type: DECOMMISSIONING_PAW_SELECTED,
+        payload: item
+      })
+    };
+
+    const selection = new Selection({
+      onSelectionChanged: () => {
+        onPawSelected(selection.getSelection() as IPawItem[])
+      },
+    });
+
+    const getKey = (item: IDeviceItem, index?: number): string => {
+      return item.deviceId;
+    };
+
     return <DetailsList
                 items={props.items}
+                checkboxVisibility={CheckboxVisibility.always}
+                selection={selection}
                 compact={isCompactMode}
                 columns={columns}
                 selectionMode={SelectionMode.multiple}
-                // getKey={getKeyItemKey}
+                getKey={getKey}
                 setKey="none"
                 layoutMode={DetailsListLayoutMode.justified}
                 isHeaderVisible={true}
-                // onItemInvoked={onItemInvoked} // could be used if a pecial behaviour is needed on pressEnter
             />
 };

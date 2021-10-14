@@ -1,11 +1,14 @@
 import React from 'react';
 import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
+import { RootStateOrAny, useSelector } from 'react-redux';
 
 interface IPawActionsProps {
   onCommissionPaws: () => void;
   onDecommissionPaws?: () => void;
 }
 export const PawActions = (props: IPawActionsProps) => {
+  const pawsToDecommission = useSelector((state: RootStateOrAny) => state.paw.commissionPaws.pawsToDecommission);
+
   const _items: ICommandBarItemProps[] = [
     {
       key: 'addGroup',
@@ -17,6 +20,7 @@ export const PawActions = (props: IPawActionsProps) => {
       key: 'delete',
       text: 'Decommission Selected PAW',
       iconProps: { iconName: 'Delete' },
+      disabled: !(pawsToDecommission?.length > 0),
       onClick: () => console.log('Decommissioning PAW'),
     },
     {

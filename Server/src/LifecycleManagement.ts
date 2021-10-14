@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { endpointPAWUserRightsSettings, conditionalAccessPAWUserAssignment } from "./RequestGenerator";
-import { validateGUIDArray, writeDebugInfo, InternalAppError, validateGUID } from "./Utility";
+import { endpointPAWUserRightsSettings, conditionalAccessPAWUserAssignment, localGroupMembershipUserRights } from "./RequestGenerator";
+import { writeDebugInfo, InternalAppError, validateGUID, validateEmailArray } from "./Utility";
 import type { MSGraphClient } from "./GraphClient";
 import type { ConfigurationEngine, PAWGroupConfig, PAWObject } from "./ConfigEngine";
 import type express from "express";
@@ -181,14 +181,22 @@ export class LifecycleRouter {
                 throw new InternalAppError("PAW ID is undefined!", "No Data", "LifecycleManagement - LifeCycleRouter - recursePAWGroup - Validate device ID presence");
             };
 
+            // Check to make sure that the name data is present for the retrieved device.
+            if (typeof deviceMemberList[0].displayName === "undefined" || deviceMemberList[0].displayName == null) {
+                // Throw an error
+                throw new InternalAppError("Incomplete Data!", "Invalid Return", "LifecycleManagement - LifecycleRouter - commissionPAW - AAD Device Object Validation");
+            };
+
             // Parse the group's description
             const parsedDescription = await this.configEngine.getPAWGroupConfig(groupID);
 
             // Compile the data into a PAW object
             const pawObject: PAWObject = {
                 "id": deviceMemberList[0].deviceId,
+                "DisplayName": deviceMemberList[0].displayName,
                 "ParentGroup": groupID,
                 "CommissionedDate": parsedDescription.CommissionedDate,
+                "GroupAssignment": parsedDescription.GroupAssignment,
                 "Type": parsedDescription.Type,
                 "UserAssignment": parsedDescription.UserAssignment
             };
@@ -217,6 +225,7 @@ export class LifecycleRouter {
         return processedMembers;
     };
 
+    // TODO: Add child support
     // Commission the specified PAW with no user(s)
     private async commissionPAW(deviceID: string, type?: string): Promise<PAWObject> {
         // Validate Input
@@ -226,6 +235,7 @@ export class LifecycleRouter {
         let devGroup: MicrosoftGraphBeta.Group;
         let rootGroupMemberResult: boolean;
         let devGroupMemberResult: boolean;
+        let deviceObject: MicrosoftGraphBeta.Device;
         let pawType: "Privileged" | "Developer" | "Tactical-CR" | "Tactical-RRR";
 
         // If the type param is not specified, default it to standard PAW.
@@ -323,15 +333,34 @@ export class LifecycleRouter {
             throw new InternalAppError("Incomplete Data!", "Invalid Return", "LifecycleManagement - LifecycleRouter - commissionPAW - User Assignment Settings Catalog ID Null Check");
         };
 
+        // Write debug info
+        writeDebugInfo("Creating settings catalog");
+
+        // Generate the OMA Settings object
+        const omaSettings = localGroupMembershipUserRights();
+
+        // Create the local users and groups custom OMA setting.
+        const localGroupsConfig = await this.graphClient.newMEMCustomDeviceConfigString("PAW - Groups - " + deviceID, "Restrict Admins and Hyper-V admin group memberships.", [this.configEngine.config.ScopeTagID], [omaSettings]);
+
+        // Write debug info
+        writeDebugInfo(localGroupsConfig.id, "Created settings catalog:");
+
+        // Check that all the expected data is present from the Graph API call
+        if (typeof localGroupsConfig.id !== "string") {
+            // Throw an error
+            throw new InternalAppError("Incomplete Data!", "Invalid Return", "LifecycleManagement - LifecycleRouter - commissionPAW - Local Group Config ID Null Check");
+        };
+
         // Collect all the data in one place for the PAW Device Group description
         const devGroupDescription: PAWGroupConfig = {
             "CommissionedDate": new Date(),
             "Type": pawType,
-            "UserAssignment": userAssignmentConfig.id
+            "UserAssignment": userAssignmentConfig.id,
+            "GroupAssignment": localGroupsConfig.id
         };
 
         // Generate the description string to be use for the PAW's device group
-        const groupDescription = "CommissionedDate=" + devGroupDescription.CommissionedDate.toJSON() + ",Type=" + devGroupDescription.Type + ",UserAssignment=" + devGroupDescription.UserAssignment
+        const groupDescription = "CommissionedDate=" + devGroupDescription.CommissionedDate.toJSON() + ",Type=" + devGroupDescription.Type + ",UserAssignment=" + devGroupDescription.UserAssignment + ",GroupAssignment=" + devGroupDescription.GroupAssignment
 
         // Catch Execution Errors
         try {
@@ -339,7 +368,7 @@ export class LifecycleRouter {
             writeDebugInfo("Creating device's unique group");
 
             // Create the device group
-            devGroup = await this.graphClient.newAADGroup("PAW - " + deviceAutopilot[0].serialNumber, groupDescription);
+            devGroup = await this.graphClient.newAADGroup("PAW - " + deviceID, groupDescription);
 
             // Write debug info
             writeDebugInfo(devGroup.id, "Created device's unique group:");
@@ -357,11 +386,32 @@ export class LifecycleRouter {
         // Write debug info
         writeDebugInfo(devGroup.id, "Starting assignment of user rights to:");
 
-        // Assign the user rights configuration to the device security group
-        const assignmentResults = await this.graphClient.updateConfigurationAssignment("Settings Catalog", userAssignmentConfig.id, [devGroup.id], [this.configEngine.config.BrkGls]);
+        // Catch Execution Errors
+        try {
+            // Assign the user rights configuration to the device security group
+            await this.graphClient.updateConfigurationAssignment("Settings Catalog", userAssignmentConfig.id, [devGroup.id], [this.configEngine.config.BrkGls]);
+        } catch (error) {
+            // Throw an error
+            throw new InternalAppError("Unknown error", "Unknown", "LifecycleManagement - LifecycleRouter - commissionPAW - Settings Catalog Assignment");
+        };
 
         // Write debug info
         writeDebugInfo(devGroup.id, "Completed assignment of user rights to:");
+
+        // Write debug info
+        writeDebugInfo(devGroup.id, "Starting assignment of group management to:");
+
+        // Catch Execution Errors
+        try {
+            // Assign the user rights configuration to the device security group
+            await this.graphClient.updateConfigurationAssignment("Setting Template", localGroupsConfig.id, [devGroup.id], [this.configEngine.config.BrkGls]);
+        } catch (error) {
+            // Throw an error
+            throw new InternalAppError("Unknown error", "Unknown", "LifecycleManagement - LifecycleRouter - commissionPAW - Settings Catalog Assignment");
+        };
+
+        // Write debug info
+        writeDebugInfo(devGroup.id, "Completed assignment of group management to:");
 
         // Catch Execution Errors
         try {
@@ -387,13 +437,30 @@ export class LifecycleRouter {
             throw new InternalAppError("Unknown error", "Unknown", "LifecycleManagement - LifecycleRouter - commissionPAW - Add Dev to Dev Grp");
         };
 
+        // Catch Execution Errors
+        try {
+            // Get the device object from AAD
+            deviceObject = (await this.graphClient.getAADDevice(deviceID))[0];
+        } catch (error) {
+            // Throw an error
+            throw new InternalAppError("Unknown error", "Unknown", "LifecycleManagement - LifecycleRouter - commissionPAW - Get AAD Device Object");
+        };
+
+        // Check to make sure that the name data is present for the retrieved device.
+        if (typeof deviceObject.displayName === "undefined" || deviceObject.displayName == null) {
+            // Throw an error
+            throw new InternalAppError("Incomplete Data!", "Invalid Return", "LifecycleManagement - LifecycleRouter - commissionPAW - AAD Device Object Validation");
+        };
+
         // Build the object that will be returned on successful execution.
         const returnObject: PAWObject = {
+            "id": deviceID,
+            "DisplayName": deviceObject.displayName,
+            "ParentGroup": devGroup.id,
             "CommissionedDate": devGroupDescription.CommissionedDate,
             "Type": devGroupDescription.Type,
             "UserAssignment": devGroupDescription.UserAssignment,
-            "id": deviceID,
-            "ParentGroup": devGroup.id
+            "GroupAssignment": devGroupDescription.GroupAssignment
         };
 
         // Return the newly commissioned PAW object on successful operation
@@ -438,7 +505,7 @@ export class LifecycleRouter {
             if (paw.ParentDevice === deviceID) { // If it does list it
                 // Write debug info
                 writeDebugInfo(paw.id, "Found child PAW, recursing function against child:");
-                
+
                 // Decommission the child PAW
                 await this.decommissionPAW(paw.id);
             };
@@ -472,6 +539,15 @@ export class LifecycleRouter {
         writeDebugInfo(pawObject.UserAssignment, "Finished settings catalog removal:");
 
         // Write debug info
+        writeDebugInfo(pawObject.GroupAssignment, "Starting groups config removal:");
+
+        // Remove the PAW's user rights assignment
+        await this.graphClient.removeDeviceConfig(pawObject.GroupAssignment);
+
+        // Write debug info
+        writeDebugInfo(pawObject.GroupAssignment, "Finished groups config removal:");
+
+        // Write debug info
         writeDebugInfo(pawObject.id, "Sending wipe device command:");
 
         // Catch execution errors
@@ -485,13 +561,13 @@ export class LifecycleRouter {
             // If the error is unknown device, ignore it, otherwise bubble it up
             if (error instanceof InternalAppError && error.message === "The specified device does not exist" && error.name === "Retrieval Error") {
                 // Write debug info
-                writeDebugInfo("This is ok as it indicates the device was never booted.","Skipped sending wipe command as device was not present in MEM.");
-                
+                writeDebugInfo("This is ok as it indicates the device was never booted.", "Skipped sending wipe command as device was not present in MEM.");
+
                 // Do nothing because this is ok, it means the device hasn't booted up and registered into Endpoint Manager yet.
-            }  else {
+            } else {
                 // Write debug info
                 writeDebugInfo(error, "Unexpected exception during decommission:");
-                
+
                 // Throw an error
                 throw new InternalAppError("An unknown error occurred, please see console for details", "Unknown Error", "LifecycleManagement - LifecycleRouter - decommissionPAW - Input Validation");
             };
