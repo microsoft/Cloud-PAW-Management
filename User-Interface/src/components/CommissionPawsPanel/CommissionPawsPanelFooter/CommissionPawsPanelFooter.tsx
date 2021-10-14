@@ -4,7 +4,7 @@ import React, { useCallback } from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { commissionPaws } from '../../../store/actions/pawActions';
 
-export const CommissionPawsPanelFooter = () => {
+export const CommissionPawsPanelFooter = (props) => {
     const stackTokens: Partial<IStackTokens> = { childrenGap: 20 };
     const selectedItems = useSelector((state: RootStateOrAny) => state.paw.commissionPaws.devicesToCommission);
     const pawTypeToCommission = useSelector((state: RootStateOrAny) => state.paw.commissionPaws.pawTypeToCommission);
@@ -12,11 +12,12 @@ export const CommissionPawsPanelFooter = () => {
     const dispatch = useDispatch();
 
     const dismissPanel = () => {
-
+        props.onDismissPanel();
     };
     const onCommissionPaws = useCallback(() => {
-        dispatch(commissionPaws(selectedItems, pawTypeToCommission))
-    }, [dispatch, selectedItems, pawTypeToCommission]);
+        dispatch(commissionPaws(selectedItems, pawTypeToCommission));
+        props.onDismissPanel();
+    }, [dispatch, selectedItems, pawTypeToCommission, props]);
 
     return (
         <Stack tokens={stackTokens} horizontal>

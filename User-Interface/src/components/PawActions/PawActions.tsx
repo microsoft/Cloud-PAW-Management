@@ -15,7 +15,7 @@ interface IPawActionsProps {
 export const PawActions = (props: IPawActionsProps) => {
   const pawsToDecommission = useSelector((state: RootStateOrAny) => state.paw.commissionPaws.pawsToDecommission);
   const isPawDecommissioning = useSelector((state: RootStateOrAny) => state.paw.commissionPaws.isPawDecommissioning);
-  const isGettingPaws = useSelector((state: RootStateOrAny) => state.paw.commissionPaws.isGettingPaws);
+  const isGettingPaws = useSelector((state: RootStateOrAny) => state.paw.getPaws.isGettingPaws);
 
   const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(true);
   const dispatch = useDispatch();
@@ -25,9 +25,9 @@ export const PawActions = (props: IPawActionsProps) => {
       toggleHideDialog()
   }, [dispatch, pawsToDecommission, toggleHideDialog]);
 
-  const onRefershPaws = () => {
+  const onRefershPaws = useCallback(() => {
     dispatch(getPaws())
-  };
+  }, [dispatch]);
 
   const _items: ICommandBarItemProps[] = [
     {
@@ -47,7 +47,7 @@ export const PawActions = (props: IPawActionsProps) => {
       key: 'refresh',
       text: 'Refresh',
       iconProps: { iconName: 'Refresh' },
-      onClick: () => onRefershPaws(),
+      onClick: () => { onRefershPaws() },
     },
   ];
 

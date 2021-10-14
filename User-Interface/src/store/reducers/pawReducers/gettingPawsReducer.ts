@@ -3,7 +3,6 @@ import {
     GETTING_PAWS_REQUEST,
     GETTING_PAWS_SUCCESS,
     GETTING_PAWS_FAILURE,
-    PAW_LIST_REFRESH_SUCCESS
 } from '../../actions/pawActions';
 
 const initialState = {
@@ -19,7 +18,6 @@ export const getPaws = (state = initialState, action: any) => {
                 isGettingPaws: true
             };
             case GETTING_PAWS_SUCCESS:
-            case PAW_LIST_REFRESH_SUCCESS:
                 return {
                     ...state,
                     isGettingPaws: false,

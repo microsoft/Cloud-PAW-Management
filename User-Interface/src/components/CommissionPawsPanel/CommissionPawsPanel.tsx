@@ -17,8 +17,8 @@ export const CommissionPawsPanel = ({ isOpen, onDismissPanel}: ICommissionPawsPa
     }, [dispatch]);
 
     const onRenderFooterContent = React.useCallback(
-        () => <CommissionPawsPanelFooter />,
-        [],
+        () => <CommissionPawsPanelFooter onDismissPanel={onDismissPanel} />,
+        [onDismissPanel],
       );
     return (
         <Panel
