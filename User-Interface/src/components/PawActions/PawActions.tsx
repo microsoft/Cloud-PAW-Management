@@ -15,6 +15,7 @@ interface IPawActionsProps {
 export const PawActions = (props: IPawActionsProps) => {
   const pawsToDecommission = useSelector((state: RootStateOrAny) => state.paw.commissionPaws.pawsToDecommission);
   const isPawDecommissioning = useSelector((state: RootStateOrAny) => state.paw.commissionPaws.isPawDecommissioning);
+  const isPawCommissioning = useSelector((state: RootStateOrAny) => state.paw.commissionPaws.isPawCommissioning);
   const isGettingPaws = useSelector((state: RootStateOrAny) => state.paw.getPaws.isGettingPaws);
 
   const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(true);
@@ -96,6 +97,7 @@ export const PawActions = (props: IPawActionsProps) => {
         />
         {DecommissionPawDialog}
         {isPawDecommissioning && <Spinner styles={{root: { minWidth: 400}}} label="Decommissioning PAW"/>}
+        {isPawCommissioning && <Spinner styles={{root: { minWidth: 400}}} label="Commissioning PAW"/>}
         {isGettingPaws && <Spinner styles={{root: { minWidth: 400}}} label="Getting PAWs"/>}
       </div>
     );

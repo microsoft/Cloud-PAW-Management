@@ -6,7 +6,10 @@ import {
     DECOMMISSIONING_PAWS_FAILURE,
     SELECT_DEVICES_TO_COMMISSION_PAW,
     REMOVE_DEVICE_FROM_COMMISSION_PAW_LIST,
-    SELECT_PAW_TYPE_TO_COMMISSION
+    SELECT_PAW_TYPE_TO_COMMISSION,
+    COMMISSIONING_PAWS_REQUEST,
+    COMMISSIONING_PAWS_SUCCESS,
+    COMMISSIONING_PAWS_FAILURE
 } from '../../actions/pawActions';
 
 const initialState = {
@@ -52,7 +55,25 @@ export const commissionPaws = (state = initialState, action: any) => {
             return {
                 ...state,
                 pawTypeToCommission: action.payload
-            };            
+            };
+        case COMMISSIONING_PAWS_REQUEST:
+            return {
+                ...state,
+                isPawCommissioning: true,
+            };
+        case COMMISSIONING_PAWS_SUCCESS:
+            return {
+                ...state,
+                message: 'Commissioning success',
+                isPawCommissioning: false,
+            };
+        case COMMISSIONING_PAWS_FAILURE:
+            return {
+                ...state,
+                isPawCommissioning: false,
+                error: action.payload,
+                message: undefined,
+            };
         case REMOVE_DEVICE_FROM_COMMISSION_PAW_LIST:
             return {
                 ...state,
