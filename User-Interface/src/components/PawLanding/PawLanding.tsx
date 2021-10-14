@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { DefaultPalette, IStackStyles, Stack, } from '@fluentui/react';
+import { DefaultPalette, IStackStyles, Stack, ThemeProvider, } from '@fluentui/react';
 import { useBoolean } from '@fluentui/react-hooks';
 import { PawActions } from '../PawActions';
 import { PawItemList } from '../PawItemList/PawItemList';
@@ -9,6 +9,7 @@ import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { getPaws } from '../../store/actions/pawActions';
 import { CommissionPawsPanel } from '../CommissionPawsPanel';
 import {LeftNav} from '../LeftNav/LeftNav';
+import {darkTheme, lightTheme} from '../../themes';
 
 initializeIcons(/* optional base url */);
 
@@ -27,7 +28,7 @@ export const PawLanding = () => {
       };
       const leftNavStyles: IStackStyles = {
         root: {
-          background: DefaultPalette.themeDark,
+          //background: DefaultPalette.themeDark,
           color: DefaultPalette.white,
           minWidth: '300px',
           display: 'grid'
@@ -35,14 +36,17 @@ export const PawLanding = () => {
       };
       const contentStyles: IStackStyles = {
         root: {
-          color: DefaultPalette.white,
+          //color: DefaultPalette.white,
           width: '100%',
           minWidth: '900px',
           display: 'grid'
         },
       };
     return (
-    <>
+      <ThemeProvider
+      applyTo="body"
+      theme={darkTheme}
+    >
     <Stack><Header/></Stack>
     <Stack styles={stackStyles} horizontal>
         <Stack.Item styles={leftNavStyles}>
@@ -60,6 +64,6 @@ export const PawLanding = () => {
         </Stack.Item>
     </Stack>
     <CommissionPawsPanel isOpen={isCommissionPawsPanelOpen} onDismissPanel={dismissCommissionPawsPanel} />
-    </>
+    </ThemeProvider>
     );
 };
