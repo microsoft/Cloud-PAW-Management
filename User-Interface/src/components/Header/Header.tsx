@@ -1,19 +1,27 @@
 import './Header.css';
-import { SearchBox } from '@fluentui/react';
 import groups from '../../Assets/groups.svg';
+import {AzureSearchBox} from '../SearchBox/AzureSearchBox';
+import * as React from 'react';
+import { FontIcon } from '@fluentui/react/lib/Icon';
+import { mergeStyles } from '@fluentui/react/lib/Styling';
+
+const iconClass = mergeStyles({
+  fontSize: 50,
+  height: 50,
+  width: 50,
+  margin: '0 25px',
+});
 
 export const Header = () => {
     return (
         <div className="header">
             <div className="topnav">
                 <a href="#home">Microsoft Azure (Preview)</a>
-                <input type="text" placeholder="Search resources, services, and docs (G+/)" />
-                
+                <AzureSearchBox />
             </div>
             <div className = "breadcrumb">
                 <ul className="breadcrumb">
                     <li><a href="#">Home &#62;</a></li>
-      
                 </ul>
             </div>
             <div className="titleheader">
@@ -23,12 +31,10 @@ export const Header = () => {
             <use href="{groups}"></use>
          </svg>
       </span></td><td>
-      <a href="#home">Lifecycle Management | All PAWs</a><br/></td></tr>
+      <a href="#home">Lifecycle Management | All PAWs </a><br/></td></tr>
       <tr><td></td><td><span className="titleheaderspan">Microsoft - Azure Active Directory</span></td></tr>
    </table>
 </div>    
-</div>       
-       
-        
+</div>         
     )
 }
