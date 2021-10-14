@@ -1,5 +1,5 @@
 import dateformat from 'dateformat';
-import { IPawItem } from "../models";
+import { IDeviceItem, IPawItem } from "../models";
 import { paws } from './mocks/pawMocks';
 
 export interface IPawService {
@@ -19,7 +19,7 @@ export class PawService {
             };
         });
     }
-    public static commissionPaw = async () => {
+    public static commissionPaw = async (items: IDeviceItem[]) => {
         // call api
         // get response
     }

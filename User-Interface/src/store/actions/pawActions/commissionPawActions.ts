@@ -21,7 +21,7 @@ const commissioningPawsFailure = (error: Error) => ({
 export const commissionPaws = (paws: IPawItem[]) => {
     return async (dispatch) => {
         dispatch(commissioningPawsRequest());
-        PawService.commissionPaw() // Implement this please
+        PawService.commissionPaw([]) // Implement this please
         .then(paws => dispatch(commissioningPawsSuccess([])))
         .catch(error => dispatch(commissioningPawsFailure(error)))
     };

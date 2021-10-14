@@ -2,7 +2,7 @@ import { IDeviceItem } from "../models";
 import { devices } from './mocks/deviceMocks';
 
 export interface IDeviceService {
-    sgetDevices: () => Promise<IDeviceItem[]>,
+    getDevices: () => Promise<IDeviceItem[]>,
 }
 export class DeviceService {
     public static async getDevices(): Promise<IDeviceItem[]> {
