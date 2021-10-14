@@ -182,7 +182,7 @@ export class LifecycleRouter {
             };
 
             // Check to make sure that the name data is present for the retrieved device.
-            if (typeof deviceMemberList[0].name === "undefined" || deviceMemberList[0].name == null) {
+            if (typeof deviceMemberList[0].displayName === "undefined" || deviceMemberList[0].displayName == null) {
                 // Throw an error
                 throw new InternalAppError("Incomplete Data!", "Invalid Return", "LifecycleManagement - LifecycleRouter - commissionPAW - AAD Device Object Validation");
             };
@@ -193,7 +193,7 @@ export class LifecycleRouter {
             // Compile the data into a PAW object
             const pawObject: PAWObject = {
                 "id": deviceMemberList[0].deviceId,
-                "DisplayName": deviceMemberList[0].name,
+                "DisplayName": deviceMemberList[0].displayName,
                 "ParentGroup": groupID,
                 "CommissionedDate": parsedDescription.CommissionedDate,
                 "GroupAssignment": parsedDescription.GroupAssignment,
@@ -447,7 +447,7 @@ export class LifecycleRouter {
         };
 
         // Check to make sure that the name data is present for the retrieved device.
-        if (typeof deviceObject.name === "undefined" || deviceObject.name == null) {
+        if (typeof deviceObject.displayName === "undefined" || deviceObject.displayName == null) {
             // Throw an error
             throw new InternalAppError("Incomplete Data!", "Invalid Return", "LifecycleManagement - LifecycleRouter - commissionPAW - AAD Device Object Validation");
         };
@@ -455,7 +455,7 @@ export class LifecycleRouter {
         // Build the object that will be returned on successful execution.
         const returnObject: PAWObject = {
             "id": deviceID,
-            "DisplayName": deviceObject.name,
+            "DisplayName": deviceObject.displayName,
             "ParentGroup": devGroup.id,
             "CommissionedDate": devGroupDescription.CommissionedDate,
             "Type": devGroupDescription.Type,
