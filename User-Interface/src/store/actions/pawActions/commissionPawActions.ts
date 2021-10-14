@@ -5,7 +5,8 @@ import {
     COMMISSIONING_PAWS_SUCCESS,
     COMMISSIONING_PAWS_FAILURE,
     DECOMMISSIONING_PAWS_SUCCESS,
-    DECOMMISSIONING_PAWS_FAILURE
+    DECOMMISSIONING_PAWS_FAILURE,
+    DECOMMISSIONING_PAWS_REQUEST
 } from './types';
 
 const commissioningPawsRequest = () => ({
@@ -29,6 +30,10 @@ export const commissionPaws = (paws: IDeviceItem[], pawTypeToCommission: string)
     };
 }
 
+const decommissioningPawsRequest = () => ({
+    type: DECOMMISSIONING_PAWS_REQUEST,
+});
+
 const decommissioningPawsSuccess = (paws: IPawItem[]) => ({
     type: DECOMMISSIONING_PAWS_SUCCESS,
     payload: paws
@@ -41,6 +46,7 @@ const decommissioningPawsFailure = (error: Error) => ({
 
 export const decommissionPaws = (paws: IPawItem[]) => {
     return async (dispatch) => {
+        dispatch(decommissioningPawsRequest())
         PawService.decommissionPaw(paws)
         .then(paws => dispatch(decommissioningPawsSuccess([])))
         .catch(error => dispatch(decommissioningPawsFailure(error)))

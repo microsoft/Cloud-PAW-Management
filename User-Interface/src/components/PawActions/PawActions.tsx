@@ -5,7 +5,8 @@ import { useBoolean } from '@fluentui/react-hooks'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { DefaultButton, PrimaryButton } from '@fluentui/react/lib/Button';
 import { Stack } from '@fluentui/react/lib/Stack';
-import { decommissionPaws } from '../../store/actions/pawActions';
+import { decommissionPaws, getPaws } from '../../store/actions/pawActions';
+import { Spinner } from '@fluentui/react';
 
 interface IPawActionsProps {
   onCommissionPaws: () => void;
@@ -13,13 +14,20 @@ interface IPawActionsProps {
 }
 export const PawActions = (props: IPawActionsProps) => {
   const pawsToDecommission = useSelector((state: RootStateOrAny) => state.paw.commissionPaws.pawsToDecommission);
+  const isPawDecommissioning = useSelector((state: RootStateOrAny) => state.paw.commissionPaws.isPawDecommissioning);
+  const isGettingPaws = useSelector((state: RootStateOrAny) => state.paw.commissionPaws.isGettingPaws);
+
   const [hideDialog, { toggle: toggleHideDialog }] = useBoolean(true);
   const dispatch = useDispatch();
 
   const decommissionSelectedPaw = useCallback(() => {
       dispatch(decommissionPaws(pawsToDecommission));
-  }, [dispatch, pawsToDecommission]);
+      toggleHideDialog()
+  }, [dispatch, pawsToDecommission, toggleHideDialog]);
 
+  const onRefershPaws = () => {
+    dispatch(getPaws())
+  };
 
   const _items: ICommandBarItemProps[] = [
     {
@@ -39,7 +47,7 @@ export const PawActions = (props: IPawActionsProps) => {
       key: 'refresh',
       text: 'Refresh',
       iconProps: { iconName: 'Refresh' },
-      onClick: () => console.log('Refreshing PAW'),
+      onClick: () => onRefershPaws(),
     },
   ];
 
@@ -87,6 +95,8 @@ export const PawActions = (props: IPawActionsProps) => {
           farItemsGroupAriaLabel="More actions"
         />
         {DecommissionPawDialog}
+        {isPawDecommissioning && <Spinner styles={{root: { minWidth: 400}}} label="Decommissioning PAW"/>}
+        {isGettingPaws && <Spinner styles={{root: { minWidth: 400}}} label="Getting PAWs"/>}
       </div>
     );
   };
