@@ -41,6 +41,7 @@ export class PawService {
             const data = {
                 type: pawTypeToCommission,
             };
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const commissionPawResponse = await fetch(commissionPawUrl, {
                 method: 'POST',
                 mode: 'same-origin',
@@ -54,6 +55,7 @@ export class PawService {
     public static decommissionPaw = async (pawItems: IPawItem[]) => {
         for(const pawItem of pawItems) {
             const commissionPawUrl = `${this.API_BASE_URL}/API/Lifecycle/PAW/${pawItem.pawId}`;
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const deletePawResponse = await fetch(commissionPawUrl, {
                 method: 'DELETE',
                 mode: 'same-origin',
