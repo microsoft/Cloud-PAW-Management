@@ -1,16 +1,17 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import './Header.css';
-import groups from '../../Assets/groups.svg';
+// import groups from '../../Assets/groups.svg';
 import {AzureSearchBox} from '../SearchBox/AzureSearchBox';
 import * as React from 'react';
-import { FontIcon } from '@fluentui/react/lib/Icon';
-import { mergeStyles } from '@fluentui/react/lib/Styling';
+// import { FontIcon } from '@fluentui/react/lib/Icon';
+// import { mergeStyles } from '@fluentui/react/lib/Styling';
 
-const iconClass = mergeStyles({
-  fontSize: 50,
-  height: 50,
-  width: 50,
-  margin: '0 25px',
-});
+// const iconClass = mergeStyles({
+//   fontSize: 50,
+//   height: 50,
+//   width: 50,
+//   margin: '0 25px',
+// });
 
 export const Header = () => {
     return (

@@ -7,20 +7,22 @@ import { commissionPaws } from '../../../store/actions/pawActions';
 export const CommissionPawsPanelFooter = () => {
     const stackTokens: Partial<IStackTokens> = { childrenGap: 20 };
     const selectedItems = useSelector((state: RootStateOrAny) => state.paw.commissionPaws.devicesToCommission);
+    const pawTypeToCommission = useSelector((state: RootStateOrAny) => state.paw.commissionPaws.pawTypeToCommission);
+
     const dispatch = useDispatch();
 
     const dismissPanel = () => {
 
     };
     const onCommissionPaws = useCallback(() => {
-        dispatch(commissionPaws(selectedItems))
-    }, [dispatch, selectedItems]);
+        dispatch(commissionPaws(selectedItems, pawTypeToCommission))
+    }, [dispatch, selectedItems, pawTypeToCommission]);
 
     return (
         <Stack tokens={stackTokens} horizontal>
             <PrimaryButton
                 onClick={onCommissionPaws}
-                disabled={!selectedItems || selectedItems.length <= 0 }
+                disabled={!pawTypeToCommission || !selectedItems || selectedItems.length <= 0 }
                 >
                 Commission PAW
             </PrimaryButton>
