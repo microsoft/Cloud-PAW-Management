@@ -362,7 +362,7 @@ export class ConfigurationEngine {
                     break;
                 case "Type":
                     // Validate string to ensure that the PAW type is allowed
-                    if (splitLine[1] === "Privileged" || splitLine[1] === "Developer" || splitLine[1] === "Tactical-DART" || splitLine[1] === "Tactical-RRR") {
+                    if (splitLine[1] === "Privileged" || splitLine[1] === "Developer" || splitLine[1] === "Tactical-CR" || splitLine[1] === "Tactical-RRR") {
                         // If validated successfully, set the parsed return as the data that was validated
                         parsedConfig.Type = splitLine[1];
                     } else { // If validation failed
