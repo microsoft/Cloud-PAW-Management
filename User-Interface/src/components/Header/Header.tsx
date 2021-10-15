@@ -17,7 +17,7 @@ export const Header = () => {
     return (
         <div className="header">
             <div className="topnav">
-                <a href="#home">Cloud PAW Management (Private Preview)</a>
+                <a href="/">Cloud PAW Management (Private Preview)</a>
                 {/* <AzureSearchBox /> */}
             </div>
             {/* <div className = "breadcrumb">
