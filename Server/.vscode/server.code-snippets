@@ -51,6 +51,26 @@
 			"throw new InternalAppError(\"${1:Error Message}\", \"${2:Error Type}\", \"${3:Stack Trace}\");"
 		]
 	},
+	"Try Catch - Internal Edition": {
+		"prefix": "trycatch - internal",
+		"description": "A best practice pre-built try catch block",
+		"scope": "javascript,typescript",
+		"body": [
+			"// Catch execution errors",
+			"try {",
+			"    ${1:code to execute}",
+			"} catch (error) {",
+			"    // Check if error is internal and pass it directly if it is.",
+			"    if (error instanceof InternalAppError) {",
+			"        // Send the current error instance up since it is an internal error.",
+			"        throw error",
+			"    } else {",
+			"        // Throw an error",
+			"        throw new InternalAppError(\"${2:Error Message}\", \"Unknown Error\", \"${3:Scope}\");",
+			"    }",
+			"};",
+		]
+	},
 	"Unit Test - Valid Test": {
 		"prefix": "UTValid",
 		"description": "A template for creating a valid unit test.",
