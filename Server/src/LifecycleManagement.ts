@@ -215,7 +215,7 @@ export class LifecycleRouter {
             };
         });
 
-        // TODO: Assign a PAW to a user or set of users
+        // Assign a PAW to a user or set of users
         this.webServer.post('/API/Lifecycle/PAW/:deviceID/Assign', async (request, response, next) => {
             // Write debug info
             writeDebugInfo(request.params.deviceID, "Assign PAW - Device ID URL Param:")
@@ -256,10 +256,46 @@ export class LifecycleRouter {
             };
         });
 
-        // TODO: Remove an assignment of a principal or set of principals from a PAW.
+        // Remove an assignment of a principal or set of principals from a PAW.
         // If no user assignments are left, a wipe command is issued to prepare it for the next user(s).
         this.webServer.delete('/API/Lifecycle/PAW/:deviceID/Assign', async (request, response, next) => {
-            // Coming Soon!
+            // Write debug info
+            writeDebugInfo(request.params.deviceID, "Remove PAW Assignment - Device ID URL Param:")
+
+            // Catch execution errors
+            try {
+                // Send the result of the assign operation back to the caller
+                response.send(await this.unassignPAW(request.params.deviceID, request.body.userList));
+            } catch (error) { // On error, process known errors or send back a generic error statement that isn't user editable
+                // Check if the error is known
+                if (error instanceof InternalAppError) {
+                    if (error.name === "Invalid Input") {
+                        // Set the response code of 400 to indicate a bad request
+                        response.statusCode = 400;
+
+                        // All internal app errors are hard coded, no tricky business here from the end user :)
+                        next(error.message);
+                    } else if (error.name === "Misconfigured Structure") {
+                        // Set the response code of 500 to indicate an internal error
+                        response.statusCode = 500;
+
+                        // All internal app errors are hard coded, no tricky business here from the end user :)
+                        next(error.message);
+                    } else {
+                        // Set the response code of 500 to indicate an internal error
+                        response.statusCode = 500;
+
+                        // Send a generic error to the next middleware in the line for processing
+                        next("An error was thrown and handled internally, operation failed. Please see server console for more info.");
+                    };
+                } else { // The error is unknown, treat it as such
+                    // Write debug info
+                    writeDebugInfo(error, "Error details:");
+
+                    // Send a generic error to the next middleware in the line for processing
+                    next("There was an error assigning the specified user list to the specified PAW");
+                };
+            };
         });
     };
 
@@ -892,6 +928,9 @@ export class LifecycleRouter {
             });
         });
 
+        // Prefix the accounts with AzureAD so that they are compatible with the user rights assignment generator
+        upnList = upnList.map(upn => "AzureAD\\" + upn);
+
         // Write debug info
         writeDebugInfo(userOverlap, "User overlap status:");
 
@@ -922,15 +961,11 @@ export class LifecycleRouter {
         // Write debug info
         writeDebugInfo("Generating user rights post body");
 
-        // Prefix the accounts with AzureAD so that they are compatible with the user rights assignment generator
-        upnList = upnList.map(upn => "AzureAD\\" + upn);
-
         // Make the defaultuser0 assignment object so that the PAW can complete Autopilot even if the device isn't assigned
         const userAssignmentSettings = endpointPAWUserRightsSettings(["defaultuser0", ...upnList]);
 
         // Write debug info
         writeDebugInfo(userAssignmentSettings, "Completed generating user rights post body:");
-
 
         // Catch execution errors
         try {
@@ -1120,6 +1155,188 @@ export class LifecycleRouter {
         return upnResults;
     };
 
-    // TODO: Un-Assign the specified user(s) from the specified PAW. Wipes the device if no user left.
-    private async unassignPAW(deviceID: string, upnList: string[]) { }
+    // Un-Assign the specified user(s) from the specified PAW. Wipes the device if no user left.
+    private async unassignPAW(deviceID: string, upnList: string[]): Promise<any> {
+        // Validate Input
+        if (!validateGUID(deviceID)) { throw new InternalAppError("The specified Device ID is not valid!", "Invalid Input", "LifecycleManagement - LifecycleRouter - unassignPAW - Input Validation") };
+        if (!validateEmailArray(upnList)) { throw new InternalAppError("The UPN list is not valid!", "Invalid Input", "LifecycleManagement - LifecycleRouter - unassignPAW - Input Validation") };
+
+        // Ensure that the config engine is initialized
+        if (!this.configEngine.configInitialized || typeof this.configEngine.config === "undefined") {
+            // Throw an error
+            throw new InternalAppError("Config engine is not initialized", "Not Initialized", "LifecycleManagement - LifecycleRouter - unassignPAW - Input Validation");
+        };
+
+        // Initialize variable
+        let oldUpnList: string[] = [];
+        let pawList: PAWObject[];
+        let assignedUserList: MicrosoftGraphBeta.User[];
+
+        // Catch execution errors
+        try {
+            // Write debug info
+            writeDebugInfo("Starting PAW recurse on the root group");
+
+            // Get the list of PAWs
+            pawList = await this.recursePAWGroup(this.configEngine.config.PAWSecGrp);
+
+            // Write debug info
+            writeDebugInfo(deviceID, "Completed update of ExtensionAttribute1 for device:");
+        } catch (error) {
+            // Check if error is internal and pass it directly if it is.
+            if (error instanceof InternalAppError) {
+                // Send the current error instance up since it is an internal error.
+                throw error;
+            } else {
+                // Throw an error
+                throw new InternalAppError("Error getting PAW Devices", "Unknown Error", "LifecycleManagement - LifecycleRouter - unassignPAW - Get PAW Devices");
+            };
+        };
+
+        // Loop through the PAW list and grab the first PAW whose ID matches the specified device ID
+        const pawDevice = pawList.find((paw) => { return paw.id === deviceID });
+
+        // Check if the PAW object isn't found
+        if (typeof pawDevice !== "object") {
+            // Throw an error
+            throw new InternalAppError("PAW is not commissioned!", "Invalid Input", "LifecycleManagement - LifecycleRouter - unassignPAW - Validate PAW Commission Status");
+        };
+
+        // Catch execution errors
+        try {
+            // Write debug info
+            writeDebugInfo("Getting a list of assigned users");
+
+            assignedUserList = await this.getPawAssignment(deviceID);
+
+            // Write debug info
+            writeDebugInfo(assignedUserList, "Got the list of assigned users:");
+        } catch (error) { // If an error happens
+            // Check if error is internal and pass it directly if it is.
+            if (error instanceof InternalAppError) {
+                // Send the current error instance up since it is an internal error.
+                throw error;
+            } else {
+                // Throw an error
+                throw new InternalAppError("Unknown error occurred when getting the user list!", "Unknown Error", "LifecycleManagement - LifecycleRouter - unassignPAW - Get Assigned User List");
+            };
+        };
+
+        // Make a list of users that will remain after removal
+        const remainingUserList = assignedUserList.filter((user) => {
+            // Ensure that the required data is present in the user object
+            if (user.userPrincipalName === null || typeof user.userPrincipalName === "undefined") {
+                // Throw an error
+                throw new InternalAppError("Data from the User object is not present!", "Invalid Return", "LifecycleManagement - LifecycleRouter - unassignPAW - Validate user object integrity");
+            };
+
+            // Returns the results for the requested current UPN and upn requested to be removed
+            // If the result of the sub match is true, then that UPN needs to be removed.
+            // If the result of the sub match is false, then the UPN can stay.
+            // If this return is equal to true the filter method will add the current user to the list of remaining users
+            // If this return is equal to false, the filter method will exclude the current user from being returned.
+            return !upnList.some((removeUPN) => {
+                // Return true if the user matches the UPN that was requested to be removed
+                return user.userPrincipalName === removeUPN;
+            });
+        });
+
+        // Write debug info
+        writeDebugInfo(remainingUserList, "Remaining users:");
+
+        // Write debug info
+        writeDebugInfo("Generating user rights post body");
+
+        // Prefix the accounts with AzureAD so that they are compatible with the user rights assignment generator
+        const upnListMap = remainingUserList.map(user => "AzureAD\\" + user.userPrincipalName);
+
+        // Make the defaultuser0 assignment object so that the PAW can complete Autopilot even if the device isn't assigned
+        const userAssignmentSettings = endpointPAWUserRightsSettings(["defaultuser0", ...upnListMap]);
+
+        // Write debug info
+        writeDebugInfo(userAssignmentSettings, "Completed generating user rights post body:");
+
+        // Catch execution errors
+        try {
+            // Write debug info
+            writeDebugInfo("Updating settings catalog");
+
+            // Create the user assignment settings catalog.
+            const userAssignmentConfig = await this.graphClient.updateSettingsCatalog(pawDevice.UserAssignment, "PAW - Login - " + deviceID, "Allow only the specified users to log in.", [this.configEngine.config.ScopeTagID], userAssignmentSettings);
+
+            // Write debug info
+            writeDebugInfo(userAssignmentConfig, "Updated settings catalog:");
+        } catch (error) { // If an error happens
+            // Check if error is internal and pass it directly if it is.
+            if (error instanceof InternalAppError) {
+                // Send the current error instance up since it is an internal error.
+                throw error;
+            } else {
+                // Throw an error
+                throw new InternalAppError("Unable to update the settings catalog!", "Unknown Error", "LifecycleManagement - LifecycleRouter - unassignPAW - Update Settings Catalog");
+            };
+        };
+
+        // Catch execution errors
+        try {
+            // Write debug info
+            writeDebugInfo("Updating custom settings config");
+
+            // Initialize oma variable
+            let omaSettings;
+
+            // Check if there are no users left
+            if (upnListMap.length == 0) {
+                // Generate the OMA Settings object with no user rights
+                omaSettings = localGroupMembershipUserRights();
+            } else { // if there are still users left, execute the below
+                // Generate the OMA Settings object
+                omaSettings = localGroupMembershipUserRights(upnListMap);
+            };
+
+            // Create the local users and groups custom OMA setting.
+            await this.graphClient.updateMEMCustomDeviceConfigString(pawDevice.GroupAssignment, "PAW - Groups - " + deviceID, "Restrict Administrators and Hyper-V Admin group memberships.", [this.configEngine.config.ScopeTagID], [omaSettings]);
+
+            // Write debug info
+            writeDebugInfo("Updated custom settings config");
+        } catch (error) {
+            // Check if error is internal and pass it directly if it is.
+            if (error instanceof InternalAppError) {
+                // Send the current error instance up since it is an internal error.
+                throw error;
+            } else {
+                // Throw an error
+                throw new InternalAppError("Unknown error on custom settings config update!", "Unknown Error", "LifecycleManagement - LifecycleRouter - unassignPAW - Update Custom Settings Config");
+            };
+        };
+
+        // If no users are assigned, wipe the device
+        if (remainingUserList.length == 0) {
+            // Catch execution errors
+            try {
+                // Wipe the device
+                await this.graphClient.wipeMEMDevice(deviceID);
+
+                // Write debug info
+                writeDebugInfo(deviceID, "Sent wipe device command:");
+            } catch (error) {
+                // If the error is unknown device, ignore it, otherwise bubble it up
+                if (error instanceof InternalAppError && error.message === "The specified device does not exist" && error.name === "Retrieval Error") {
+                    // Write debug info
+                    writeDebugInfo("This is ok as it indicates the device was never booted.", "Skipped sending wipe command as device was not present in MEM.");
+
+                    // Do nothing because this is ok, it means the device hasn't booted up and registered into Endpoint Manager yet.
+                } else {
+                    // Write debug info
+                    writeDebugInfo(error, "Unexpected exception during assignment:");
+
+                    // Throw an error
+                    throw new InternalAppError("An unknown error occurred, please see console for details", "Unknown Error", "LifecycleManagement - LifecycleRouter - unassignPAW - Input Validation");
+                };
+            };
+        } else {
+            // Write debug info
+            writeDebugInfo("Skipping wipe as other user(s) are still assigned.");
+        };
+    };
 };
