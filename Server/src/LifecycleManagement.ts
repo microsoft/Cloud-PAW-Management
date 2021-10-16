@@ -175,6 +175,47 @@ export class LifecycleRouter {
             };
         });
 
+        // Get user assignments for the specified PAW
+        this.webServer.get('/API/Lifecycle/PAW/:deviceID/Assign', async (request, response, next) => {
+            // Write debug info
+            writeDebugInfo(request.params.deviceID, "Get PAW Assignment - Device ID URL Param:")
+
+            // Catch execution errors
+            try {
+                // Send the result of the assign operation back to the caller
+                response.send(await this.getPawAssignment(request.params.deviceID));
+            } catch (error) { // On error, process known errors or send back a generic error statement that isn't user editable
+                // Check if the error is known
+                if (error instanceof InternalAppError) {
+                    if (error.name === "Invalid Input") {
+                        // Set the response code of 400 to indicate a bad request
+                        response.statusCode = 400;
+
+                        // All internal app errors are hard coded, no tricky business here from the end user :)
+                        next(error.message);
+                    } else if (error.name === "Misconfigured Structure") {
+                        // Set the response code of 500 to indicate an internal error
+                        response.statusCode = 500;
+
+                        // All internal app errors are hard coded, no tricky business here from the end user :)
+                        next(error.message);
+                    } else {
+                        // Set the response code of 500 to indicate an internal error
+                        response.statusCode = 500;
+
+                        // Send a generic error to the next middleware in the line for processing
+                        next("An error was thrown and handled internally, operation failed. Please see server console for more info.");
+                    };
+                } else { // The error is unknown, treat it as such
+                    // Write debug info
+                    writeDebugInfo(error, "Error details:");
+
+                    // Send a generic error to the next middleware in the line for processing
+                    next("There was an error assigning the specified user list to the specified PAW");
+                };
+            };
+        });
+
         // TODO: Assign a PAW to a user or set of users
         this.webServer.post('/API/Lifecycle/PAW/:deviceID/Assign', async (request, response, next) => {
             // Write debug info
@@ -850,6 +891,136 @@ export class LifecycleRouter {
         return true;
     };
 
+    // Get the user assignment(s) of the specified PAW
+    private async getPawAssignment(deviceID: string): Promise<MicrosoftGraphBeta.User[]> {
+        // Validate Input
+        if (!validateGUID(deviceID)) { throw new InternalAppError("The specified Device ID is not valid!", "Invalid Input", "LifecycleManagement - LifecycleRouter - getPawAssignment - Input Validation") };
+
+        // Ensure that the config engine is initialized
+        if (!this.configEngine.configInitialized || typeof this.configEngine.config === "undefined") {
+            // Throw an error
+            throw new InternalAppError("Config engine is not initialized", "Not Initialized", "LifecycleManagement - LifecycleRouter - getPawAssignment - Input Validation");
+        };
+
+        // Initialize Variables
+        let assignedUpnList: string[] = []
+        let pawList: PAWObject[];
+        let assignmentCatalog: MicrosoftGraphBeta.DeviceManagementConfigurationPolicy;
+
+        // Catch execution errors
+        try {
+            // Write debug info
+            writeDebugInfo("Starting PAW recurse on the root group");
+
+            // Get the list of PAWs
+            pawList = await this.recursePAWGroup(this.configEngine.config.PAWSecGrp);
+
+            // Write debug info
+            writeDebugInfo("Completed PAW recurse on the root group");
+        } catch (error) { // If an error happens
+            // Check if error is internal and pass it directly if it is.
+            if (error instanceof InternalAppError) {
+                // Send the current error instance up since it is an internal error.
+                throw error;
+            } else {
+                // Throw an error
+                throw new InternalAppError("Unable to get a list of PAW devices!", "Unknown Error", "LifecycleManagement - LifecycleRouter - getPawAssignment - Get PAW List");
+            };
+        };
+
+        // Loop through the PAW list and grab the first PAW whose ID matches the specified device ID
+        const pawDevice = pawList.find((paw) => { return paw.id === deviceID });
+
+        // Check if the PAW object isn't found
+        if (typeof pawDevice !== "object") {
+            // Throw an error
+            throw new InternalAppError("PAW is not commissioned!", "Invalid Input", "LifecycleManagement - LifecycleRouter - getPawAssignment - Validate PAW Commission Status");
+        };
+
+        // Catch execution errors
+        try {
+            // Write debug info
+            writeDebugInfo("Grabbing the user assignment data.");
+
+            // Get the assignment settings
+            assignmentCatalog = (await this.graphClient.getSettingsCatalog(pawDevice.UserAssignment))[0];
+
+            // Write debug info
+            writeDebugInfo(assignmentCatalog, "Completed retrieval of the user assignment data:");
+        } catch (error) { // If an error happens
+            // Check if error is internal and pass it directly if it is.
+            if (error instanceof InternalAppError) {
+                // Send the current error instance up since it is an internal error.
+                throw error;
+            } else {
+                // Throw an error
+                throw new InternalAppError("Unable to get the settings catalog due to an unknown error", "Unknown Error", "LifecycleManagement - LifecycleRouter - getPawAssignment - Get Settings Catalog");
+            };
+        };
+
+        // Check to make sure that the
+        if (assignmentCatalog.settings === null || typeof assignmentCatalog.settings === "undefined" || typeof assignmentCatalog.settings[0].settingInstance === "undefined") {
+            // Throw an error
+            throw new InternalAppError("Data from the settings catalog is not present!", "Invalid Return", "LifecycleManagement - LifecycleRouter - getPawAssignment - assignment catalog data check");
+        };
+
+        // Extract the settings node and assign it a different type of typescript compatibility.
+        const extractedSettings: MicrosoftGraphBeta.DeviceManagementConfigurationSimpleSettingCollectionInstance = assignmentCatalog.settings[0].settingInstance;
+
+        // Validate that is present
+        if (typeof extractedSettings.simpleSettingCollectionValue === "undefined") {
+            // Throw an error
+            throw new InternalAppError("Data from the settings catalog's settings array is not present!", "Invalid Return", "LifecycleManagement - LifecycleRouter - assignPAW - settings array data check.");
+        };
+
+        // Loop through all of the user assignment and extract them.
+        for (const valueItem of extractedSettings.simpleSettingCollectionValue) {
+            // Convert the type so that the typing is present for TypeScript
+            const userAssignment: MicrosoftGraphBeta.DeviceManagementConfigurationStringSettingValue = valueItem;
+
+            // Validate that is present
+            if (typeof userAssignment.value === "undefined" || userAssignment.value === null) {
+                // Throw an error
+                throw new InternalAppError("Data from the settings catalog's settings array's value is not present!", "Invalid Return", "LifecycleManagement - LifecycleRouter - assignPAW - settings array value data check.");
+            };
+
+            // If the default user 0 user (OOBE User) is listed, ignore it and continue to the next loop iteration
+            if (userAssignment.value === "defaultuser0") {
+                // Skip this loop round
+                continue
+            } else { // Is not the OOBE user
+                // Extract the UPN from the value and add it to the old user list
+                assignedUpnList = [userAssignment.value.split("\\")[1], ...assignedUpnList];
+            };
+        };
+
+        // Write debug info
+        writeDebugInfo(assignedUpnList, "Currently Assigned Users:");
+
+        // Initialize the variable that will contained the enriched user(s)
+        let upnResults: MicrosoftGraphBeta.User[] = []
+
+        // Loop through all of the UPNs and get user objects
+        for (const upn of assignedUpnList) {
+            // Catch execution errors
+            try {
+                // Get the specified UPN and add it to the list of assigned UPNs
+                upnResults = [(await this.graphClient.getAADUser(upn))[0], ...upnResults];
+            } catch (error) { // If an error happens
+                // Check if error is internal and pass it directly if it is.
+                if (error instanceof InternalAppError) {
+                    // Send the current error instance up since it is an internal error.
+                    throw error;
+                } else {
+                    // Throw an error
+                    throw new InternalAppError("Unable to retrieve user", "Unknown Error", "LifecycleManagement - LifecycleRouter - getPawAssignment - User Enrichment");
+                };
+            };
+        };
+
+        // Return the results of the request to the caller
+        return upnResults;
+    };
 
     // TODO: Un-Assign the specified user(s) from the specified PAW. Wipes the device if no user left.
     private async unassignPAW(deviceID: string, upnList: string[]) { }
