@@ -27,7 +27,7 @@ export const SelectedItems = () => {
         onRender: (item: IDeviceItem) => {
           return (
             <Stack horizontal>
-              <IconButton iconProps={{ iconName: 'Devices3' }} title="Add" ariaLabel="Add" />  
+              <IconButton iconProps={{ iconName: 'Devices3' }} title="Autopilot Device" ariaLabel="Autopilot Device" />  
               <Stack>
                 <Stack.Item><Label>{item?.displayName}</Label></Stack.Item>
                 <Stack.Item>{item?.deviceId}</Stack.Item>
