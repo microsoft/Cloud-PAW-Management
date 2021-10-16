@@ -432,7 +432,7 @@ export class LifecycleRouter {
             pawList = await this.recursePAWGroup(this.configEngine.config.PAWSecGrp);
 
             // Write debug info
-            writeDebugInfo(deviceID, "Completed update of ExtensionAttribute1 for device:");
+            writeDebugInfo(pawList, "Completed retrieving the list of PAW devices:");
         } catch (error) { // If an error happens
             // Check if error is internal and pass it directly if it is.
             if (error instanceof InternalAppError) {
@@ -448,8 +448,11 @@ export class LifecycleRouter {
         writeDebugInfo("Completed PAW recurse on the root group");
 
         // Check for an existing PAW
-        const existingPAW = pawList.some((paw) => { paw.id == deviceID })
+        const existingPAW = pawList.some((paw) => { return paw.id == deviceID });
 
+        // Write debug info
+        writeDebugInfo(existingPAW, "Existing PAW?");
+        
         // If a PAW already exists, stop execution
         if (existingPAW) {
             // Throw an error
