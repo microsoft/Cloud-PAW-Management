@@ -33,6 +33,44 @@ export class LifecycleRouter {
     // Initialize the REST API routes
     private initRoutes(): void {
 
+        // Get all autopilot devices
+        this.webServer.get('/API/Lifecycle/AutopilotDevice', async (request, response, next) => {
+            // Catch execution errors
+            try {
+                // Send the result of the get operation back to the caller
+                response.send(await this.graphClient.getAutopilotDevice());
+            } catch (error) { // On error, process known errors or send back a generic error statement that isn't user editable
+                // Check if the error is known
+                if (error instanceof InternalAppError) {
+                    if (error.name === "Invalid Input") {
+                        // Set the response code of 400 to indicate a bad request
+                        response.statusCode = 400;
+
+                        // All internal app errors are hard coded, no tricky business here from the end user :)
+                        next(error.message);
+                    } else if (error.name === "Misconfigured Structure") {
+                        // Set the response code of 500 to indicate an internal error
+                        response.statusCode = 500;
+
+                        // All internal app errors are hard coded, no tricky business here from the end user :)
+                        next(error.message);
+                    } else {
+                        // Set the response code of 500 to indicate an internal error
+                        response.statusCode = 500;
+
+                        // Send a generic error to the next middleware in the line for processing
+                        next("An error was thrown and handled internally, operation failed. Please see server console for more info.");
+                    };
+                } else { // The error is unknown, treat it as such
+                    // Write debug info
+                    writeDebugInfo(error, "Error details:");
+
+                    // Send a generic error to the next middleware in the line for processing
+                    next("There was an error retrieving all of the Autopilot devices.");
+                };
+            };
+        });
+
         // List all Commissioned PAW Devices
         this.webServer.get('/API/Lifecycle/PAW', async (request, response, next) => {
             // Write debug info
