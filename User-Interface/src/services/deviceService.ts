@@ -1,5 +1,5 @@
 import { IDeviceItem } from "../models";
-import { devices } from './mocks/deviceMocks';
+// import { devices } from './mocks/deviceMocks';
 
 export interface IDeviceService {
     getDevices: () => Promise<IDeviceItem[]>,
