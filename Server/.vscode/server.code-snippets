@@ -58,7 +58,7 @@
 		"body": [
 			"// Catch execution errors",
 			"try {",
-			"    ${1:code to execute};",
+			"    ${1:code to execute;}",
 			"} catch (error) { // If an error happens",
 			"    // Check if error is internal and pass it directly if it is.",
 			"    if (error instanceof InternalAppError) {",
@@ -67,7 +67,7 @@
 			"    } else {",
 			"        // Throw an error",
 			"        throw new InternalAppError(\"${2:Error Message}\", \"Unknown Error\", \"${3:Scope}\");",
-			"    }",
+			"    };",
 			"};",
 		]
 	},
