@@ -32,7 +32,6 @@ export class LifecycleRouter {
 
     // Initialize the REST API routes
     private initRoutes(): void {
-
         // Get all autopilot devices
         this.webServer.get('/API/Lifecycle/AutopilotDevice', async (request, response, next) => {
             // Catch execution errors
@@ -371,6 +370,11 @@ export class LifecycleRouter {
             throw new InternalAppError("Config engine is not initialized", "Not Initialized", "LifecycleManagement - LifecycleRouter - commissionPAW - Input Validation");
         };
 
+        // Initialize vars
+        let pawList: PAWObject[];
+        let userAssignmentConfig: MicrosoftGraphBeta.DeviceManagementConfigurationPolicy;
+        let localGroupsConfig: MicrosoftGraphBeta.Windows10CustomConfiguration;
+
         // Grab the specified device's autopilot instance
         const deviceAutopilot = await this.graphClient.getAutopilotDevice(deviceID);
 
@@ -383,24 +387,37 @@ export class LifecycleRouter {
             throw new InternalAppError("More than one autopilot device returned!", "Invalid Input", "LifecycleManagement - LifecycleRouter - commissionPAW - Validate PAW Autopilot Status too many");
         };
 
-        // Write debug info
-        writeDebugInfo("Starting PAW recurse on the root group");
+        // Catch execution errors
+        try {
+            // Write debug info
+            writeDebugInfo("Starting PAW recurse on the root group");
 
-        // Get the list of PAWs
-        const pawList = await this.recursePAWGroup(this.configEngine.config.PAWSecGrp);
+            // Get the list of PAWs
+            pawList = await this.recursePAWGroup(this.configEngine.config.PAWSecGrp);
+
+            // Write debug info
+            writeDebugInfo(deviceID, "Completed update of ExtensionAttribute1 for device:");
+        } catch (error) { // If an error happens
+            // Check if error is internal and pass it directly if it is.
+            if (error instanceof InternalAppError) {
+                // Send the current error instance up since it is an internal error.
+                throw error;
+            } else {
+                // Throw an error
+                throw new InternalAppError("Error getting PAW Devices", "Unknown Error", "LifecycleManagement - LifecycleRouter - commissionPAW - Get PAW Devices");
+            };
+        };
 
         // Write debug info
         writeDebugInfo("Completed PAW recurse on the root group");
 
-        // Loop through the PAW list and ensure that the device doesn't already exist
-        for (const paw of pawList) {
-            // If the PAW is already commissioned
-            if (paw.id == deviceID) {
-                // Throw an error
-                throw new InternalAppError("PAW is already commissioned!", "Invalid Input", "LifecycleManagement - LifecycleRouter - commissionPAW - Validate PAW Commission Status");
-            } else { // Otherwise, check the next PAW in the list
-                continue;
-            };
+        // Check for an existing PAW
+        const existingPAW = pawList.some((paw) => { paw.id == deviceID })
+
+        // If a PAW already exists, stop execution
+        if (existingPAW) {
+            // Throw an error
+            throw new InternalAppError("PAW is already commissioned!", "Invalid Input", "LifecycleManagement - LifecycleRouter - commissionPAW - Validate PAW Commission Status");
         };
 
         // Ensure that the serial number is present on the autopilot device instance by checking the absence of the serial number and throwing an error if missing
@@ -419,9 +436,15 @@ export class LifecycleRouter {
 
             // Write debug info
             writeDebugInfo(deviceID, "Completed update of ExtensionAttribute1 for device:");
-        } catch (error) {
-            // Throw an error
-            throw new InternalAppError("Error setting Extension Attribute", "Unknown Error", "LifecycleManagement - LifecycleRouter - commissionPAW - Add Extension Attribute");
+        } catch (error) { // If an error happens
+            // Check if error is internal and pass it directly if it is.
+            if (error instanceof InternalAppError) {
+                // Send the current error instance up since it is an internal error.
+                throw error;
+            } else {
+                // Throw an error
+                throw new InternalAppError("Error setting Extension Attribute", "Unknown Error", "LifecycleManagement - LifecycleRouter - commissionPAW - Add Extension Attribute");
+            };
         };
 
         // Write debug info
@@ -433,14 +456,26 @@ export class LifecycleRouter {
         // Write debug info
         writeDebugInfo("Completed generating user rights post body");
 
-        // Write debug info
-        writeDebugInfo("Creating settings catalog");
+        // Catch execution errors
+        try {
+            // Write debug info
+            writeDebugInfo("Creating settings catalog");
 
-        // Create the user assignment settings catalog.
-        const userAssignmentConfig = await this.graphClient.newSettingsCatalog("PAW - Login - " + deviceID, "Allow only the specified users to log in.", [this.configEngine.config.ScopeTagID], userAssignmentSettings);
+            // Create the user assignment settings catalog.
+            userAssignmentConfig = await this.graphClient.newSettingsCatalog("PAW - Login - " + deviceID, "Allow only the specified users to log in.", [this.configEngine.config.ScopeTagID], userAssignmentSettings);
 
-        // Write debug info
-        writeDebugInfo(userAssignmentConfig.id, "Created settings catalog:");
+            // Write debug info
+            writeDebugInfo(userAssignmentConfig.id, "Created settings catalog:");
+        } catch (error) { // If an error happens
+            // Check if error is internal and pass it directly if it is.
+            if (error instanceof InternalAppError) {
+                // Send the current error instance up since it is an internal error.
+                throw error;
+            } else {
+                // Throw an error
+                throw new InternalAppError("Unknown error when creating the settings catalog!", "Unknown Error", "LifecycleManagement - LifecycleRouter - commissionPAW - Create User Assignment Config");
+            };
+        };
 
         // Check that all the expected data is present from the Graph API call
         if (typeof userAssignmentConfig.id !== "string") {
@@ -448,17 +483,29 @@ export class LifecycleRouter {
             throw new InternalAppError("Incomplete Data!", "Invalid Return", "LifecycleManagement - LifecycleRouter - commissionPAW - User Assignment Settings Catalog ID Null Check");
         };
 
-        // Write debug info
-        writeDebugInfo("Creating custom settings config");
-
         // Generate the OMA Settings object
         const omaSettings = localGroupMembershipUserRights();
 
-        // Create the local users and groups custom OMA setting.
-        const localGroupsConfig = await this.graphClient.newMEMCustomDeviceConfigString("PAW - Groups - " + deviceID, "Restrict Admins and Hyper-V admin group memberships.", [this.configEngine.config.ScopeTagID], [omaSettings]);
+        // Catch execution errors
+        try {
+            // Write debug info
+            writeDebugInfo("Creating custom settings config");
 
-        // Write debug info
-        writeDebugInfo(localGroupsConfig.id, "Created custom settings config:");
+            // Create the local users and groups custom OMA setting.
+            localGroupsConfig = await this.graphClient.newMEMCustomDeviceConfigString("PAW - Groups - " + deviceID, "Restrict Admins and Hyper-V admin group memberships.", [this.configEngine.config.ScopeTagID], [omaSettings]);
+
+            // Write debug info
+            writeDebugInfo(localGroupsConfig.id, "Created custom settings config:");
+        } catch (error) { // If an error happens
+            // Check if error is internal and pass it directly if it is.
+            if (error instanceof InternalAppError) {
+                // Send the current error instance up since it is an internal error.
+                throw error;
+            } else {
+                // Throw an error
+                throw new InternalAppError("Unknown error when creating the custom settings config!", "Unknown Error", "LifecycleManagement - LifecycleRouter - commissionPAW - Create Custom Settings Config");
+            };
+        };
 
         // Check that all the expected data is present from the Graph API call
         if (typeof localGroupsConfig.id !== "string") {
@@ -475,9 +522,9 @@ export class LifecycleRouter {
         };
 
         // Generate the description string to be use for the PAW's device group
-        const groupDescription = "CommissionedDate=" + devGroupDescription.CommissionedDate.toJSON() + ",Type=" + devGroupDescription.Type + ",UserAssignment=" + devGroupDescription.UserAssignment + ",GroupAssignment=" + devGroupDescription.GroupAssignment
+        const groupDescription = "CommissionedDate=" + devGroupDescription.CommissionedDate.toJSON() + ",Type=" + devGroupDescription.Type + ",UserAssignment=" + devGroupDescription.UserAssignment + ",GroupAssignment=" + devGroupDescription.GroupAssignment;
 
-        // Catch Execution Errors
+        // Catch execution errors
         try {
             // Write debug info
             writeDebugInfo("Creating device's unique group");
@@ -487,9 +534,15 @@ export class LifecycleRouter {
 
             // Write debug info
             writeDebugInfo(devGroup.id, "Created device's unique group:");
-        } catch (error) {
-            // Throw an error
-            throw new InternalAppError("Unknown error", "Unknown", "LifecycleManagement - LifecycleRouter - commissionPAW - Device Group Creation");
+        } catch (error) { // If an error happens
+            // Check if error is internal and pass it directly if it is.
+            if (error instanceof InternalAppError) {
+                // Send the current error instance up since it is an internal error.
+                throw error;
+            } else {
+                // Throw an error
+                throw new InternalAppError("Unknown error on AAD Group creation!", "Unknown", "LifecycleManagement - LifecycleRouter - commissionPAW - Device Group Creation");
+            };
         };
 
         // Check to ensure that complete data was returned.
@@ -498,46 +551,49 @@ export class LifecycleRouter {
             throw new InternalAppError("Incomplete Data!", "Invalid Return", "LifecycleManagement - LifecycleRouter - commissionPAW - Device Group ID Null Check");
         };
 
-        // Write debug info
-        writeDebugInfo(devGroup.id, "Starting assignment of user rights to:");
-
-        // Catch Execution Errors
+        // Catch execution errors
         try {
+            // Write debug info
+            writeDebugInfo(devGroup.id, "Starting assignment of user rights to:");
+
             // Assign the user rights configuration to the device security group
             await this.graphClient.updateConfigurationAssignment("Settings Catalog", userAssignmentConfig.id, [devGroup.id], [this.configEngine.config.BrkGls]);
-        } catch (error) {
-            // Throw an error
-            throw new InternalAppError("Unknown error", "Unknown", "LifecycleManagement - LifecycleRouter - commissionPAW - Settings Catalog Assignment");
+
+            // Write debug info
+            writeDebugInfo(devGroup.id, "Completed assignment of user rights to:");
+        } catch (error) { // If an error happens
+            // Check if error is internal and pass it directly if it is.
+            if (error instanceof InternalAppError) {
+                // Send the current error instance up since it is an internal error.
+                throw error;
+            } else {
+                // Throw an error
+                throw new InternalAppError("Unknown error on assignment of settings catalog", "Unknown", "LifecycleManagement - LifecycleRouter - commissionPAW - Settings Catalog Assignment");
+            };
         };
 
-        // Write debug info
-        writeDebugInfo(devGroup.id, "Completed assignment of user rights to:");
-
-        // Write debug info
-        writeDebugInfo(devGroup.id, "Starting assignment of group management to:");
-
-        // Catch Execution Errors
+        // Catch execution errors
         try {
+            // Write debug info
+            writeDebugInfo(devGroup.id, "Starting assignment of group management to:");
+
             // Assign the user rights configuration to the device security group
             await this.graphClient.updateConfigurationAssignment("Setting Template", localGroupsConfig.id, [devGroup.id], [this.configEngine.config.BrkGls]);
-        } catch (error) {
-            // Throw an error
-            throw new InternalAppError("Unknown error", "Unknown", "LifecycleManagement - LifecycleRouter - commissionPAW - Settings Catalog Assignment");
+
+            // Write debug info
+            writeDebugInfo(devGroup.id, "Completed assignment of group management to:");
+        } catch (error) { // If an error happens
+            // Check if error is internal and pass it directly if it is.
+            if (error instanceof InternalAppError) {
+                // Send the current error instance up since it is an internal error.
+                throw error;
+            } else {
+                // Throw an error
+                throw new InternalAppError("Unknown error", "Unknown", "LifecycleManagement - LifecycleRouter - commissionPAW - Settings Catalog Assignment");
+            };
         };
 
-        // Write debug info
-        writeDebugInfo(devGroup.id, "Completed assignment of group management to:");
-
-        // Catch Execution Errors
-        try {
-            // Add the newly created PAW device group to the PAW root group
-            rootGroupMemberResult = await this.graphClient.newAADGroupMember(this.configEngine.config.PAWSecGrp, devGroup.id);
-        } catch (error) {
-            // Throw an error
-            throw new InternalAppError("Unknown error", "Unknown", "LifecycleManagement - LifecycleRouter - commissionPAW - Add Dev Grp to PAW Root Grp");
-        };
-
-        // Catch Execution Errors
+        // Catch execution errors
         try {
             // Write debug info
             writeDebugInfo(devGroup.id, "Adding PAW (" + deviceID + ") to its exclusive SG:");
@@ -547,18 +603,45 @@ export class LifecycleRouter {
 
             // Write debug info
             writeDebugInfo(devGroup.id, "Completed membership addition of PAW (" + deviceID + ") to its exclusive SG:");
-        } catch (error) {
-            // Throw an error
-            throw new InternalAppError("Unknown error", "Unknown", "LifecycleManagement - LifecycleRouter - commissionPAW - Add Dev to Dev Grp");
+        } catch (error) { // If an error happens
+            // Check if error is internal and pass it directly if it is.
+            if (error instanceof InternalAppError) {
+                // Send the current error instance up since it is an internal error.
+                throw error;
+            } else {
+                // Throw an error
+                throw new InternalAppError("Unknown error", "Unknown", "LifecycleManagement - LifecycleRouter - commissionPAW - Add Dev to Dev Grp");
+            };
         };
 
-        // Catch Execution Errors
+        // Catch execution errors
+        try {
+            // Add the newly created PAW device group to the PAW root group
+            rootGroupMemberResult = await this.graphClient.newAADGroupMember(this.configEngine.config.PAWSecGrp, devGroup.id);
+        } catch (error) { // If an error happens
+            // Check if error is internal and pass it directly if it is.
+            if (error instanceof InternalAppError) {
+                // Send the current error instance up since it is an internal error.
+                throw error;
+            } else {
+                // Throw an error
+                throw new InternalAppError("Unknown error", "Unknown", "LifecycleManagement - LifecycleRouter - commissionPAW - Add Dev Grp to PAW Root Grp");
+            };
+        };
+
+        // Catch execution errors
         try {
             // Get the device object from AAD
             deviceObject = (await this.graphClient.getAADDevice(deviceID))[0];
-        } catch (error) {
-            // Throw an error
-            throw new InternalAppError("Unknown error", "Unknown", "LifecycleManagement - LifecycleRouter - commissionPAW - Get AAD Device Object");
+        } catch (error) { // If an error happens
+            // Check if error is internal and pass it directly if it is.
+            if (error instanceof InternalAppError) {
+                // Send the current error instance up since it is an internal error.
+                throw error;
+            } else {
+                // Throw an error
+                throw new InternalAppError("Unknown error", "Unknown", "LifecycleManagement - LifecycleRouter - commissionPAW - Get AAD Device Object");
+            };
         };
 
         // Check to make sure that the name data is present for the retrieved device.
@@ -701,7 +784,7 @@ export class LifecycleRouter {
         // Ensure that the config engine is initialized
         if (!this.configEngine.configInitialized || typeof this.configEngine.config === "undefined") {
             // Throw an error
-            throw new InternalAppError("Config engine is not initialized", "Not Initialized", "LifecycleManagement - LifecycleRouter - commissionPAW - Input Validation");
+            throw new InternalAppError("Config engine is not initialized", "Not Initialized", "LifecycleManagement - LifecycleRouter - assignPAW - Input Validation");
         };
 
         // Initialize variable
@@ -720,8 +803,14 @@ export class LifecycleRouter {
             // Write debug info
             writeDebugInfo(deviceID, "Completed update of ExtensionAttribute1 for device:");
         } catch (error) {
-            // Throw an error
-            throw new InternalAppError("Error getting PAW Devices", "Unknown Error", "LifecycleManagement - LifecycleRouter - assignPAW - Get PAW Devices");
+            // Check if error is internal and pass it directly if it is.
+            if (error instanceof InternalAppError) {
+                // Send the current error instance up since it is an internal error.
+                throw error;
+            } else {
+                // Throw an error
+                throw new InternalAppError("Error getting PAW Devices", "Unknown Error", "LifecycleManagement - LifecycleRouter - assignPAW - Get PAW Devices");
+            };
         };
 
         // Loop through the PAW list and grab the first PAW whose ID matches the specified device ID
@@ -744,8 +833,14 @@ export class LifecycleRouter {
             // Write debug info
             writeDebugInfo(assignmentCatalog, "Completed retrieval of the user assignment data:");
         } catch (error) {
-            // Throw an error
-            throw new InternalAppError("Error the assignment catalog", "Unknown Error", "LifecycleManagement - LifecycleRouter - assignPAW - Get Assignment Catalog");
+            // Check if error is internal and pass it directly if it is.
+            if (error instanceof InternalAppError) {
+                // Send the current error instance up since it is an internal error.
+                throw error;
+            } else {
+                // Throw an error
+                throw new InternalAppError("Error the assignment catalog", "Unknown Error", "LifecycleManagement - LifecycleRouter - assignPAW - Get Assignment Catalog");
+            };
         };
 
         // Check to make sure that the
@@ -820,8 +915,8 @@ export class LifecycleRouter {
                 throw error;
             } else {
                 // Throw an error
-                throw new InternalAppError("Error getting PAW Devices", "Unknown Error", "LifecycleManagement - LifecycleRouter - assignPAW - Update Custom Settings Config");
-            }
+                throw new InternalAppError("Unknown error on custom settings config update!", "Unknown Error", "LifecycleManagement - LifecycleRouter - assignPAW - Update Custom Settings Config");
+            };
         };
 
         // Write debug info
@@ -855,7 +950,7 @@ export class LifecycleRouter {
             } else {
                 // Throw an error
                 throw new InternalAppError("Unable to update the settings catalog!", "Unknown Error", "LifecycleManagement - LifecycleRouter - assignPAW - Update Settings Catalog");
-            }
+            };
         };
 
         // If the users overlap, just update the current assignment
