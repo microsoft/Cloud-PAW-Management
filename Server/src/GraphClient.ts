@@ -246,7 +246,7 @@ export class MSGraphClient {
     };
 
     // Update the specified Windows custom setting (string)
-    async updateMEMCustomDeviceConfigString(id: string, name: string, description: string, scopeTagID: string[], omaSetting: MicrosoftGraphBeta.OmaSettingString[]) {
+    async updateMEMCustomDeviceConfigString(id: string, name: string, description: string, scopeTagID: string[], omaSetting: MicrosoftGraphBeta.OmaSettingString[]): Promise<MicrosoftGraphBeta.Windows10CustomConfiguration> {
         // Validate Input
         if (!validateGUID(id)) { throw new InternalAppError("The ID is not a valid GUID!", "Invalid Input", "GraphClient - MSGraphClient - updateMEMCustomDeviceConfigString - Input Validation")};
         if (typeof name !== "string") { throw new InternalAppError("The type of the name parameter is not a string!", "Invalid Input", "GraphClient - MSGraphClient - updateMEMCustomDeviceConfigString - Input Validation") };
@@ -895,7 +895,7 @@ export class MSGraphClient {
         };
 
         // Build the post body for the new setting catalog object
-        let patchBody: MicrosoftGraphBeta.DeviceManagementConfigurationPolicy = {
+        let putBody: MicrosoftGraphBeta.DeviceManagementConfigurationPolicy = {
             name: name,
             description: description,
             roleScopeTagIds: roleScopeTagID,
@@ -907,9 +907,9 @@ export class MSGraphClient {
         // Catch any error on catalog update
         try {
             // Send the updated settings catalog 
-            await (await this.client).api("/deviceManagement/configurationPolicies/" + GUID).put(patchBody);
-
-            // Return true to indicate a successful operation
+            await (await this.client).api("/deviceManagement/configurationPolicies/" + GUID).put(putBody);
+            
+            // Return true for successful execution
             return true;
         } catch (error) {
             // Check to see if the error parameter is an instance of the Error class.
