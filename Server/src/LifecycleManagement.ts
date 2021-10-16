@@ -779,7 +779,7 @@ export class LifecycleRouter {
     private async assignPAW(deviceID: string, upnList: string[]): Promise<boolean> {
         // Validate Input
         if (!validateGUID(deviceID)) { throw new InternalAppError("The specified Device ID is not valid!", "Invalid Input", "LifecycleManagement - LifecycleRouter - assignPAW - Input Validation") };
-        if (!validateEmailArray(upnList)) { throw new InternalAppError("The specified Device ID is not valid!", "Invalid Input", "LifecycleManagement - LifecycleRouter - assignPAW - Input Validation") };
+        if (!validateEmailArray(upnList)) { throw new InternalAppError("The UPN list is not valid!", "Invalid Input", "LifecycleManagement - LifecycleRouter - assignPAW - Input Validation") };
 
         // Ensure that the config engine is initialized
         if (!this.configEngine.configInitialized || typeof this.configEngine.config === "undefined") {
@@ -957,7 +957,7 @@ export class LifecycleRouter {
         if (userOverlap === true) {
             // Write debug info
             writeDebugInfo("Not wiping device as there is user overlap.");
-        } else { // Wipe the device if there is no user overlap
+        } else if (userOverlap === false && oldUpnList.length !== 0) { // Wipe the device if there is no user overlap
             // Catch execution errors
             try {
                 // Wipe the device after if no user overlap is detected
@@ -980,6 +980,9 @@ export class LifecycleRouter {
                     throw new InternalAppError("An unknown error occurred, please see console for details", "Unknown Error", "LifecycleManagement - LifecycleRouter - assignPAW - Input Validation");
                 };
             };
+        } else {
+            // Write debug info
+            writeDebugInfo("Not wiping device as there are no users assigned.");
         };
 
         // Return true for successful execution.
