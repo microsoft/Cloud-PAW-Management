@@ -59,7 +59,7 @@
 			"// Catch execution errors",
 			"try {",
 			"    ${1:code to execute};",
-			"} catch (error) {",
+			"} catch (error) { // If an error happens",
 			"    // Check if error is internal and pass it directly if it is.",
 			"    if (error instanceof InternalAppError) {",
 			"        // Send the current error instance up since it is an internal error.",
