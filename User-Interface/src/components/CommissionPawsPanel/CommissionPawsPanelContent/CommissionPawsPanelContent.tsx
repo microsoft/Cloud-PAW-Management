@@ -47,7 +47,7 @@ export const CommissionPawsPanelContent = () => {
     <>
       <Stack tokens={stackTokens} styles={containerStyles}>
       <FocusZone direction={FocusZoneDirection.vertical}>
-        <SearchBox placeholder="Search" onSearch={onSearch} />
+        <SearchBox placeholder="Search by AAD Device ID" onSearch={onSearch} />
         {
         FilteredItemsMemo
         }
