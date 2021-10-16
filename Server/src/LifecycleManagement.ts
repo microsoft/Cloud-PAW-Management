@@ -812,7 +812,7 @@ export class LifecycleRouter {
     };
 
     // Assign the specified user(s) to a device, if replacing assignment, wipes if no user overlap.
-    private async assignPAW(deviceID: string, upnList: string[]): Promise<boolean> {
+    private async assignPAW(deviceID: string, upnList: string[]): Promise<MicrosoftGraphBeta.User[]> {
         // Validate Input
         if (!validateGUID(deviceID)) { throw new InternalAppError("The specified Device ID is not valid!", "Invalid Input", "LifecycleManagement - LifecycleRouter - assignPAW - Input Validation") };
         if (!validateEmailArray(upnList)) { throw new InternalAppError("The UPN list is not valid!", "Invalid Input", "LifecycleManagement - LifecycleRouter - assignPAW - Input Validation") };
@@ -928,6 +928,9 @@ export class LifecycleRouter {
             });
         });
 
+        // Save a copy of the UPN List for the user enrichment later.
+        const assignedUpnEnrichmentList = upnList;
+
         // Prefix the accounts with AzureAD so that they are compatible with the user rights assignment generator
         upnList = upnList.map(upn => "AzureAD\\" + upn);
 
@@ -1020,8 +1023,29 @@ export class LifecycleRouter {
             writeDebugInfo("Not wiping device as there are no users assigned.");
         };
 
-        // Return true for successful execution.
-        return true;
+        // Initialize the variable that will contained the enriched user(s)
+        let upnResults: MicrosoftGraphBeta.User[] = [];
+
+        // Loop through all of the UPNs and get user objects
+        for (const upn of assignedUpnEnrichmentList) {
+            // Catch execution errors
+            try {
+                // Get the specified UPN and add it to the list of assigned UPNs
+                upnResults = [(await this.graphClient.getAADUser(upn))[0], ...upnResults];
+            } catch (error) { // If an error happens
+                // Check if error is internal and pass it directly if it is.
+                if (error instanceof InternalAppError) {
+                    // Send the current error instance up since it is an internal error.
+                    throw error;
+                } else {
+                    // Throw an error
+                    throw new InternalAppError("Unable to retrieve user", "Unknown Error", "LifecycleManagement - LifecycleRouter - assignPAW - User Enrichment");
+                };
+            };
+        };
+
+        // Return the list of users that are now assigned.
+        return upnResults;
     };
 
     // Get the user assignment(s) of the specified PAW
@@ -1131,7 +1155,7 @@ export class LifecycleRouter {
         writeDebugInfo(assignedUpnList, "Currently Assigned Users:");
 
         // Initialize the variable that will contained the enriched user(s)
-        let upnResults: MicrosoftGraphBeta.User[] = []
+        let upnResults: MicrosoftGraphBeta.User[] = [];
 
         // Loop through all of the UPNs and get user objects
         for (const upn of assignedUpnList) {
@@ -1156,7 +1180,7 @@ export class LifecycleRouter {
     };
 
     // Un-Assign the specified user(s) from the specified PAW. Wipes the device if no user left.
-    private async unassignPAW(deviceID: string, upnList: string[]): Promise<any> {
+    private async unassignPAW(deviceID: string, upnList: string[]): Promise<MicrosoftGraphBeta.User[]> {
         // Validate Input
         if (!validateGUID(deviceID)) { throw new InternalAppError("The specified Device ID is not valid!", "Invalid Input", "LifecycleManagement - LifecycleRouter - unassignPAW - Input Validation") };
         if (!validateEmailArray(upnList)) { throw new InternalAppError("The UPN list is not valid!", "Invalid Input", "LifecycleManagement - LifecycleRouter - unassignPAW - Input Validation") };
@@ -1338,5 +1362,8 @@ export class LifecycleRouter {
             // Write debug info
             writeDebugInfo("Skipping wipe as other user(s) are still assigned.");
         };
+
+        // Return the list of users that remain
+        return remainingUserList;
     };
 };
