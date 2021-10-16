@@ -179,7 +179,7 @@ export function localGroupMembershipUserRights(upnList?: string[]) {
         // Loop through all of the users in the user list
         for (const user of upnList) {
             // Add a user line to grant that user hyper-v admin rights
-            settingMiddle += "<add member = \"AzureAD\\" + user + "\"/>";
+            settingMiddle += "<add member = \"" + user + "\"/>";
         };
     };
     // If the UPN List is un-specified, don't add any users to the list.
