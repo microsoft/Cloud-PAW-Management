@@ -17,10 +17,10 @@
     "url": "https://github.com/microsoft/Cloud-PAW-Management"
   },
   "dependencies": {
+    "@fluentui/react": "^8.36.4",
+    "dateformat": "^5.0.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "@fluentui/react": "^8.36.4",
-    "dateformat": "^5.0.1",
     "react-redux": "^7.2.5",
     "redux": "^4.1.1",
     "redux-logger": "^3.0.6",
@@ -30,9 +30,9 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.4.1",
+    "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.0.2",
-    "@types/node": "^16.11.0",
+    "@types/node": "^16.11.1",
     "@types/react": "^17.0.30",
     "@types/react-dom": "^17.0.9",
     "react-scripts": "4.0.3",
