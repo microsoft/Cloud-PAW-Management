@@ -27,7 +27,7 @@
     "web-vitals": "^2.1.2"
   },
   "devDependencies": {
-    "@microsoft/microsoft-graph-types-beta": "^0.15.0-preview",
+    "@microsoft/microsoft-graph-types-beta": "^0.16.0-preview",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
