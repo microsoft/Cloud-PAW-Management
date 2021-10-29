@@ -22,8 +22,8 @@ export const PawActions = (props: IPawActionsProps) => {
   const dispatch = useDispatch();
 
   const decommissionSelectedPaw = useCallback(() => {
-      dispatch(decommissionPaws(pawsToDecommission));
-      toggleHideDialog()
+    dispatch(decommissionPaws(pawsToDecommission));
+    toggleHideDialog()
   }, [dispatch, pawsToDecommission, toggleHideDialog]);
 
   const onRefershPaws = useCallback(() => {
@@ -42,7 +42,7 @@ export const PawActions = (props: IPawActionsProps) => {
       text: 'Decommission Selected PAW',
       iconProps: { iconName: 'Delete' },
       disabled: !(pawsToDecommission?.length > 0),
-      onClick: () => {toggleHideDialog()},
+      onClick: () => { toggleHideDialog() },
     },
     {
       key: 'refresh',
@@ -66,40 +66,39 @@ export const PawActions = (props: IPawActionsProps) => {
       type: DialogType.normal,
       title: 'Decommissioning PAW(s)',
       subText: `Do you want to decommission selected(${pawsToDecommission.length}) PAWs?`,
-    };  
+    };
     return (
       <Dialog
-      hidden={hideDialog}
-      onDismiss={toggleHideDialog}
-      dialogContentProps={dialogContentProps}
-      modalProps={modalProps}
-    >
-      <DialogFooter>
-        <Stack horizontal tokens={{childrenGap: 25}}>
-          <PrimaryButton onClick={decommissionSelectedPaw} text="Decommission" />
-          <DefaultButton onClick={toggleHideDialog} text="Cancel" />
-        </Stack>
-      </DialogFooter>
-    </Dialog>
+        hidden={hideDialog}
+        onDismiss={toggleHideDialog}
+        dialogContentProps={dialogContentProps}
+        modalProps={modalProps}
+      >
+        <DialogFooter>
+          <Stack horizontal tokens={{ childrenGap: 25 }}>
+            <PrimaryButton onClick={decommissionSelectedPaw} text="Decommission" />
+            <DefaultButton onClick={toggleHideDialog} text="Cancel" />
+          </Stack>
+        </DialogFooter>
+      </Dialog>
     );
   }, [decommissionSelectedPaw, hideDialog, modalProps, pawsToDecommission.length, toggleHideDialog]);
 
-    return (
-      <div>
-        <CommandBar
-          items={_items}
-          overflowItems={[]}
-          overflowButtonProps={{}}
-          farItems={[]}
-          ariaLabel="Inbox actions"
-          primaryGroupAriaLabel="PAW actions"
-          farItemsGroupAriaLabel="More actions"
-        />
-        {DecommissionPawDialog}
-        {isPawDecommissioning && <Spinner styles={{root: { minWidth: 400}}} label="Decommissioning PAW"/>}
-        {isPawCommissioning && <Spinner styles={{root: { minWidth: 400}}} label="Commissioning PAW"/>}
-        {isGettingPaws && <Spinner styles={{root: { minWidth: 400}}} label="Getting PAWs"/>}
-      </div>
-    );
-  };
-  
+  return (
+    <div>
+      <CommandBar
+        items={_items}
+        overflowItems={[]}
+        overflowButtonProps={{}}
+        farItems={[]}
+        ariaLabel="Inbox actions"
+        primaryGroupAriaLabel="PAW actions"
+        farItemsGroupAriaLabel="More actions"
+      />
+      {DecommissionPawDialog}
+      {isPawDecommissioning && <Spinner styles={{ root: { minWidth: 400 } }} label="Decommissioning PAW" />}
+      {isPawCommissioning && <Spinner styles={{ root: { minWidth: 400 } }} label="Commissioning PAW" />}
+      {isGettingPaws && <Spinner styles={{ root: { minWidth: 400 } }} label="Getting PAWs" />}
+    </div>
+  );
+};

@@ -1,6 +1,7 @@
 import { IPawItem } from '../../../models';
 import { PawService } from '../../../services';
-import { GETTING_PAWS_REQUEST,
+import {
+    GETTING_PAWS_REQUEST,
     GETTING_PAWS_SUCCESS,
     GETTING_PAWS_FAILURE
 } from './types';
@@ -21,7 +22,7 @@ export const getPaws = () => {
     return async (dispatch) => {
         dispatch(gettingPawsRequest());
         PawService.getPaws()
-        .then(paws => dispatch(gettingPawsSuccess(paws)))
-        .catch(error => dispatch(gettingPawsFailure(error)))
+            .then(paws => dispatch(gettingPawsSuccess(paws)))
+            .catch(error => dispatch(gettingPawsFailure(error)))
     };
 }

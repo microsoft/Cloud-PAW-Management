@@ -1,5 +1,5 @@
 
 export interface IDeviceItem {
-    displayName: string;
+    displayName: string,
     deviceId: string,
 }

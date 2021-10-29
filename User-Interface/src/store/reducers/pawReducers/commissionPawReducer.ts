@@ -1,4 +1,5 @@
-import { IDeviceItem } from '../../../models';
+import type { IDeviceItem } from '../../../models';
+
 import {
     DECOMMISSIONING_PAW_SELECTED,
     DECOMMISSIONING_PAWS_REQUEST,
@@ -21,8 +22,9 @@ const initialState = {
     message: undefined,
     error: undefined,
 };
+
 export const commissionPaws = (state = initialState, action: any) => {
-    switch(action.type) {
+    switch (action.type) {
         case DECOMMISSIONING_PAW_SELECTED:
             return {
                 ...state,

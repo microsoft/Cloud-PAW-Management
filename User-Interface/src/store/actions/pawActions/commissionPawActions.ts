@@ -1,5 +1,5 @@
 import { getPaws } from '.';
-import { IDeviceItem, IPawItem } from '../../../models';
+import type { IDeviceItem, IPawItem } from '../../../models';
 import { PawService } from '../../../services';
 import {
     COMMISSIONING_PAWS_REQUEST,
@@ -25,7 +25,7 @@ const commissioningPawsFailure = (error: Error) => ({
 export const commissionPaws = (paws: IDeviceItem[], pawTypeToCommission: string) => {
     return async (dispatch) => {
         dispatch(commissioningPawsRequest());
-        PawService.commissionPaw(paws, pawTypeToCommission) // Implement this please
+        PawService.commissionPaw(paws, pawTypeToCommission)
         .then(paws => {
             dispatch(commissioningPawsSuccess([]));
             dispatch(getPaws());
