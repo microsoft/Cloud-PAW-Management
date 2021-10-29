@@ -83,6 +83,73 @@ export class PawService {
                 method: 'DELETE',
                 mode: 'same-origin'
             });
-        }
-    }
-}
+        };
+    };
+
+    // Get the User Assignments for the specified PAW device
+    public static async getPawAssignment(pawDevice: IPawItem): Promise<User[]> {
+        // Build the request url
+        const getAssignmentURL = `${this.API_BASE_URL}/API/Lifecycle/PAW/${pawDevice.pawId}/Assign`;
+
+        // Run the Get request against the specified endpoint
+        const response = await fetch(getAssignmentURL);
+
+        // Parse the response body into JSON (the API always returns an array, an empty one if no users are assigned)
+        const result: User[] = await response.json();
+
+        // Returned the processed results
+        return result;
+    };
+
+    public static async setPawAssignment(pawDevice: IPawItem, upnList: string[]): Promise<User[]> {
+        // Build the request url
+        const postAssignmentURL = `${this.API_BASE_URL}/API/Lifecycle/PAW/${pawDevice.pawId}/Assign`;
+
+        // Build the post body to be used in the web request
+        const postBody = {
+            userList: upnList
+        };
+
+        // Run the Get request against the specified endpoint
+        const response = await fetch(postAssignmentURL, {
+            method: "POST",
+            mode: "same-origin",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(postBody)
+        });
+
+        // Parse the response body into JSON (the API always returns an array, an empty one if no users are assigned)
+        const result: User[] = await response.json();
+
+        // Returned the processed results
+        return result;
+    };
+
+    public static async removePawAssignment(pawDevice: IPawItem, upnList: string[]): Promise<User[]> {
+        // Build the request url
+        const deleteAssignmentURL = `${this.API_BASE_URL}/API/Lifecycle/PAW/${pawDevice.pawId}/Assign`;
+
+        // Build the delete body to be used in the web request
+        const deleteBody = {
+            userList: upnList
+        };
+
+        // Run the Get request against the specified endpoint
+        const response = await fetch(deleteAssignmentURL, {
+            method: "DELETE",
+            mode: "same-origin",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(deleteBody)
+        });
+
+        // Parse the response body into JSON (the API always returns an array, an empty one if no users are assigned)
+        const result: User[] = await response.json();
+
+        // Returned the processed results
+        return result;
+    };
+};
