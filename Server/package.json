@@ -40,7 +40,7 @@
     "@azure/identity": "^2.0.1",
     "@azure/keyvault-secrets": "^4.3.0",
     "@microsoft/microsoft-graph-client": "^3.0.0",
-    "@microsoft/microsoft-graph-types-beta": "^0.16.0-preview",
+    "@microsoft/microsoft-graph-types-beta": "^0.17.0-preview",
     "express": "^4.17.1",
     "helmet": "^4.6.0",
     "isomorphic-fetch": "^3.0.0"
