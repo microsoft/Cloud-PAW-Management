@@ -41,7 +41,7 @@
     "@azure/identity": "^2.0.1",
     "@azure/keyvault-secrets": "^4.3.0",
     "@microsoft/microsoft-graph-client": "^3.0.1",
-    "express": "^4.17.1",
+    "express": "^4.17.2",
     "helmet": "^4.6.0",
     "isomorphic-fetch": "^3.0.0"
   }
