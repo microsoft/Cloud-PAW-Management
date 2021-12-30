@@ -7,7 +7,7 @@ import * as path from "path";
 import { MSAzureAccessCredential } from "./Authentication";
 import { ConfigurationEngine } from "./ConfigEngine";
 import { DebugRouter } from "./DebugRoute";
-import { MSGraphClient } from "./GraphClient";
+import { AppGraphClient } from "./GraphClient";
 import { LifecycleRouter } from "./LifecycleManagement";
 import { writeDebugInfo } from "./Utility";
 
@@ -20,7 +20,7 @@ const debugMode = process.env.Debug || "false"
 const azureAuthSession = new MSAzureAccessCredential();
 
 // Initialize the graph client
-const graphClient = new MSGraphClient(azureAuthSession.credential);
+const graphClient = new AppGraphClient(azureAuthSession.credential);
 
 // Initialize the configuration engine
 const configEngine = new ConfigurationEngine(graphClient);

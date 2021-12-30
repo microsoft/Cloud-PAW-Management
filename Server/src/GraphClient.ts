@@ -10,15 +10,17 @@ import { endpointGroupAssignmentTarget } from "./RequestGenerator";
 import { writeDebugInfo, InternalAppError, validateConditionalAccessSetting, validateEmail, validateGUID, validateGUIDArray, validateSettingCatalogSettings, validateStringArray, validateOmaStringObjectArray } from "./Utility";
 
 // Define the Graph Client class.
-export class MSGraphClient {
+export class AppGraphClient {
     private client: Promise<Client>;
 
     // Define the initialization of the class
     constructor(credential: Promise<ChainedTokenCredential>) {
+        //TODO: Input validate that input is a chained token credential
+
         // Create an instance of the graph client and expose it internally.
         // The credentials are passed as a parameter as to not expose them to other methods internal to this class.
         this.client = this.init(credential);
-    }
+    };
 
     // Define the login command that returns a connected instance of the Graph client
     private async init(credential: Promise<ChainedTokenCredential>): Promise<Client> {

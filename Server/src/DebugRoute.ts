@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import type { MSGraphClient } from "./GraphClient";
+import type { AppGraphClient } from "./GraphClient";
 import type { ConfigurationEngine } from "./ConfigEngine";
 import { endpointPAWUserRightsSettings, conditionalAccessPAWUserAssignment, localGroupMembershipUserRights } from "./RequestGenerator";
 import { validateGUID, validateGUIDArray, validateStringArray } from "./Utility";
@@ -11,11 +11,11 @@ import type { ChainedTokenCredential } from "@azure/identity"
 export class DebugRouter {
     // Define the properties that will be available to the class
     private webServer: express.Express;
-    private graphClient: MSGraphClient;
+    private graphClient: AppGraphClient;
     private configEngine: ConfigurationEngine;
 
     // Define how the class should be instantiated
-    constructor(webServer: express.Express, graphClient: MSGraphClient, configEngine: ConfigurationEngine, credential: Promise<ChainedTokenCredential>) {
+    constructor(webServer: express.Express, graphClient: AppGraphClient, configEngine: ConfigurationEngine, credential: Promise<ChainedTokenCredential>) {
 
         // Make the express instance available to the class
         this.webServer = webServer;

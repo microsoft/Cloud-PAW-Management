@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import type { MSGraphClient } from "./GraphClient";
+import type { AppGraphClient } from "./GraphClient";
 import { InternalAppError, validateGUID, validateDate, writeDebugInfo } from "./Utility";
 
 // Define the Endpoint Manager Role Scope Tag data format.
@@ -53,14 +53,14 @@ export interface PAWObject extends PAWGroupConfig {
 // Expose a configuration engine that interfaces with the
 export class ConfigurationEngine {
     // Define the properties available in the class
-    private graphClient: MSGraphClient;
+    private graphClient: AppGraphClient;
     private configScratchSpace: CloudSecConfigIncomplete;
     scopeTagName: string;
     configInitialized: boolean;
     config: CloudSecConfig | undefined;
 
     // Initialize the class
-    constructor(graphClient: MSGraphClient) {
+    constructor(graphClient: AppGraphClient) {
         // Initialize the properties
         this.graphClient = graphClient;
         this.configInitialized = false;
