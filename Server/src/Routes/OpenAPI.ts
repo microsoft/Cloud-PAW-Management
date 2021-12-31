@@ -23,7 +23,7 @@ export class SwaggerUI {
     // Initialize the Swagger UI middleware
     initSwaggerUI(): void {
         // Initialize the Swagger UI middleware on the API endpoint
-        this.webServer.use('/Docs/API', swaggerUI.serve);
+        this.webServer.use('/Docs', swaggerUI.serve);
 
         // Set the Swagger UI engine's default options
         const swaggerOptions: swaggerUI.SwaggerUiOptions = {
@@ -32,6 +32,6 @@ export class SwaggerUI {
         };
 
         // Specify the document to be served up on the SwaggerUI endpoint using the specified options
-        this.webServer.get('/Docs/API', swaggerUI.setup(swaggerDocument, swaggerOptions));
+        this.webServer.get('/Docs', swaggerUI.setup(swaggerDocument, swaggerOptions));
     }
 }
