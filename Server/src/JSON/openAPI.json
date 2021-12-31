@@ -1,144 +1,147 @@
 {
     "openapi": "3.0.3",
     "info": {
-      "title": "Cloud PAW Management",
-      "description": "Microsoft Endpoint Manager (Intune) Cloud Privileged Access Workstation (PAW) Lifecycle Management and Deployment App.",
-      "contact": {
-        "email": "elliot.huffman@microsoft.com"
-      },
-      "license": {
-        "name": "MIT",
-        "url": "https://github.com/microsoft/Cloud-PAW-Management/blob/main/LICENSE"
-      },
-      "version": "appVersionFromConfigEngine"
+        "title": "Cloud PAW Management",
+        "description": "Microsoft Endpoint Manager (Intune) Cloud Privileged Access Workstation (PAW) Lifecycle Management and Deployment App.",
+        "contact": {
+            "email": "elliot.huffman@microsoft.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://github.com/microsoft/Cloud-PAW-Management/blob/main/LICENSE"
+        },
+        "version": "appVersionFromConfigEngine"
     },
     "externalDocs": {
-      "description": "Official Documentation",
-      "url": "https://github.com/microsoft/Cloud-PAW-Management/wiki"
+        "description": "Official Documentation",
+        "url": "https://github.com/microsoft/Cloud-PAW-Management/wiki"
     },
     "servers": [
-      {
-        "url": "https://contoso.local:80/",
-        "description": "A secured connection to the app, only secured connections should be used for production."
-      },
-      {
-        "url": "http://contoso.local:443/",
-        "description": "Used only for local dev, never host this app without network encryption."
-      }
+        {
+            "url": "https://contoso.local:80/",
+            "description": "A secured connection to the app, only secured connections should be used for production."
+        },
+        {
+            "url": "http://contoso.local:443/",
+            "description": "Used only for local dev, never host this app without network encryption."
+        }
     ],
     "tags": [
-      {
-        "name": "Lifecycle Management",
-        "description": "PAW Device Management",
-        "externalDocs": {
-          "description": "Read the wiki page",
-          "url": "https://github.com/microsoft/Cloud-PAW-Management/wiki/PAW-Lifecycle-Management-API-Endpoints"
+        {
+            "name": "Lifecycle Management",
+            "description": "PAW Device Management",
+            "externalDocs": {
+                "description": "Read the wiki page",
+                "url": "https://github.com/microsoft/Cloud-PAW-Management/wiki/PAW-Lifecycle-Management-API-Endpoints"
+            }
+        },
+        {
+            "name": "Infrastructure Deployment",
+            "description": "Coming soon!",
+            "externalDocs": {
+                "description": "Read the wiki page",
+                "url": "https://github.com/microsoft/Cloud-PAW-Management/wiki/Infrastructure-Deployment-API-Endpoints"
+            }
+        },
+        {
+            "name": "Debug Mode",
+            "description": "Endpoints that are exposed only in debug mode. You can use these to see as the app sees.",
+            "externalDocs": {
+                "description": "Read the wiki page",
+                "url": "https://github.com/microsoft/Cloud-PAW-Management/wiki/Debug-API-Endpoints"
+            }
         }
-      },
-      {
-        "name": "Infrastructure Deployment",
-        "description": "Coming soon!",
-        "externalDocs": {
-          "description": "Read the wiki page",
-          "url": "https://github.com/microsoft/Cloud-PAW-Management/wiki/Infrastructure-Deployment-API-Endpoints"
-        }
-      },
-      {
-        "name": "Debug Mode",
-        "description": "Endpoints that are exposed only in debug mode. You can use these to see as the app sees.",
-        "externalDocs": {
-          "description": "Read the wiki page",
-          "url": "https://github.com/microsoft/Cloud-PAW-Management/wiki/Debug-API-Endpoints"
-        }
-      }
     ],
     "paths": {
-      "/Docs": {
-        "get": {
-          "operationId": "swaggerUI",
-          "tags": [
-            "Debug Mode"
-          ],
-          "summary": "Render this Swagger UI",
-          "description": "Runs the Swagger UI render to render the OpenAPI spec that you are viewing now.",
-          "responses": {
-            "200": {
-              "description": "Returns the HTML for Swagger UI renderer's output"
-            }
-          }
-        }
-      },
-      "/Debug/accessToken": {
-        "get": {
-          "operationId": "debugAccessToken",
-          "tags": [
-            "Debug Mode"
-          ],
-          "summary": "Returns an access token in the app's auth context",
-          "description": "Returns the access token that the web server is using for authenticating to the MS Graph API.",
-          "responses": {
-            "200": {
-              "description": "Successful Operation. You can securely decode the access token using https://jwt.ms",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/AccessToken"
-                  }
+        "/Docs": {
+            "get": {
+                "operationId": "swaggerUI",
+                "tags": [
+                    "Debug Mode"
+                ],
+                "summary": "Render this Swagger UI",
+                "description": "Runs the Swagger UI render to render the OpenAPI spec that you are viewing now.",
+                "responses": {
+                    "200": {
+                        "description": "Returns the HTML for Swagger UI renderer's output"
+                    }
                 }
-              }
             }
-          }
-        }
-      },
-      "/Debug/envVar": {
-        "get": {
-          "operationId": "debugEnvVar",
-          "tags": [
-            "Debug Mode"
-          ],
-          "summary": "List Environmental Variables",
-          "description": "Returns a list of the enviornmental variables accessible to the API server",
-          "responses": {
-            "200": {
-              "description": "Successful Operation",
-              "content": {
-                "application/json": {
-                  "example": {
-                    "debug": "true",
-                    "Scope_Tag": "Cloud-PAW-Mgmt",
-                    "port": "4000"
-                  },
-                  "schema": {
-                    "$ref": "#/components/schemas/EnvironmentalVariables"
-                  }
+        },
+        "/Debug/accessToken": {
+            "get": {
+                "operationId": "debugAccessToken",
+                "tags": [
+                    "Debug Mode"
+                ],
+                "summary": "Returns an access token in the app's auth context",
+                "description": "Returns the access token that the web server is using for authenticating to the MS Graph API.",
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation. You can securely decode the access token using https://jwt.ms",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AccessToken"
+                                }
+                            }
+                        }
+                    }
                 }
-              }
             }
-          }
+        },
+        "/Debug/envVar": {
+            "get": {
+                "operationId": "debugEnvVar",
+                "tags": [
+                    "Debug Mode"
+                ],
+                "summary": "List Environmental Variables",
+                "description": "Returns a list of the enviornmental variables accessible to the API server",
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "debug": "true",
+                                    "Scope_Tag": "Cloud-PAW-Mgmt",
+                                    "port": "4000"
+                                },
+                                "schema": {
+                                    "$ref": "#/components/schemas/EnvironmentalVariables"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+                }
+            }
         }
-      }
     },
     "components": {
-      "schemas": {
-        "AccessToken": {
-          "type": "object",
-          "properties": {
-            "token": {
-              "type": "string",
-              "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Imk2bEdrM0ZaenhSY1ViMkMzbkVRN3N5SEpsWSIsImtpZCI6Imk2bEdrM0ZaenhSY1ViMkMzbkVRN3N5SEpsWSJ9.eyJhdWQiOiJlZjFkYTlkNC1mZjc3LTRjM2UtYTAwNS04NDBjM2Y4MzA3NDUiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9mYTE1ZDY5Mi1lOWM3LTQ0NjAtYTc0My0yOWYyOTUyMjIyOS8iLCJpYXQiOjE1MzcyMzMxMDYsIm5iZiI6MTUzNzIzMzEwNiwiZXhwIjoxNTM3MjM3MDA2LCJhY3IiOiIxIiwiYWlvIjoiQVhRQWkvOElBQUFBRm0rRS9RVEcrZ0ZuVnhMaldkdzhLKzYxQUdyU091TU1GNmViYU1qN1hPM0libUQzZkdtck95RCtOdlp5R24yVmFUL2tES1h3NE1JaHJnR1ZxNkJuOHdMWG9UMUxrSVorRnpRVmtKUFBMUU9WNEtjWHFTbENWUERTL0RpQ0RnRTIyMlRJbU12V05hRU1hVU9Uc0lHdlRRPT0iLCJhbXIiOlsid2lhIl0sImFwcGlkIjoiNzVkYmU3N2YtMTBhMy00ZTU5LTg1ZmQtOGMxMjc1NDRmMTdjIiwiYXBwaWRhY3IiOiIwIiwiZW1haWwiOiJBYmVMaUBtaWNyb3NvZnQuY29tIiwiZmFtaWx5X25hbWUiOiJMaW5jb2xuIiwiZ2l2ZW5fbmFtZSI6IkFiZSAoTVNGVCkiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMjIyNDcvIiwiaXBhZGRyIjoiMjIyLjIyMi4yMjIuMjIiLCJuYW1lIjoiYWJlbGkiLCJvaWQiOiIwMjIyM2I2Yi1hYTFkLTQyZDQtOWVjMC0xYjJiYjkxOTQ0MzgiLCJyaCI6IkkiLCJzY3AiOiJ1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiJsM19yb0lTUVUyMjJiVUxTOXlpMmswWHBxcE9pTXo1SDNaQUNvMUdlWEEiLCJ0aWQiOiJmYTE1ZDY5Mi1lOWM3LTQ0NjAtYTc0My0yOWYyOTU2ZmQ0MjkiLCJ1bmlxdWVfbmFtZSI6ImFiZWxpQG1pY3Jvc29mdC5jb20iLCJ1dGkiOiJGVnNHeFlYSTMwLVR1aWt1dVVvRkFBIiwidmVyIjoiMS4wIn0.D3H6pMUtQnoJAGq6AHd"
+        "schemas": {
+            "AccessToken": {
+                "type": "object",
+                "properties": {
+                    "token": {
+                        "type": "string",
+                        "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Imk2bEdrM0ZaenhSY1ViMkMzbkVRN3N5SEpsWSIsImtpZCI6Imk2bEdrM0ZaenhSY1ViMkMzbkVRN3N5SEpsWSJ9.eyJhdWQiOiJlZjFkYTlkNC1mZjc3LTRjM2UtYTAwNS04NDBjM2Y4MzA3NDUiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9mYTE1ZDY5Mi1lOWM3LTQ0NjAtYTc0My0yOWYyOTUyMjIyOS8iLCJpYXQiOjE1MzcyMzMxMDYsIm5iZiI6MTUzNzIzMzEwNiwiZXhwIjoxNTM3MjM3MDA2LCJhY3IiOiIxIiwiYWlvIjoiQVhRQWkvOElBQUFBRm0rRS9RVEcrZ0ZuVnhMaldkdzhLKzYxQUdyU091TU1GNmViYU1qN1hPM0libUQzZkdtck95RCtOdlp5R24yVmFUL2tES1h3NE1JaHJnR1ZxNkJuOHdMWG9UMUxrSVorRnpRVmtKUFBMUU9WNEtjWHFTbENWUERTL0RpQ0RnRTIyMlRJbU12V05hRU1hVU9Uc0lHdlRRPT0iLCJhbXIiOlsid2lhIl0sImFwcGlkIjoiNzVkYmU3N2YtMTBhMy00ZTU5LTg1ZmQtOGMxMjc1NDRmMTdjIiwiYXBwaWRhY3IiOiIwIiwiZW1haWwiOiJBYmVMaUBtaWNyb3NvZnQuY29tIiwiZmFtaWx5X25hbWUiOiJMaW5jb2xuIiwiZ2l2ZW5fbmFtZSI6IkFiZSAoTVNGVCkiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMjIyNDcvIiwiaXBhZGRyIjoiMjIyLjIyMi4yMjIuMjIiLCJuYW1lIjoiYWJlbGkiLCJvaWQiOiIwMjIyM2I2Yi1hYTFkLTQyZDQtOWVjMC0xYjJiYjkxOTQ0MzgiLCJyaCI6IkkiLCJzY3AiOiJ1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiJsM19yb0lTUVUyMjJiVUxTOXlpMmswWHBxcE9pTXo1SDNaQUNvMUdlWEEiLCJ0aWQiOiJmYTE1ZDY5Mi1lOWM3LTQ0NjAtYTc0My0yOWYyOTU2ZmQ0MjkiLCJ1bmlxdWVfbmFtZSI6ImFiZWxpQG1pY3Jvc29mdC5jb20iLCJ1dGkiOiJGVnNHeFlYSTMwLVR1aWt1dVVvRkFBIiwidmVyIjoiMS4wIn0.D3H6pMUtQnoJAGq6AHd"
+                    },
+                    "expiresOnTimestamp": {
+                        "type": "integer",
+                        "example": 1640975116000
+                    }
+                }
             },
-            "expiresOnTimestamp": {
-              "type": "integer",
-              "example": 1640975116000
+            "EnvironmentalVariables": {
+                "type": "object",
+                "additionalProperties": {
+                    "type": "string"
+                }
             }
-          }
-        },
-        "EnvironmentalVariables": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          }
         }
-      }
     }
-  }
+}
