@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import type { AppGraphClient } from "./GraphClient";
-import type { ConfigurationEngine } from "./ConfigEngine";
-import { writeDebugInfo, InternalAppError } from "./Utility";
+import type { AppGraphClient } from "../Utility/GraphClient";
+import type { ConfigurationEngine } from "../Startup/ConfigEngine";
+import { writeDebugInfo, InternalAppError } from "../Utility/Utility";
 import type express from "express";
 import type * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta";
 

@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import type { AppGraphClient } from "./GraphClient";
-import { InternalAppError, validateGUID, validateDate, writeDebugInfo } from "./Utility";
+import type { AppGraphClient } from "../Utility/GraphClient";
+import { InternalAppError, validateGUID, validateDate, writeDebugInfo } from "../Utility/Utility";
 
 // Define the Endpoint Manager Role Scope Tag data format.
 interface CloudSecConfigIncomplete {

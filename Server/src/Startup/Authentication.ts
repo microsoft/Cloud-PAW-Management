@@ -4,7 +4,7 @@
 import { ChainedTokenCredential, ClientSecretCredential, ManagedIdentityCredential } from "@azure/identity";
 import type { KeyVaultSecret } from "@azure/keyvault-secrets";
 import { SecretClient } from "@azure/keyvault-secrets";
-import { validateGUID } from "./Utility";
+import { validateGUID } from "../Utility/Utility";
 
 // Create the MS Azure Access Credential handler class.
 export class MSAzureAccessCredential {

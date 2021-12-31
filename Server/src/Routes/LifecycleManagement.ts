@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { endpointPAWUserRightsSettings, localGroupMembershipUserRights } from "./RequestGenerator";
-import { writeDebugInfo, InternalAppError, validateGUID, validateEmailArray } from "./Utility";
-import type { AppGraphClient } from "./GraphClient";
-import type { ConfigurationEngine, PAWGroupConfig, PAWObject } from "./ConfigEngine";
+import { endpointPAWUserRightsSettings, localGroupMembershipUserRights } from "../Utility/RequestGenerator";
+import { writeDebugInfo, InternalAppError, validateGUID, validateEmailArray } from "../Utility/Utility";
+import type { AppGraphClient } from "../Utility/GraphClient";
+import type { ConfigurationEngine, PAWGroupConfig, PAWObject } from "../Startup/ConfigEngine";
 import type express from "express";
 import type * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta";
 

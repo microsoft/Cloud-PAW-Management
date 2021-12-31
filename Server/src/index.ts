@@ -4,12 +4,13 @@
 import express from "express";
 import helmet from "helmet";
 import * as path from "path";
-import { MSAzureAccessCredential } from "./Authentication";
-import { ConfigurationEngine } from "./ConfigEngine";
-import { DebugRouter } from "./DebugRoute";
-import { AppGraphClient } from "./GraphClient";
-import { LifecycleRouter } from "./LifecycleManagement";
-import { writeDebugInfo } from "./Utility";
+import { MSAzureAccessCredential } from "./Startup/Authentication";
+import { ConfigurationEngine } from "./Startup/ConfigEngine";
+import { DebugRouter } from "./Routes/DebugRoute";
+import { AppGraphClient } from "./Utility/GraphClient";
+import { LifecycleRouter } from "./Routes/LifecycleManagement";
+import { SwaggerUI } from "./Routes/OpenAPI";
+import { writeDebugInfo } from "./Utility/Utility";
 
 // Import environmental variables
 const port = process.env.PORT || 3000;

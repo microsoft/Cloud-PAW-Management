@@ -3,7 +3,7 @@
 
 import "mocha";
 import { expect } from "chai";
-import { validateGUID, validateEmail } from "../src/Utility";
+import { validateGUID, validateEmail } from "../src/Utility/Utility";
 
 describe("GUID Validator", () => {
     describe("Validation of a Real GUID", () => {

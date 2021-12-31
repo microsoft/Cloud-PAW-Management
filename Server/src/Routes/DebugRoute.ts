@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import type { AppGraphClient } from "./GraphClient";
-import type { ConfigurationEngine } from "./ConfigEngine";
-import { endpointPAWUserRightsSettings, conditionalAccessPAWUserAssignment, localGroupMembershipUserRights } from "./RequestGenerator";
-import { validateGUID, validateGUIDArray, validateStringArray } from "./Utility";
+import type { AppGraphClient } from "../Utility/GraphClient";
+import type { ConfigurationEngine } from "../Startup/ConfigEngine";
+import { endpointPAWUserRightsSettings, conditionalAccessPAWUserAssignment, localGroupMembershipUserRights } from "../Utility/RequestGenerator";
+import { validateGUID, validateGUIDArray, validateStringArray } from "../Utility/Utility";
 import type express from "express";
 import type { ChainedTokenCredential } from "@azure/identity"
 
