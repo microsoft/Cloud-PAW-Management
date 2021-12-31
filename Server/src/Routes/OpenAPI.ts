@@ -33,7 +33,7 @@ export class SwaggerUI {
 
         // Set the two host names in the API Doc
         openAPIDoc.servers[0].url = "https://" + hostname + ":" + port + "/"
-        openAPIDoc.servers[1].url = "https://" + hostname + ":" + port + "/"
+        openAPIDoc.servers[1].url = "http://" + hostname + ":" + port + "/"
 
         // Initialize the Swagger UI middleware on the API endpoint
         this.webServer.use('/Docs', swaggerUI.serve);
