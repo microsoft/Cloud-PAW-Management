@@ -59,6 +59,9 @@ if (debugMode === "true") {
         // Stop the server
         serverInstance.close();
     });
+
+    // Instantiate an instance of the OpenAPI docs engine
+    const openAPIRoutes = new SwaggerUI(webServer);
 };
 
 // Initialize the core business logic routes
