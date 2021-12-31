@@ -4,6 +4,9 @@
 import type { AppGraphClient } from "../Utility/GraphClient";
 import { InternalAppError, validateGUID, validateDate, writeDebugInfo } from "../Utility/Utility";
 
+// Export the version of the app
+export const appVersion = "1.1.0";
+
 // Define the Endpoint Manager Role Scope Tag data format.
 interface CloudSecConfigIncomplete {
     "PAWSecGrp"?: string,
