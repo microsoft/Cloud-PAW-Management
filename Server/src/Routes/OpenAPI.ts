@@ -1,8 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { hostname } from "os";
 import * as swaggerUI from "swagger-ui-express"
-import { swaggerDocument } from "../JSON/swaggerDoc";
+import { appVersion } from "../Startup/ConfigEngine";
+import * as openAPIDoc from "../JSON/openAPI.json";
 import type express from "express";
 
 // Define the Swagger UI class that 
@@ -22,16 +24,27 @@ export class SwaggerUI {
 
     // Initialize the Swagger UI middleware
     initSwaggerUI(): void {
+
+        // Import environmental variables
+        const port = process.env.PORT || 3000;
+
+        // Set the app version in the API Doc
+        openAPIDoc.info.version = appVersion;
+
+        // Set the two host names in the API Doc
+        openAPIDoc.servers[0].url = "https://" + hostname + ":" + port + "/"
+        openAPIDoc.servers[1].url = "https://" + hostname + ":" + port + "/"
+
         // Initialize the Swagger UI middleware on the API endpoint
         this.webServer.use('/Docs', swaggerUI.serve);
 
         // Set the Swagger UI engine's default options
         const swaggerOptions: swaggerUI.SwaggerUiOptions = {
-            customCss: '.swagger-ui .topbar { display: none }',
+            // customCss: '.swagger-ui .topbar { display: none }',
             customSiteTitle: "Cloud PAW Management - API Docs"
         };
 
         // Specify the document to be served up on the SwaggerUI endpoint using the specified options
-        this.webServer.get('/Docs', swaggerUI.setup(swaggerDocument, swaggerOptions));
+        this.webServer.get('/Docs', swaggerUI.setup(openAPIDoc, swaggerOptions));
     }
 }
