@@ -117,6 +117,75 @@
                 }
             }
         },
+        "/Debug/testPost": {
+            "post": {
+                "operationId": "debugPost",
+                "tags": [
+                    "Debug Mode"
+                ],
+                "summary": "Returns posted data to the caller",
+                "description": "Returns JSON data posted to the endpoint to test if the server is getting posts and can parse them.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "additionalProperties": {
+                                    "type": "object"
+                                }
+                            },
+                            "examples": {
+                                "Hello World": {
+                                    "summary": "Generic Hello World",
+                                    "description": "This example is a generic hello world example where the property name is hello and the value is world.",
+                                    "value": "{\"Hello\": \"World!\"}"
+                                },
+                                "Multi-Property": {
+                                    "summary": "Object with multiple properties",
+                                    "description": "This example is an object with multiple properties.",
+                                    "value": "{\"abc\": \"123\", \"def\": \"!@#\"}"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                },
+                                "examples": {
+                                    "Hello World": {
+                                        "summary": "Generic Hello World",
+                                        "description": "This example is a generic hello world example where the property name is hello and the value is world.",
+                                        "value": "{\"Hello\": \"World!\"}"
+                                    },
+                                    "Multi-Property": {
+                                        "summary": "Object with multiple properties",
+                                        "description": "This example is an object with multiple properties.",
+                                        "value": "{\"abc\": \"123\", \"def\": \"!@#\"}"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Bad Request",
+                        "content": {
+                            "text/html":{
+                                "schema":{
+                                    "type": "string",
+                                    "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>SyntaxError: Unexpected end of JSON input<br> &nbsp; &nbsp;at JSON.parse (&lt;anonymous&gt;)<br> &nbsp; &nbsp;at parse (json.js:89:19)<br></pre>\n</body>\n</html>"
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
