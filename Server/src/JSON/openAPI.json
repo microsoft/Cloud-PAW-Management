@@ -123,7 +123,7 @@
                 "tags": [
                     "Debug Mode"
                 ],
-                "summary": "Returns posted data to the caller",
+                "summary": "Returns posted data to the caller.",
                 "description": "Returns JSON data posted to the endpoint to test if the server is getting posts and can parse them.",
                 "requestBody": {
                     "content": {
@@ -175,13 +175,94 @@
                             }
                         }
                     },
-                    "400":{
+                    "400": {
                         "description": "Bad Request",
                         "content": {
-                            "text/html":{
-                                "schema":{
+                            "text/html": {
+                                "schema": {
                                     "type": "string",
                                     "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>SyntaxError: Unexpected end of JSON input<br> &nbsp; &nbsp;at JSON.parse (&lt;anonymous&gt;)<br> &nbsp; &nbsp;at parse (json.js:89:19)<br></pre>\n</body>\n</html>"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/Debug/roleScopeTag": {
+            "post": {
+                "operationId": "debugPostRoleScopeTag",
+                "tags": [
+                    "Debug Mode"
+                ],
+                "summary": "Create a new Role Scope Tag.",
+                "description": "Creates a new Endpoint Manager role scope tag using the MS Graph API.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 128,
+                                        "minLength": 1
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "maxLength": 1024
+                                    }
+                                },
+                                "required": [
+                                    "name"
+                                ]
+                            },
+                            "examples": {
+                                "Name only": {
+                                    "summary": "Name only tag creation",
+                                    "description": "Create a role scope tag with a name only.",
+                                    "value": "{\"name\": \"Cloud-PAW-Management\"}"
+                                },
+                                "Name and Description": {
+                                    "summary": "Name and Description tag creation",
+                                    "description": "Create a role scope tag with a name and a description field.",
+                                    "value": "{\"name\": \"Cloud-PAW-Management\", \"description\": \"PAWSecGrp=9ed1e179-e179-9ed1-79e1-d19e79e1d19e\\nUsrSecGrp=9ed1e179-e179-9ed1-79e1-d19e79e1d19e\\nSiloRootGrp=9ed1e179-e179-9ed1-79e1-d19e79e1d19e\\nBrkGls=9ed1e179-e179-9ed1-79e1-d19e79e1d19e\\nUsrTag=9ed1e179-e179-9ed1-79e1-d19e79e1d19e\"}"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/roleScopeTag"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "operationId": "debugGetRoleScopeTag",
+                "tags": [
+                    "Debug Mode"
+                ],
+                "summary": "Return array of role scope tags.",
+                "description": "Returns an array of all the role scope tag objects from the MS Graph API.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/roleScopeTag"
+                                    }
                                 }
                             }
                         }
