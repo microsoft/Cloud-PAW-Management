@@ -210,6 +210,43 @@
                 "additionalProperties": {
                     "type": "string"
                 }
+            },
+            "roleScopeTag": {
+                "type": "object",
+                "properties": {
+                    "@odata.type": {
+                        "type": "string",
+                        "readOnly": true,
+                        "default": "#microsoft.graph.roleScopeTag",
+                        "enum": [
+                            "#microsoft.graph.roleScopeTag"
+                        ],
+                        "description": "The type indicator for the MS Graph API to consume.",
+                        "example": "#microsoft.graph.roleScopeTag"
+                    },
+                    "id": {
+                        "type": "string",
+                        "readOnly": true,
+                        "example": "3",
+                        "description": "A unique number representing the unique Role Scope tag object. This is an integer as a string. Key of the entity. This is automatically generated."
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Description of the Role Scope Tag.",
+                        "example": "PAWSecGrp=9ed1e179-e179-9ed1-79e1-d19e79e1d19e\nUsrSecGrp=9ed1e179-e179-9ed1-79e1-d19e79e1d19e\nSiloRootGrp=9ed1e179-e179-9ed1-79e1-d19e79e1d19e\nBrkGls=9ed1e179-e179-9ed1-79e1-d19e79e1d19e\nUsrTag=9ed1e179-e179-9ed1-79e1-d19e79e1d19e"
+                    },
+                    "displayName": {
+                        "type": "string",
+                        "description": "The display or friendly name of the Role Scope Tag.",
+                        "example": "Cloud-PAW-Management"
+                    },
+                    "isBuiltIn": {
+                        "type": "boolean",
+                        "readOnly": true,
+                        "example": false,
+                        "description": "This field is used to notate Microsoft managed Role Scope tags, e.g. the \"default\" tag."
+                    }
+                }
             }
         }
     }
