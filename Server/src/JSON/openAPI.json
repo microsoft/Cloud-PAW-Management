@@ -260,6 +260,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "array",
+                                    "minItems": 0,
                                     "items": {
                                         "$ref": "#/components/schemas/roleScopeTag"
                                     }
@@ -268,6 +269,151 @@
                         }
                     }
                 }
+            }
+        },
+        "/Debug/roleScopeTag/{identifier}": {
+            "get": {
+                "operationId": "debugGetRoleScopeTagByIdentifier",
+                "tags": [
+                    "Debug Mode"
+                ],
+                "summary": "Get the specific role scope tag",
+                "description": "Get the role scope tag by the name of the tag. Returns the first match, if more than one match exists. This is possible if a duplicate display name value is specified during scope tag creation via the Graph API.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "maxItems": 1,
+                                    "minItems": 0,
+                                    "items": {
+                                        "$ref": "#/components/schemas/roleScopeTag"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "identifier",
+                        "description": "The display name property of the role scope tag to retrieve.",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "maxLength": 128,
+                            "minLength": 1,
+                            "example": "Privileged-Security-Management"
+                        }
+                    }
+                ]
+            },
+            "patch": {
+                "operationId": "debugUpdateRoleScopeTagByIdentifier",
+                "tags": [
+                    "Debug Mode"
+                ],
+                "summary": "Update the specified role scope tag",
+                "description": "Update the specified role scope tag's values. The ID field is read only but can be specified to update the name field's value while operating on the specified entity ID.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "description": {
+                                        "type": "string",
+                                        "maxLength": 1024,
+                                        "minLength": 0
+                                    },
+                                    "ID": {
+                                        "type": "number",
+                                        "minimum": 1
+                                    }
+                                },
+                                "required": [
+                                    "description"
+                                ]
+                            },
+                            "examples": {
+                                "Update Description": {
+                                    "summary": "Update description only",
+                                    "description": "Updates the description field only as the name is used as the entity identifier.",
+                                    "value": "{\"description\": \"Hello world!\"}"
+                                },
+                                "Update Name and Description": {
+                                    "summary": "Update name and description",
+                                    "description": "Updates the name and the description fields as the ID is used as the entity identifier, allowing the name parameter to be written as the new display name. The name's value is grabbed from the identifier parameter.",
+                                    "value": "{\"ID\": 3, \"description\": \"PAWSecGrp=9ed1e179-e179-9ed1-79e1-d19e79e1d19e\\nUsrSecGrp=9ed1e179-e179-9ed1-79e1-d19e79e1d19e\\nSiloRootGrp=9ed1e179-e179-9ed1-79e1-d19e79e1d19e\\nBrkGls=9ed1e179-e179-9ed1-79e1-d19e79e1d19e\\nUsrTag=9ed1e179-e179-9ed1-79e1-d19e79e1d19e\"}"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/roleScopeTag"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "identifier",
+                        "description": "The display name property of the role scope tag to update.",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "maxLength": 128,
+                            "minLength": 1,
+                            "example": "Privileged-Security-Management"
+                        }
+                    }
+                ]
+            },
+            "delete": {
+                "operationId": "debugDeleteRoleScopeTagByIdentifier",
+                "tags": [
+                    "Debug Mode"
+                ],
+                "summary": "Delete the specified role scope tag",
+                "description": "Deletes the specified role scope tag based on the ID specified in the parameter.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "boolean",
+                                    "example": true
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "identifier",
+                        "description": "The display name property of the role scope tag to delete.",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "number",
+                            "minimum": 1,
+                            "example": "3"
+                        }
+                    }
+                ]
             }
         }
     },
