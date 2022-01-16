@@ -2,7 +2,8 @@
 // Licensed under the MIT license.
 
 import type * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta";
-import { InternalAppError, validateEmailArray, validateGUID, validateGUIDArray, validateStringArray } from "./Utility";
+import { InternalAppError } from "./Utility";
+import { validateEmailArray, validateGUID, validateGUIDArray, validateStringArray } from "./Validators";
 
 // Generate a settings object for the user rights assignment of a PAW.
 // Allows multiple users for potential shared PAW concept in the future.

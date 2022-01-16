@@ -2,7 +2,8 @@
 // Licensed under the MIT license.
 
 import type { AppGraphClient } from "../Utility/GraphClient";
-import { InternalAppError, validateGUID, validateDate, writeDebugInfo } from "../Utility/Utility";
+import { InternalAppError, writeDebugInfo } from "../Utility/Utility";
+import { validateGUID, validateDate } from "../Utility/Validators";
 
 // Export the version of the app
 export const appVersion = "1.1.0";

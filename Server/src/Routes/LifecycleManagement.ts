@@ -2,7 +2,8 @@
 // Licensed under the MIT license.
 
 import { endpointPAWUserRightsSettings, localGroupMembershipUserRights } from "../Utility/RequestGenerator";
-import { writeDebugInfo, InternalAppError, validateGUID, validateEmailArray } from "../Utility/Utility";
+import { writeDebugInfo, InternalAppError } from "../Utility/Utility";
+import { validateGUID, validateEmailArray } from "../Utility/Validators";
 import type { AppGraphClient } from "../Utility/GraphClient";
 import type { ConfigurationEngine, PAWGroupConfig, PAWObject } from "../Startup/ConfigEngine";
 import type express from "express";
