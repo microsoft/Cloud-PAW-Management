@@ -24,7 +24,7 @@
     "react-redux": "^7.2.6"
   },
   "devDependencies": {
-    "@microsoft/microsoft-graph-types-beta": "^0.22.0-preview",
+    "@microsoft/microsoft-graph-types-beta": "^0.23.0-preview",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
