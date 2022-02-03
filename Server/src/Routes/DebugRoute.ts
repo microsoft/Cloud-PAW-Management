@@ -157,7 +157,7 @@ export class DebugRouter {
             };
         });
 
-        // Create a Windows 10 Custom Device string configuration
+        // Update a Windows 10 Custom Device string configuration
         this.webServer.patch('/Debug/customStringDeviceConfiguration/:id', async (request, response, next) => {
             // Catch execution errors
             try {
