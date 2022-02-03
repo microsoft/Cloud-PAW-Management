@@ -75,6 +75,12 @@
                                 }
                             }
                         }
+                    },
+                    "400": {
+                        "description": "Invalid Input. This is usually due to not following content type or input validation constraints."
+                    },
+                    "500": {
+                        "description": "Internal error. This is usually thrown because of a misconfiguration on the PAW architecture structure or some other internal error. See the server console logs/app insights for more info."
                     }
                 }
             }
@@ -509,7 +515,8 @@
                         "type": "string",
                         "description": "Read-only.",
                         "readOnly": true,
-                        "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$"
+                        "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$",
+                        "example": "9f237e13-9a04-4daf-b3d4-6d2beec3c2bf"
                     }
                 }
             },
@@ -526,25 +533,29 @@
                             "addressableUserName": {
                                 "type": "string",
                                 "description": "Addressable user name.",
-                                "nullable": true
+                                "nullable": true,
+                                "example": "Riley Johnson"
                             },
                             "azureActiveDirectoryDeviceId": {
                                 "type": "string",
                                 "description": "AAD Device ID - to be deprecated",
                                 "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$",
-                                "nullable": true
+                                "nullable": true,
+                                "example": "de30426d-c90d-42d0-8340-0c587733f3c5"
                             },
                             "azureAdDeviceId": {
                                 "type": "string",
                                 "description": "AAD Device ID",
                                 "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$",
-                                "nullable": true
+                                "nullable": true,
+                                "example": "de30426d-c90d-42d0-8340-0c587733f3c5"
                             },
                             "deploymentProfileAssignedDateTime": {
                                 "pattern": "^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$",
                                 "type": "string",
                                 "description": "Profile set time of the Windows autopilot device.",
-                                "format": "date-time"
+                                "format": "date-time",
+                                "example": "2022-02-03T17:42:53Z"
                             },
                             "deploymentProfileAssignmentDetailedStatus": {
                                 "type": "string",
@@ -557,7 +568,8 @@
                                     "windowsPcProfileNotSupported",
                                     "surfaceHub2SProfileNotSupported",
                                     "unknownFutureValue"
-                                ]
+                                ],
+                                "example": "none"
                             },
                             "deploymentProfileAssignmentStatus": {
                                 "description": "Profile assignment status of the Windows autopilot device. Possible values are: unknown, assignedInSync, assignedOutOfSync, assignedUnkownSyncState, notAssigned, pending, failed.",
@@ -570,12 +582,14 @@
                                     "notAssigned",
                                     "pending",
                                     "failed"
-                                ]
+                                ],
+                                "example": "assignedUnkownSyncState"
                             },
                             "displayName": {
                                 "type": "string",
                                 "description": "Display Name",
-                                "nullable": true
+                                "nullable": true,
+                                "example": "Computer-Name"
                             },
                             "enrollmentState": {
                                 "type": "string",
@@ -587,70 +601,83 @@
                                     "failed",
                                     "notContacted",
                                     "blocked"
-                                ]
+                                ],
+                                "example": "enrolled"
                             },
                             "groupTag": {
                                 "type": "string",
                                 "description": "Group Tag of the Windows autopilot device.",
-                                "nullable": true
+                                "nullable": true,
+                                "example": "laptops-2202"
                             },
                             "lastContactedDateTime": {
                                 "pattern": "^[0-9]{4,}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]([.][0-9]{1,12})?(Z|[+-][0-9][0-9]:[0-9][0-9])$",
                                 "type": "string",
                                 "description": "Intune Last Contacted Date Time of the Windows autopilot device.",
-                                "format": "date-time"
+                                "format": "date-time",
+                                "example": "2022-02-03T17:42:53Z"
                             },
                             "managedDeviceId": {
                                 "type": "string",
                                 "description": "Managed Device ID",
                                 "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$",
-                                "nullable": true
+                                "nullable": true,
+                                "example": "0cc2c546-5c22-4745-ae70-976b7594ca38"
                             },
                             "manufacturer": {
                                 "type": "string",
                                 "description": "Oem manufacturer of the Windows autopilot device.",
-                                "nullable": true
+                                "nullable": true,
+                                "example": "Microsoft Corporation"
                             },
                             "model": {
                                 "type": "string",
                                 "description": "Model name of the Windows autopilot device.",
-                                "nullable": true
+                                "nullable": true,
+                                "example": "Surface Book 3"
                             },
                             "productKey": {
                                 "type": "string",
                                 "description": "Product Key of the Windows autopilot device.",
                                 "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$",
-                                "nullable": true
+                                "nullable": true,
+                                "example": "d43bb9fc-39af-416a-a64f-7800fd8713a9"
                             },
                             "purchaseOrderIdentifier": {
                                 "type": "string",
                                 "description": "Purchase Order Identifier of the Windows autopilot device.",
-                                "nullable": true
+                                "nullable": true,
+                                "example": "876123987162-143"
                             },
                             "resourceName": {
                                 "type": "string",
-                                "description": "Resource Name.",
-                                "nullable": true
+                                "description": "Resource Name. (usually an empty string)",
+                                "nullable": true,
+                                "example": ""
                             },
                             "serialNumber": {
                                 "type": "string",
                                 "description": "Serial number of the Windows autopilot device.",
-                                "nullable": true
+                                "nullable": true,
+                                "example": "001534962354"
                             },
                             "skuNumber": {
                                 "type": "string",
                                 "description": "SKU Number",
-                                "nullable": true
+                                "nullable": true,
+                                "example": "Surface_Book_3_1899"
                             },
                             "systemFamily": {
                                 "type": "string",
                                 "description": "System Family",
-                                "nullable": true
+                                "nullable": true,
+                                "example": "Surface"
                             },
                             "userPrincipalName": {
                                 "type": "string",
                                 "description": "User Principal Name.",
-                                "nullable": true
+                                "nullable": true,
+                                "example": "rileyjohn@contoso.com"
                             }
                         },
                         "description": "The windowsAutopilotDeviceIdentity resource represents a Windows Autopilot Device."
