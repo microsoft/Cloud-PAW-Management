@@ -527,7 +527,6 @@
                         "$ref": "#/components/schemas/microsoft.graph.entity"
                     },
                     {
-                        "title": "windowsAutopilotDeviceIdentity",
                         "type": "object",
                         "properties": {
                             "addressableUserName": {
@@ -589,7 +588,7 @@
                                 "type": "string",
                                 "description": "Display Name",
                                 "nullable": true,
-                                "example": "Computer-Name"
+                                "example": "PAW-001534962354"
                             },
                             "enrollmentState": {
                                 "type": "string",
