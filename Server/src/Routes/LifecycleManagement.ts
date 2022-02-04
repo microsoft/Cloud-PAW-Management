@@ -35,6 +35,16 @@ export class LifecycleRouter {
     private initRoutes(): void {
         // Get all autopilot devices
         this.webServer.get('/API/Lifecycle/AutopilotDevice', async (request, response, next) => {
+            // If the app is starting, send a notice to the client stating that
+            if (this.configEngine.startup) {
+                // Set the HTTP status code to indicate app start up faze
+                response.statusCode = 520;
+
+                // Send the response to the caller
+                response.send("App is starting still");
+            };
+            // TODO: Add the ability to detect if the infra is not deployed and respond with a 525.
+
             // Catch execution errors
             try {
                 // Send the result of the get operation back to the caller
@@ -77,6 +87,16 @@ export class LifecycleRouter {
             writeDebugInfo(this.configEngine.configInitialized, "Config initialization status:");
             writeDebugInfo(this.configEngine.config, "Config data:");
 
+            // If the app is starting, send a notice to the client stating that
+            if (this.configEngine.startup) {
+                // Set the HTTP status code to indicate app start up faze
+                response.statusCode = 520;
+
+                // Send the response to the caller
+                response.send("App is starting still");
+            };
+            // TODO: Add the ability to detect if the infra is not deployed and respond with a 525.
+
             // Ensure that the config is initialized before executing the PAW Group recurse command
             if (this.configEngine.configInitialized && typeof this.configEngine.config !== "undefined") {
                 try {
@@ -103,6 +123,16 @@ export class LifecycleRouter {
             // Write debug info
             writeDebugInfo(request.params.deviceID, "Commission PAW - Device ID URL Param:")
             writeDebugInfo(request.body, "Commission PAW - Body of the XHR:");
+
+            // If the app is starting, send a notice to the client stating that
+            if (this.configEngine.startup) {
+                // Set the HTTP status code to indicate app start up faze
+                response.statusCode = 520;
+
+                // Send the response to the caller
+                response.send("App is starting still");
+            };
+            // TODO: Add the ability to detect if the infra is not deployed and respond with a 525.
 
             // Catch execution errors
             try {
@@ -140,7 +170,17 @@ export class LifecycleRouter {
         // Decommissions the PAW into a normal enterprise device
         this.webServer.delete('/API/Lifecycle/PAW/:deviceID/Commission', async (request, response, next) => {
             // Write debug info
-            writeDebugInfo(request.params.deviceID, "Decommission PAW - Device ID URL Param:")
+            writeDebugInfo(request.params.deviceID, "Decommission PAW - Device ID URL Param:");
+
+            // If the app is starting, send a notice to the client stating that
+            if (this.configEngine.startup) {
+                // Set the HTTP status code to indicate app start up faze
+                response.statusCode = 520;
+
+                // Send the response to the caller
+                response.send("App is starting still");
+            };
+            // TODO: Add the ability to detect if the infra is not deployed and respond with a 525.
 
             // Catch execution errors
             try {
@@ -178,7 +218,17 @@ export class LifecycleRouter {
         // Get user assignments for the specified PAW
         this.webServer.get('/API/Lifecycle/PAW/:deviceID/Assign', async (request, response, next) => {
             // Write debug info
-            writeDebugInfo(request.params.deviceID, "Get PAW Assignment - Device ID URL Param:")
+            writeDebugInfo(request.params.deviceID, "Get PAW Assignment - Device ID URL Param:");
+
+            // If the app is starting, send a notice to the client stating that
+            if (this.configEngine.startup) {
+                // Set the HTTP status code to indicate app start up faze
+                response.statusCode = 520;
+
+                // Send the response to the caller
+                response.send("App is starting still");
+            };
+            // TODO: Add the ability to detect if the infra is not deployed and respond with a 525.
 
             // Catch execution errors
             try {
@@ -219,7 +269,17 @@ export class LifecycleRouter {
         // Assign a PAW to a user or set of users
         this.webServer.post('/API/Lifecycle/PAW/:deviceID/Assign', async (request, response, next) => {
             // Write debug info
-            writeDebugInfo(request.params.deviceID, "Assign PAW - Device ID URL Param:")
+            writeDebugInfo(request.params.deviceID, "Assign PAW - Device ID URL Param:");
+
+            // If the app is starting, send a notice to the client stating that
+            if (this.configEngine.startup) {
+                // Set the HTTP status code to indicate app start up faze
+                response.statusCode = 520;
+
+                // Send the response to the caller
+                response.send("App is starting still");
+            };
+            // TODO: Add the ability to detect if the infra is not deployed and respond with a 525.
 
             // Catch execution errors
             try {
@@ -261,7 +321,17 @@ export class LifecycleRouter {
         // If no user assignments are left, a wipe command is issued to prepare it for the next user(s).
         this.webServer.delete('/API/Lifecycle/PAW/:deviceID/Assign', async (request, response, next) => {
             // Write debug info
-            writeDebugInfo(request.params.deviceID, "Remove PAW Assignment - Device ID URL Param:")
+            writeDebugInfo(request.params.deviceID, "Remove PAW Assignment - Device ID URL Param:");
+
+            // If the app is starting, send a notice to the client stating that
+            if (this.configEngine.startup) {
+                // Set the HTTP status code to indicate app start up faze
+                response.statusCode = 520;
+
+                // Send the response to the caller
+                response.send("App is starting still");
+            };
+            // TODO: Add the ability to detect if the infra is not deployed and respond with a 525.
 
             // Catch execution errors
             try {
