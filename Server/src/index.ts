@@ -38,6 +38,8 @@ webServer.use(helmet({"contentSecurityPolicy": false}));
 
 // Serve up the UI directory
 webServer.use(express.static(path.join(__dirname, "UI")));
+webServer.use("/devices", express.static(path.join(__dirname, "UI")));
+webServer.use("/devices/:DeviceId", express.static(path.join(__dirname, "UI")));
 
 // Write the info about the static files being served
 writeDebugInfo(path.join(__dirname, "UI"), "Static file path:")
