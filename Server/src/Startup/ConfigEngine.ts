@@ -63,6 +63,7 @@ export class ConfigurationEngine {
     scopeTagName: string;
     configInitialized: boolean;
     config: CloudSecConfig | undefined;
+    startup: boolean;
 
     // Initialize the class
     constructor(graphClient: AppGraphClient) {
@@ -70,6 +71,7 @@ export class ConfigurationEngine {
         this.graphClient = graphClient;
         this.configInitialized = false;
         this.configScratchSpace = {};
+        this.startup = true;
 
         // Write debug info
         writeDebugInfo("Initialized standard class properties");

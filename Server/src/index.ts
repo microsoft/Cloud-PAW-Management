@@ -69,6 +69,9 @@ if (debugMode === "true") {
 // Initialize the core business logic routes
 const lifeCycleRouter = new LifecycleRouter(webServer, graphClient, configEngine);
 
+// Set the startup indicator as false to indicate that the app is no longer starting up
+configEngine.startup = false;
+
 // Start the web server
 const serverInstance = webServer.listen(port, () => {
     writeDebugInfo("Running on port: " + port, "Server Started");
