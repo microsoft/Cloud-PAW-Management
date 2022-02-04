@@ -10,13 +10,28 @@ const navLinkGroups: INavLinkGroup[] = [
     collapseAriaLabel: 'Collapse Main section',
     links: [
       {
-        key: 'All PAWs',
-        name: 'All PAWs',
+        key: 'Home',
+        name: 'Home',
         url: '/',
       },
       {
-        key: 'Diagnose and solve problems',
-        name: 'Diagnose and solve problems',
+        key: 'All PAWs',
+        name: 'All PAWs',
+        url: '/devices',
+      },
+      {
+        key: 'User Management',
+        name: 'User Management',
+        url: '#',
+      },
+      {
+        key: 'SILO Management',
+        name: 'SILO Management',
+        url: '#',
+      },
+      {
+        key: 'Privileged Secure Score',
+        name: 'Privileged Secure Score',
         url: '#',
       }
     ],
@@ -32,6 +47,11 @@ const navLinkGroups: INavLinkGroup[] = [
         url: '#',
       },
       {
+        key: "Access control (IAM)",
+        name: "Access control (IAM)",
+        url: "#"
+      },
+      {
         key: 'Naming Format',
         name: 'Naming Format',
         url: '#',
@@ -39,7 +59,7 @@ const navLinkGroups: INavLinkGroup[] = [
     ],
   },
   {
-    name: 'Troubleshooting + Support',
+    name: 'Support + troubleshooting',
     expandAriaLabel: 'Expand Troubleshooting + Support section',
     collapseAriaLabel: 'Collapse Troubleshooting + Support section',
     links: [
