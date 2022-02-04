@@ -106,7 +106,7 @@ export class DebugRouter {
             // Catch execution errors
             try {
                 // Validate that the description was provided
-                if (typeof request.body.description === "undefined") { throw new Error("The description needs to be specified when updating a scope tag. An empty string will clear the description from the scope.") };
+                if (request.body.description === undefined) { throw new Error("The description needs to be specified when updating a scope tag. An empty string will clear the description from the scope.") };
 
                 // Update the scope tag
                 if (typeof request.body.ID !== "undefined") {

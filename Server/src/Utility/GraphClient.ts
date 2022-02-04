@@ -110,7 +110,7 @@ export class AppGraphClient {
             let scopeTagPage: PageCollection;
 
             // If no name is specified, return all scope tags
-            if (typeof name === "undefined") {
+            if (name === undefined) {
                 // Grab an initial MEM Scope page collection
                 scopeTagPage = await (await this.client).api("/deviceManagement/roleScopeTags").get();
             } else if (typeof name === "string" && name.length <= 128) {
@@ -154,7 +154,7 @@ export class AppGraphClient {
 
         // Catch execution errors
         try {
-            if (typeof id === "undefined") {
+            if (id === undefined) {
                 // Get an instance of the specified scope tag
                 const scopeTagInstance = (await this.getMEMScopeTag(name))[0];
 
@@ -307,7 +307,7 @@ export class AppGraphClient {
                 // Grab the specified device configuration.
                 return [await (await this.client).api("/deviceManagement/deviceConfigurations/" + GUID).get()];
                 // If no GUID is specified, return all configs
-            } else if (typeof GUID === "undefined") {
+            } else if (GUID === undefined) {
                 // Grab all device configs.
                 deviceConfigPage = await (await this.client).api("/deviceManagement/deviceConfigurations").get();
             } else {
@@ -374,7 +374,7 @@ export class AppGraphClient {
             if (validateGUID(GUID)) {
                 // Grab the specified device configuration.
                 return [await (await this.client).api("/deviceManagement/groupPolicyConfigurations/" + GUID).get()];
-            } else if (typeof GUID === "undefined") {
+            } else if (GUID === undefined) {
                 // Grab all device configs.
                 deviceGPConfigPage = await (await this.client).api("/deviceManagement/groupPolicyConfigurations").get();
             } else {
@@ -411,7 +411,7 @@ export class AppGraphClient {
             let userPage: PageCollection;
 
             // If no GUID is specified, return all users.
-            if (typeof ID === "undefined") {
+            if (ID === undefined) {
                 // Grab all users.
                 userPage = await (await this.client).api("/users").get();
                 // If a GUID or UPN is specified, return that user.
@@ -503,7 +503,7 @@ export class AppGraphClient {
                 // Grab and return the specified group.
                 return [await (await this.client).api("/groups/" + GUID).get()];
                 // If no GUID is specified, return all groups.
-            } else if (typeof GUID === "undefined") {
+            } else if (GUID === undefined) {
                 // Grab all device configs.
                 groupPage = await (await this.client).api("/groups").get();
             } else {
@@ -741,7 +741,7 @@ export class AppGraphClient {
                 // Grab the specified device configuration.
                 return [await (await this.client).api("/administrativeUnits/" + GUID).get()];
                 // If no GUID is specified, return all AUs
-            } else if (typeof GUID === "undefined") {
+            } else if (GUID === undefined) {
                 // Grab all device configs.
                 adminUnitPage = await (await this.client).api("/administrativeUnits").get();
             } else {
@@ -850,7 +850,7 @@ export class AppGraphClient {
                 // Grab and return the specified settings catalog.
                 return [await (await this.client).api("/deviceManagement/configurationPolicies/" + GUID).expand("settings").get()];
                 // If no GUID is specified, return all settings catalogs.
-            } else if (typeof GUID === "undefined") {
+            } else if (GUID === undefined) {
                 // Grab all device configs.
                 settingsCatalogPage = await (await this.client).api("/deviceManagement/configurationPolicies").expand("settings").get();
             } else {
@@ -1035,7 +1035,7 @@ export class AppGraphClient {
                 // Grab and return the specified CA Policy.
                 return [await (await this.client).api("/identity/conditionalAccess/policies/" + GUID).get()];
                 // If no GUID is specified, return all AAD CA policies.
-            } else if (typeof GUID === "undefined") {
+            } else if (GUID === undefined) {
                 // Grab all AAD CA policies.
                 aadCAPage = await (await this.client).api("/identity/conditionalAccess/policies").get();
             } else {
@@ -1129,7 +1129,7 @@ export class AppGraphClient {
                 // Grab and return the specified CA Policy.
                 memDevicePage = await (await this.client).api("/deviceManagement/managedDevices").filter("azureADDeviceId eq '" + deviceID + "'").get();
                 // If no GUID is specified, return all AAD CA policies.
-            } else if (typeof deviceID === "undefined") {
+            } else if (deviceID === undefined) {
                 // Grab all AAD CA policies.
                 memDevicePage = await (await this.client).api("/deviceManagement/managedDevices").get();
             } else {
@@ -1162,7 +1162,7 @@ export class AppGraphClient {
             let devicePage: PageCollection;
 
             // Check the presence of the device ID parameter
-            if (typeof deviceID === "undefined") { // If no device ID is specified, return all devices
+            if (deviceID === undefined) { // If no device ID is specified, return all devices
                 // Grab an initial device page collection
                 devicePage = await (await this.client).api("/devices").get();
             } else if (validateGUID(deviceID)) {
@@ -1250,7 +1250,7 @@ export class AppGraphClient {
             let autopilotDevicePage: PageCollection;
 
             // Route the Graph API calls based on the AAD Device ID presence.
-            if (typeof AADDeviceID === "undefined") { // If no GUID is specified.
+            if (AADDeviceID === undefined) { // If no GUID is specified.
                 // Request all Autopilot Devices.
                 autopilotDevicePage = await (await this.client).api("/deviceManagement/windowsAutopilotDeviceIdentities").get();
             } else if (validateGUID(AADDeviceID)) { // If a GUID is specified.

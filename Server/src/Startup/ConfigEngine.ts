@@ -129,23 +129,23 @@ export class ConfigurationEngine {
 
         // Validate object structure by checking the properties exist and the values of the object is what is expected
         // Validate the Break Glass property
-        if (typeof scratchSpaceInstance.BrkGls === "undefined" || !(validateGUID(scratchSpaceInstance.BrkGls))) {
+        if (scratchSpaceInstance.BrkGls === undefined || !(validateGUID(scratchSpaceInstance.BrkGls))) {
             // If validation fails, return false
             return false;
             // Validate the PAW Security Group property
-        } else if (typeof scratchSpaceInstance.PAWSecGrp === "undefined" || !(validateGUID(scratchSpaceInstance.PAWSecGrp))) {
+        } else if (scratchSpaceInstance.PAWSecGrp === undefined || !(validateGUID(scratchSpaceInstance.PAWSecGrp))) {
             // If validation fails, return false
             return false;
             // Validate the SILO Root Group property
-        } else if (typeof scratchSpaceInstance.SiloRootGrp === "undefined" || !(validateGUID(scratchSpaceInstance.SiloRootGrp))) {
+        } else if (scratchSpaceInstance.SiloRootGrp === undefined || !(validateGUID(scratchSpaceInstance.SiloRootGrp))) {
             // If validation fails, return false
             return false;
             // Validate the User Root Group property
-        } else if (typeof scratchSpaceInstance.UsrSecGrp === "undefined" || !(validateGUID(scratchSpaceInstance.UsrSecGrp))) {
+        } else if (scratchSpaceInstance.UsrSecGrp === undefined || !(validateGUID(scratchSpaceInstance.UsrSecGrp))) {
             // If validation fails, return false
             return false;
             // Validate the User Tagging property
-        } else if (typeof scratchSpaceInstance.UsrTag === "undefined" || !(validateGUID(scratchSpaceInstance.UsrTag))) {
+        } else if (scratchSpaceInstance.UsrTag === undefined || !(validateGUID(scratchSpaceInstance.UsrTag))) {
             // If validation fails, return false
             return false;
         } else if (typeof scratchSpaceInstance.ScopeTagID !== "string") {
@@ -250,7 +250,7 @@ export class ConfigurationEngine {
         if (!userConcent) { throw new InternalAppError("User has not consented to the deployment!", "Invalid Input", "ConfigEngine -> deployConfig -> User Concent") };
 
         // If the Break glass property is not configured, deploy a new BG SG
-        if (typeof this.configScratchSpace.BrkGls === "undefined") {
+        if (this.configScratchSpace.BrkGls === undefined) {
             // Create the Break Glass security group
             const newBGgroup = await this.graphClient.newAADGroup("Break Glass", "Used by the Cloud PAW Management App to exclude the emergency access accounts from being caught in an outage.");
 
@@ -258,7 +258,7 @@ export class ConfigurationEngine {
             this.configScratchSpace.BrkGls = newBGgroup.id
 
             // If the PAW Device root group is not configured, deploy a new SG
-        } else if (typeof this.configScratchSpace.PAWSecGrp === "undefined") {
+        } else if (this.configScratchSpace.PAWSecGrp === undefined) {
             // Create the PAW Devices security group
             const newPAWDevGroup = await this.graphClient.newAADGroup("PAW Devices", "Used by the Cloud PAW Management App to contain the PAW device's Security Group and device hierarchy.");
 
@@ -266,7 +266,7 @@ export class ConfigurationEngine {
             this.configScratchSpace.PAWSecGrp = newPAWDevGroup.id
 
             // If the SILO Root group doesn't exist, deploy it
-        } else if (typeof this.configScratchSpace.SiloRootGrp === "undefined") {
+        } else if (this.configScratchSpace.SiloRootGrp === undefined) {
             // Create the SILO Root Group
             const newSILOGroup = await this.graphClient.newAADGroup("SILO Root", "Used by the Cloud PAW management app to contain the SILO Security Group hierarchy.");
 
@@ -274,7 +274,7 @@ export class ConfigurationEngine {
             this.configScratchSpace.SiloRootGrp = newSILOGroup.id;
 
             // If the Privileged Users root group does not exist, deploy a new SG for it.
-        } else if (typeof this.configScratchSpace.UsrSecGrp === "undefined") {
+        } else if (this.configScratchSpace.UsrSecGrp === undefined) {
             // Create the Priv Users Sec Group
             const newPrivUserGroup = await this.graphClient.newAADGroup("Privileged Users", "Used by the Cloud PAW Management App to contain the Priv Users' Security Group and user hierarchy.");
 
@@ -282,7 +282,7 @@ export class ConfigurationEngine {
             this.configScratchSpace.UsrSecGrp = newPrivUserGroup.id;
 
             // If the Priv Users tagging group doesn't exist, deploy the PAG.
-        } else if (typeof this.configScratchSpace.UsrTag === "undefined") {
+        } else if (this.configScratchSpace.UsrTag === undefined) {
             // Create a new PAG
             const newUserTagging = await this.graphClient.newAADGroup("Privileged Users - Tagging", "Used to tag priv users to enforce credential partitioning.", true);
 
@@ -340,7 +340,7 @@ export class ConfigurationEngine {
         const groupObject = (await this.graphClient.getAADGroup(groupID))[0];
 
         // Validate the AAD Group is in good working order
-        if (typeof groupObject.description === "undefined" || groupObject.description == null) { throw new InternalAppError("Group is undefined!", "Retrieval", "ConfigEngine - ConfigurationEngine - parsePAWGroupConfig - AAD Group Retrieval") };
+        if (groupObject.description === undefined || groupObject.description == null) { throw new InternalAppError("Group is undefined!", "Retrieval", "ConfigEngine - ConfigurationEngine - parsePAWGroupConfig - AAD Group Retrieval") };
         if (groupObject.description === "") { throw new InternalAppError("Group description is empty!", "Not Configured", "ConfigEngine - ConfigurationEngine - parsePAWGroupConfig - AAD Group Validation") };
 
         // Create the returned object

@@ -402,7 +402,7 @@ export class LifecycleRouter {
         };
 
         // Ensure that the config engine is initialized
-        if (!this.configEngine.configInitialized || typeof this.configEngine.config === "undefined") {
+        if (!this.configEngine.configInitialized || this.configEngine.config === undefined) {
             // Throw an error
             throw new InternalAppError("Config engine is not initialized", "Not Initialized", "LifecycleManagement - LifecycleRouter - commissionPAW - Input Validation");
         };
@@ -685,7 +685,7 @@ export class LifecycleRouter {
         };
 
         // Check to make sure that the name data is present for the retrieved device.
-        if (typeof deviceObject.displayName === "undefined" || deviceObject.displayName == null) {
+        if (deviceObject.displayName === undefined || deviceObject.displayName == null) {
             // Throw an error
             throw new InternalAppError("Incomplete Data!", "Invalid Return", "LifecycleManagement - LifecycleRouter - commissionPAW - AAD Device Object Validation");
         };
@@ -711,7 +711,7 @@ export class LifecycleRouter {
         if (!validateGUID(deviceID)) { throw new InternalAppError("The specified Device ID is not a valid device ID!", "Invalid Input", "LifecycleManagement - LifecycleRouter - decommissionPAW - Input Validation") };
 
         // Ensure that the config engine is initialized
-        if (!this.configEngine.configInitialized || typeof this.configEngine.config === "undefined") {
+        if (!this.configEngine.configInitialized || this.configEngine.config === undefined) {
             // Throw an error
             throw new InternalAppError("Config engine is not initialized", "Not Initialized", "LifecycleManagement - LifecycleRouter - decommissionPAW - Input Validation");
         };
@@ -732,7 +732,7 @@ export class LifecycleRouter {
         writeDebugInfo(pawObject, "PAW to decommission from list matched by ID:");
 
         // If the PAW Object var is undefined, then the find command didn't find any commissioned PAWs with the specified device ID
-        if (typeof pawObject === "undefined") {
+        if (pawObject === undefined) {
             // Throw an error
             throw new InternalAppError("PAW is not commissioned!", "Invalid Input", "LifecycleManagement - LifecycleRouter - decommissionPAW - Validate PAW Commission Status");
         };
@@ -822,7 +822,7 @@ export class LifecycleRouter {
         if (!validateEmailArray(upnList)) { throw new InternalAppError("The UPN list is not valid!", "Invalid Input", "LifecycleManagement - LifecycleRouter - assignPAW - Input Validation") };
 
         // Ensure that the config engine is initialized
-        if (!this.configEngine.configInitialized || typeof this.configEngine.config === "undefined") {
+        if (!this.configEngine.configInitialized || this.configEngine.config === undefined) {
             // Throw an error
             throw new InternalAppError("Config engine is not initialized", "Not Initialized", "LifecycleManagement - LifecycleRouter - assignPAW - Input Validation");
         };
@@ -884,7 +884,7 @@ export class LifecycleRouter {
         };
 
         // Check to make sure that the
-        if (assignmentCatalog.settings === null || typeof assignmentCatalog.settings === "undefined" || typeof assignmentCatalog.settings[0].settingInstance === "undefined") {
+        if (assignmentCatalog.settings === null || assignmentCatalog.settings === undefined || typeof assignmentCatalog.settings[0].settingInstance === "undefined") {
             // Throw an error
             throw new InternalAppError("Data from the settings catalog is not present!", "Invalid Return", "LifecycleManagement - LifecycleRouter - assignPAW - assignment catalog data check.");
         };
@@ -893,7 +893,7 @@ export class LifecycleRouter {
         const extractedSettings: MicrosoftGraphBeta.DeviceManagementConfigurationSimpleSettingCollectionInstance = assignmentCatalog.settings[0].settingInstance;
 
         // Validate that is present
-        if (typeof extractedSettings.simpleSettingCollectionValue === "undefined") {
+        if (extractedSettings.simpleSettingCollectionValue === undefined) {
             // Throw an error
             throw new InternalAppError("Data from the settings catalog's settings array is not present!", "Invalid Return", "LifecycleManagement - LifecycleRouter - assignPAW - settings array data check.");
         };
@@ -904,7 +904,7 @@ export class LifecycleRouter {
             const userAssignment: MicrosoftGraphBeta.DeviceManagementConfigurationStringSettingValue = valueItem;
 
             // Validate that is present
-            if (typeof userAssignment.value === "undefined" || userAssignment.value === null) {
+            if (userAssignment.value === undefined || userAssignment.value === null) {
                 // Throw an error
                 throw new InternalAppError("Data from the settings catalog's settings array's value is not present!", "Invalid Return", "LifecycleManagement - LifecycleRouter - assignPAW - settings array value data check.");
             };
@@ -1058,7 +1058,7 @@ export class LifecycleRouter {
         if (!validateGUID(deviceID)) { throw new InternalAppError("The specified Device ID is not valid!", "Invalid Input", "LifecycleManagement - LifecycleRouter - getPawAssignment - Input Validation") };
 
         // Ensure that the config engine is initialized
-        if (!this.configEngine.configInitialized || typeof this.configEngine.config === "undefined") {
+        if (!this.configEngine.configInitialized || this.configEngine.config === undefined) {
             // Throw an error
             throw new InternalAppError("Config engine is not initialized", "Not Initialized", "LifecycleManagement - LifecycleRouter - getPawAssignment - Input Validation");
         };
@@ -1120,7 +1120,7 @@ export class LifecycleRouter {
         };
 
         // Check to make sure that the
-        if (assignmentCatalog.settings === null || typeof assignmentCatalog.settings === "undefined" || typeof assignmentCatalog.settings[0].settingInstance === "undefined") {
+        if (assignmentCatalog.settings === null || assignmentCatalog.settings === undefined || typeof assignmentCatalog.settings[0].settingInstance === "undefined") {
             // Throw an error
             throw new InternalAppError("Data from the settings catalog is not present!", "Invalid Return", "LifecycleManagement - LifecycleRouter - getPawAssignment - assignment catalog data check");
         };
@@ -1129,7 +1129,7 @@ export class LifecycleRouter {
         const extractedSettings: MicrosoftGraphBeta.DeviceManagementConfigurationSimpleSettingCollectionInstance = assignmentCatalog.settings[0].settingInstance;
 
         // Validate that is present
-        if (typeof extractedSettings.simpleSettingCollectionValue === "undefined") {
+        if (extractedSettings.simpleSettingCollectionValue === undefined) {
             // Throw an error
             throw new InternalAppError("Data from the settings catalog's settings array is not present!", "Invalid Return", "LifecycleManagement - LifecycleRouter - assignPAW - settings array data check.");
         };
@@ -1140,7 +1140,7 @@ export class LifecycleRouter {
             const userAssignment: MicrosoftGraphBeta.DeviceManagementConfigurationStringSettingValue = valueItem;
 
             // Validate that is present
-            if (typeof userAssignment.value === "undefined" || userAssignment.value === null) {
+            if (userAssignment.value === undefined || userAssignment.value === null) {
                 // Throw an error
                 throw new InternalAppError("Data from the settings catalog's settings array's value is not present!", "Invalid Return", "LifecycleManagement - LifecycleRouter - assignPAW - settings array value data check.");
             };
@@ -1190,7 +1190,7 @@ export class LifecycleRouter {
         if (!validateEmailArray(upnList)) { throw new InternalAppError("The UPN list is not valid!", "Invalid Input", "LifecycleManagement - LifecycleRouter - unassignPAW - Input Validation") };
 
         // Ensure that the config engine is initialized
-        if (!this.configEngine.configInitialized || typeof this.configEngine.config === "undefined") {
+        if (!this.configEngine.configInitialized || this.configEngine.config === undefined) {
             // Throw an error
             throw new InternalAppError("Config engine is not initialized", "Not Initialized", "LifecycleManagement - LifecycleRouter - unassignPAW - Input Validation");
         };
@@ -1253,7 +1253,7 @@ export class LifecycleRouter {
         // Make a list of users that will remain after removal
         const remainingUserList = assignedUserList.filter((user) => {
             // Ensure that the required data is present in the user object
-            if (user.userPrincipalName === null || typeof user.userPrincipalName === "undefined") {
+            if (user.userPrincipalName === null || user.userPrincipalName === undefined) {
                 // Throw an error
                 throw new InternalAppError("Data from the User object is not present!", "Invalid Return", "LifecycleManagement - LifecycleRouter - unassignPAW - Validate user object integrity");
             };

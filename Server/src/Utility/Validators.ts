@@ -29,7 +29,7 @@ export function validateDate(dateToTest: string | number | Date): boolean {
 // Create a GUID validation function to ensure GUID data is in correct format
 export function validateGUID(GUIDToTest: any): boolean {
     // If the data is undefined, it is not a GUID
-    if (typeof GUIDToTest === "undefined" || GUIDToTest === null) {
+    if (GUIDToTest === undefined || GUIDToTest === null) {
         // Return false since it is not a GUID
         return false;
     } else {
@@ -44,7 +44,7 @@ export function validateGUID(GUIDToTest: any): boolean {
 // Validate the specified email address to ensure it is in the correct format
 export function validateEmail(emailToTest: any): boolean {
     // If the data is undefined, it is not an email
-    if (typeof emailToTest === "undefined" || emailToTest === null) {
+    if (emailToTest === undefined || emailToTest === null) {
         // Return false since it is not an email
         return false;
     } else {
