@@ -43,6 +43,7 @@ export interface PAWGroupConfig {
 
 /* 
 id = DeviceID of the PAW Device
+DisplayName = The computer name of the device according to AAD.
 ParentGroup = the ObjectID of the unique PAW group that the PAW is a member of
 ParentDevice = is an optional property that is the DeviceID of the parent PAW device
 */
