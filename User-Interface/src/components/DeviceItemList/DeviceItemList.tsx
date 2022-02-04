@@ -1,10 +1,13 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { CheckboxVisibility, DetailsList, Selection, DetailsListLayoutMode, IColumn, SelectionMode } from '@fluentui/react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { IDeviceItem, IPawItem } from '../../models';
-import { IPawItemListProps } from './PawItemList.types';
+import { IPawItemListProps } from './DeviceItemList.types';
 import { DECOMMISSIONING_PAW_SELECTED } from '../../store/actions/pawActions'; 
-export const PawItemList = (props: IPawItemListProps) => {
+export const DeviceItemList = (props: IPawItemListProps) => {
     const dispatch = useDispatch();
     const [isCompactMode, ] = useState(false);
     const onColumnClick = (ev: React.MouseEvent<HTMLElement>, column: IColumn): void => {
