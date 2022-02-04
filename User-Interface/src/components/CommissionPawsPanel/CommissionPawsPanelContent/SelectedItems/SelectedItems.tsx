@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import React from "react";
 import { DetailsList, IColumn, IconButton, Label, Stack } from "@fluentui/react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";

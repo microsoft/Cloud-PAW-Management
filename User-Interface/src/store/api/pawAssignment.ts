@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import type { User } from "@microsoft/microsoft-graph-types-beta";
 

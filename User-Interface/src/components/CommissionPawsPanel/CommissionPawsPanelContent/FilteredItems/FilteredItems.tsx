@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import React, { useCallback, useMemo } from "react";
 import { DetailsList, IColumn, IconButton, Label, Stack, Selection, Dropdown, FocusZone } from "@fluentui/react";
 import { useDispatch } from "react-redux";

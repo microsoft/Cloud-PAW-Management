@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { getPaws } from '.';
 import type { IDeviceItem, IPawItem } from '../../../models';
 import { PawService } from '../../../services';

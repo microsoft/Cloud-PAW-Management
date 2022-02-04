@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import {
     GETTING_PAW_ASSIGNMENT_REQUEST,
     GETTING_PAW_ASSIGNMENT_SUCCESS,

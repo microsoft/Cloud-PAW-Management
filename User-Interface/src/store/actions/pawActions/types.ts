@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 export const GETTING_PAWS_REQUEST = 'GETTING_PAWS_REQUEST';
 export const GETTING_PAWS_SUCCESS = 'GETTING_PAWS_SUCCESS';
 export const GETTING_PAWS_FAILURE = 'GETTING_PAWS_FAILURE';

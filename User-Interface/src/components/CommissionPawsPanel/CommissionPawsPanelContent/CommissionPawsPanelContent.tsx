@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import React, { useMemo, useState } from 'react';
 import { SearchBox } from '@fluentui/react/lib/SearchBox';
 import { Stack, IStackTokens, IStackStyles } from '@fluentui/react/lib/Stack';

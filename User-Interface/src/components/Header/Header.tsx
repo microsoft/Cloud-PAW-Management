@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import './Header.css';
 // import groups from '../../Assets/groups.svg';

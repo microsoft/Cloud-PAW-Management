@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { User } from "@microsoft/microsoft-graph-types-beta";

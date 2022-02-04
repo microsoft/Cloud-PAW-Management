@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { Panel, PanelType } from "@fluentui/react";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";

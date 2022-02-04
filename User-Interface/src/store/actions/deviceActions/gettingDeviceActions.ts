@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { IDeviceItem } from '../../../models';
 import { DeviceService } from '../../../services/deviceService';
 import {
