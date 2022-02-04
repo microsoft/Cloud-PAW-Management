@@ -85,6 +85,32 @@
                 }
             }
         },
+        "/API/Lifecycle/PAW": {
+            "get": {
+                "operationId": "lifecycleGetPAWDevice",
+                "tags": [
+                    "Lifecycle Management"
+                ],
+                "summary": "Get all commissioned PAW device(s)",
+                "description": "Returns a list of all commissioned PAW devices managed by the Cloud PAW Management systems.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "minItems": 0,
+                                    "items": {
+                                        "$ref": "#/components/schemas/pawDevice"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/Docs": {
             "get": {
                 "operationId": "swaggerUI",
