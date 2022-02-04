@@ -81,6 +81,12 @@
                     },
                     "500": {
                         "description": "Internal error. This is usually thrown because of a misconfiguration on the PAW architecture structure or some other internal error. See the server console logs/app insights for more info."
+                    },
+                    "520": {
+                        "description": "App is starting still. Feature is not available. Please try again later."
+                    },
+                    "525": {
+                        "description": "Not deployed. Please deploy the infra before using the app."
                     }
                 }
             }
@@ -91,7 +97,7 @@
                 "tags": [
                     "Lifecycle Management"
                 ],
-                "summary": "Get all commissioned PAW device(s)",
+                "summary": "Get all commissioned device(s).",
                 "description": "Returns a list of all commissioned PAW devices managed by the Cloud PAW Management systems.",
                 "responses": {
                     "200": {
@@ -107,6 +113,137 @@
                                 }
                             }
                         }
+                    },
+                    "520": {
+                        "description": "App is starting still. Feature is not available. Please try again later."
+                    },
+                    "525": {
+                        "description": "Not deployed. Please deploy the infra before using the app."
+                    }
+                }
+            }
+        },
+        "/API/Lifecycle/PAW/{deviceID}/Commission": {
+            "post": {
+                "operationId": "lifecyclePostPAWCommission",
+                "tags": [
+                    "Lifecycle Management"
+                ],
+                "summary": "Commission a new device.",
+                "description": "Commissions a new device, into the device hierarchy and appends appropriate metadata and initial policies. Appends required metadata to proper locations.",
+                "parameters": [
+                    {
+                        "name": "deviceID",
+                        "description": "The AAD Device ID of the autopilot device to commission into a managed device.",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$",
+                            "maxLength": 36,
+                            "minLength": 36,
+                            "example": "75da7fa4-4a04-44c8-8f2c-c1b2fa29aa51"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "enum": [
+                                            "Privileged",
+                                            "Developer",
+                                            "Tactical-CR",
+                                            "Tactical-RRR"
+                                        ]
+                                    }
+                                }
+                            },
+                            "examples": {
+                                    "summary": "Privileged",
+                                    "description": "In this example, the target device in the URL path is commissioned as a PAW.",
+                                    "value": "{\"type\": \"Privileged\"}"
+                                },
+                                "Developer": {
+                                    "summary": "Developer",
+                                    "description": "In this example, the target device in the URL path is commissioned as a developer workstation.",
+                                    "value": "{\"type\": \"Developer\"}"
+                                },
+                                "Tactical-CR": {
+                                    "summary": "Tactical: Compromise Recovery",
+                                    "description": "In this example, the target device in the URL path is commissioned as a Tactical PAW for CR operations.",
+                                    "value": "{\"type\": \"Tactical-CR\"}"
+                                },
+                                "Tactical-RRR": {
+                                    "summary": "Tactical: Rapid Ransomware Response",
+                                    "description": "In this example, the target device in the URL path is commissioned as a Tactical PAW for RRR operations.",
+                                    "value": "{\"type\": \"Tactical-RRR\"}"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/pawDevice"
+                                }
+                            }
+                        }
+                    },
+                    "520": {
+                        "description": "App is starting still. Feature is not available. Please try again later."
+                    },
+                    "525": {
+                        "description": "Not deployed. Please deploy the infra before using the app."
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "lifecycleDeletePAWCommission",
+                "tags": [
+                    "Lifecycle Management"
+                ],
+                "summary": "Decommission specified device",
+                "parameters": [
+                    {
+                        "name": "deviceID",
+                        "description": "The AAD Device ID of the autopilot device to commission into a managed device.",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$",
+                            "maxLength": 36,
+                            "minLength": 36,
+                            "example": "75da7fa4-4a04-44c8-8f2c-c1b2fa29aa51"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "boolean",
+                                    "example": true
+                                }
+                            }
+                        }
+                    },
+                    "520": {
+                        "description": "App is starting still. Feature is not available. Please try again later."
+                    },
+                    "525": {
+                        "description": "Not deployed. Please deploy the infra before using the app."
                     }
                 }
             }
@@ -517,7 +654,10 @@
                                 "type": "string",
                                 "description": "Commission type of the PAW",
                                 "enum": [
-                                    "Privileged", "Developer", "Tactical-CR", "Tactical-RRR"
+                                    "Privileged",
+                                    "Developer",
+                                    "Tactical-CR",
+                                    "Tactical-RRR"
                                 ],
                                 "example": "Privileged"
                             },
