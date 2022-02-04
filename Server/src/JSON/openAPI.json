@@ -164,6 +164,7 @@
                                 }
                             },
                             "examples": {
+                                "Privileged": {
                                     "summary": "Privileged",
                                     "description": "In this example, the target device in the URL path is commissioned as a PAW.",
                                     "value": "{\"type\": \"Privileged\"}"
