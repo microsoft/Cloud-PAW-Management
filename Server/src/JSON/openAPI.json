@@ -4,6 +4,7 @@
         "title": "Cloud PAW Management",
         "description": "Microsoft Endpoint Manager (Intune) Cloud Privileged Access Workstation (PAW) Lifecycle Management and Deployment App.",
         "contact": {
+            "name": "Elliot Huffman",
             "email": "elliot.huffman@microsoft.com"
         },
         "license": {
@@ -18,11 +19,11 @@
     },
     "servers": [
         {
-            "url": "https://contoso.local:80/",
+            "url": "https://contoso.local:443/",
             "description": "A secured connection to the app, only secured connections should be used for production."
         },
         {
-            "url": "http://contoso.local:443/",
+            "url": "http://contoso.local:80/",
             "description": "Used only for local dev, never host this app without network encryption."
         }
     ],
@@ -216,7 +217,7 @@
                 "parameters": [
                     {
                         "name": "deviceID",
-                        "description": "The AAD Device ID of the autopilot device to commission into a managed device.",
+                        "description": "The AAD Device ID of the autopilot device to decommission into a enterprise/user class device.",
                         "in": "path",
                         "required": true,
                         "schema": {
