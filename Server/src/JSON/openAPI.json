@@ -250,6 +250,203 @@
                 }
             }
         },
+        "/API/Lifecycle/PAW/{deviceID}/Assign": {
+            "get": {
+                "operationId": "lifecycleGetDeviceAssignment",
+                "tags": [
+                    "Lifecycle Management"
+                ],
+                "summary": "List user assignments on PAW",
+                "description": "Lists all of the users that are currently assigned to the specified device.",
+                "parameters": [
+                    {
+                        "name": "deviceID",
+                        "description": "The AAD Device ID of the managed device that will have all the user assignments listed.",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$",
+                            "maxLength": 36,
+                            "minLength": 36,
+                            "example": "75da7fa4-4a04-44c8-8f2c-c1b2fa29aa51"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "minItems": 0,
+                                    "items": {
+                                        "$ref": "#/components/schemas/microsoft.graph.user"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "520": {
+                        "description": "App is starting still. Feature is not available. Please try again later."
+                    },
+                    "525": {
+                        "description": "Not deployed. Please deploy the infra before using the app."
+                    }
+                }
+            },
+            "post": {
+                "operationId": "lifecyclePostDeviceAssignment",
+                "tags": [
+                    "Lifecycle Management"
+                ],
+                "summary": "Replace assignment list",
+                "description": "Replace the list of currently assigned users on the specified device.",
+                "parameters": [
+                    {
+                        "name": "deviceID",
+                        "description": "The AAD Device ID of the managed device that will have all the user assignments listed.",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$",
+                            "maxLength": 36,
+                            "minLength": 36,
+                            "example": "75da7fa4-4a04-44c8-8f2c-c1b2fa29aa51"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "userList": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "minLength": 5
+                                        }
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "1:1 map": {
+                                    "summary": "1:1 User Mapping",
+                                    "description": "This example is the security best practice of having only one user mapped to a managed device.",
+                                    "value": "{\"userList\": [\"user@contoso.com\"]}"
+                                },
+                                "Multi-User Managed Device": {
+                                    "summary": "Multi-User Assignment",
+                                    "description": "This example is the security best practice of having only one user mapped to a managed device.",
+                                    "value": "{\"userList\": [\"user@contoso.com\",\"anotherUser@contoso.com\"]}"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "minItems": 0,
+                                    "items": {
+                                        "$ref": "#/components/schemas/microsoft.graph.user"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "520": {
+                        "description": "App is starting still. Feature is not available. Please try again later."
+                    },
+                    "525": {
+                        "description": "Not deployed. Please deploy the infra before using the app."
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "lifecycleDeleteDeviceAssignment",
+                "tags": [
+                    "Lifecycle Management"
+                ],
+                "summary": "Delete user assignment.",
+                "description": "Remove the specified user from the device and if they were the last user, wipe the device for the next user. If multiple assignments exist and only part of the users are specified, all remaining users are un-touched and the device is not wiped.",
+                "parameters": [
+                    {
+                        "name": "deviceID",
+                        "description": "The AAD Device ID of the managed device that will have the user assignments deleted.",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$",
+                            "maxLength": 36,
+                            "minLength": 36,
+                            "example": "75da7fa4-4a04-44c8-8f2c-c1b2fa29aa51"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "userList": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "minLength": 5
+                                        }
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "Single User": {
+                                    "summary": "Unassign one user",
+                                    "description": "Remove a single user assignment from a managed device.",
+                                    "value": "{\"userList\": [\"user@contoso.com\"]}"
+                                },
+                                "Multiple Users": {
+                                    "summary": "Unassign multiple users",
+                                    "description": "Remove multiple user assignments from a managed device.",
+                                    "value": "{\"userList\": [\"user@contoso.com\",\"anotherUser@contoso.com\"]}"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "minItems": 0,
+                                    "items": {
+                                        "$ref": "#/components/schemas/microsoft.graph.user"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "520": {
+                        "description": "App is starting still. Feature is not available. Please try again later."
+                    },
+                    "525": {
+                        "description": "Not deployed. Please deploy the infra before using the app."
+                    }
+                }
+            }
+        },
         "/Docs": {
             "get": {
                 "operationId": "swaggerUI",
@@ -910,6 +1107,10 @@
                         "description": "The windowsAutopilotDeviceIdentity resource represents a Windows Autopilot Device."
                     }
                 ]
+            },
+            "microsoft.graph.user": {
+                "title": "Graph API - User",
+                "type": "object"
             }
         }
     }
