@@ -55,14 +55,8 @@ jobs:
         working-directory: Server
         
       # Upload the artifacts to make them available to other processes
-      - name: Upload the Windows EXE Artifact
+      - name: Upload Bin Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: Windows EXE
-          path: Server\dist\cloud-paw-management-win.exe
-      
-      - name: Upload the Linux Bin Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: Linux Bin
-          path: Server\dist\cloud-paw-management-linux
+          name: ExecutableBins
+          path: Server/dist/
