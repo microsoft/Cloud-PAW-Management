@@ -10,7 +10,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  Package-Bins:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -54,9 +54,16 @@ jobs:
         run: npx pkg .
         working-directory: Server
         
-      # Upload the artifacts to make them available to other processes
-      - name: Upload Bin Artifacts
+      # Upload the Windows EXE Arctifact to make them available to other processes
+      - name: Upload Raw Windows EXE Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ExecutableBins
-          path: Server/dist/
+          name: WindowsRawExe
+          path: Server/dist/cloud-paw-management-win.exe
+
+      # Upload the Windows EXE Arctifact to make them available to other processes
+      - name: Upload Raw Linux bin Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: LinuxRawBin
+          path: Server/dist/cloud-paw-management-linux
