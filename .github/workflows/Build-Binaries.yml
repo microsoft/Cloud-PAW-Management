@@ -1,0 +1,68 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Build Binaries
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      
+      # Set up NodeJS on the build host
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+          
+      # Install the PKG package to allow for building binaries
+      - name: Install PKG
+        run: npm install -g pkg
+
+      # Install the UI's dependencies
+      - name: Install the UI project
+        run: npm install
+        working-directory: User-Interface
+        
+      # Install the servers dependencies
+      - name: Install the Server project
+        run: npm install
+        working-directory: Server
+      
+      # Compile the Typescript files to JS
+      - name: Build Server
+        run: npm run-script build
+        working-directory: Server
+        
+        # Build the UI static files and place them into the server's compiled folder.
+      - name: Build the UI
+        run: npm run-script build
+        working-directory: User-Interface
+        
+      # Build the native binaries to be included as artifacts for publish
+      - name: Build native binaries
+        run: npx pkg .
+        working-directory: Server
+        
+      # Upload the artifacts to make them available to other processes
+      - name: Upload the Windows EXE Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Windows EXE
+          path: Server\dist\cloud-paw-management-win.exe
+      
+      - name: Upload the Linux Bin Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Linux Bin
+          path: Server\dist\cloud-paw-management-linux
