@@ -3,6 +3,7 @@
   "version": "1.1.0",
   "description": "A utility to easily manage cloud PAW devices via Microsoft Endpoint Manager (Intune).",
   "main": "bin/src/index.js",
+  "bin": "bin/src/index.js",
   "private": "true",
   "scripts": {
     "start": "node ./bin/src/index.js",
@@ -46,5 +47,17 @@
     "helmet": "^5.0.2",
     "isomorphic-fetch": "^3.0.0",
     "swagger-ui-express": "^4.3.0"
+  },
+  "pkg": {
+    "scripts": "bin/src/**/*.js",
+    "assets": [
+      "node_modules/**/*",
+      "bin/src/UI/**/*"
+    ],
+    "targets": [
+      "node16-win-x64",
+      "node16-linux-x64"
+    ],
+    "outputPath": "dist"
   }
 }

@@ -1,3 +1,6 @@
+# Built Executables/Installers
+dist/
+
 # typescript compiled output
 bin/
 
