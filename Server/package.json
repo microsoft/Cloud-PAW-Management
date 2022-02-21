@@ -40,7 +40,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@azure/identity": "^2.0.2",
+    "@azure/identity": "^2.0.4",
     "@azure/keyvault-secrets": "^4.3.0",
     "@microsoft/microsoft-graph-client": "^3.0.2",
     "express": "^4.17.2",
