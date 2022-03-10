@@ -1,21 +1,21 @@
 {
     "openapi": "3.0.3",
     "info": {
-        "title": "Cloud PAW Management",
-        "description": "Microsoft Endpoint Manager (Intune) Cloud Privileged Access Workstation (PAW) Lifecycle Management and Deployment App.",
+        "title": "Privileged Security Management",
+        "description": "Simplify PAW and SPA for the masses, unify the MS Internal, and public PAW specs, and expedite deployment to ~5min or less.",
         "contact": {
             "name": "Elliot Huffman",
             "email": "elliot.huffman@microsoft.com"
         },
         "license": {
             "name": "MIT",
-            "url": "https://github.com/microsoft/Cloud-PAW-Management/blob/main/LICENSE"
+            "url": "https://github.com/microsoft/Privileged-Security-Management/blob/main/LICENSE"
         },
         "version": "appVersionFromConfigEngine"
     },
     "externalDocs": {
         "description": "Official Documentation",
-        "url": "https://github.com/microsoft/Cloud-PAW-Management/wiki"
+        "url": "https://github.com/microsoft/Privileged-Security-Management/wiki"
     },
     "servers": [
         {
@@ -33,7 +33,7 @@
             "description": "Device Management",
             "externalDocs": {
                 "description": "Read the wiki page",
-                "url": "https://github.com/microsoft/Cloud-PAW-Management/wiki/PAW-Lifecycle-Management-API-Endpoints"
+                "url": "https://github.com/microsoft/Privileged-Security-Management/wiki/PAW-Lifecycle-Management-API-Endpoints"
             }
         },
         {
@@ -41,7 +41,7 @@
             "description": "Coming soon!",
             "externalDocs": {
                 "description": "Read the wiki page",
-                "url": "https://github.com/microsoft/Cloud-PAW-Management/wiki/Infrastructure-Deployment-API-Endpoints"
+                "url": "https://github.com/microsoft/Privileged-Security-Management/wiki/Infrastructure-Deployment-API-Endpoints"
             }
         },
         {
@@ -49,7 +49,7 @@
             "description": "Endpoints that are exposed only in debug mode. You can use these to see as the app sees.",
             "externalDocs": {
                 "description": "Read the wiki page",
-                "url": "https://github.com/microsoft/Cloud-PAW-Management/wiki/Debug-API-Endpoints"
+                "url": "https://github.com/microsoft/Privileged-Security-Management/wiki/Debug-API-Endpoints"
             }
         }
     ],
@@ -99,7 +99,7 @@
                     "Lifecycle Management"
                 ],
                 "summary": "Get all commissioned device(s).",
-                "description": "Returns a list of all commissioned devices managed by the Cloud PAW Management app.",
+                "description": "Returns a list of all commissioned devices managed by the Privileged Security Management app.",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -499,7 +499,7 @@
                             "application/json": {
                                 "example": {
                                     "debug": "true",
-                                    "Scope_Tag": "Cloud-PAW-Mgmt",
+                                    "Scope_Tag": "Priv-Sec-Mgmt",
                                     "port": "4000"
                                 },
                                 "schema": {
@@ -615,12 +615,12 @@
                                 "Name only": {
                                     "summary": "Name only tag creation",
                                     "description": "Create a role scope tag with a name only.",
-                                    "value": "{\"name\": \"Cloud-PAW-Management\"}"
+                                    "value": "{\"name\": \"Privileged-Security-Management\"}"
                                 },
                                 "Name and Description": {
                                     "summary": "Name and Description tag creation",
                                     "description": "Create a role scope tag with a name and a description field.",
-                                    "value": "{\"name\": \"Cloud-PAW-Management\", \"description\": \"PAWSecGrp=9ed1e179-e179-9ed1-79e1-d19e79e1d19e\\nUsrSecGrp=9ed1e179-e179-9ed1-79e1-d19e79e1d19e\\nSiloRootGrp=9ed1e179-e179-9ed1-79e1-d19e79e1d19e\\nBrkGls=9ed1e179-e179-9ed1-79e1-d19e79e1d19e\\nUsrTag=9ed1e179-e179-9ed1-79e1-d19e79e1d19e\"}"
+                                    "value": "{\"name\": \"Privileged-Security-Management\", \"description\": \"PAWSecGrp=9ed1e179-e179-9ed1-79e1-d19e79e1d19e\\nUsrSecGrp=9ed1e179-e179-9ed1-79e1-d19e79e1d19e\\nSiloRootGrp=9ed1e179-e179-9ed1-79e1-d19e79e1d19e\\nBrkGls=9ed1e179-e179-9ed1-79e1-d19e79e1d19e\\nUsrTag=9ed1e179-e179-9ed1-79e1-d19e79e1d19e\"}"
                                 }
                             }
                         }
@@ -923,7 +923,7 @@
                     "displayName": {
                         "type": "string",
                         "description": "The display or friendly name of the Role Scope Tag.",
-                        "example": "Cloud-PAW-Management"
+                        "example": "Privileged-Security-Management"
                     },
                     "isBuiltIn": {
                         "type": "boolean",
