@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@azure/identity": "^2.0.4",
-    "@azure/keyvault-secrets": "^4.3.0",
+    "@azure/keyvault-secrets": "^4.4.0",
     "@microsoft/microsoft-graph-client": "^3.0.2",
     "express": "^4.17.3",
     "helmet": "^5.0.2",
