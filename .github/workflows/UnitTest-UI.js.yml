@@ -4,14 +4,14 @@
 name: Unit Test - User Interface
 
 on:
-  push:
-    branches: [ main ]
-    paths:
-      - User-Interface/**
-  pull_request:
-    branches: [ main ]
-    paths:
-      - User-Interface/**
+#   push:
+#     branches: [ main ]
+#     paths:
+#       - User-Interface/**
+#   pull_request:
+#     branches: [ main ]
+#     paths:
+#       - User-Interface/**
   workflow_dispatch:    
 
 jobs:
