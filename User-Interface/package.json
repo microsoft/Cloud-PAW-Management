@@ -17,16 +17,16 @@
     "url": "https://github.com/microsoft/Cloud-PAW-Management"
   },
   "dependencies": {
-    "@fluentui/react": "^8.62.4",
-    "@reduxjs/toolkit": "^1.8.0",
+    "@fluentui/react": "^8.64.0",
+    "@reduxjs/toolkit": "^1.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-redux": "^7.2.6",
-    "react-router-dom": "^6.2.2"
+    "react-redux": "^7.2.8",
+    "react-router-dom": "^6.3.0"
   },
   "devDependencies": {
-    "@microsoft/microsoft-graph-types-beta": "^0.25.0-preview",
-    "@testing-library/jest-dom": "^5.16.3",
+    "@microsoft/microsoft-graph-types-beta": "^0.26.0-preview",
+    "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.4.1",
