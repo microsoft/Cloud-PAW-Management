@@ -25,7 +25,7 @@
     "react-router-dom": "^6.2.2"
   },
   "devDependencies": {
-    "@microsoft/microsoft-graph-types-beta": "^0.25.0-preview",
+    "@microsoft/microsoft-graph-types-beta": "^0.26.0-preview",
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
