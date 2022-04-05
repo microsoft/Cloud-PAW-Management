@@ -455,7 +455,7 @@ export class AppGraphClient {
         // Build the graph client post body
         let postBody: MicrosoftGraphBeta.Group = {
             displayName: name,
-            mailNickname: nickName,
+            mailNickname: nickName + "-PSM",
             mailEnabled: false,
             securityEnabled: true
         };
