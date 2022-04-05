@@ -32,4 +32,4 @@ jobs:
 
       # Install the Azure Sign Tool for authenticode signing
       - name: Install Azure Sign Tool
-      - run: dotnet tool install AzureSignTool
+        run: dotnet tool install AzureSignTool
