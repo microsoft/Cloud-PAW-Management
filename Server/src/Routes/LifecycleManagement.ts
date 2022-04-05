@@ -457,13 +457,13 @@ export class LifecycleRouter {
         let rootGroupMemberResult: boolean;
         let devGroupMemberResult: boolean;
         let deviceObject: MicrosoftGraphBeta.Device;
-        let pawType: "Privileged" | "Developer" | "Tactical-CR" | "Tactical-RRR";
+        let pawType: "Privileged" | "Developer" | "Tactical";
 
         // If the type param is not specified, default it to standard PAW.
         if (typeof type !== "string") {
             // Set the PAW type to be used
             pawType = "Privileged"
-        } else if (type === "Privileged" || type === "Developer" || type == "Tactical-CR" || type == "Tactical-RRR") {
+        } else if (type === "Privileged" || type === "Developer" || type == "Tactical") {
             // Set the PAW type to be used
             pawType = type
         } else { // a string was specified but it doesn't match the expected types allowed

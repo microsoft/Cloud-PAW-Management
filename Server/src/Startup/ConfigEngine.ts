@@ -37,7 +37,7 @@ interface CloudSecConfig {
 export interface PAWGroupConfig {
     CommissionedDate: Date,
     GroupAssignment: string,
-    Type: "Privileged" | "Developer" | "Tactical-CR" | "Tactical-RRR",
+    Type: "Privileged" | "Developer" | "Tactical",
     UserAssignment: string
 };
 
@@ -369,7 +369,7 @@ export class ConfigurationEngine {
                     break;
                 case "Type":
                     // Validate string to ensure that the PAW type is allowed
-                    if (splitLine[1] === "Privileged" || splitLine[1] === "Developer" || splitLine[1] === "Tactical-CR" || splitLine[1] === "Tactical-RRR") {
+                    if (splitLine[1] === "Privileged" || splitLine[1] === "Developer" || splitLine[1] === "Tactical" || splitLine[1] === "Tactical") {
                         // If validated successfully, set the parsed return as the data that was validated
                         parsedConfig.Type = splitLine[1];
                     } else { // If validation failed

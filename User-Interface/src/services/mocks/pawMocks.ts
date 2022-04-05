@@ -19,7 +19,7 @@ export const paws =[
     "UserAssignment": "930e2dab-dcd4-4e7b-b841-7141c073e638"
   },
   {
-    "Type": "Tactical-CR",
+    "Type": "Tactical",
     "id": "7a4f05a2-630c-474f-8e42-65749b042bf6",
     "ParentGroup": "16dbe62a-277e-4ae8-b0cd-2158d956be6e",
     "GroupAssignment": "812ebd96-f3cd-4624-ada8-2ca17abeb007",
@@ -31,14 +31,14 @@ export const paws =[
   {
     "DisplayName": "PAW - 88001052",
     "GroupAssignment": "5b926d90-a31f-4553-819c-cc1c970fd107",
-    "Type": "Tactical-CR",
+    "Type": "Tactical",
     "CommissionedDate": "2021-10-25T00:10:27.072Z",
     "ParentGroup": "84b4c2c3-1ad5-4d3b-9e93-3baa1a8473e5",
     "id": "d807eafd-5a4c-427e-bfa0-df1085fbfe34",
     "UserAssignment": "add101a0-d83d-4230-86f0-65fd5a27410a"
   },
   {
-    "Type": "Tactical-CR",
+    "Type": "Tactical",
     "id": "986d1bfb-d69c-4337-93ef-491ddabefeae",
     "ParentGroup": "ff5d66f1-28b9-40ce-be3e-40631a002008",
     "GroupAssignment": "bf87773e-6fee-47d1-9bf2-bee421ed3dcf",
@@ -48,7 +48,7 @@ export const paws =[
     "CommissionedDate": "2021-02-03T00:10:27.072Z"
   },
   {
-    "Type": "Tactical-CR",
+    "Type": "Tactical",
     "id": "795a2e56-61f3-43af-8a12-9e80ff757c48",
     "ParentGroup": "4a2b68e2-b314-40c5-8feb-f1679d66f129",
     "GroupAssignment": "38191946-7bc3-4914-b569-bafa2fee6cf4",
@@ -60,7 +60,7 @@ export const paws =[
   {
     "DisplayName": "PAW - 1398295044",
     "GroupAssignment": "6b903a45-c5be-407a-9a3c-268ba78fe5bc",
-    "Type": "Tactical-CR",
+    "Type": "Tactical",
     "CommissionedDate": "2021-09-03T00:10:27.082Z",
     "ParentGroup": "9dd53afb-6941-42b8-a846-f4ef3de7d969",
     "id": "c0429b53-04a9-4190-84d9-08eb265488b8",
@@ -76,7 +76,7 @@ export const paws =[
     "UserAssignment": "26626ed1-7fb8-469b-8e25-3ff5d8fd0b71"
   },
   {
-    "Type": "Tactical-CR",
+    "Type": "Tactical",
     "id": "13848a47-8a3d-47ea-8d45-a915e35926bf",
     "ParentGroup": "11ce08f6-987d-4ca8-bd26-35278dbafee1",
     "GroupAssignment": "9749e3ec-c243-4bd9-99e4-79ad2d02c971",
@@ -88,7 +88,7 @@ export const paws =[
   {
     "DisplayName": "PAW - 1884491206",
     "GroupAssignment": "570ec22e-002d-4399-b1b8-019c2957569d",
-    "Type": "Tactical-CR",
+    "Type": "Tactical",
     "CommissionedDate": "2021-06-28T00:10:27.083Z",
     "ParentGroup": "25727d65-a608-4edc-a983-e58d41542984",
     "id": "7e391f84-41d9-4a58-8a35-335fa6fcfeec",
@@ -107,7 +107,7 @@ export const paws =[
   {
     "DisplayName": "PAW - 528381031",
     "GroupAssignment": "65896d0a-d52d-46ac-a77b-3e423b5f245d",
-    "Type": "Tactical-CR",
+    "Type": "Tactical",
     "CommissionedDate": "2021-11-02T00:10:27.084Z",
     "ParentGroup": "7e5e8302-e113-4159-8ce8-3a55565afad7",
     "id": "63db4a82-8bf4-4c91-8eb4-80ba6b255359",
@@ -173,7 +173,7 @@ export const paws =[
     "CommissionedDate": "2021-11-26T00:10:27.086Z"
   },
   {
-    "Type": "Tactical-CR",
+    "Type": "Tactical",
     "id": "6cd4dbdb-d621-4969-9141-6b3267621e69",
     "ParentGroup": "5a8a47fa-d194-46ee-9c3b-b10b2ab889d2",
     "GroupAssignment": "11b382ab-e922-45bf-a778-6c6545953a1c",
@@ -220,7 +220,7 @@ export const paws =[
     "CommissionedDate": "2021-08-09T00:10:27.088Z"
   },
   {
-    "Type": "Tactical-CR",
+    "Type": "Tactical",
     "id": "9a11c229-f4cf-45cd-8948-de3e1d14e086",
     "ParentGroup": "2024b4f8-8733-4586-bcc1-c83159ca2f7d",
     "GroupAssignment": "6bd6b4f2-afad-458c-97fc-7f3a4179cb43",
@@ -261,7 +261,7 @@ export const paws =[
   {
     "DisplayName": "PAW - 1545669561",
     "GroupAssignment": "ed8a29bd-5db6-47ae-813d-e564feaf7439",
-    "Type": "Tactical-CR",
+    "Type": "Tactical",
     "CommissionedDate": "2021-08-12T00:10:27.091Z",
     "ParentGroup": "bf63949b-3d89-4868-b987-e0d0dca8d3ba",
     "id": "1955a72b-ac02-4134-8131-05ec37f033c4",
@@ -278,7 +278,7 @@ export const paws =[
     "CommissionedDate": "2021-08-24T00:10:27.091Z"
   },
   {
-    "Type": "Tactical-CR",
+    "Type": "Tactical",
     "id": "5471a054-4945-4ebd-baf0-ce08c76bb58a",
     "ParentGroup": "32a7facb-8ffd-419b-a16c-6e68ac2255bb",
     "GroupAssignment": "81ee5585-f5e6-4c5e-892c-c11fcc655d9c",
@@ -346,7 +346,7 @@ export const paws =[
     "UserAssignment": "65936613-82a0-4e96-a1a3-dddda02b9fe1"
   },
   {
-    "Type": "Tactical-CR",
+    "Type": "Tactical",
     "id": "f99c474d-5883-44b1-a551-305c28cc0c4d",
     "ParentGroup": "3777a133-11eb-441c-abdd-baa30ffc9523",
     "GroupAssignment": "50b3f4c1-715b-4caf-9184-fe7cdca13d11",
@@ -356,7 +356,7 @@ export const paws =[
     "CommissionedDate": "2021-06-16T00:10:27.095Z"
   },
   {
-    "Type": "Tactical-CR",
+    "Type": "Tactical",
     "id": "7c551e96-85c1-44bf-8022-ea5a897fa13c",
     "ParentGroup": "57cfd5da-e7b1-4eb5-8daa-6ddf75f9cfa9",
     "GroupAssignment": "4ab2319d-7ed2-4cd4-b678-0bd7efac0100",
@@ -377,7 +377,7 @@ export const paws =[
   {
     "DisplayName": "PAW - 1167630752",
     "GroupAssignment": "fd4d1a9e-b96f-4544-8826-dc3f03278c66",
-    "Type": "Tactical-CR",
+    "Type": "Tactical",
     "CommissionedDate": "2021-04-10T00:10:27.096Z",
     "ParentGroup": "03a5222f-9601-4836-8a33-0862a21e1d6b",
     "id": "cf4e05e9-85d5-4c3c-af72-d05cfb760c06",
@@ -395,14 +395,14 @@ export const paws =[
   {
     "DisplayName": "PAW - 881512506",
     "GroupAssignment": "e92b1fc0-abd8-41c1-95bf-6b39cbc2a323",
-    "Type": "Tactical-CR",
+    "Type": "Tactical",
     "CommissionedDate": "2021-02-03T00:10:27.097Z",
     "ParentGroup": "04f53123-0c58-4995-bcb4-78ac08e5ff61",
     "id": "79df2bed-575c-4ea5-9934-b3c88c5b6555",
     "UserAssignment": "73a0d5ad-fdff-4b91-ae45-62543b4c4241"
   },
   {
-    "Type": "Tactical-CR",
+    "Type": "Tactical",
     "id": "7ffa1cb2-0fc5-410c-9954-bc0292b8fd1a",
     "ParentGroup": "f30f4637-e70b-4ddb-958c-7b426b56db55",
     "GroupAssignment": "bedf7d03-2fa5-45af-8bac-3cb482406af1",
@@ -444,7 +444,7 @@ export const paws =[
   {
     "DisplayName": "PAW - 1187629943",
     "GroupAssignment": "21372776-6113-4a05-875b-6d0e14036efd",
-    "Type": "Tactical-CR",
+    "Type": "Tactical",
     "CommissionedDate": "2021-10-24T00:10:27.099Z",
     "ParentGroup": "846c3c99-d1f4-46f6-b415-6ddff4d8fd77",
     "id": "bf0a1a35-084e-432c-8ae1-43ddd56915bf",
@@ -453,14 +453,14 @@ export const paws =[
   {
     "DisplayName": "PAW - 2081303712",
     "GroupAssignment": "e4683886-cd57-4ecf-9f00-6d4ace1fc389",
-    "Type": "Tactical-CR",
+    "Type": "Tactical",
     "CommissionedDate": "2021-04-09T00:10:27.099Z",
     "ParentGroup": "d15b3cd0-eb86-4d2c-8190-38f3c2d35fa4",
     "id": "226c8233-8016-40ca-ae4c-0031b1931ca0",
     "UserAssignment": "0c6dd26a-0512-46a8-bd90-09daee93d1a1"
   },
   {
-    "Type": "Tactical-CR",
+    "Type": "Tactical",
     "id": "2c0ffa1b-5dfe-4932-86af-10f92fb35b1f",
     "ParentGroup": "380c7d1f-9fc6-4506-9cf9-6e0f18580c35",
     "GroupAssignment": "43fca3f1-694d-4e6f-a5c9-966a7d803dc7",

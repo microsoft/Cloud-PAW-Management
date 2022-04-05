@@ -45,8 +45,7 @@ export const FilteredItems = ({ items }: IFilteredItemsProps) => {
     options={[
       { key: 'Privileged', text: 'Privileged' },
       { key: 'Developer', text: 'Developer' },
-      { key: 'Tactical-CR', text: 'Tactical-CR' },
-      { key: 'Tactical-RRR', text: 'Tactical-RRR' },
+      { key: 'Tactical', text: 'Tactical' },
     ]}
     onChange = {onPawTypeChange}
     styles={dropdownStyles}

@@ -158,8 +158,7 @@
                                         "enum": [
                                             "Privileged",
                                             "Developer",
-                                            "Tactical-CR",
-                                            "Tactical-RRR"
+                                            "Tactical"
                                         ]
                                     }
                                 }
@@ -175,15 +174,10 @@
                                     "description": "In this example, the target device in the URL path is commissioned as a developer workstation.",
                                     "value": "{\"type\": \"Developer\"}"
                                 },
-                                "Tactical-CR": {
+                                "Tactical": {
                                     "summary": "Tactical: Compromise Recovery",
-                                    "description": "In this example, the target device in the URL path is commissioned as a Tactical PAW for CR operations.",
-                                    "value": "{\"type\": \"Tactical-CR\"}"
-                                },
-                                "Tactical-RRR": {
-                                    "summary": "Tactical: Rapid Ransomware Response",
-                                    "description": "In this example, the target device in the URL path is commissioned as a Tactical PAW for RRR operations.",
-                                    "value": "{\"type\": \"Tactical-RRR\"}"
+                                    "description": "In this example, the target device in the URL path is commissioned as a Tactical PAW for incident response.",
+                                    "value": "{\"type\": \"Tactical\"}"
                                 }
                             }
                         }
@@ -855,8 +849,7 @@
                                 "enum": [
                                     "Privileged",
                                     "Developer",
-                                    "Tactical-CR",
-                                    "Tactical-RRR"
+                                    "Tactical"
                                 ],
                                 "example": "Privileged"
                             },
