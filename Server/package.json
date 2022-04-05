@@ -27,7 +27,7 @@
   "author": "Elliot Huffman",
   "license": "MIT",
   "devDependencies": {
-    "@microsoft/microsoft-graph-types-beta": "^0.25.0-preview",
+    "@microsoft/microsoft-graph-types-beta": "^0.26.0-preview",
     "@types/chai": "^4.3.0",
     "@types/express": "^4.17.13",
     "@types/mocha": "^9.1.0",
