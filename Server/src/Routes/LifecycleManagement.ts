@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { endpointPAWUserRightsSettings, localGroupMembershipUserRights } from "../Utility/RequestGenerator";
-import { writeDebugInfo, InternalAppError } from "../Utility/Utility";
-import { validateGUID, validateEmailArray } from "../Utility/Validators";
-import type { AppGraphClient } from "../Utility/GraphClient";
-import type { ConfigurationEngine, PAWGroupConfig, PAWObject } from "../Startup/ConfigEngine";
-import type express from "express";
 import type * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta";
+import type express from "express";
+import type { ConfigurationEngine, PAWGroupConfig, PAWObject } from "../Startup/ConfigEngine";
+import type { AppGraphClient } from "../Utility/GraphClient";
+import { endpointPAWUserRightsSettings, localGroupMembershipUserRights } from "../Utility/RequestGenerator";
+import { InternalAppError, writeDebugInfo } from "../Utility/Utility";
+import { validateEmailArray, validateGUID } from "../Utility/Validators";
 
 export class LifecycleRouter {
     // Define the properties that will be available to the class

@@ -1,12 +1,8 @@
+import { CommandBar, DefaultButton, Dialog, DialogFooter, DialogType, ICommandBarItemProps, PrimaryButton, Spinner, Stack } from '@fluentui/react';
+import { useBoolean } from '@fluentui/react-hooks';
 import React, { useCallback, useMemo } from 'react';
-import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
-import { Dialog, DialogType, DialogFooter } from '@fluentui/react/lib/Dialog';
-import { useBoolean } from '@fluentui/react-hooks'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-import { DefaultButton, PrimaryButton } from '@fluentui/react/lib/Button';
-import { Stack } from '@fluentui/react/lib/Stack';
 import { decommissionPaws, getPaws } from '../../store/actions/pawActions';
-import { Spinner } from '@fluentui/react';
 
 interface IPawActionsProps {
   onCommissionPaws: () => void;

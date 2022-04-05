@@ -1,18 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect } from 'react';
-import { DefaultPalette, IStackStyles, Stack, ThemeProvider, } from '@fluentui/react';
+import { DefaultPalette, IStackStyles, Stack, ThemeProvider } from '@fluentui/react';
 import { useBoolean } from '@fluentui/react-hooks';
-import { PawActions } from '../PawActions';
-import { DeviceItemList } from '../DeviceItemList/DeviceItemList';
-import { Header } from '../Header/Header';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
+import React, { useEffect } from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { getPaws } from '../../store/actions/pawActions';
-import { CommissionPawsPanel } from '../CommissionPawsPanel';
-import { LeftNav } from '../LeftNav/LeftNav';
 import { darkTheme } from '../../themes';
+import { CommissionPawsPanel } from '../CommissionPawsPanel';
+import { DeviceItemList } from '../DeviceItemList/DeviceItemList';
+import { Header } from '../Header/Header';
+import { LeftNav } from '../LeftNav/LeftNav';
+import { PawActions } from '../PawActions';
 
 initializeIcons(/* optional base url */);
 

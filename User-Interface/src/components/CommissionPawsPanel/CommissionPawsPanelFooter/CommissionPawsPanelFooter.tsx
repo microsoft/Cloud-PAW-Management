@@ -1,8 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultButton, PrimaryButton } from '@fluentui/react/lib/components/Button';
-import { IStackTokens, Stack } from '@fluentui/react/lib/components/Stack';
+import { DefaultButton, IStackTokens, PrimaryButton, Stack } from '@fluentui/react';
 import React, { useCallback } from 'react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { commissionPaws } from '../../../store/actions/pawActions';

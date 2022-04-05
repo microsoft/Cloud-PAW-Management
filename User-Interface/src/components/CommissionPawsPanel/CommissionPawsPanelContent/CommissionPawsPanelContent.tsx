@@ -1,15 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { FocusZone, FocusZoneDirection, IStackStyles, IStackTokens, SearchBox, Selection, Stack } from '@fluentui/react';
 import React, { useMemo, useState } from 'react';
-import { SearchBox } from '@fluentui/react/lib/SearchBox';
-import { Stack, IStackTokens, IStackStyles } from '@fluentui/react/lib/Stack';
-import { SelectedItems } from './SelectedItems/SelectedItems';
-import { Selection, FocusZone, FocusZoneDirection } from '@fluentui/react';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { IDeviceItem } from '../../../models';
 import { SELECT_DEVICES_TO_COMMISSION_PAW } from '../../../store/actions/pawActions';
 import { FilteredItems } from './FilteredItems/FilteredItems';
+import { SelectedItems } from './SelectedItems/SelectedItems';
 
 export const CommissionPawsPanelContent = () => {
     const dispatch = useDispatch();
