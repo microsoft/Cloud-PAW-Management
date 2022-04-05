@@ -10,27 +10,27 @@ import { FilteredItems } from './FilteredItems/FilteredItems';
 import { SelectedItems } from './SelectedItems/SelectedItems';
 
 export const CommissionPawsPanelContent = () => {
-    const dispatch = useDispatch();
-    const [searchTerm, setSearchTerm] = useState('');
-    const devices: IDeviceItem[] = useSelector((state: RootStateOrAny) => state.devices.getDevices.devices);
-    const stackTokens: Partial<IStackTokens> = { childrenGap: 0 };
+  const dispatch = useDispatch();
+  const [searchTerm, setSearchTerm] = useState('');
+  const devices: IDeviceItem[] = useSelector((state: RootStateOrAny) => state.devices.getDevices.devices);
+  const stackTokens: Partial<IStackTokens> = { childrenGap: 0 };
 
-    const selection = new Selection({
-      onSelectionChanged: () => {
-        onDeviceSelected(selection.getSelection() as IDeviceItem[])
-      },
-    });
+  const selection = new Selection({
+    onSelectionChanged: () => {
+      onDeviceSelected(selection.getSelection() as IDeviceItem[])
+    },
+  });
 
-    const onSearch = (newValue) => {
-      setSearchTerm(newValue);
-    };
+  const onSearch = (newValue) => {
+    setSearchTerm(newValue);
+  };
 
-    const containerStyles: IStackStyles = {
-      root: {
-        marginTop: 20
-      },
-    };
-  
+  const containerStyles: IStackStyles = {
+    root: {
+      marginTop: 20
+    },
+  };
+
 
   const onDeviceSelected = (deviceItems: IDeviceItem[]) => {
     dispatch({
@@ -40,19 +40,19 @@ export const CommissionPawsPanelContent = () => {
   };
 
   const FilteredItemsMemo = useMemo(() => {
-    const filteredDevices = devices.filter((device) => device.deviceId.indexOf(searchTerm) >=0 );
-    return <FilteredItems items={filteredDevices}/>;
+    const filteredDevices = devices.filter((device) => device.deviceId.indexOf(searchTerm) >= 0);
+    return <FilteredItems items={filteredDevices} />;
   }, [devices, searchTerm]);
 
   return (
     <>
       <Stack tokens={stackTokens} styles={containerStyles}>
-      <FocusZone direction={FocusZoneDirection.vertical}>
-        <SearchBox placeholder="Search by AAD Device ID" onSearch={onSearch} />
-        {
-        FilteredItemsMemo
-        }
-      </FocusZone>
+        <FocusZone direction={FocusZoneDirection.vertical}>
+          <SearchBox placeholder="Search by AAD Device ID" onSearch={onSearch} />
+          {
+            FilteredItemsMemo
+          }
+        </FocusZone>
         <SelectedItems />
       </Stack>
     </>
