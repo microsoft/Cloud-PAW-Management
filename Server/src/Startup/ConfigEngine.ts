@@ -254,7 +254,7 @@ export class ConfigurationEngine {
         // If the Break glass property is not configured, deploy a new BG SG
         if (this.configScratchSpace.BrkGls === undefined) {
             // Create the Break Glass security group
-            const newBGgroup = await this.graphClient.newAADGroup("Break Glass", "Used by the Cloud PAW Management App to exclude the emergency access accounts from being caught in an outage.");
+            const newBGgroup = await this.graphClient.newAADGroup("Break Glass", "Used by the Privileged Security Management App to exclude the emergency access accounts from being caught in an outage.");
 
             // Update the Scratch space to reflect the GUID from the new SG that was just created
             this.configScratchSpace.BrkGls = newBGgroup.id
@@ -262,7 +262,7 @@ export class ConfigurationEngine {
             // If the PAW Device root group is not configured, deploy a new SG
         } else if (this.configScratchSpace.PAWSecGrp === undefined) {
             // Create the PAW Devices security group
-            const newPAWDevGroup = await this.graphClient.newAADGroup("PAW Devices", "Used by the Cloud PAW Management App to contain the PAW device's Security Group and device hierarchy.");
+            const newPAWDevGroup = await this.graphClient.newAADGroup("PAW Devices", "Used by the Privileged Security Management App to contain the PAW device's Security Group and device hierarchy.");
 
             // Update the Scratch space to reflect the GUID from the new SG that was just created
             this.configScratchSpace.PAWSecGrp = newPAWDevGroup.id
@@ -270,7 +270,7 @@ export class ConfigurationEngine {
             // If the SILO Root group doesn't exist, deploy it
         } else if (this.configScratchSpace.SiloRootGrp === undefined) {
             // Create the SILO Root Group
-            const newSILOGroup = await this.graphClient.newAADGroup("SILO Root", "Used by the Cloud PAW management app to contain the SILO Security Group hierarchy.");
+            const newSILOGroup = await this.graphClient.newAADGroup("SILO Root", "Used by the Privileged Security Management app to contain the SILO Security Group hierarchy.");
 
             // Update the Scratch Space SILO Root group data with the new GUID
             this.configScratchSpace.SiloRootGrp = newSILOGroup.id;
@@ -278,7 +278,7 @@ export class ConfigurationEngine {
             // If the Privileged Users root group does not exist, deploy a new SG for it.
         } else if (this.configScratchSpace.UsrSecGrp === undefined) {
             // Create the Priv Users Sec Group
-            const newPrivUserGroup = await this.graphClient.newAADGroup("Privileged Users", "Used by the Cloud PAW Management App to contain the Priv Users' Security Group and user hierarchy.");
+            const newPrivUserGroup = await this.graphClient.newAADGroup("Privileged Users", "Used by the Privileged Security Management App to contain the Priv Users' Security Group and user hierarchy.");
 
             // Configure the scratch space Priv Users root group with the new GUID provided
             this.configScratchSpace.UsrSecGrp = newPrivUserGroup.id;

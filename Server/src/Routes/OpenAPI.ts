@@ -41,7 +41,7 @@ export class SwaggerUI {
         // Set the Swagger UI engine's default options
         const swaggerOptions: swaggerUI.SwaggerUiOptions = {
             // customCss: '.swagger-ui .topbar { display: none }',
-            customSiteTitle: "Cloud PAW Management - API Docs"
+            customSiteTitle: "Privileged Security Management - API Docs"
         };
 
         // Specify the document to be served up on the SwaggerUI endpoint using the specified options

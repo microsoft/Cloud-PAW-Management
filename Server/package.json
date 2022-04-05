@@ -1,7 +1,7 @@
 {
-  "name": "cloud-paw-management",
+  "name": "privileged-security-management-server",
   "version": "1.1.0",
-  "description": "A utility to easily manage cloud PAW devices via Microsoft Endpoint Manager (Intune).",
+  "description": "A utility to easily manage privileged security via a web app.",
   "main": "bin/src/index.js",
   "bin": "bin/src/index.js",
   "private": "true",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/microsoft/Cloud-PAW-Management"
+    "url": "https://github.com/microsoft/Privileged-Security-Management"
   },
   "keywords": [
     "Intune",

@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 
 import { PrimaryButton } from "@fluentui/react";
-import { useNavigate } from "react-router-dom"
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 // Initial landing page
 export function Home() {
@@ -19,13 +19,13 @@ export function Home() {
 
     return (
         <React.Fragment>
-            <h1>Welcome to Cloud PAW Management</h1>
+            <h1>Welcome to Privileged Security Management</h1>
             <h2>Please select a module to administer</h2>
             <PrimaryButton text="Device Management" onClick={onClickPageNavDevice} />
             <PrimaryButton text="User Management" disabled={true} />
             <PrimaryButton text="SILO Management" disabled={true} />
             <PrimaryButton text="Privileged Secure Score" disabled={true} />
-            <PrimaryButton text="Cloud PAW Management Settings" disabled={true} />
+            <PrimaryButton text="Privileged Security Management Settings" disabled={true} />
         </React.Fragment>
     )
 }

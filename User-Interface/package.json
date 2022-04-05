@@ -1,5 +1,5 @@
 {
-  "name": "user-interface",
+  "name": "psm-ui",
   "version": "0.0.1",
   "private": "true",
   "keywords": [
@@ -14,7 +14,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/microsoft/Cloud-PAW-Management"
+    "url": "https://github.com/microsoft/Privileged-Security-Management"
   },
   "dependencies": {
     "@fluentui/react": "^8.64.0",
