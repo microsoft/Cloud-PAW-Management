@@ -59,11 +59,11 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: WindowsRawExe
-          path: Server/dist/cloud-paw-management-win.exe
+          path: Server/dist/privileged-security-management-server-win.exe
 
       # Upload the Windows EXE Arctifact to make them available to other processes
       - name: Upload Raw Linux bin Artifact
         uses: actions/upload-artifact@v2
         with:
           name: LinuxRawBin
-          path: Server/dist/cloud-paw-management-linux
+          path: Server/dist/privileged-security-management-server-linux
