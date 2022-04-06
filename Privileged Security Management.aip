@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DOCUMENT Type="Advanced Installer" CreateVersion="19.3" version="19.3" Modules="architect" RootPath="." Language="en" Id="{6A6A0CE2-1D86-45F6-84C2-C135AF7E1266}">
+  <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
+    <ROW Name="Application_AssetGenDestFolderPath" Value="Generated Assets" ValueType="1"/>
+    <ROW Name="AssetGenPkgDestFolderPath" Value="Generated Assets" ValueType="1"/>
+    <ROW Name="HiddenItems" Value="ActSyncAppComponent;AutorunComponent;CPLAppletComponent;GameUxComponent;SilverlightSlnComponent"/>
+    <ROW Name="MigrationUninstallCode" Value="{685E565D-4C38-4348-A9C9-60744733217B}"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
+    <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
+    <ROW Property="AI_CF_FrameBottomLeft" Value="frame_bottom_left.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameBottomLeftInactive" Value="frame_bottom_left_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameBottomMid" Value="frame_bottom_mid.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameBottomMidInactive" Value="frame_bottom_mid_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameBottomRight" Value="frame_bottom_right.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameBottomRightInactive" Value="frame_bottom_right_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameCaption" Value="frame_caption.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameCaptionInactive" Value="frame_caption_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameLeft" Value="frame_left.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameLeftInactive" Value="frame_left_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameRight" Value="frame_right.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameRightInactive" Value="frame_right_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameTopLeft" Value="frame_top_left.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameTopLeftInactive" Value="frame_top_left_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameTopMid" Value="frame_top_mid.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameTopMidInactive" Value="frame_top_mid_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameTopRight" Value="frame_top_right.bmp" Type="1"/>
+    <ROW Property="AI_CF_FrameTopRightInactive" Value="frame_top_right_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_SysCloseDown" Value="sys_close_down.bmp" Type="1"/>
+    <ROW Property="AI_CF_SysCloseHot" Value="sys_close_hot.bmp" Type="1"/>
+    <ROW Property="AI_CF_SysCloseInactive" Value="sys_close_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_SysCloseNormal" Value="sys_close_normal.bmp" Type="1"/>
+    <ROW Property="AI_CF_SysMinDown" Value="sys_min_down.bmp" Type="1"/>
+    <ROW Property="AI_CF_SysMinHot" Value="sys_min_hot.bmp" Type="1"/>
+    <ROW Property="AI_CF_SysMinInactive" Value="sys_min_inactive.bmp" Type="1"/>
+    <ROW Property="AI_CF_SysMinNormal" Value="sys_min_normal.bmp" Type="1"/>
+    <ROW Property="AI_CF_TYPE" Value="0" MultiBuildValue="DefaultBuild:1" Type="4"/>
+    <ROW Property="AI_CURRENT_YEAR" Value="2022" ValueLocId="-"/>
+    <ROW Property="AI_FINDEXE_TITLE" Value="Select the installation package for [|ProductName]" ValueLocId="AI.Property.FindExeTitle"/>
+    <ROW Property="ALLUSERS" Value="1"/>
+    <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
+    <ROW Property="ARPCONTACT" Value="elliot.huffman@microsoft.com"/>
+    <ROW Property="ARPHELPLINK" Value="https://github.com/microsoft/Privileged-Security-Management/wiki"/>
+    <ROW Property="ARPNOMODIFY" MultiBuildValue="DefaultBuild:1"/>
+    <ROW Property="ARPNOREPAIR" Value="1" MultiBuildValue="DefaultBuild:1#ExeBuild:1"/>
+    <ROW Property="ARPPRODUCTICON" Value="CloudPAWLogoIcon.exe" Type="8"/>
+    <ROW Property="ARPURLINFOABOUT" Value="https://github.com/microsoft/Privileged-Security-Management/issues"/>
+    <ROW Property="Manufacturer" Value="Microsoft"/>
+    <ROW Property="ProductCode" Value="1033:{7F741135-D475-4F25-B2F2-1C4F33984D0D} " Type="16"/>
+    <ROW Property="ProductLanguage" Value="1033"/>
+    <ROW Property="ProductName" Value="Privileged Security Management"/>
+    <ROW Property="ProductVersion" Value="1.0.0"/>
+    <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND;AI_SETUPEXEPATH;SETUPEXEDIR"/>
+    <ROW Property="UpgradeCode" Value="{685E565D-4C38-4348-A9C9-60744733217B}"/>
+    <ROW Property="UserPassword" Value="1mQRqVJMJ0XH@bMPp@*aPILgrLgNfkxIk7Pz6&amp;z6G6USa9EH2@" MultiBuildValue="Build_MSIX_APPX:" Options="5" Comments="Password to have set on the PrivSecMgmt user account during account creation."/>
+    <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME#ExeBuild:Windows 9x/ME" ValueLocId="-"/>
+    <ROW Property="WindowsType9XDisplay" MultiBuildValue="DefaultBuild:Windows 9x/ME#ExeBuild:Windows 9x/ME" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT" MultiBuildValue="DefaultBuild:Windows 9x/ME/NT/2000/XP/Vista/Windows 7/Windows 8 x86/Windows 8.1 x86/Windows 10 x86" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT40" MultiBuildValue="DefaultBuild:Windows NT 4.0#ExeBuild:Windows NT 4.0" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT40Display" MultiBuildValue="DefaultBuild:Windows NT 4.0#ExeBuild:Windows NT 4.0" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT50" MultiBuildValue="DefaultBuild:Windows 2000#ExeBuild:Windows 2000" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT50Display" MultiBuildValue="DefaultBuild:Windows 2000#ExeBuild:Windows 2000" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT5X" MultiBuildValue="DefaultBuild:Windows XP/2003#ExeBuild:Windows XP/2003" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT5XDisplay" MultiBuildValue="DefaultBuild:Windows XP/2003#ExeBuild:Windows XP/2003" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNTDisplay" MultiBuildValue="DefaultBuild:32-bit Windows versions" ValueLocId="-"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
+    <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
+    <ROW Directory="Assets" Directory_Parent="TARGETDIR" DefaultDir="Assets" IsPseudoRoot="1"/>
+    <ROW Directory="CommonAppDataFolder" Directory_Parent="TARGETDIR" DefaultDir="COMMON~1|CommonAppDataFolder" IsPseudoRoot="1"/>
+    <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
+    <ROW Directory="regid.199105.com.microsoftprivs_Dir" Directory_Parent="CommonAppDataFolder" DefaultDir="REGID1~1.MIC|regid.1991-05.com.microsoft,privsecmgmt"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
+    <ROW Component="AI_ExePath" ComponentId="{1CE90C63-CF03-4F3E-8DFE-867E99A6B810}" Directory_="APPDIR" Attributes="260" KeyPath="AI_ExePath"/>
+    <ROW Component="APPDIR" ComponentId="{3A6BECF9-25D6-4219-B122-FECCD0BF6AEC}" Directory_="APPDIR" Attributes="0"/>
+    <ROW Component="CloudPAWLogoIcon.scale100.png" ComponentId="{680FC7F9-4322-4AB7-A8BB-6A50127601BA}" Directory_="Assets" Attributes="0" KeyPath="CloudPAWLogoIcon.scale100.png" Type="0"/>
+    <ROW Component="ProductInformation" ComponentId="{65947B40-50B4-4F17-89FA-F3CA2F2E9AB1}" Directory_="APPDIR" Attributes="260" KeyPath="Version"/>
+    <ROW Component="SecureProp.dll" ComponentId="{A9399E0D-F9CA-4D1B-8863-C0B25C1BDEBC}" Directory_="APPDIR" Attributes="0" KeyPath="SecureProp.dll"/>
+    <ROW Component="privilegedsecuritymanagementserverwin.exe" ComponentId="{6D2CF4B3-050C-454F-848D-937019B8E620}" Directory_="APPDIR" Attributes="256" KeyPath="privilegedsecuritymanagementserverwin.exe"/>
+    <ROW Component="regid.199105.com.microsoftprivsecmgmt" ComponentId="{CF9B2C0D-E218-466A-B019-33546B90AF7F}" Directory_="regid.199105.com.microsoftprivs_Dir" Attributes="0"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
+    <ROW Feature="AiAppXAssets" Title="AiAppXAssets" Description="Description" Display="3" Level="0" Directory_="APPDIR" Attributes="0" Options="271" Builds="Build_MSIX_APPX"/>
+    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0"/>
+    <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
+    <ROW File="CloudPAWLogoIcon.scale100.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="CLOUDP~1.PNG|Cloud PAW Logo - Icon.scale-100.png" Attributes="0" SourcePath="Generated Assets\Cloud PAW Logo - Icon.scale-100.png" SelfReg="false"/>
+    <ROW File="CloudPAWLogoIcon.scale125.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="CLOUDP~2.PNG|Cloud PAW Logo - Icon.scale-125.png" Attributes="0" SourcePath="Generated Assets\Cloud PAW Logo - Icon.scale-125.png" SelfReg="false"/>
+    <ROW File="CloudPAWLogoIcon.scale150.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="CLOUDP~3.PNG|Cloud PAW Logo - Icon.scale-150.png" Attributes="0" SourcePath="Generated Assets\Cloud PAW Logo - Icon.scale-150.png" SelfReg="false"/>
+    <ROW File="CloudPAWLogoIcon.scale200.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="CLOUDP~4.PNG|Cloud PAW Logo - Icon.scale-200.png" Attributes="0" SourcePath="Generated Assets\Cloud PAW Logo - Icon.scale-200.png" SelfReg="false"/>
+    <ROW File="CloudPAWLogoIcon.scale400.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="CLOUDP~5.PNG|Cloud PAW Logo - Icon.scale-400.png" Attributes="0" SourcePath="Generated Assets\Cloud PAW Logo - Icon.scale-400.png" SelfReg="false"/>
+    <ROW File="cloudpawmanagementwin.exeSquare44x44Logo.scale100.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="CLOUDP~6.PNG|cloudpawmanagementwin.exeSquare44x44Logo.scale-100.png" Attributes="0" SourcePath="&lt;AI_RES&gt;appx\SmallLogo10.png" SelfReg="false"/>
+    <ROW File="cloudpawmanagementwin.exeSquare150x150Logo.scale100.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="CLOUDP~7.PNG|cloudpawmanagementwin.exeSquare150x150Logo.scale-100.png" Attributes="0" SourcePath="&lt;AI_RES&gt;appx\Logo.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagementserverwin.exe" Component_="privilegedsecuritymanagementserverwin.exe" FileName="PRIVIL~1.EXE|privileged-security-management-server-win.exe" Attributes="0" SourcePath="Server\dist\privileged-security-management-server-win.exe" SelfReg="false" DigSign="true"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare71x71Logo.scale100.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVIL~1.PNG|privilegedsecuritymanagement.exeSquare71x71Logo.scale-100.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare71x71Logo.scale-100.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare71x71Logo.scale120.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVIL~2.PNG|privilegedsecuritymanagement.exeSquare71x71Logo.scale-120.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare71x71Logo.scale-120.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare71x71Logo.scale125.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVIL~3.PNG|privilegedsecuritymanagement.exeSquare71x71Logo.scale-125.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare71x71Logo.scale-125.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare71x71Logo.scale140.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVIL~4.PNG|privilegedsecuritymanagement.exeSquare71x71Logo.scale-140.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare71x71Logo.scale-140.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare71x71Logo.scale150.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVIL~5.PNG|privilegedsecuritymanagement.exeSquare71x71Logo.scale-150.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare71x71Logo.scale-150.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare71x71Logo.scale160.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVIL~6.PNG|privilegedsecuritymanagement.exeSquare71x71Logo.scale-160.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare71x71Logo.scale-160.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare71x71Logo.scale180.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVIL~7.PNG|privilegedsecuritymanagement.exeSquare71x71Logo.scale-180.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare71x71Logo.scale-180.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare71x71Logo.scale200.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVIL~8.PNG|privilegedsecuritymanagement.exeSquare71x71Logo.scale-200.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare71x71Logo.scale-200.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare71x71Logo.scale220.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVIL~9.PNG|privilegedsecuritymanagement.exeSquare71x71Logo.scale-220.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare71x71Logo.scale-220.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare71x71Logo.scale225.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~10.PNG|privilegedsecuritymanagement.exeSquare71x71Logo.scale-225.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare71x71Logo.scale-225.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare71x71Logo.scale240.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~11.PNG|privilegedsecuritymanagement.exeSquare71x71Logo.scale-240.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare71x71Logo.scale-240.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare71x71Logo.scale250.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~12.PNG|privilegedsecuritymanagement.exeSquare71x71Logo.scale-250.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare71x71Logo.scale-250.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare71x71Logo.scale300.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~13.PNG|privilegedsecuritymanagement.exeSquare71x71Logo.scale-300.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare71x71Logo.scale-300.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare71x71Logo.scale400.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~14.PNG|privilegedsecuritymanagement.exeSquare71x71Logo.scale-400.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare71x71Logo.scale-400.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare71x71Logo.scale500.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~15.PNG|privilegedsecuritymanagement.exeSquare71x71Logo.scale-500.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare71x71Logo.scale-500.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare150x150Logo.scale100.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~16.PNG|privilegedsecuritymanagement.exeSquare150x150Logo.scale-100.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare150x150Logo.scale-100.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare150x150Logo.scale120.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~17.PNG|privilegedsecuritymanagement.exeSquare150x150Logo.scale-120.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare150x150Logo.scale-120.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare150x150Logo.scale125.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~18.PNG|privilegedsecuritymanagement.exeSquare150x150Logo.scale-125.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare150x150Logo.scale-125.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare150x150Logo.scale140.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~19.PNG|privilegedsecuritymanagement.exeSquare150x150Logo.scale-140.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare150x150Logo.scale-140.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare150x150Logo.scale150.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~20.PNG|privilegedsecuritymanagement.exeSquare150x150Logo.scale-150.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare150x150Logo.scale-150.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare150x150Logo.scale160.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~21.PNG|privilegedsecuritymanagement.exeSquare150x150Logo.scale-160.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare150x150Logo.scale-160.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare150x150Logo.scale180.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~22.PNG|privilegedsecuritymanagement.exeSquare150x150Logo.scale-180.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare150x150Logo.scale-180.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare150x150Logo.scale200.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~23.PNG|privilegedsecuritymanagement.exeSquare150x150Logo.scale-200.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare150x150Logo.scale-200.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare150x150Logo.scale220.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~24.PNG|privilegedsecuritymanagement.exeSquare150x150Logo.scale-220.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare150x150Logo.scale-220.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare150x150Logo.scale225.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~25.PNG|privilegedsecuritymanagement.exeSquare150x150Logo.scale-225.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare150x150Logo.scale-225.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare150x150Logo.scale240.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~26.PNG|privilegedsecuritymanagement.exeSquare150x150Logo.scale-240.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare150x150Logo.scale-240.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare150x150Logo.scale250.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~27.PNG|privilegedsecuritymanagement.exeSquare150x150Logo.scale-250.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare150x150Logo.scale-250.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare150x150Logo.scale300.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~28.PNG|privilegedsecuritymanagement.exeSquare150x150Logo.scale-300.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare150x150Logo.scale-300.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare150x150Logo.scale400.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~29.PNG|privilegedsecuritymanagement.exeSquare150x150Logo.scale-400.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare150x150Logo.scale-400.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare150x150Logo.scale500.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~30.PNG|privilegedsecuritymanagement.exeSquare150x150Logo.scale-500.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare150x150Logo.scale-500.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeWide310x150Logo.scale100.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~31.PNG|privilegedsecuritymanagement.exeWide310x150Logo.scale-100.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeWide310x150Logo.scale-100.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeWide310x150Logo.scale120.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~32.PNG|privilegedsecuritymanagement.exeWide310x150Logo.scale-120.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeWide310x150Logo.scale-120.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeWide310x150Logo.scale125.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~33.PNG|privilegedsecuritymanagement.exeWide310x150Logo.scale-125.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeWide310x150Logo.scale-125.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeWide310x150Logo.scale140.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~34.PNG|privilegedsecuritymanagement.exeWide310x150Logo.scale-140.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeWide310x150Logo.scale-140.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeWide310x150Logo.scale150.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~35.PNG|privilegedsecuritymanagement.exeWide310x150Logo.scale-150.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeWide310x150Logo.scale-150.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeWide310x150Logo.scale160.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~36.PNG|privilegedsecuritymanagement.exeWide310x150Logo.scale-160.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeWide310x150Logo.scale-160.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeWide310x150Logo.scale180.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~37.PNG|privilegedsecuritymanagement.exeWide310x150Logo.scale-180.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeWide310x150Logo.scale-180.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeWide310x150Logo.scale200.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~38.PNG|privilegedsecuritymanagement.exeWide310x150Logo.scale-200.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeWide310x150Logo.scale-200.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeWide310x150Logo.scale220.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~39.PNG|privilegedsecuritymanagement.exeWide310x150Logo.scale-220.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeWide310x150Logo.scale-220.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeWide310x150Logo.scale225.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~40.PNG|privilegedsecuritymanagement.exeWide310x150Logo.scale-225.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeWide310x150Logo.scale-225.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeWide310x150Logo.scale240.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~41.PNG|privilegedsecuritymanagement.exeWide310x150Logo.scale-240.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeWide310x150Logo.scale-240.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeWide310x150Logo.scale250.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~42.PNG|privilegedsecuritymanagement.exeWide310x150Logo.scale-250.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeWide310x150Logo.scale-250.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeWide310x150Logo.scale300.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~43.PNG|privilegedsecuritymanagement.exeWide310x150Logo.scale-300.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeWide310x150Logo.scale-300.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeWide310x150Logo.scale400.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~44.PNG|privilegedsecuritymanagement.exeWide310x150Logo.scale-400.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeWide310x150Logo.scale-400.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeWide310x150Logo.scale500.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~45.PNG|privilegedsecuritymanagement.exeWide310x150Logo.scale-500.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeWide310x150Logo.scale-500.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare310x310Logo.scale100.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~46.PNG|privilegedsecuritymanagement.exeSquare310x310Logo.scale-100.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare310x310Logo.scale-100.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare310x310Logo.scale120.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~47.PNG|privilegedsecuritymanagement.exeSquare310x310Logo.scale-120.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare310x310Logo.scale-120.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare310x310Logo.scale125.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~48.PNG|privilegedsecuritymanagement.exeSquare310x310Logo.scale-125.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare310x310Logo.scale-125.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare310x310Logo.scale140.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~49.PNG|privilegedsecuritymanagement.exeSquare310x310Logo.scale-140.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare310x310Logo.scale-140.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare310x310Logo.scale150.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~50.PNG|privilegedsecuritymanagement.exeSquare310x310Logo.scale-150.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare310x310Logo.scale-150.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare310x310Logo.scale160.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~51.PNG|privilegedsecuritymanagement.exeSquare310x310Logo.scale-160.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare310x310Logo.scale-160.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare310x310Logo.scale180.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~52.PNG|privilegedsecuritymanagement.exeSquare310x310Logo.scale-180.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare310x310Logo.scale-180.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare310x310Logo.scale200.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~53.PNG|privilegedsecuritymanagement.exeSquare310x310Logo.scale-200.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare310x310Logo.scale-200.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare310x310Logo.scale220.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~54.PNG|privilegedsecuritymanagement.exeSquare310x310Logo.scale-220.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare310x310Logo.scale-220.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare310x310Logo.scale225.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~55.PNG|privilegedsecuritymanagement.exeSquare310x310Logo.scale-225.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare310x310Logo.scale-225.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare310x310Logo.scale240.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~56.PNG|privilegedsecuritymanagement.exeSquare310x310Logo.scale-240.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare310x310Logo.scale-240.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare310x310Logo.scale250.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~57.PNG|privilegedsecuritymanagement.exeSquare310x310Logo.scale-250.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare310x310Logo.scale-250.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare310x310Logo.scale300.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~58.PNG|privilegedsecuritymanagement.exeSquare310x310Logo.scale-300.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare310x310Logo.scale-300.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare310x310Logo.scale400.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~59.PNG|privilegedsecuritymanagement.exeSquare310x310Logo.scale-400.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare310x310Logo.scale-400.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare310x310Logo.scale500.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~60.PNG|privilegedsecuritymanagement.exeSquare310x310Logo.scale-500.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare310x310Logo.scale-500.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.scale100.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~61.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.scale-100.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.scale-100.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.targetsize16.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~62.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-16.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-16.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.targetsize16_altformu" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~63.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-16_altform-unplated.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-16_altform-unplated.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.targetsize16_altforml" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~64.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-16_altform-lightunplated.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-16_altform-lightunplated.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.scale120.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~65.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.scale-120.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.scale-120.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.scale125.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~66.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.scale-125.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.scale-125.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.targetsize24.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~67.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-24.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-24.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.targetsize24_altformu" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~68.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-24_altform-unplated.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-24_altform-unplated.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.targetsize24_altforml" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~69.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-24_altform-lightunplated.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-24_altform-lightunplated.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.scale140.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~70.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.scale-140.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.scale-140.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.scale150.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~71.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.scale-150.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.scale-150.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.targetsize32.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~72.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-32.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-32.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.targetsize32_altformu" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~73.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-32_altform-unplated.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-32_altform-unplated.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.targetsize32_altforml" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~74.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-32_altform-lightunplated.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-32_altform-lightunplated.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.scale160.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~75.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.scale-160.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.scale-160.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.scale180.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~76.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.scale-180.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.scale-180.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.scale200.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~77.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.scale-200.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.scale-200.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.targetsize48.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~78.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-48.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-48.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.targetsize48_altformu" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~79.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-48_altform-unplated.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-48_altform-unplated.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.targetsize48_altforml" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~80.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-48_altform-lightunplated.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-48_altform-lightunplated.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.scale220.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~81.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.scale-220.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.scale-220.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.scale225.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~82.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.scale-225.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.scale-225.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.scale240.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~83.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.scale-240.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.scale-240.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.scale250.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~84.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.scale-250.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.scale-250.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.scale300.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~85.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.scale-300.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.scale-300.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.scale400.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~86.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.scale-400.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.scale-400.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.targetsize256.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~87.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-256.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-256.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.targetsize256_altform" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~88.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-256_altform-unplated.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-256_altform-unplated.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.targetsize256_altfo_1" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~89.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-256_altform-lightunplated.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.targetsize-256_altform-lightunplated.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSquare44x44Logo.scale500.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~90.PNG|privilegedsecuritymanagement.exeSquare44x44Logo.scale-500.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSquare44x44Logo.scale-500.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSplashScreen.scale100.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~91.PNG|privilegedsecuritymanagement.exeSplashScreen.scale-100.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSplashScreen.scale-100.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSplashScreen.scale120.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~92.PNG|privilegedsecuritymanagement.exeSplashScreen.scale-120.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSplashScreen.scale-120.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSplashScreen.scale125.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~93.PNG|privilegedsecuritymanagement.exeSplashScreen.scale-125.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSplashScreen.scale-125.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSplashScreen.scale140.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~94.PNG|privilegedsecuritymanagement.exeSplashScreen.scale-140.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSplashScreen.scale-140.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSplashScreen.scale150.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~95.PNG|privilegedsecuritymanagement.exeSplashScreen.scale-150.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSplashScreen.scale-150.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSplashScreen.scale160.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~96.PNG|privilegedsecuritymanagement.exeSplashScreen.scale-160.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSplashScreen.scale-160.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSplashScreen.scale180.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~97.PNG|privilegedsecuritymanagement.exeSplashScreen.scale-180.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSplashScreen.scale-180.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSplashScreen.scale200.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~98.PNG|privilegedsecuritymanagement.exeSplashScreen.scale-200.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSplashScreen.scale-200.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSplashScreen.scale220.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIVI~99.PNG|privilegedsecuritymanagement.exeSplashScreen.scale-220.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSplashScreen.scale-220.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSplashScreen.scale225.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIV~100.PNG|privilegedsecuritymanagement.exeSplashScreen.scale-225.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSplashScreen.scale-225.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSplashScreen.scale240.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIV~101.PNG|privilegedsecuritymanagement.exeSplashScreen.scale-240.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSplashScreen.scale-240.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSplashScreen.scale250.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIV~102.PNG|privilegedsecuritymanagement.exeSplashScreen.scale-250.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSplashScreen.scale-250.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSplashScreen.scale300.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIV~103.PNG|privilegedsecuritymanagement.exeSplashScreen.scale-300.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSplashScreen.scale-300.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSplashScreen.scale400.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIV~104.PNG|privilegedsecuritymanagement.exeSplashScreen.scale-400.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSplashScreen.scale-400.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeSplashScreen.scale500.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIV~105.PNG|privilegedsecuritymanagement.exeSplashScreen.scale-500.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeSplashScreen.scale-500.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeBadgeLogo.scale100.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIV~106.PNG|privilegedsecuritymanagement.exeBadgeLogo.scale-100.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeBadgeLogo.scale-100.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeBadgeLogo.scale120.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIV~107.PNG|privilegedsecuritymanagement.exeBadgeLogo.scale-120.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeBadgeLogo.scale-120.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeBadgeLogo.scale125.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIV~108.PNG|privilegedsecuritymanagement.exeBadgeLogo.scale-125.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeBadgeLogo.scale-125.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeBadgeLogo.scale140.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIV~109.PNG|privilegedsecuritymanagement.exeBadgeLogo.scale-140.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeBadgeLogo.scale-140.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeBadgeLogo.scale150.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIV~110.PNG|privilegedsecuritymanagement.exeBadgeLogo.scale-150.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeBadgeLogo.scale-150.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeBadgeLogo.scale160.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIV~111.PNG|privilegedsecuritymanagement.exeBadgeLogo.scale-160.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeBadgeLogo.scale-160.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeBadgeLogo.scale180.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIV~112.PNG|privilegedsecuritymanagement.exeBadgeLogo.scale-180.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeBadgeLogo.scale-180.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeBadgeLogo.scale200.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIV~113.PNG|privilegedsecuritymanagement.exeBadgeLogo.scale-200.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeBadgeLogo.scale-200.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeBadgeLogo.scale220.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIV~114.PNG|privilegedsecuritymanagement.exeBadgeLogo.scale-220.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeBadgeLogo.scale-220.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeBadgeLogo.scale225.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIV~115.PNG|privilegedsecuritymanagement.exeBadgeLogo.scale-225.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeBadgeLogo.scale-225.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeBadgeLogo.scale240.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIV~116.PNG|privilegedsecuritymanagement.exeBadgeLogo.scale-240.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeBadgeLogo.scale-240.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeBadgeLogo.scale250.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIV~117.PNG|privilegedsecuritymanagement.exeBadgeLogo.scale-250.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeBadgeLogo.scale-250.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeBadgeLogo.scale300.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIV~118.PNG|privilegedsecuritymanagement.exeBadgeLogo.scale-300.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeBadgeLogo.scale-300.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeBadgeLogo.scale400.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIV~119.PNG|privilegedsecuritymanagement.exeBadgeLogo.scale-400.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeBadgeLogo.scale-400.png" SelfReg="false"/>
+    <ROW File="privilegedsecuritymanagement.exeBadgeLogo.scale500.png" Component_="CloudPAWLogoIcon.scale100.png" FileName="PRIV~120.PNG|privilegedsecuritymanagement.exeBadgeLogo.scale-500.png" Attributes="0" SourcePath="Generated Assets\privilegedsecuritymanagement.exeBadgeLogo.scale-500.png" SelfReg="false"/>
+    <ROW File="SecureProp.dll" Component_="SecureProp.dll" FileName="SECURE~1.DLL|SecureProp.dll" Attributes="0" SourcePath="&lt;AI_CUSTACTS&gt;SecureProp.dll" SelfReg="false"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.AppXCfgComponent">
+    <ROW ID="Configuration" Order="1" ManifestFile="AppxManifest.xml" TargetOs="4" AutoUpdatesFrequency="0" AutoUpdatesOptions="0" ManifestBundleFile="AppxBundleManifest.xml"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
+    <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
+    <ROW BuildKey="Build_MSIX_APPX" BuildName="MSIX" BuildOrder="2" BuildType="7" PackageFolder="Server\dist" PackageFileName="Privileged Security Management" Languages="en" UwpTargetDesktop="TargetDeviceFamily" UwpTargetServer="TargetDeviceFamily_1"/>
+    <ROW BuildKey="Build_MSIX_APPXSubBuild" BuildName="x64" BuildOrder="3" BuildType="8" ParentBuild="Build_MSIX_APPX"/>
+    <ROW BuildKey="DefaultBuild" BuildName="MSI" BuildOrder="1" BuildType="0" PackageFolder="Server\dist" PackageFileName="PSM-Win-x64" Languages="en" InstallationType="4" CabsLocation="1" PackageType="1" FilesInsideExe="true" ExtractionFolder="[AppDataFolder][|Manufacturer]\[|ProductName] [|ProductVersion]\install" UseLargeSchema="true" MsiPackageType="x64"/>
+    <ROW BuildKey="ExeBuild" BuildName="EXE" BuildOrder="4" BuildType="0" PackageFolder="Server\dist" PackageFileName="PrivSecMgmtSetup" Languages="en" InstallationType="2" CabsLocation="1" CompressCabs="false" UseLzma="true" LzmaMethod="2" LzmaCompressionLevel="4" PackageType="1" FilesInsideExe="true" ExeIconPath="User-Interface\src\Assets\Cloud PAW Logo - Icon.ico" ExtractionFolder="[AppDataFolder][|Manufacturer]\[|ProductName] [|ProductVersion]\install" UseLargeSchema="true" ExeName="PSM-Win-x64"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.CacheComponent">
+    <ATTRIBUTE name="CacheIndex" value="Privileged Security Management_1.txt"/>
+    <ATTRIBUTE name="Folder" value="Server\dist\Advanced Installer Build Cache"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
+    <ROW Path="&lt;AI_DICTS&gt;ui.ail"/>
+    <ROW Path="&lt;AI_DICTS&gt;ui_en.ail"/>
+    <ROW Path="&lt;AI_REPOSITORY&gt;Dialogs\SetEnvVars\SetEnvVars_en.ail"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.DigCertStoreComponent">
+    <ROW TimeStampUrl="http://timestamp.digicert.com" SignerDescription="[|ProductName]" SignOptions="0" SignTool="0" UseSha256="1"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.FragmentComponent">
+    <ROW Fragment="CommonUI.aip" Path="&lt;AI_FRAGS&gt;CommonUI.aip"/>
+    <ROW Fragment="FolderDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\FolderDlg.aip"/>
+    <ROW Fragment="MaintenanceTypeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceTypeDlg.aip"/>
+    <ROW Fragment="MaintenanceWelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceWelcomeDlg.aip"/>
+    <ROW Fragment="SequenceDialogs.aip" Path="&lt;AI_THEMES&gt;classic\fragments\SequenceDialogs.aip"/>
+    <ROW Fragment="Sequences.aip" Path="&lt;AI_FRAGS&gt;Sequences.aip"/>
+    <ROW Fragment="SetEnvVars.aip" Path="&lt;AI_REPOSITORY&gt;Dialogs\SetEnvVars\SetEnvVars.aip"/>
+    <ROW Fragment="StaticUIStrings.aip" Path="&lt;AI_FRAGS&gt;StaticUIStrings.aip"/>
+    <ROW Fragment="Themes.aip" Path="&lt;AI_FRAGS&gt;Themes.aip"/>
+    <ROW Fragment="UI.aip" Path="&lt;AI_THEMES&gt;classic\fragments\UI.aip"/>
+    <ROW Fragment="Validation.aip" Path="&lt;AI_FRAGS&gt;Validation.aip"/>
+    <ROW Fragment="VerifyRemoveDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRemoveDlg.aip"/>
+    <ROW Fragment="VerifyRepairDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRepairDlg.aip"/>
+    <ROW Fragment="WelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\WelcomeDlg.aip"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.GenericXmlAttributeComponent">
+    <ROW XmlAttribute="Alias" XmlElement="ExecutionAlias" Name="Alias" Flags="0" Order="0" Value="privileged-security-management-server-win.exe"/>
+    <ROW XmlAttribute="BackgroundColor" XmlElement="VisualElements" Name="BackgroundColor" Flags="0" Order="0" Value="transparent"/>
+    <ROW XmlAttribute="BadgeLogo" XmlElement="LockScreen" Name="BadgeLogo" Flags="0" Order="0" FileId="privilegedsecuritymanagement.exeBadgeLogo.scale100.png"/>
+    <ROW XmlAttribute="Category" XmlElement="Extension" Name="Category" Flags="0" Order="0" Value="windows.service"/>
+    <ROW XmlAttribute="Category_1" XmlElement="Extension_1" Name="Category" Flags="0" Order="0" Value="windows.appExecutionAlias"/>
+    <ROW XmlAttribute="Category_2" XmlElement="Extension_2" Name="Category" Flags="0" Order="0" Value="windows.desktopAppMigration"/>
+    <ROW XmlAttribute="Description" XmlElement="VisualElements" Name="Description" Flags="0" Order="0" Value="privileged-security-management-server-win"/>
+    <ROW XmlAttribute="DisplayName" XmlElement="VisualElements" Name="DisplayName" Flags="0" Order="0" Value="privileged-security-management-server-win"/>
+    <ROW XmlAttribute="EntryPoint" XmlElement="Application" Name="EntryPoint" Flags="0" Order="0" Value="Windows.FullTrustApplication"/>
+    <ROW XmlAttribute="EntryPoint_1" XmlElement="Extension" Name="EntryPoint" Flags="0" Order="0" Value="Windows.FullTrustApplication"/>
+    <ROW XmlAttribute="EntryPoint_2" XmlElement="Extension_2" Name="EntryPoint" Flags="0" Order="0" Value="Windows.FullTrustApplication"/>
+    <ROW XmlAttribute="Executable" XmlElement="Application" Name="Executable" Flags="0" Order="0" FileId="privilegedsecuritymanagementserverwin.exe"/>
+    <ROW XmlAttribute="Executable_1" XmlElement="Extension" Name="Executable" Flags="0" Order="0" FileId="privilegedsecuritymanagementserverwin.exe"/>
+    <ROW XmlAttribute="Executable_2" XmlElement="Extension_2" Name="Executable" Flags="0" Order="0" FileId="privilegedsecuritymanagementserverwin.exe"/>
+    <ROW XmlAttribute="Id" XmlElement="Application" Name="Id" Flags="0" Order="0" Value="privilegedsecuritymanagement.exe"/>
+    <ROW XmlAttribute="Image" XmlElement="SplashScreen" Name="Image" Flags="0" Order="0" FileId="privilegedsecuritymanagement.exeSplashScreen.scale100.png"/>
+    <ROW XmlAttribute="Language" XmlElement="Resource" Name="Language" Flags="0" Order="0" Value="en-US"/>
+    <ROW XmlAttribute="MaxVersionTested" XmlElement="TargetDeviceFamily" Name="MaxVersionTested" Flags="0" Order="0" Value="10.0.22000.0"/>
+    <ROW XmlAttribute="MaxVersionTested_1" XmlElement="TargetDeviceFamily_1" Name="MaxVersionTested" Flags="0" Order="0" Value="10.0.20348.0"/>
+    <ROW XmlAttribute="MinVersion" XmlElement="TargetDeviceFamily" Name="MinVersion" Flags="0" Order="0" Value="10.0.19044.0"/>
+    <ROW XmlAttribute="MinVersion_1" XmlElement="TargetDeviceFamily_1" Name="MinVersion" Flags="0" Order="0" Value="10.0.20348.0"/>
+    <ROW XmlAttribute="Name" XmlElement="Identity" Name="Name" Flags="0" Order="0" Value="Microsoft.PrivilegedSecurityManagement"/>
+    <ROW XmlAttribute="Name_1" XmlElement="Capability" Name="Name" Flags="0" Order="0" Value="runFullTrust"/>
+    <ROW XmlAttribute="Name_2" XmlElement="Service" Name="Name" Flags="0" Order="0" Value="privsecmgmt"/>
+    <ROW XmlAttribute="Name_3" XmlElement="Capability_1" Name="Name" Flags="0" Order="0" Value="localSystemServices"/>
+    <ROW XmlAttribute="Name_4" XmlElement="Capability_2" Name="Name" Flags="0" Order="0" Value="packagedServices"/>
+    <ROW XmlAttribute="Name_5" XmlElement="TargetDeviceFamily" Name="Name" Flags="0" Order="0" Value="Windows.Desktop"/>
+    <ROW XmlAttribute="Name_6" XmlElement="TargetDeviceFamily_1" Name="Name" Flags="0" Order="0" Value="Windows.Server"/>
+    <ROW XmlAttribute="Notification" XmlElement="LockScreen" Name="Notification" Flags="0" Order="0" Value="badge"/>
+    <ROW XmlAttribute="Preference" XmlElement="Rotation" Name="Preference" Flags="0" Order="0" Value="portrait"/>
+    <ROW XmlAttribute="Preference_1" XmlElement="Rotation_1" Name="Preference" Flags="0" Order="0" Value="landscape"/>
+    <ROW XmlAttribute="Preference_2" XmlElement="Rotation_2" Name="Preference" Flags="0" Order="0" Value="portraitFlipped"/>
+    <ROW XmlAttribute="Preference_3" XmlElement="Rotation_3" Name="Preference" Flags="0" Order="0" Value="landscapeFlipped"/>
+    <ROW XmlAttribute="ProcessorArchitecture" XmlElement="Identity" Name="ProcessorArchitecture" Flags="0" Order="0" Value="x64"/>
+    <ROW XmlAttribute="Publisher" XmlElement="Identity" Name="Publisher" Flags="0" Order="0" Value="CN=Microsoft"/>
+    <ROW XmlAttribute="ShortName" XmlElement="DefaultTile" Name="ShortName" Flags="0" Order="0" Value="Priv Sec Mgmt"/>
+    <ROW XmlAttribute="ShortcutPath" XmlElement="DesktopApp" Name="ShortcutPath" Flags="0" Order="0" Value="%APPDATA%\Microsoft\Windows\Start Menu\Programs\Privileged Security Management\privileged-security-management-server-win.lnk"/>
+    <ROW XmlAttribute="ShortcutPath_1" XmlElement="DesktopApp_1" Name="ShortcutPath" Flags="0" Order="0" Value="%PROGRAMDATA%\Microsoft\Windows\Start Menu\Programs\Privileged Security Management\privileged-security-management-server-win.lnk"/>
+    <ROW XmlAttribute="Square150x150Logo" XmlElement="VisualElements" Name="Square150x150Logo" Flags="0" Order="0" FileId="cloudpawmanagementwin.exeSquare150x150Logo.scale100.png"/>
+    <ROW XmlAttribute="Square310x310Logo" XmlElement="DefaultTile" Name="Square310x310Logo" Flags="0" Order="0" FileId="privilegedsecuritymanagement.exeSquare310x310Logo.scale100.png"/>
+    <ROW XmlAttribute="Square44x44Logo" XmlElement="VisualElements" Name="Square44x44Logo" Flags="0" Order="0" FileId="cloudpawmanagementwin.exeSquare44x44Logo.scale100.png"/>
+    <ROW XmlAttribute="Square71x71Logo" XmlElement="DefaultTile" Name="Square71x71Logo" Flags="0" Order="0" FileId="privilegedsecuritymanagement.exeSquare71x71Logo.scale100.png"/>
+    <ROW XmlAttribute="StartAccount" XmlElement="Service" Name="StartAccount" Flags="0" Order="0" Value="localService"/>
+    <ROW XmlAttribute="StartupType" XmlElement="Service" Name="StartupType" Flags="0" Order="0" Value="auto"/>
+    <ROW XmlAttribute="Version" XmlElement="Identity" Name="Version" Flags="0" Order="0" Value="1.0.0.0"/>
+    <ROW XmlAttribute="Wide310x150Logo" XmlElement="DefaultTile" Name="Wide310x150Logo" Flags="0" Order="0" FileId="privilegedsecuritymanagement.exeWide310x150Logo.scale100.png"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.GenericXmlElementComponent">
+    <ROW XmlElement="AppExecutionAlias" ParentElement="Extension_1" Name="AppExecutionAlias" Order="0" Flags="0" Type="0"/>
+    <ROW XmlElement="Application" ParentElement="Applications" Name="Application" Order="0" Flags="0" Type="4"/>
+    <ROW XmlElement="Applications" ParentElement="Package" Name="Applications" Order="3" Flags="0" Type="3"/>
+    <ROW XmlElement="Bundle" Name="Bundle" Order="0" Flags="0" Type="0"/>
+    <ROW XmlElement="Capabilities" ParentElement="Package" Name="Capabilities" Order="4" Flags="0" Type="0"/>
+    <ROW XmlElement="Capability" ParentElement="Capabilities" Name="Capability" Order="0" Flags="0" Type="0"/>
+    <ROW XmlElement="Capability_1" ParentElement="Capabilities" Name="Capability" Order="1" Flags="0" Type="0"/>
+    <ROW XmlElement="Capability_2" ParentElement="Capabilities" Name="Capability" Order="2" Flags="0" Type="0"/>
+    <ROW XmlElement="DefaultTile" ParentElement="VisualElements" Name="DefaultTile" Order="1" Flags="0" Type="0"/>
+    <ROW XmlElement="Dependencies" ParentElement="Package" Name="Dependencies" Order="5" Flags="0" Type="0"/>
+    <ROW XmlElement="DesktopApp" ParentElement="DesktopAppMigration" Name="DesktopApp" Order="0" Flags="0" Type="0"/>
+    <ROW XmlElement="DesktopAppMigration" ParentElement="Extension_2" Name="DesktopAppMigration" Order="0" Flags="0" Type="0"/>
+    <ROW XmlElement="DesktopApp_1" ParentElement="DesktopAppMigration" Name="DesktopApp" Order="1" Flags="0" Type="0"/>
+    <ROW XmlElement="DisplayName" ParentElement="Properties" Name="DisplayName" Order="1" Flags="0" Text="Privileged Security Management" Type="0"/>
+    <ROW XmlElement="ExecutionAlias" ParentElement="AppExecutionAlias" Name="ExecutionAlias" Order="0" Flags="0" Type="0"/>
+    <ROW XmlElement="Extension" ParentElement="Extensions" Name="Extension" Order="0" Flags="0" Type="110"/>
+    <ROW XmlElement="Extension_1" ParentElement="Extensions" Name="Extension" Order="1" Flags="0" Type="54"/>
+    <ROW XmlElement="Extension_2" ParentElement="Extensions" Name="Extension" Order="2" Flags="0" Type="55"/>
+    <ROW XmlElement="Extensions" ParentElement="Application" Name="Extensions" Order="1" Flags="0" Type="0"/>
+    <ROW XmlElement="Identity" ParentElement="Package" Name="Identity" Order="0" Flags="0" Type="0"/>
+    <ROW XmlElement="InitialRotationPreference" ParentElement="VisualElements" Name="InitialRotationPreference" Order="0" Flags="0" Type="0"/>
+    <ROW XmlElement="LockScreen" ParentElement="VisualElements" Name="LockScreen" Order="3" Flags="0" Type="0"/>
+    <ROW XmlElement="Logo" ParentElement="Properties" Name="Logo" Order="2" Flags="0" FileId="CloudPAWLogoIcon.scale100.png" Type="0"/>
+    <ROW XmlElement="Package" Name="Package" Order="0" Flags="0" Type="6"/>
+    <ROW XmlElement="Properties" ParentElement="Package" Name="Properties" Order="2" Flags="0" Type="0"/>
+    <ROW XmlElement="PublisherDisplayName" ParentElement="Properties" Name="PublisherDisplayName" Order="0" Flags="0" Text="Microsoft" Type="0"/>
+    <ROW XmlElement="Resource" ParentElement="Resources" Name="Resource" Order="0" Flags="0" Type="0"/>
+    <ROW XmlElement="Resources" ParentElement="Package" Name="Resources" Order="1" Flags="0" Type="0"/>
+    <ROW XmlElement="Rotation" ParentElement="InitialRotationPreference" Name="Rotation" Order="0" Flags="0" Type="0"/>
+    <ROW XmlElement="Rotation_1" ParentElement="InitialRotationPreference" Name="Rotation" Order="1" Flags="0" Type="0"/>
+    <ROW XmlElement="Rotation_2" ParentElement="InitialRotationPreference" Name="Rotation" Order="2" Flags="0" Type="0"/>
+    <ROW XmlElement="Rotation_3" ParentElement="InitialRotationPreference" Name="Rotation" Order="3" Flags="0" Type="0"/>
+    <ROW XmlElement="Service" ParentElement="Extension" Name="Service" Order="0" Flags="0" Type="0"/>
+    <ROW XmlElement="SplashScreen" ParentElement="VisualElements" Name="SplashScreen" Order="2" Flags="0" Type="0"/>
+    <ROW XmlElement="TargetDeviceFamily" ParentElement="Dependencies" Name="TargetDeviceFamily" Order="0" Flags="0" Type="28"/>
+    <ROW XmlElement="TargetDeviceFamily_1" ParentElement="Dependencies" Name="TargetDeviceFamily" Order="1" Flags="0" Type="28"/>
+    <ROW XmlElement="VisualElements" ParentElement="Application" Name="VisualElements" Order="0" Flags="0" Type="0"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.GenericXmlFileComponent">
+    <ROW XmlFile="AppxBundleManifest.xml" FileName="AppxBundleManifest.xml" RootElement="Bundle" Flags="89" Version="1.0" Encoding="UTF-8" IndentUnits="2"/>
+    <ROW XmlFile="AppxManifest.xml" FileName="AppxManifest.xml" RootElement="Package" Flags="89" Version="1.0" Encoding="UTF-8" IndentUnits="2"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiActionTextComponent">
+    <ROW Action="AI_CommitAccounts" Description="Commit the creation of user accounts on the local computer" DescriptionLocId="ActionText.Description.AI_CommitAccounts"/>
+    <ROW Action="AI_CreateAccount" Description="Creating user account on the local computer" DescriptionLocId="ActionText.Description.AI_CreateAccount" Template="Account: [1]" TemplateLocId="ActionText.Template.AI_CreateAccount"/>
+    <ROW Action="AI_DeleteLzma" Description="Deleting files extracted from archive" DescriptionLocId="ActionText.Description.AI_DeleteLzma" TemplateLocId="-"/>
+    <ROW Action="AI_DeleteRLzma" Description="Deleting files extracted from archive" DescriptionLocId="ActionText.Description.AI_DeleteLzma" TemplateLocId="-"/>
+    <ROW Action="AI_ExtractFiles" Description="Extracting files from archive" DescriptionLocId="ActionText.Description.AI_ExtractLzma" TemplateLocId="-"/>
+    <ROW Action="AI_ExtractLzma" Description="Extracting files from archive" DescriptionLocId="ActionText.Description.AI_ExtractLzma" TemplateLocId="-"/>
+    <ROW Action="AI_ProcessAccounts" Description="Generating actions to create user accounts on the local computer" DescriptionLocId="ActionText.Description.AI_ProcessAccounts" Template="Account: [1], Attributes: [2]" TemplateLocId="ActionText.Template.AI_ProcessAccounts"/>
+    <ROW Action="AI_ProcessTasks2" Description="Generating actions to schedule tasks on the local computer:" DescriptionLocId="ActionText.Description.AI_ProcessTasks" Template="Task Name: [1]" TemplateLocId="ActionText.Template.AI_ProcessTasks"/>
+    <ROW Action="AI_RemoveAccount" Description="Removing user account from the local computer" DescriptionLocId="ActionText.Description.AI_RemoveAccount" Template="Account: [1]" TemplateLocId="ActionText.Template.AI_RemoveAccount"/>
+    <ROW Action="AI_RemoveTasks2" Description="Removing scheduled task from the local computer" DescriptionLocId="ActionText.Description.AI_RemoveTasks" Template="Task Name: [1]" TemplateLocId="ActionText.Template.AI_RemoveTasks"/>
+    <ROW Action="AI_RollbackAccount" Description="Rolling back the creation of user accounts on the local computer" DescriptionLocId="ActionText.Description.AI_RollbackAccount" Template="Account: [1]" TemplateLocId="ActionText.Template.AI_RollbackAccount"/>
+    <ROW Action="AI_RollbackTasks2" Description="Rolling back scheduled task on the local computer" DescriptionLocId="ActionText.Description.AI_RollbackTasks" Template="Task Name: [1]" TemplateLocId="ActionText.Template.AI_RollbackTasks"/>
+    <ROW Action="AI_ScheduleTasks2" Description="Scheduling task on the local computer" DescriptionLocId="ActionText.Description.AI_ScheduleTasks" Template="Task Name: [1]" TemplateLocId="ActionText.Template.AI_ScheduleTasks"/>
+    <ROW Action="AI_UninstallAccounts" Description="Generating actions to create user accounts on the local computer" DescriptionLocId="ActionText.Description.AI_ProcessAccounts" Template="Account: [1], Attributes: [2]" TemplateLocId="ActionText.Template.AI_ProcessAccounts"/>
+    <ROW Action="AI_UninstallTasks2" Description="Generating actions to remove scheduled tasks from the local computer:" DescriptionLocId="ActionText.Description.AI_UninstallTasks"/>
+    <ROW Action="AI_XmlCommit" Description="Committing XML file configurations." DescriptionLocId="ActionText.Description.AI_XmlCommit" Template="Committing XML file configurations." TemplateLocId="ActionText.Template.AI_XmlCommit"/>
+    <ROW Action="AI_XmlConfig" Description="Executing XML file configurations" DescriptionLocId="ActionText.Description.AI_XmlConfig" Template="Configuring XML file: &quot;[1]&quot;" TemplateLocId="ActionText.Template.AI_XmlConfig"/>
+    <ROW Action="AI_XmlInstall" Description="Generating actions to configure XML files" DescriptionLocId="ActionText.Description.AI_XmlInstall"/>
+    <ROW Action="AI_XmlRemove" Description="Executing XML file configurations" DescriptionLocId="ActionText.Description.AI_XmlRemove" Template="Configuring XML file: &quot;[1]&quot;" TemplateLocId="ActionText.Template.AI_XmlRemove"/>
+    <ROW Action="AI_XmlRollback" Description="Rolling back XML file configurations." DescriptionLocId="ActionText.Description.AI_XmlRollback" Template="Rolling back XML file configurations." TemplateLocId="ActionText.Template.AI_XmlRollback"/>
+    <ROW Action="AI_XmlUninstall" Description="Generating actions to configure XML files" DescriptionLocId="ActionText.Description.AI_XmlUninstall"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiAppSearchComponent">
+    <ROW Property="AI_SETUPEXEPATH" Signature_="AI_EXE_PATH_LM" Builds="DefaultBuild;ExeBuild"/>
+    <ROW Property="AI_SETUPEXEPATH" Signature_="AI_EXE_PATH_CU" Builds="DefaultBuild;ExeBuild"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiBinaryComponent">
+    <ROW Name="Prereq.dll" SourcePath="&lt;AI_CUSTACTS&gt;Prereq.dll"/>
+    <ROW Name="SecureProp.dll" SourcePath="&lt;AI_CUSTACTS&gt;SecureProp.dll"/>
+    <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
+    <ROW Name="aischeduler2.dll" SourcePath="&lt;AI_CUSTACTS&gt;aischeduler2.dll"/>
+    <ROW Name="frame_bottom_left.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_bottom_left.bmp"/>
+    <ROW Name="frame_bottom_left_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_bottom_left_inactive.bmp"/>
+    <ROW Name="frame_bottom_mid.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_bottom_mid.bmp"/>
+    <ROW Name="frame_bottom_mid_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_bottom_mid_inactive.bmp"/>
+    <ROW Name="frame_bottom_right.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_bottom_right.bmp"/>
+    <ROW Name="frame_bottom_right_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_bottom_right_inactive.bmp"/>
+    <ROW Name="frame_caption.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_caption.bmp"/>
+    <ROW Name="frame_caption_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_caption_inactive.bmp"/>
+    <ROW Name="frame_left.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_left.bmp"/>
+    <ROW Name="frame_left_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_left_inactive.bmp"/>
+    <ROW Name="frame_right.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_right.bmp"/>
+    <ROW Name="frame_right_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_right_inactive.bmp"/>
+    <ROW Name="frame_top_left.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_top_left.bmp"/>
+    <ROW Name="frame_top_left_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_top_left_inactive.bmp"/>
+    <ROW Name="frame_top_mid.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_top_mid.bmp"/>
+    <ROW Name="frame_top_mid_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_top_mid_inactive.bmp"/>
+    <ROW Name="frame_top_right.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_top_right.bmp"/>
+    <ROW Name="frame_top_right_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_top_right_inactive.bmp"/>
+    <ROW Name="lzmaextractor.dll" SourcePath="&lt;AI_CUSTACTS&gt;lzmaextractor.dll"/>
+    <ROW Name="sys_close_down.bmp" SourcePath="&lt;AI_FRAME_BTNS&gt;sys_close_down.bmp"/>
+    <ROW Name="sys_close_hot.bmp" SourcePath="&lt;AI_FRAME_BTNS&gt;sys_close_hot.bmp"/>
+    <ROW Name="sys_close_inactive.bmp" SourcePath="&lt;AI_FRAME_BTNS&gt;sys_close_inactive.bmp"/>
+    <ROW Name="sys_close_normal.bmp" SourcePath="&lt;AI_FRAME_BTNS&gt;sys_close_normal.bmp"/>
+    <ROW Name="sys_min_down.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;sys_min_down.bmp"/>
+    <ROW Name="sys_min_hot.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;sys_min_hot.bmp"/>
+    <ROW Name="sys_min_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;sys_min_inactive.bmp"/>
+    <ROW Name="sys_min_normal.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;sys_min_normal.bmp"/>
+    <ROW Name="userAccounts.dll" SourcePath="&lt;AI_CUSTACTS&gt;userAccounts.dll"/>
+    <ROW Name="xmlCfg.dll" SourcePath="&lt;AI_CUSTACTS&gt;xmlCfg.dll"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiControlComponent">
+    <ROW Dialog_="SetEnvVars" Control="SetEnvVarsDialogInitializer" Type="DialogInitializer" X="0" Y="0" Width="0" Height="0" Attributes="0" Order="-1" TextLocId="-" HelpLocId="-" ExtDataLocId="-"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiControlEventComponent">
+    <ROW Dialog_="WelcomeDlg" Control_="Next" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="3"/>
+    <ROW Dialog_="FolderDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL" Ordering="201"/>
+    <ROW Dialog_="FolderDlg" Control_="Back" Event="NewDialog" Argument="WelcomeDlg" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_INSTALL" Ordering="197"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="201"/>
+    <ROW Dialog_="MaintenanceWelcomeDlg" Control_="Next" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="99"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_MAINT" Ordering="101"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="1"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_MAINT" Ordering="198"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="202"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="ChangeButton" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="501"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceWelcomeDlg" Condition="AI_MAINT" Ordering="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="RemoveButton" Event="NewDialog" Argument="VerifyRemoveDlg" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="601"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="RepairButton" Event="NewDialog" Argument="VerifyRepairDlg" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="601"/>
+    <ROW Dialog_="VerifyRepairDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="1"/>
+    <ROW Dialog_="VerifyRepairDlg" Control_="Repair" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="399" Options="1"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control_="Remove" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="299" Options="1"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_PATCH" Ordering="201"/>
+    <ROW Dialog_="ResumeDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_RESUME" Ordering="299"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_PATCH" Ordering="199"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PatchWelcomeDlg" Condition="AI_PATCH" Ordering="204"/>
+    <ROW Dialog_="WelcomeDlg" Control_="Next" Event="[EnvironmentalVars_Cond]" Argument="1" Condition="( NOT %Tenant_ID ) OR ( NOT %Client_GUID ) OR ( NOT %Client_Secret )" Ordering="2"/>
+    <ROW Dialog_="WelcomeDlg" Control_="Next" Event="[EnvironmentalVars_Cond]" Argument="{}" Condition="1" Ordering="1"/>
+    <ROW Dialog_="WelcomeDlg" Control_="Next" Event="NewDialog" Argument="SetEnvVars" Condition="AI_INSTALL AND EnvironmentalVars_Cond" Ordering="4"/>
+    <ROW Dialog_="SetEnvVars" Control_="Next" Event="SpawnDialog" Argument="OutOfRbDiskDlg" Condition="AI_INSTALL AND EnvironmentalVars_Cond AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND (PROMPTROLLBACKCOST=&quot;P&quot; OR NOT PROMPTROLLBACKCOST)" Ordering="2" Options="2"/>
+    <ROW Dialog_="SetEnvVars" Control_="Next" Event="EndDialog" Argument="Return" Condition="AI_INSTALL AND EnvironmentalVars_Cond" Ordering="1"/>
+    <ROW Dialog_="SetEnvVars" Control_="Back" Event="NewDialog" Argument="WelcomeDlg" Condition="AI_INSTALL AND EnvironmentalVars_Cond" Ordering="1"/>
+    <ROW Dialog_="SetEnvVars" Control_="Next" Event="EnableRollback" Argument="False" Condition="AI_INSTALL AND EnvironmentalVars_Cond AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST=&quot;D&quot;" Ordering="3" Options="2"/>
+    <ROW Dialog_="SetEnvVars" Control_="Next" Event="SpawnDialog" Argument="OutOfDiskDlg" Condition="AI_INSTALL AND EnvironmentalVars_Cond AND ( (OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 1) OR (OutOfDiskSpace = 1 AND PROMPTROLLBACKCOST=&quot;F&quot;) )" Ordering="4" Options="2"/>
+    <ROW Dialog_="SetEnvVars" Control_="SetEnvVarsDialogInitializer" Event="[AI_ButtonText_Next_Orig]" Argument="[ButtonText_Next]" Condition="AI_INSTALL AND EnvironmentalVars_Cond" Ordering="0" Options="2"/>
+    <ROW Dialog_="SetEnvVars" Control_="SetEnvVarsDialogInitializer" Event="[ButtonText_Next]" Argument="[[AI_CommitButton]]" Condition="AI_INSTALL AND EnvironmentalVars_Cond" Ordering="1" Options="2"/>
+    <ROW Dialog_="SetEnvVars" Control_="SetEnvVarsDialogInitializer" Event="[AI_Text_Next_Orig]" Argument="[Text_Next]" Condition="AI_INSTALL AND EnvironmentalVars_Cond" Ordering="2" Options="2"/>
+    <ROW Dialog_="SetEnvVars" Control_="SetEnvVarsDialogInitializer" Event="[Text_Next]" Argument="[Text_Install]" Condition="AI_INSTALL AND EnvironmentalVars_Cond" Ordering="3" Options="2"/>
+    <ROW Dialog_="SetEnvVars" Control_="Back" Event="[ButtonText_Next]" Argument="[AI_ButtonText_Next_Orig]" Condition="AI_INSTALL AND EnvironmentalVars_Cond" Ordering="2" Options="2"/>
+    <ROW Dialog_="SetEnvVars" Control_="Back" Event="[Text_Next]" Argument="[AI_Text_Next_Orig]" Condition="AI_INSTALL AND EnvironmentalVars_Cond" Ordering="3" Options="2"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
+    <ROW Directory_="APPDIR" Component_="APPDIR" ManualDelete="true"/>
+    <ROW Directory_="regid.199105.com.microsoftprivs_Dir" Component_="regid.199105.com.microsoftprivsecmgmt" ManualDelete="false"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
+    <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Type="51" Source="AI_SETUPEXEPATH_ORIGINAL" Target="[AI_SETUPEXEPATH]"/>
+    <ROW Action="AI_CommitAccounts" Type="11777" Source="userAccounts.dll" Target="CommitAccounts" WithoutSeq="true"/>
+    <ROW Action="AI_CreateAccount" Type="11265" Source="userAccounts.dll" Target="CreateAccount" WithoutSeq="true"/>
+    <ROW Action="AI_DATA_SETTER" Type="51" Source="CustomActionData" Target="[AI_SETUPEXEPATH]"/>
+    <ROW Action="AI_DATA_SETTER_1" Type="51" Source="CustomActionData" Target="[~]"/>
+    <ROW Action="AI_DATA_SETTER_2" Type="51" Source="CustomActionData" Target="[~]"/>
+    <ROW Action="AI_DATA_SETTER_3" Type="51" Source="CustomActionData" Target="UserPassword"/>
+    <ROW Action="AI_DOWNGRADE" Type="19" Target="4010"/>
+    <ROW Action="AI_DeleteCadLzma" Type="51" Source="AI_DeleteLzma" Target="[AI_SETUPEXEPATH]"/>
+    <ROW Action="AI_DeleteLzma" Type="1025" Source="lzmaextractor.dll" Target="DeleteLZMAFiles"/>
+    <ROW Action="AI_DeleteRCadLzma" Type="51" Source="AI_DeleteRLzma" Target="[AI_SETUPEXEPATH]"/>
+    <ROW Action="AI_DeleteRLzma" Type="1281" Source="lzmaextractor.dll" Target="DeleteLZMAFiles"/>
+    <ROW Action="AI_DpiContentScale" Type="1" Source="aicustact.dll" Target="DpiContentScale"/>
+    <ROW Action="AI_EnableDebugLog" Type="321" Source="aicustact.dll" Target="EnableDebugLog"/>
+    <ROW Action="AI_ExtractCadLzma" Type="51" Source="AI_ExtractLzma" Target="[AI_SETUPEXEPATH]"/>
+    <ROW Action="AI_ExtractFiles" Type="1" Source="Prereq.dll" Target="ExtractSourceFiles" AdditionalSeq="AI_DATA_SETTER"/>
+    <ROW Action="AI_ExtractLzma" Type="1025" Source="lzmaextractor.dll" Target="ExtractLZMAFiles"/>
+    <ROW Action="AI_FindExeLzma" Type="1" Source="lzmaextractor.dll" Target="FindEXE"/>
+    <ROW Action="AI_InstallModeCheck" Type="1" Source="aicustact.dll" Target="UpdateInstallMode" WithoutSeq="true"/>
+    <ROW Action="AI_PREPARE_UPGRADE" Type="65" Source="aicustact.dll" Target="PrepareUpgrade"/>
+    <ROW Action="AI_ProcessAccounts" Type="1" Source="userAccounts.dll" Target="ProcessAccounts"/>
+    <ROW Action="AI_ProcessTasks2" Type="1" Source="aischeduler2.dll" Target="ProcessTasks"/>
+    <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Type="51" Source="AI_SETUPEXEPATH" Target="[AI_SETUPEXEPATH_ORIGINAL]"/>
+    <ROW Action="AI_RESTORE_LOCATION" Type="65" Source="aicustact.dll" Target="RestoreLocation"/>
+    <ROW Action="AI_RemoveAccount" Type="11265" Source="userAccounts.dll" Target="RemoveAccount" WithoutSeq="true"/>
+    <ROW Action="AI_RemoveTasks2" Type="11265" Source="aischeduler2.dll" Target="DeleteTasks" WithoutSeq="true"/>
+    <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
+    <ROW Action="AI_RollbackAccount" Type="11521" Source="userAccounts.dll" Target="RemoveAccount" WithoutSeq="true"/>
+    <ROW Action="AI_RollbackTasks2" Type="11521" Source="aischeduler2.dll" Target="DeleteTasks" WithoutSeq="true"/>
+    <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
+    <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
+    <ROW Action="AI_ScheduleTasks2" Type="11265" Source="aischeduler2.dll" Target="ScheduleTasks" WithoutSeq="true"/>
+    <ROW Action="AI_SecureProperty" Type="1" Source="SecureProp.dll" Target="AddSecuredProp" AdditionalSeq="AI_DATA_SETTER_3"/>
+    <ROW Action="AI_UninstallAccounts" Type="1" Source="userAccounts.dll" Target="UninstallAccounts"/>
+    <ROW Action="AI_UninstallTasks2" Type="1" Source="aischeduler2.dll" Target="UninstallTasks"/>
+    <ROW Action="AI_XmlCommit" Type="11777" Source="xmlCfg.dll" Target="OnXmlCommit" WithoutSeq="true"/>
+    <ROW Action="AI_XmlConfig" Type="11265" Source="xmlCfg.dll" Target="OnXmlConfig" WithoutSeq="true"/>
+    <ROW Action="AI_XmlInstall" Type="1" Source="xmlCfg.dll" Target="OnXmlInstall" AdditionalSeq="AI_DATA_SETTER_1"/>
+    <ROW Action="AI_XmlRemove" Type="11265" Source="xmlCfg.dll" Target="OnXmlRemove" WithoutSeq="true"/>
+    <ROW Action="AI_XmlRollback" Type="11521" Source="xmlCfg.dll" Target="OnXmlRollback" WithoutSeq="true"/>
+    <ROW Action="AI_XmlUninstall" Type="1" Source="xmlCfg.dll" Target="OnXmlUninstall" AdditionalSeq="AI_DATA_SETTER_2"/>
+    <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="DefaultBuild:[ProgramFiles64Folder][Manufacturer]\[ProductName]#Build_MSIX_APPX:#ExeBuild:[ProgramFiles64Folder][Manufacturer]\[ProductName]"/>
+    <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
+    <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatCompsComponent">
+    <ROW Feature_="MainFeature" Component_="APPDIR"/>
+    <ROW Feature_="MainFeature" Component_="ProductInformation"/>
+    <ROW Feature_="MainFeature" Component_="regid.199105.com.microsoftprivsecmgmt"/>
+    <ROW Feature_="AiAppXAssets" Component_="CloudPAWLogoIcon.scale100.png"/>
+    <ROW Feature_="MainFeature" Component_="privilegedsecuritymanagementserverwin.exe"/>
+    <ROW Feature_="MainFeature" Component_="SecureProp.dll"/>
+    <ROW Feature_="MainFeature" Component_="AI_ExePath"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
+    <ROW Name="CloudPAWLogoIcon.exe" SourcePath="User-Interface\src\Assets\Cloud PAW Logo - Icon.ico" Index="0"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
+    <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
+    <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
+    <ROW Action="AI_STORE_LOCATION" Condition="(Not Installed) OR REINSTALL" Sequence="1501"/>
+    <ROW Action="AI_PREPARE_UPGRADE" Condition="AI_UPGRADE=&quot;No&quot; AND (Not Installed)" Sequence="1397"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="52"/>
+    <ROW Action="AI_EnableDebugLog" Sequence="51"/>
+    <ROW Action="AI_XmlInstall" Condition="(REMOVE &lt;&gt; &quot;ALL&quot;)" Sequence="5102"/>
+    <ROW Action="AI_DATA_SETTER_1" Condition="(REMOVE &lt;&gt; &quot;ALL&quot;)" Sequence="5101"/>
+    <ROW Action="AI_XmlUninstall" Condition="(REMOVE)" Sequence="3102"/>
+    <ROW Action="AI_DATA_SETTER_2" Condition="(REMOVE)" Sequence="3101"/>
+    <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Sequence="99" Builds="DefaultBuild;ExeBuild"/>
+    <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Condition="AI_SETUPEXEPATH_ORIGINAL" Sequence="101" Builds="DefaultBuild;ExeBuild"/>
+    <ROW Action="AI_DeleteCadLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="199" Builds="DefaultBuild;ExeBuild"/>
+    <ROW Action="AI_DeleteRCadLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="198" Builds="DefaultBuild;ExeBuild"/>
+    <ROW Action="AI_ExtractCadLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="197" Builds="DefaultBuild;ExeBuild"/>
+    <ROW Action="AI_FindExeLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="196" Builds="DefaultBuild;ExeBuild"/>
+    <ROW Action="AI_ExtractLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="1549" Builds="DefaultBuild;ExeBuild"/>
+    <ROW Action="AI_DeleteRLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="1548" Builds="DefaultBuild;ExeBuild"/>
+    <ROW Action="AI_DeleteLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="6599" Builds="DefaultBuild;ExeBuild"/>
+    <ROW Action="AI_ExtractFiles" Sequence="1399" Builds="DefaultBuild;ExeBuild"/>
+    <ROW Action="AI_DATA_SETTER" Sequence="1398"/>
+    <ROW Action="AI_ProcessAccounts" Condition="(VersionNT &gt;= 500) AND (REMOVE &lt;&gt; &quot;ALL&quot;)" Sequence="1551"/>
+    <ROW Action="AI_UninstallAccounts" Condition="(VersionNT &gt;= 500) AND (REMOVE = &quot;ALL&quot;)" Sequence="1649"/>
+    <ROW Action="AI_ProcessTasks2" Condition="(VersionNT &gt;= 600) AND (REMOVE&lt;&gt;&quot;ALL&quot;)" Sequence="1624"/>
+    <ROW Action="AI_UninstallTasks2" Condition="(VersionNT &gt;= 600) AND (REMOVE=&quot;ALL&quot;)" Sequence="1699"/>
+    <ROW Action="AI_SecureProperty" Sequence="1402"/>
+    <ROW Action="AI_DATA_SETTER_3" Sequence="1401"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiInstallUISequenceComponent">
+    <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="53"/>
+    <ROW Action="AI_DpiContentScale" Sequence="52"/>
+    <ROW Action="AI_EnableDebugLog" Sequence="51"/>
+    <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Sequence="99"/>
+    <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Condition="AI_SETUPEXEPATH_ORIGINAL" Sequence="101"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiLaunchConditionsComponent">
+    <ROW Condition="( Version9X OR VersionNT64 )" Description="[ProductName] cannot be installed on [WindowsTypeNTDisplay]." DescriptionLocId="AI.LaunchCondition.NoNT" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="((VersionNT &lt;&gt; 501) AND (VersionNT &lt;&gt; 502))" Description="[ProductName] cannot be installed on [WindowsTypeNT5XDisplay]." DescriptionLocId="AI.LaunchCondition.NoNT5X" IsPredefined="true" Builds="DefaultBuild;ExeBuild"/>
+    <ROW Condition="(VersionNT &lt;&gt; 400)" Description="[ProductName] cannot be installed on [WindowsTypeNT40Display]." DescriptionLocId="AI.LaunchCondition.NoNT40" IsPredefined="true" Builds="DefaultBuild;ExeBuild"/>
+    <ROW Condition="(VersionNT &lt;&gt; 500)" Description="[ProductName] cannot be installed on [WindowsTypeNT50Display]." DescriptionLocId="AI.LaunchCondition.NoNT50" IsPredefined="true" Builds="DefaultBuild;ExeBuild"/>
+    <ROW Condition="SETUPEXEDIR OR (REMOVE=&quot;ALL&quot;)" Description="This package can only be run from a bootstrapper." DescriptionLocId="AI.LaunchCondition.RequireBootstrapper" IsPredefined="true" Builds="DefaultBuild;ExeBuild"/>
+    <ROW Condition="VersionNT" Description="[ProductName] cannot be installed on [WindowsType9XDisplay]." DescriptionLocId="AI.LaunchCondition.No9X" IsPredefined="true" Builds="DefaultBuild;ExeBuild"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiRegLocatorComponent">
+    <ROW Signature_="AI_EXE_PATH_CU" Root="1" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]\[ProductVersion]" Name="AI_ExePath" Type="2"/>
+    <ROW Signature_="AI_EXE_PATH_LM" Root="2" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]\[ProductVersion]" Name="AI_ExePath" Type="2"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiRegsComponent">
+    <ROW Registry="AI_ExePath" Root="-1" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]\[ProductVersion]" Name="AI_ExePath" Value="[AI_SETUPEXEPATH]" Component_="AI_ExePath"/>
+    <ROW Registry="AdvancedInstaller" Root="-1" Key="Software\Caphyon\Advanced Installer" Name="\"/>
+    <ROW Registry="Caphyon" Root="-1" Key="Software\Caphyon" Name="\"/>
+    <ROW Registry="LZMA" Root="-1" Key="Software\Caphyon\Advanced Installer\LZMA" Name="\"/>
+    <ROW Registry="Manufacturer" Root="-1" Key="Software\[Manufacturer]" Name="\"/>
+    <ROW Registry="Path" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Path" Value="[APPDIR]" Component_="ProductInformation"/>
+    <ROW Registry="ProductCode" Root="-1" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]" Name="\"/>
+    <ROW Registry="ProductName" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="\"/>
+    <ROW Registry="ProductVersion" Root="-1" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]\[ProductVersion]" Name="\"/>
+    <ROW Registry="Software" Root="-1" Key="Software" Name="\"/>
+    <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
+    <ATTRIBUTE name="UsedTheme" value="classic"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiUpgradeComponent">
+    <ROW UpgradeCode="[|UpgradeCode]" VersionMin="0.0.1" VersionMax="[|ProductVersion]" Attributes="257" ActionProperty="OLDPRODUCTS"/>
+    <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MultipleInstancesComponent">
+    <ATTRIBUTE name="DynamicInstances" value="DefaultBuild:false"/>
+    <ATTRIBUTE name="MajorUpgradeInstances" value="DefaultBuild:false"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.ScheduledTasksComponent">
+    <ROW TaskId="StartPrivSecMgmt" TaskName="Start PrivSecMgmt" Run="[#privilegedsecuritymanagementserverwin.exe]" User="PrivSecMgmt" Comments="Runs the server executable that hosts the UI and the REST API." Flags="0" Trigger="5|1|1|1|0|0|0||0|0" Settings="2|0" Condition="1" TaskVersion="2.4"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.SoftwareIdentificationComponent">
+    <ATTRIBUTE name="LocalFile" value="regid.199509.com.example_ProductNam"/>
+    <ATTRIBUTE name="SystemFile" value="regid.199509.com.example_ProductN_1"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.UserAccountsComponent">
+    <ROW UserName="PrivSecMgmt" Property="UserPassword" Comment="User that runs the PrivSecMgmt application" Attributes="65600" ErrorControl="1" Flags="1"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.XmlAttributeComponent">
+    <ROW XmlAttribute="xmlnsds" XmlElement="swidsoftware_identification_tag" Name="xmlns:ds" Flags="14" Order="0" Value="http://www.w3.org/2000/09/xmldsig#"/>
+    <ROW XmlAttribute="xmlnsswid" XmlElement="swidsoftware_identification_tag" Name="xmlns:swid" Flags="14" Order="1" Value="http://standards.iso.org/iso/19770/-2/2008/schema.xsd"/>
+    <ROW XmlAttribute="xmlnsxsi" XmlElement="swidsoftware_identification_tag" Name="xmlns:xsi" Flags="14" Order="2" Value="http://www.w3.org/2001/XMLSchema-instance"/>
+    <ROW XmlAttribute="xsischemaLocation" XmlElement="swidsoftware_identification_tag" Name="xsi:schemaLocation" Flags="14" Order="3" Value="http://standards.iso.org/iso/19770/-2/2008/schema.xsd software_identification_tag.xsd"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.XmlElementComponent">
+    <ROW XmlElement="swidbuild" ParentElement="swidnumeric" Name="swid:build" Condition="1" Order="2" Flags="14" Text="0" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidentitlement_required_indicator" ParentElement="swidsoftware_identification_tag" Name="swid:entitlement_required_indicator" Condition="1" Order="0" Flags="14" Text="false" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidmajor" ParentElement="swidnumeric" Name="swid:major" Condition="1" Order="0" Flags="14" Text="1" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidminor" ParentElement="swidnumeric" Name="swid:minor" Condition="1" Order="1" Flags="14" Text="0" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidname" ParentElement="swidproduct_version" Name="swid:name" Condition="1" Order="0" Flags="14" Text="[ProductVersion]" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidname_4" ParentElement="swidsoftware_creator" Name="swid:name" Condition="1" Order="0" Flags="14" Text="[Manufacturer]" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidname_5" ParentElement="swidsoftware_licensor" Name="swid:name" Condition="1" Order="0" Flags="14" Text="[Manufacturer]" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidname_6" ParentElement="swidtag_creator" Name="swid:name" Condition="1" Order="0" Flags="14" Text="[Manufacturer]" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidnumeric" ParentElement="swidproduct_version" Name="swid:numeric" Condition="1" Order="1" Flags="14" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidproduct_title" ParentElement="swidsoftware_identification_tag" Name="swid:product_title" Condition="1" Order="1" Flags="14" Text="[ProductName]" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidproduct_version" ParentElement="swidsoftware_identification_tag" Name="swid:product_version" Condition="1" Order="2" Flags="14" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidregid" ParentElement="swidsoftware_creator" Name="swid:regid" Condition="1" Order="1" Flags="14" Text="regid.1991-05.com.microsoft,privsecmgmt" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidregid_3" ParentElement="swidsoftware_licensor" Name="swid:regid" Condition="1" Order="1" Flags="14" Text="regid.1991-05.com.microsoft,privsecmgmt" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidregid_4" ParentElement="swidtag_creator" Name="swid:regid" Condition="1" Order="1" Flags="14" Text="regid.1991-05.com.microsoft,privsecmgmt" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidreview" ParentElement="swidnumeric" Name="swid:review" Condition="1" Order="3" Flags="14" Text="0" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidsoftware_creator" ParentElement="swidsoftware_identification_tag" Name="swid:software_creator" Condition="1" Order="3" Flags="14" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidsoftware_id" ParentElement="swidsoftware_identification_tag" Name="swid:software_id" Condition="1" Order="5" Flags="14" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidsoftware_identification_tag" Name="swid:software_identification_tag" Condition="1" Order="0" Flags="14" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidsoftware_licensor" ParentElement="swidsoftware_identification_tag" Name="swid:software_licensor" Condition="1" Order="4" Flags="14" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidtag_creator" ParentElement="swidsoftware_identification_tag" Name="swid:tag_creator" Condition="1" Order="6" Flags="14" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidtag_creator_regid" ParentElement="swidsoftware_id" Name="swid:tag_creator_regid" Condition="1" Order="1" Flags="14" Text="regid.1991-05.com.microsoft,privsecmgmt" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidunique_id" ParentElement="swidsoftware_id" Name="swid:unique_id" Condition="1" Order="0" Flags="14" Text="[ProductName]" UpdateIndexInParent="0"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.XmlFileComponent">
+    <ROW XmlFile="regid.199509.com.example_ProductN_1" FileName="REGID1~1.SWI|regid.1991-05.com.microsoft,privsecmgmt_[|ProductName].swidtag" DirProperty="regid.199105.com.microsoftprivs_Dir" Component="ProductInformation" RootElement="swidsoftware_identification_tag" Flags="153" Version="1.0" Encoding="UTF-8" IndentUnits="2"/>
+    <ROW XmlFile="regid.199509.com.example_ProductNam" FileName="REGID1~1.SWI|regid.1991-05.com.microsoft,privsecmgmt_[|ProductName].swidtag" DirProperty="APPDIR" Component="ProductInformation" RootElement="swidsoftware_identification_tag" Flags="153" Version="1.0" Encoding="UTF-8" IndentUnits="2"/>
+  </COMPONENT>
+</DOCUMENT>
