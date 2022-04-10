@@ -1,5 +1,5 @@
 {
-  "name": "psm-ui",
+  "name": "privileged-security-management-ui",
   "version": "0.0.1",
   "private": "true",
   "keywords": [
@@ -17,7 +17,7 @@
     "url": "https://github.com/microsoft/Privileged-Security-Management"
   },
   "dependencies": {
-    "@fluentui/react": "^8.64.0",
+    "@fluentui/react": "^8.64.1",
     "@reduxjs/toolkit": "^1.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
