@@ -22,12 +22,12 @@ export class MSAzureAccessCredential {
     // Initialize the Access Credential class when instantiated
     constructor() {
         // Import environmental variables
-        this.clientID = process.env.Client_GUID || ""
-        this.clientSecret = process.env.Client_Secret || ""
-        this.tenantID = process.env.Tenant_ID || ""
-        this.managedIdentGUID = process.env.Managed_ID_GUID || "None"
-        this.keyVaultName = process.env.KeyVault_Name
-        this.kvSecretName = process.env.KeyVault_Secret
+        this.clientID = process.env.PSM_Client_GUID || ""
+        this.clientSecret = process.env.PSM_Client_Secret || ""
+        this.tenantID = process.env.PSM_Tenant_ID || ""
+        this.managedIdentGUID = process.env.PSM_Managed_ID_GUID || "None"
+        this.keyVaultName = process.env.PSM_KeyVault_Name
+        this.kvSecretName = process.env.PSM_KeyVault_Secret
 
         // Validate environmental variable input to ensure that the input is as expected and not an injection attempt.
         if (!validateGUID(this.clientID) && this.clientID !== "") { throw new Error("Client ID is not configured properly!") };

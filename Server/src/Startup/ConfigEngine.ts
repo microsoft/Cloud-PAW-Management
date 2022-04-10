@@ -77,18 +77,18 @@ export class ConfigurationEngine {
         writeDebugInfo("Initialized standard class properties");
 
         // Write debug info
-        writeDebugInfo(process.env.Scope_Tag, "Scope_Tag environmental variable value:");
+        writeDebugInfo(process.env.PSM_Scope_Tag, "Scope_Tag environmental variable value:");
 
         // Check to make sure the scope_tag variable is present
-        if (typeof process.env.Scope_Tag !== "string") {
+        if (typeof process.env.PSM_Scope_Tag !== "string") {
             // Write debug info
-            writeDebugInfo((typeof process.env.Scope_Tag), "Scope_Tag env var is not a string:");
+            writeDebugInfo((typeof process.env.PSM_Scope_Tag), "Scope_Tag env var is not a string:");
 
             // If it isn't set the scope tag name to a predefined tag name
             this.scopeTagName = "Priv Sec Mgmt App"
         } else {
             // If it is present, set the scope tag name to the specified tag name
-            this.scopeTagName = process.env.Scope_Tag;
+            this.scopeTagName = process.env.PSM_Scope_Tag;
 
             // Write debug info
             writeDebugInfo(this.scopeTagName, "Set scopeTagName:");

@@ -5,7 +5,7 @@
 // Write debug data to the console if debug mode is turned on
 export function writeDebugInfo(object: any, message?: any): void {
     // Gather the debug mode setting from the current environmental variable set
-    const debugMode = process.env.Debug || "false";
+    const debugMode = process.env.PSM_Debug || "false";
 
     // If the debug mode value is "true" write to the console
     if (debugMode === "true") {
