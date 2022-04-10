@@ -8,35 +8,9 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
-    <ROW Property="AI_CF_FrameBottomLeft" Value="frame_bottom_left.bmp" Type="1"/>
-    <ROW Property="AI_CF_FrameBottomLeftInactive" Value="frame_bottom_left_inactive.bmp" Type="1"/>
-    <ROW Property="AI_CF_FrameBottomMid" Value="frame_bottom_mid.bmp" Type="1"/>
-    <ROW Property="AI_CF_FrameBottomMidInactive" Value="frame_bottom_mid_inactive.bmp" Type="1"/>
-    <ROW Property="AI_CF_FrameBottomRight" Value="frame_bottom_right.bmp" Type="1"/>
-    <ROW Property="AI_CF_FrameBottomRightInactive" Value="frame_bottom_right_inactive.bmp" Type="1"/>
-    <ROW Property="AI_CF_FrameCaption" Value="frame_caption.bmp" Type="1"/>
-    <ROW Property="AI_CF_FrameCaptionInactive" Value="frame_caption_inactive.bmp" Type="1"/>
-    <ROW Property="AI_CF_FrameLeft" Value="frame_left.bmp" Type="1"/>
-    <ROW Property="AI_CF_FrameLeftInactive" Value="frame_left_inactive.bmp" Type="1"/>
-    <ROW Property="AI_CF_FrameRight" Value="frame_right.bmp" Type="1"/>
-    <ROW Property="AI_CF_FrameRightInactive" Value="frame_right_inactive.bmp" Type="1"/>
-    <ROW Property="AI_CF_FrameTopLeft" Value="frame_top_left.bmp" Type="1"/>
-    <ROW Property="AI_CF_FrameTopLeftInactive" Value="frame_top_left_inactive.bmp" Type="1"/>
-    <ROW Property="AI_CF_FrameTopMid" Value="frame_top_mid.bmp" Type="1"/>
-    <ROW Property="AI_CF_FrameTopMidInactive" Value="frame_top_mid_inactive.bmp" Type="1"/>
-    <ROW Property="AI_CF_FrameTopRight" Value="frame_top_right.bmp" Type="1"/>
-    <ROW Property="AI_CF_FrameTopRightInactive" Value="frame_top_right_inactive.bmp" Type="1"/>
-    <ROW Property="AI_CF_SysCloseDown" Value="sys_close_down.bmp" Type="1"/>
-    <ROW Property="AI_CF_SysCloseHot" Value="sys_close_hot.bmp" Type="1"/>
-    <ROW Property="AI_CF_SysCloseInactive" Value="sys_close_inactive.bmp" Type="1"/>
-    <ROW Property="AI_CF_SysCloseNormal" Value="sys_close_normal.bmp" Type="1"/>
-    <ROW Property="AI_CF_SysMinDown" Value="sys_min_down.bmp" Type="1"/>
-    <ROW Property="AI_CF_SysMinHot" Value="sys_min_hot.bmp" Type="1"/>
-    <ROW Property="AI_CF_SysMinInactive" Value="sys_min_inactive.bmp" Type="1"/>
-    <ROW Property="AI_CF_SysMinNormal" Value="sys_min_normal.bmp" Type="1"/>
-    <ROW Property="AI_CF_TYPE" Value="0" MultiBuildValue="DefaultBuild:1" Type="4"/>
     <ROW Property="AI_CURRENT_YEAR" Value="2022" ValueLocId="-"/>
     <ROW Property="AI_FINDEXE_TITLE" Value="Select the installation package for [|ProductName]" ValueLocId="AI.Property.FindExeTitle"/>
+    <ROW Property="AI_ThemeStyle" Value="aero" MultiBuildValue="DefaultBuild:classic" MsiKey="AI_ThemeStyle"/>
     <ROW Property="ALLUSERS" Value="1"/>
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
     <ROW Property="ARPCONTACT" Value="elliot.huffman@microsoft.com"/>
@@ -45,6 +19,7 @@
     <ROW Property="ARPNOREPAIR" Value="1" MultiBuildValue="DefaultBuild:1#ExeBuild:1"/>
     <ROW Property="ARPPRODUCTICON" Value="CloudPAWLogoIcon.exe" Type="8"/>
     <ROW Property="ARPURLINFOABOUT" Value="https://github.com/microsoft/Privileged-Security-Management/issues"/>
+    <ROW Property="ARPURLUPDATEINFO" Value="https://github.com/microsoft/Privileged-Security-Management/releases"/>
     <ROW Property="Manufacturer" Value="Microsoft"/>
     <ROW Property="ProductCode" Value="1033:{7F741135-D475-4F25-B2F2-1C4F33984D0D} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
@@ -235,7 +210,6 @@
   <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
     <ROW Path="&lt;AI_DICTS&gt;ui.ail"/>
     <ROW Path="&lt;AI_DICTS&gt;ui_en.ail"/>
-    <ROW Path="&lt;AI_REPOSITORY&gt;Dialogs\SetEnvVars\SetEnvVars_en.ail"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DigCertStoreComponent">
     <ROW TimeStampUrl="http://timestamp.digicert.com" SignerDescription="[|ProductName]" SignOptions="0" SignTool="0" UseSha256="1"/>
@@ -247,7 +221,6 @@
     <ROW Fragment="MaintenanceWelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceWelcomeDlg.aip"/>
     <ROW Fragment="SequenceDialogs.aip" Path="&lt;AI_THEMES&gt;classic\fragments\SequenceDialogs.aip"/>
     <ROW Fragment="Sequences.aip" Path="&lt;AI_FRAGS&gt;Sequences.aip"/>
-    <ROW Fragment="SetEnvVars.aip" Path="&lt;AI_REPOSITORY&gt;Dialogs\SetEnvVars\SetEnvVars.aip"/>
     <ROW Fragment="StaticUIStrings.aip" Path="&lt;AI_FRAGS&gt;StaticUIStrings.aip"/>
     <ROW Fragment="Themes.aip" Path="&lt;AI_FRAGS&gt;Themes.aip"/>
     <ROW Fragment="UI.aip" Path="&lt;AI_THEMES&gt;classic\fragments\UI.aip"/>
@@ -379,38 +352,26 @@
     <ROW Name="SecureProp.dll" SourcePath="&lt;AI_CUSTACTS&gt;SecureProp.dll"/>
     <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
     <ROW Name="aischeduler2.dll" SourcePath="&lt;AI_CUSTACTS&gt;aischeduler2.dll"/>
-    <ROW Name="frame_bottom_left.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_bottom_left.bmp"/>
-    <ROW Name="frame_bottom_left_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_bottom_left_inactive.bmp"/>
-    <ROW Name="frame_bottom_mid.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_bottom_mid.bmp"/>
-    <ROW Name="frame_bottom_mid_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_bottom_mid_inactive.bmp"/>
-    <ROW Name="frame_bottom_right.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_bottom_right.bmp"/>
-    <ROW Name="frame_bottom_right_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_bottom_right_inactive.bmp"/>
-    <ROW Name="frame_caption.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_caption.bmp"/>
-    <ROW Name="frame_caption_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_caption_inactive.bmp"/>
-    <ROW Name="frame_left.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_left.bmp"/>
-    <ROW Name="frame_left_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_left_inactive.bmp"/>
-    <ROW Name="frame_right.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_right.bmp"/>
-    <ROW Name="frame_right_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_right_inactive.bmp"/>
-    <ROW Name="frame_top_left.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_top_left.bmp"/>
-    <ROW Name="frame_top_left_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_top_left_inactive.bmp"/>
-    <ROW Name="frame_top_mid.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_top_mid.bmp"/>
-    <ROW Name="frame_top_mid_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_top_mid_inactive.bmp"/>
-    <ROW Name="frame_top_right.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_top_right.bmp"/>
-    <ROW Name="frame_top_right_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;frame_top_right_inactive.bmp"/>
     <ROW Name="lzmaextractor.dll" SourcePath="&lt;AI_CUSTACTS&gt;lzmaextractor.dll"/>
-    <ROW Name="sys_close_down.bmp" SourcePath="&lt;AI_FRAME_BTNS&gt;sys_close_down.bmp"/>
-    <ROW Name="sys_close_hot.bmp" SourcePath="&lt;AI_FRAME_BTNS&gt;sys_close_hot.bmp"/>
-    <ROW Name="sys_close_inactive.bmp" SourcePath="&lt;AI_FRAME_BTNS&gt;sys_close_inactive.bmp"/>
-    <ROW Name="sys_close_normal.bmp" SourcePath="&lt;AI_FRAME_BTNS&gt;sys_close_normal.bmp"/>
-    <ROW Name="sys_min_down.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;sys_min_down.bmp"/>
-    <ROW Name="sys_min_hot.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;sys_min_hot.bmp"/>
-    <ROW Name="sys_min_inactive.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;sys_min_inactive.bmp"/>
-    <ROW Name="sys_min_normal.bmp" SourcePath="&lt;AI_FRAME_COLOR&gt;sys_min_normal.bmp"/>
     <ROW Name="userAccounts.dll" SourcePath="&lt;AI_CUSTACTS&gt;userAccounts.dll"/>
     <ROW Name="xmlCfg.dll" SourcePath="&lt;AI_CUSTACTS&gt;xmlCfg.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiControlComponent">
-    <ROW Dialog_="SetEnvVars" Control="SetEnvVarsDialogInitializer" Type="DialogInitializer" X="0" Y="0" Width="0" Height="0" Attributes="0" Order="-1" TextLocId="-" HelpLocId="-" ExtDataLocId="-"/>
+    <ROW Dialog_="AdminBrowseDlg" Control="Logo" Type="Text" X="0" Y="228" Width="43" Height="12" Attributes="1" Text="Advanced Installer" Order="300" TextLocId="Control.Text.AdminBrowseDlg#Logo" MsiKey="AdminBrowseDlg#Logo"/>
+    <ROW Dialog_="AdminInstallPointDlg" Control="Logo" Type="Text" X="0" Y="228" Width="43" Height="12" Attributes="1" Text="Advanced Installer" Order="500" TextLocId="Control.Text.AdminInstallPointDlg#Logo" MsiKey="AdminInstallPointDlg#Logo"/>
+    <ROW Dialog_="BrowseDlg" Control="Logo" Type="Text" X="0" Y="228" Width="43" Height="12" Attributes="1" Text="Advanced Installer" Order="300" TextLocId="Control.Text.BrowseDlg#Logo" MsiKey="BrowseDlg#Logo"/>
+    <ROW Dialog_="CustomizeDlg" Control="Logo" Type="Text" X="0" Y="228" Width="43" Height="12" Attributes="1" Text="Advanced Installer" Order="600" TextLocId="Control.Text.CustomizeDlg#Logo" MsiKey="CustomizeDlg#Logo"/>
+    <ROW Dialog_="DiskCostDlg" Control="Logo" Type="Text" X="0" Y="228" Width="43" Height="12" Attributes="1" Text="Advanced Installer" Order="400" TextLocId="Control.Text.DiskCostDlg#Logo" MsiKey="DiskCostDlg#Logo"/>
+    <ROW Dialog_="FilesInUse" Control="Logo" Type="Text" X="0" Y="228" Width="43" Height="12" Attributes="1" Text="Advanced Installer" Order="600" TextLocId="Control.Text.FilesInUse#Logo" MsiKey="FilesInUse#Logo"/>
+    <ROW Dialog_="FolderDlg" Control="Logo" Type="Text" X="0" Y="228" Width="43" Height="12" Attributes="65" Text="Microsoft" Order="600" MsiKey="FolderDlg#Logo"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="Logo" Type="Text" X="0" Y="228" Width="43" Height="12" Attributes="1" Text="Advanced Installer" Order="1200" TextLocId="Control.Text.MaintenanceTypeDlg#Logo" MsiKey="MaintenanceTypeDlg#Logo"/>
+    <ROW Dialog_="MsiRMFilesInUse" Control="Logo" Type="Text" X="0" Y="228" Width="43" Height="12" Attributes="1" Text="Advanced Installer" Order="1100" TextLocId="Control.Text.MsiRMFilesInUse#Logo" MsiKey="MsiRMFilesInUse#Logo"/>
+    <ROW Dialog_="OutOfDiskDlg" Control="Logo" Type="Text" X="0" Y="228" Width="43" Height="12" Attributes="1" Text="Advanced Installer" Order="400" TextLocId="Control.Text.OutOfDiskDlg#Logo" MsiKey="OutOfDiskDlg#Logo"/>
+    <ROW Dialog_="OutOfRbDiskDlg" Control="Logo" Type="Text" X="0" Y="228" Width="43" Height="12" Attributes="1" Text="Advanced Installer" Order="500" TextLocId="Control.Text.OutOfRbDiskDlg#Logo" MsiKey="OutOfRbDiskDlg#Logo"/>
+    <ROW Dialog_="ProgressDlg" Control="Logo" Type="Text" X="0" Y="228" Width="43" Height="12" Attributes="1" Text="Advanced Installer" Order="400" TextLocId="Control.Text.ProgressDlg#Logo" MsiKey="ProgressDlg#Logo"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="Logo" Type="Text" X="0" Y="228" Width="43" Height="12" Attributes="1" Text="Advanced Installer" Order="500" TextLocId="Control.Text.VerifyReadyDlg#Logo" MsiKey="VerifyReadyDlg#Logo"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control="Logo" Type="Text" X="0" Y="228" Width="43" Height="12" Attributes="1" Text="Advanced Installer" Order="600" TextLocId="Control.Text.VerifyRemoveDlg#Logo" MsiKey="VerifyRemoveDlg#Logo"/>
+    <ROW Dialog_="VerifyRepairDlg" Control="Logo" Type="Text" X="0" Y="228" Width="43" Height="12" Attributes="1" Text="Advanced Installer" Order="500" TextLocId="Control.Text.VerifyRepairDlg#Logo" MsiKey="VerifyRepairDlg#Logo"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiControlEventComponent">
     <ROW Dialog_="WelcomeDlg" Control_="Next" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="3"/>
@@ -435,20 +396,6 @@
     <ROW Dialog_="ResumeDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_RESUME" Ordering="299"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_PATCH" Ordering="199"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PatchWelcomeDlg" Condition="AI_PATCH" Ordering="204"/>
-    <ROW Dialog_="WelcomeDlg" Control_="Next" Event="[EnvironmentalVars_Cond]" Argument="1" Condition="( NOT %Tenant_ID ) OR ( NOT %Client_GUID ) OR ( NOT %Client_Secret )" Ordering="2"/>
-    <ROW Dialog_="WelcomeDlg" Control_="Next" Event="[EnvironmentalVars_Cond]" Argument="{}" Condition="1" Ordering="1"/>
-    <ROW Dialog_="WelcomeDlg" Control_="Next" Event="NewDialog" Argument="SetEnvVars" Condition="AI_INSTALL AND EnvironmentalVars_Cond" Ordering="4"/>
-    <ROW Dialog_="SetEnvVars" Control_="Next" Event="SpawnDialog" Argument="OutOfRbDiskDlg" Condition="AI_INSTALL AND EnvironmentalVars_Cond AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND (PROMPTROLLBACKCOST=&quot;P&quot; OR NOT PROMPTROLLBACKCOST)" Ordering="2" Options="2"/>
-    <ROW Dialog_="SetEnvVars" Control_="Next" Event="EndDialog" Argument="Return" Condition="AI_INSTALL AND EnvironmentalVars_Cond" Ordering="1"/>
-    <ROW Dialog_="SetEnvVars" Control_="Back" Event="NewDialog" Argument="WelcomeDlg" Condition="AI_INSTALL AND EnvironmentalVars_Cond" Ordering="1"/>
-    <ROW Dialog_="SetEnvVars" Control_="Next" Event="EnableRollback" Argument="False" Condition="AI_INSTALL AND EnvironmentalVars_Cond AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST=&quot;D&quot;" Ordering="3" Options="2"/>
-    <ROW Dialog_="SetEnvVars" Control_="Next" Event="SpawnDialog" Argument="OutOfDiskDlg" Condition="AI_INSTALL AND EnvironmentalVars_Cond AND ( (OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 1) OR (OutOfDiskSpace = 1 AND PROMPTROLLBACKCOST=&quot;F&quot;) )" Ordering="4" Options="2"/>
-    <ROW Dialog_="SetEnvVars" Control_="SetEnvVarsDialogInitializer" Event="[AI_ButtonText_Next_Orig]" Argument="[ButtonText_Next]" Condition="AI_INSTALL AND EnvironmentalVars_Cond" Ordering="0" Options="2"/>
-    <ROW Dialog_="SetEnvVars" Control_="SetEnvVarsDialogInitializer" Event="[ButtonText_Next]" Argument="[[AI_CommitButton]]" Condition="AI_INSTALL AND EnvironmentalVars_Cond" Ordering="1" Options="2"/>
-    <ROW Dialog_="SetEnvVars" Control_="SetEnvVarsDialogInitializer" Event="[AI_Text_Next_Orig]" Argument="[Text_Next]" Condition="AI_INSTALL AND EnvironmentalVars_Cond" Ordering="2" Options="2"/>
-    <ROW Dialog_="SetEnvVars" Control_="SetEnvVarsDialogInitializer" Event="[Text_Next]" Argument="[Text_Install]" Condition="AI_INSTALL AND EnvironmentalVars_Cond" Ordering="3" Options="2"/>
-    <ROW Dialog_="SetEnvVars" Control_="Back" Event="[ButtonText_Next]" Argument="[AI_ButtonText_Next_Orig]" Condition="AI_INSTALL AND EnvironmentalVars_Cond" Ordering="2" Options="2"/>
-    <ROW Dialog_="SetEnvVars" Control_="Back" Event="[Text_Next]" Argument="[AI_Text_Next_Orig]" Condition="AI_INSTALL AND EnvironmentalVars_Cond" Ordering="3" Options="2"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
     <ROW Directory_="APPDIR" Component_="APPDIR" ManualDelete="true"/>
@@ -573,6 +520,12 @@
     <ROW Registry="ProductVersion" Root="-1" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]\[ProductVersion]" Name="\"/>
     <ROW Registry="Software" Root="-1" Key="Software" Name="\"/>
     <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiTextStyleComponent">
+    <ROW TextStyle="CfTitleFont" FaceName="Segoe UI" Size="8" Color="16777215" StyleBits="0" MsiKey="CfTitleFont"/>
+    <ROW TextStyle="DlgFont8" FaceName="Segoe UI" Size="8" Color="0" StyleBits="0" MsiKey="DlgFont8"/>
+    <ROW TextStyle="DlgFontBold8" FaceName="Segoe UI" Size="8" Color="0" StyleBits="1" MsiKey="DlgFontBold8"/>
+    <ROW TextStyle="VerdanaBold13" FaceName="Segoe UI" Size="13" Color="0" StyleBits="1" MsiKey="VerdanaBold13"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
     <ATTRIBUTE name="UsedTheme" value="classic"/>
