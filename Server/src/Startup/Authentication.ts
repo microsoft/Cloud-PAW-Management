@@ -62,7 +62,7 @@ export class MSAzureAccessCredential {
 
             // Chain the two credentials together to allow the automatic flow of authentication during token consumption
             this.credential = this.getKvChainedCred();
-                
+
             // If it is not being initialized by key vault, just chain the stuff and return the required promise.
         } else {
             // Validate that the client secret is not undefined.
@@ -79,14 +79,14 @@ export class MSAzureAccessCredential {
     // Define an asynchronous function that chains together a credential built from data in the key vault and managed identity.
     private async getKvChainedCred() {
         // Validate the client secret is defined correctly.
-        if (this.clientSecret === "") {throw new Error("the client secret is not defined: kv chained cred")};
-        if (typeof this.clientSecret === "string") {throw new Error("The client secret is manually configured: kv chained cred")};
-                        
+        if (this.clientSecret === "") { throw new Error("the client secret is not defined: kv chained cred") };
+        if (typeof this.clientSecret === "string") { throw new Error("The client secret is manually configured: kv chained cred") };
+
         // Isolate the value from the Key Vault secret
         const kvSecretValue = (await this.clientSecret).value
 
         // Validate that it contains data, if not, throw an error
-        if (kvSecretValue === undefined) {throw new Error("KV secret value is undefined")};
+        if (kvSecretValue === undefined) { throw new Error("KV secret value is undefined") };
 
         // Create the client secret object and place it into the instantiated class' properties
         this.clientSecretCred = new ClientSecretCredential(this.tenantID, this.clientID, kvSecretValue);
