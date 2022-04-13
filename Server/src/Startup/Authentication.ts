@@ -16,8 +16,8 @@ export class MSAzureAccessCredential {
     private clientSecret: string | Promise<KeyVaultSecret>
     private tenantID: string
     private managedIdentGUID: string
-    private keyVaultName: string | undefined
-    private kvSecretName: string | undefined
+    private keyVaultName: string
+    private kvSecretName: string
 
     // Initialize the Access Credential class when instantiated
     constructor() {
@@ -26,19 +26,19 @@ export class MSAzureAccessCredential {
         this.clientSecret = process.env.PSM_Client_Secret || ""
         this.tenantID = process.env.PSM_Tenant_ID || ""
         this.managedIdentGUID = process.env.PSM_Managed_ID_GUID || "None"
-        this.keyVaultName = process.env.PSM_KeyVault_Name
-        this.kvSecretName = process.env.PSM_KeyVault_Secret
+        this.keyVaultName = process.env.PSM_KeyVault_Name || ""
+        this.kvSecretName = process.env.PSM_KeyVault_Secret || ""
 
         // Validate environmental variable input to ensure that the input is as expected and not an injection attempt.
         if (!validateGUID(this.clientID) && this.clientID !== "") { throw new Error("Client ID is not configured properly!") };
-        if (this.clientSecret !== "" && typeof this.keyVaultName !== "undefined") { throw new Error("You should not specify a app secret if you are using a key vault to store the secret. This is a security risk!") };
+        if (this.clientSecret !== "" && this.keyVaultName === undefined) { throw new Error("You should not specify a app secret if you are using a key vault to store the secret. This is a security risk!") };
         if (this.clientSecret === "" && this.keyVaultName === undefined) { throw new Error("You must specify either a Key Vault name (preferred) and Key Vault secret name, or set a app registration secret to authenticate to the MS graph"); }
         if (!validateGUID(this.tenantID) && this.tenantID !== "") { throw new Error("Tenant ID is not configured properly!") };
         if (!validateGUID(this.managedIdentGUID) && this.managedIdentGUID !== "None") { throw new Error("The user assigned managed identity GUID is not a valid GUID!") };
-        if (typeof this.keyVaultName !== "undefined" && this.kvSecretName === undefined) { throw new Error("If you specify a Key Vault name, you need to specify the name of a secret in the key vault"); }
+        if (this.keyVaultName === undefined && (this.kvSecretName === undefined || this.kvSecretName === "")) { throw new Error("If you specify a Key Vault name, you need to specify the name of a secret in the key vault"); }
 
         // Validate if a GUID is provided for a user assigned managed identity
-        if (typeof this.managedIdentGUID !== "undefined" && validateGUID(this.managedIdentGUID)) {
+        if (this.managedIdentGUID === undefined && validateGUID(this.managedIdentGUID)) {
             // Initialize the managed identity credential object for user assigned managed identity.
             this.managedIdentCred = new ManagedIdentityCredential(this.managedIdentGUID)
         } else {
@@ -47,7 +47,7 @@ export class MSAzureAccessCredential {
         }
 
         // if a KeyVault is specified, grab the client ID secret.
-        if (typeof this.keyVaultName !== "undefined") {
+        if (this.keyVaultName === undefined && this.keyVaultName !== "") {
             // Validate that the key vault secret is specified and halt execution if it is not.
             if (this.kvSecretName === undefined) { throw new Error("If you configure a key vault name, you need to specify a secret."); }
 
