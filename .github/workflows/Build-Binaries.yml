@@ -112,7 +112,7 @@ jobs:
           name: WindowsRawExe
           path: Server/dist/
 
-      - name: Build MSI
+      - name: Build MSI Installer
         uses: Caphyon/advinst-github-action@v1.0
         with:
           advinst-version: '19.3'
@@ -120,3 +120,25 @@ jobs:
           advinst-enable-automation: 'false'
           aip-path: 'Privileged Security Management.aip'
           aip-build-name: 'MSI'
+
+      - name: Build EXE Installer
+        uses: Caphyon/advinst-github-action@v1.0
+        with:
+          advinst-version: '19.3'
+          advinst-license: ${{ secrets.ADVANCEDINSTALLER_KEY }}
+          advinst-enable-automation: 'false'
+          aip-path: 'Privileged Security Management.aip'
+          aip-build-name: 'EXE'
+        
+        # Upload the Windows MSI Arctifact to make them available to other processes
+      - name: Upload MSI Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: WindowsInstallerMSI
+          path: Server/dist/PSM-Win-x64.msi
+        
+      - name: Upload EXE Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: WindowsInstallerEXE
+          path: Server/dist/PSM-Win-x64.exe
