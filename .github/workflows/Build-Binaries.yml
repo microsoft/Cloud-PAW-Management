@@ -121,6 +121,13 @@ jobs:
           aip-path: 'Privileged Security Management.aip'
           aip-build-name: 'MSI'
 
+        # Upload the Windows MSI Arctifact to make them available to other processes
+      - name: Upload MSI Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: WindowsInstallerMSI
+          path: Server/dist/PSM-Win-x64.msi
+
       - name: Build EXE Installer
         uses: Caphyon/advinst-github-action@v1.0
         with:
@@ -130,13 +137,7 @@ jobs:
           aip-path: 'Privileged Security Management.aip'
           aip-build-name: 'EXE'
         
-        # Upload the Windows MSI Arctifact to make them available to other processes
-      - name: Upload MSI Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: WindowsInstallerMSI
-          path: Server/dist/PSM-Win-x64.msi
-        
+        # Upload the Windows EXE Arctifact to make them available to other processes
       - name: Upload EXE Artifact
         uses: actions/upload-artifact@v2
         with:
