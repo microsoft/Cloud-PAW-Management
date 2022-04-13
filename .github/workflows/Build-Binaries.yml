@@ -92,7 +92,7 @@ jobs:
 
       # Install the Azure Sign Tool for authenticode signing
       - name: Install Azure Sign Tool
-        run: dotnet tool install AzureSignTool
+        run: dotnet tool install --global AzureSignTool
 
   Package-WindowsInstallers:
     # This job can't procede if the EXE hasn't been generated or signed
