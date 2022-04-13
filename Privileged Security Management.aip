@@ -36,7 +36,7 @@
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="Privileged Security Management"/>
     <ROW Property="ProductVersion" Value="1.0.0"/>
-    <ROW Property="RADIOBUTTONGROUP_1_PROP" Value="RadioButton_1" Type="4"/>
+    <ROW Property="RADIOBUTTONGROUP_1_PROP" Value="SA MI" Type="4" MsiKey="RADIOBUTTONGROUP_1_PROP"/>
     <ROW Property="Scope_Tag" Value="Privileged-Security-Management" Comments="This is the Intune Scope tag that the app will be used to store the app&apos;s configurations (in the description) and to isolate its configurations from other scopes to enforce least privilege."/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND;AI_SETUPEXEPATH;SETUPEXEDIR"/>
     <ROW Property="Tenant_ID" Comments="This is the ID of the tenant that the application registration is registered in."/>
@@ -51,7 +51,6 @@
     <ROW Property="WindowsTypeNT5X" MultiBuildValue="DefaultBuild:Windows XP/2003#ExeBuild:Windows XP/2003" ValueLocId="-"/>
     <ROW Property="WindowsTypeNT5XDisplay" MultiBuildValue="DefaultBuild:Windows XP/2003#ExeBuild:Windows XP/2003" ValueLocId="-"/>
     <ROW Property="WindowsTypeNTDisplay" MultiBuildValue="DefaultBuild:32-bit Windows versions" ValueLocId="-"/>
-    <ATTRIBUTE name="DeletedRows" value="UI.aip"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
@@ -223,6 +222,7 @@
   <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
     <ROW Path="&lt;AI_DICTS&gt;ui.ail"/>
     <ROW Path="&lt;AI_DICTS&gt;ui_en.ail"/>
+    <ROW Path="&lt;AI_REPOSITORY&gt;Dialogs\PSMAuthOptions\PSMAuthOptions_en.ail"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DigCertStoreComponent">
     <ROW TimeStampUrl="http://timestamp.digicert.com" SignerDescription="[|ProductName]" SignOptions="0" SignTool="0" UseSha256="1"/>
@@ -235,6 +235,7 @@
     <ROW Fragment="FolderDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\FolderDlg.aip"/>
     <ROW Fragment="MaintenanceTypeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceTypeDlg.aip"/>
     <ROW Fragment="MaintenanceWelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceWelcomeDlg.aip"/>
+    <ROW Fragment="PSMAuthOptions.aip" Path="&lt;AI_REPOSITORY&gt;Dialogs\PSMAuthOptions\PSMAuthOptions.aip"/>
     <ROW Fragment="SequenceDialogs.aip" Path="&lt;AI_THEMES&gt;classic\fragments\SequenceDialogs.aip"/>
     <ROW Fragment="Sequences.aip" Path="&lt;AI_FRAGS&gt;Sequences.aip"/>
     <ROW Fragment="StaticUIStrings.aip" Path="&lt;AI_FRAGS&gt;StaticUIStrings.aip"/>
@@ -392,14 +393,21 @@
     <ROW Dialog_="BrowseDlg" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="20" Attributes="196611" Text="Browse to the destination folder" TextStyle="Subtitle" Order="1400" TextLocId="Control.Text.BrowseDlg#Description" MsiKey="BrowseDlg#Description"/>
     <ROW Dialog_="CustomizeDlg" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="500" MsiKey="CustomizeDlg#BottomLine"/>
     <ROW Dialog_="CustomizeDlg" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="Advanced Installer" Order="600" TextLocId="Control.Text.CustomizeDlg#Logo" MsiKey="CustomizeDlg#Logo"/>
-    <ROW Dialog_="CustomizeDlg" Control="Title" Type="Text" X="15" Y="6" Width="277" Height="17" Attributes="196611" Text="Custom Setup" TextStyle="[DlgTitleFont]" Order="1800" TextLocId="Control.Text.CustomizeDlg#Title" MsiKey="CustomizeDlg#Title"/>
+    <ROW Dialog_="CustomizeDlg" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="20" Attributes="196611" Text="Select the way you want features to be installed." TextStyle="Subtitle" Order="1300" TextLocId="Control.Text.CustomizeDlg#Description" MsiKey="CustomizeDlg#Description"/>
+    <ROW Dialog_="CustomizeDlg" Control="Title" Type="Text" X="15" Y="6" Width="277" Height="17" Attributes="196611" Text="Custom Setup" TextStyle="Title" Order="1800" TextLocId="Control.Text.CustomizeDlg#Title" MsiKey="CustomizeDlg#Title"/>
     <ROW Dialog_="DiskCostDlg" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="300" MsiKey="DiskCostDlg#BottomLine"/>
     <ROW Dialog_="DiskCostDlg" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="Advanced Installer" Order="400" TextLocId="Control.Text.DiskCostDlg#Logo" MsiKey="DiskCostDlg#Logo"/>
-    <ROW Dialog_="DiskCostDlg" Control="Title" Type="Text" X="15" Y="6" Width="277" Height="17" Attributes="196611" Text="Disk Space Requirements" TextStyle="[DlgTitleFont]" Order="600" TextLocId="Control.Text.DiskCostDlg#Title" MsiKey="DiskCostDlg#Title"/>
-    <ROW Dialog_="ExitDialog" Control="Description" Type="Text" X="135" Y="86" Width="220" Height="29" Attributes="196611" Text="Click the &quot;Finish&quot; button to exit the [Wizard]." Order="1000" TextLocId="Control.Text.ExitDialog#Description" MsiKey="ExitDialog#Description"/>
+    <ROW Dialog_="DiskCostDlg" Control="Title" Type="Text" X="15" Y="6" Width="277" Height="17" Attributes="196611" Text="Disk Space Requirements" TextStyle="Title" Order="600" TextLocId="Control.Text.DiskCostDlg#Title" MsiKey="DiskCostDlg#Title"/>
+    <ROW Dialog_="DiskCostDlg" Control="Description" Type="Text" X="20" Y="20" Width="280" Height="20" Attributes="196611" Text="The disk space required for the installation of the selected features." TextStyle="Subtitle" Order="800" TextLocId="Control.Text.DiskCostDlg#Description" MsiKey="DiskCostDlg#Description"/>
+    <ROW Dialog_="ExitDialog" Control="Description" Type="Text" X="135" Y="86" Width="220" Height="31" Attributes="196611" Text="Click the &quot;Finish&quot; button to exit the [Wizard]." Order="1000" TextLocId="Control.Text.ExitDialog#Description" MsiKey="ExitDialog#Description"/>
+    <ROW Dialog_="FatalError" Control="Description2" Type="Text" X="135" Y="138" Width="220" Height="20" Attributes="196611" Text="Click the &quot;Finish&quot; button to exit the [Wizard]." TextStyle="Normal" Order="500" TextLocId="Control.Text.FatalError#Description2" MsiKey="FatalError#Description2"/>
+    <ROW Dialog_="FatalError" Control="Description1" Type="Text" X="135" Y="86" Width="220" Height="52" Attributes="196611" Text="[ProductName] setup ended prematurely because of an error.  Your system has not been modified.  To install this program at a later time, please run the installation again." TextStyle="Normal" Order="600" TextLocId="Control.Text.FatalError#Description1" MsiKey="FatalError#Description1"/>
+    <ROW Dialog_="FatalError" Control="Title" Type="Text" X="135" Y="20" Width="220" Height="60" Attributes="196611" Text="The [ProductName] [Wizard] ended prematurely" TextStyle="TitleBold" Order="800" TextLocId="Control.Text.FatalError#Title" MsiKey="FatalError#Title"/>
+    <ROW Dialog_="FatalError" Control="LogCheckBoxLabel" Type="Text" X="148" Y="158" Width="75" Height="13" Attributes="65538" Property="AI_LOG_CHECKBOX_TEXT" Text="Show log" TextStyle="Normal" Order="1000" TextLocId="Control.Text.FatalError#LogCheckBox" MsiKey="FatalError#LogCheckBoxLabel"/>
     <ROW Dialog_="FilesInUse" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="500" MsiKey="FilesInUse#BottomLine"/>
     <ROW Dialog_="FilesInUse" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="Advanced Installer" Order="600" TextLocId="Control.Text.FilesInUse#Logo" MsiKey="FilesInUse#Logo"/>
-    <ROW Dialog_="FilesInUse" Control="Title" Type="Text" X="15" Y="6" Width="277" Height="17" Attributes="196611" Text="Files in Use" TextStyle="[DlgTitleFont]" Order="700" TextLocId="Control.Text.FilesInUse#Title" MsiKey="FilesInUse#Title"/>
+    <ROW Dialog_="FilesInUse" Control="Title" Type="Text" X="15" Y="6" Width="277" Height="17" Attributes="196611" Text="Files in Use" TextStyle="Title" Order="700" TextLocId="Control.Text.FilesInUse#Title" MsiKey="FilesInUse#Title"/>
+    <ROW Dialog_="FilesInUse" Control="Description" Type="Text" X="20" Y="23" Width="280" Height="20" Attributes="196611" Text="Some files that need to be updated are currently in use." TextStyle="Subtitle" Order="1000" TextLocId="Control.Text.FilesInUse#Description" MsiKey="FilesInUse#Description"/>
     <ROW Dialog_="FolderDlg" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="500" MsiKey="FolderDlg#BottomLine"/>
     <ROW Dialog_="FolderDlg" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="[Manufacturer]" Order="600" MsiKey="FolderDlg#Logo"/>
     <ROW Dialog_="FolderDlg" Control="Title" Type="Text" X="15" Y="6" Width="277" Height="17" Attributes="196611" Text="Select Installation Folder" TextStyle="Title" Order="1000" TextLocId="Control.Text.FolderDlg#Title" MsiKey="FolderDlg#Title"/>
@@ -417,43 +425,106 @@
     <ROW Dialog_="MaintenanceTypeDlg" Control="RemoveText" Type="Text" X="105" Y="176" Width="230" Height="23" Attributes="3" Text="Removes [ProductName] from your computer." TextStyle="Normal" Order="1800" TextLocId="Control.Text.MaintenanceTypeDlg#RemoveText" MsiKey="MaintenanceTypeDlg#RemoveText"/>
     <ROW Dialog_="MaintenanceWelcomeDlg" Control="Title" Type="Text" X="135" Y="20" Width="220" Height="60" Attributes="196611" Text="Welcome to the [ProductName] [Wizard]" TextStyle="TitleBold" Order="500" TextLocId="Control.Text.MaintenanceWelcomeDlg#Title" MsiKey="MaintenanceWelcomeDlg#Title"/>
     <ROW Dialog_="MaintenanceWelcomeDlg" Control="Description" Type="Text" X="135" Y="86" Width="220" Height="60" Attributes="196611" Text="The [Wizard] will allow you to change the way [ProductName] features are installed on your computer or even to remove [ProductName] from your computer.  Click &quot;[Text_Next]&quot; to continue or &quot;Cancel&quot; to exit the [Wizard]." TextStyle="Normal" Order="600" TextLocId="Control.Text.MaintenanceWelcomeDlg#Description" MsiKey="MaintenanceWelcomeDlg#Description"/>
+    <ROW Dialog_="MsiRMFilesInUse" Control="Title" Type="Text" X="15" Y="6" Width="200" Height="25" Attributes="196611" Text="Files in Use" TextStyle="Title" Order="400" TextLocId="Control.Text.MsiRMFilesInUse#Title" MsiKey="MsiRMFilesInUse#Title"/>
+    <ROW Dialog_="MsiRMFilesInUse" Control="Description" Type="Text" X="20" Y="23" Width="280" Height="20" Attributes="196611" Text="Some files that need to be updated are currently in use." TextStyle="Subtitle" Order="500" TextLocId="Control.Text.MsiRMFilesInUse#Description" MsiKey="MsiRMFilesInUse#Description"/>
     <ROW Dialog_="MsiRMFilesInUse" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="1000" MsiKey="MsiRMFilesInUse#BottomLine"/>
     <ROW Dialog_="MsiRMFilesInUse" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="Advanced Installer" Order="1100" TextLocId="Control.Text.MsiRMFilesInUse#Logo" MsiKey="MsiRMFilesInUse#Logo"/>
     <ROW Dialog_="OutOfDiskDlg" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="300" MsiKey="OutOfDiskDlg#BottomLine"/>
     <ROW Dialog_="OutOfDiskDlg" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="Advanced Installer" Order="400" TextLocId="Control.Text.OutOfDiskDlg#Logo" MsiKey="OutOfDiskDlg#Logo"/>
-    <ROW Dialog_="OutOfDiskDlg" Control="Title" Type="Text" X="15" Y="6" Width="277" Height="17" Attributes="196611" Text="Out of Disk Space" TextStyle="[DlgTitleFont]" Order="600" TextLocId="Control.Text.OutOfDiskDlg#Title" MsiKey="OutOfDiskDlg#Title"/>
+    <ROW Dialog_="OutOfDiskDlg" Control="Title" Type="Text" X="15" Y="6" Width="277" Height="17" Attributes="196611" Text="Out of Disk Space" TextStyle="Title" Order="600" TextLocId="Control.Text.OutOfDiskDlg#Title" MsiKey="OutOfDiskDlg#Title"/>
+    <ROW Dialog_="OutOfDiskDlg" Control="Text" Type="Text" X="20" Y="53" Width="330" Height="47" Attributes="3" Text="The highlighted volumes do not have enough disk space available for the currently selected features.  You can either remove some files from the highlighted volumes, or choose to install less features onto local drive(s), or select different destination drive(s)." Order="700" TextLocId="Control.Text.OutOfDiskDlg#Text" MsiKey="OutOfDiskDlg#Text"/>
+    <ROW Dialog_="OutOfDiskDlg" Control="Description" Type="Text" X="20" Y="20" Width="280" Height="20" Attributes="196611" Text="Disk space required for the installation exceeds available disk space." TextStyle="Subtitle" Order="800" TextLocId="Control.Text.OutOfDiskDlg#Description" MsiKey="OutOfDiskDlg#Description"/>
     <ROW Dialog_="OutOfRbDiskDlg" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="400" MsiKey="OutOfRbDiskDlg#BottomLine"/>
     <ROW Dialog_="OutOfRbDiskDlg" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="Advanced Installer" Order="500" TextLocId="Control.Text.OutOfRbDiskDlg#Logo" MsiKey="OutOfRbDiskDlg#Logo"/>
-    <ROW Dialog_="OutOfRbDiskDlg" Control="Title" Type="Text" X="15" Y="6" Width="277" Height="17" Attributes="196611" Text="Out of Disk Space" TextStyle="[DlgTitleFont]" Order="1100" TextLocId="Control.Text.OutOfRbDiskDlg#Title" MsiKey="OutOfRbDiskDlg#Title"/>
-    <ROW Dialog_="PSMAuthOptions" Control="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="100" Options="1"/>
-    <ROW Dialog_="PSMAuthOptions" Control="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Cancel]" Order="200" Options="1"/>
-    <ROW Dialog_="PSMAuthOptions" Control="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Attributes="2" Text="[ButtonText_Back]" Order="300" Options="1"/>
-    <ROW Dialog_="PSMAuthOptions" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="400"/>
-    <ROW Dialog_="PSMAuthOptions" Control="Description" Type="Text" X="25" Y="23" Width="304" Height="21" Attributes="196611" Text="Chose the method that the PSM app will authenticate to Azure AD." TextStyle="Subtitle" Order="500"/>
-    <ROW Dialog_="PSMAuthOptions" Control="Title" Type="Text" X="15" Y="6" Width="304" Height="17" Attributes="65539" Text="Chose Authentication Method" TextStyle="Title" Order="600"/>
-    <ROW Dialog_="PSMAuthOptions" Control="BottomLine" Type="Line" X="2" Y="234" Width="368" Height="0" Attributes="1" Order="700"/>
-    <ROW Dialog_="PSMAuthOptions" Control="AzAuthGroup" Type="RadioButtonGroup" X="12" Y="79" Width="345" Height="113" Attributes="16777219" Property="RADIOBUTTONGROUP_1_PROP" Text="Azure Authentication Type" Order="800"/>
-    <ROW Dialog_="PSMAuthOptions" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="[Manufacturer]" Order="900"/>
+    <ROW Dialog_="OutOfRbDiskDlg" Control="Description" Type="Text" X="20" Y="20" Width="280" Height="20" Attributes="196611" Text="Disk space required for the installation exceeds available disk space." TextStyle="Subtitle" Order="800" TextLocId="Control.Text.OutOfRbDiskDlg#Description" MsiKey="OutOfRbDiskDlg#Description"/>
+    <ROW Dialog_="OutOfRbDiskDlg" Control="Title" Type="Text" X="15" Y="6" Width="277" Height="17" Attributes="196611" Text="Out of Disk Space" TextStyle="Title" Order="1100" TextLocId="Control.Text.OutOfRbDiskDlg#Title" MsiKey="OutOfRbDiskDlg#Title"/>
+    <ROW Dialog_="PSMAuthOptions" Control="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="300" MsiKey="PSMAuthOptions#Back" Options="1"/>
+    <ROW Dialog_="PSMAuthOptions" Control="AzAuthGroup" Type="RadioButtonGroup" X="15" Y="69" Width="342" Height="113" Attributes="16777219" Property="RADIOBUTTONGROUP_1_PROP" Text="Azure Authentication Type" Order="800" TextLocId="Control.Text.PSMAuthOptions#AzAuthGroup" MsiKey="PSMAuthOptions#AzAuthGroup"/>
+    <ROW Dialog_="PSMAuthOptions" Control="LocalVarsLabel" Type="Text" X="15" Y="191" Width="260" Height="11" Attributes="65539" Property="TEXT_1_PROP_5" Text="It is a best practice to use a managed identity to authenticate!" TextStyle="Warning" Order="1000"/>
+    <ROW Dialog_="PSMDebugWarning" Control="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="100" Options="1"/>
+    <ROW Dialog_="PSMDebugWarning" Control="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Cancel]" Order="200" Options="1"/>
+    <ROW Dialog_="PSMDebugWarning" Control="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="300" Options="1"/>
+    <ROW Dialog_="PSMDebugWarning" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="400"/>
+    <ROW Dialog_="PSMDebugWarning" Control="Logo" Type="Text" X="4" Y="228" Width="70" Height="12" Attributes="1" Text="Advanced Installer" Order="500"/>
+    <ROW Dialog_="PSMDebugWarning" Control="No" Type="PushButton" X="132" Y="57" Width="56" Height="17" Attributes="3" Text="[ButtonText_No]" Order="600"/>
+    <ROW Dialog_="PSMDebugWarning" Control="Yes" Type="PushButton" X="72" Y="57" Width="56" Height="17" Attributes="3" Text="[ButtonText_Yes]" Order="700"/>
+    <ROW Dialog_="PSMDebugWarning" Control="Icon" Type="Icon" X="15" Y="15" Width="24" Height="24" Attributes="5242881" Text="[InfoIcon]" Help="Information icon|" Order="800" HelpLocId="Control.Help.CancelDlg#Icon"/>
+    <ROW Dialog_="PSMDebugWarning" Control="Text" Type="Text" X="48" Y="15" Width="194" Height="24" Attributes="3" Text="Are you sure you want to enable debug mode? This is a security risk!" TextStyle="Normal" Order="900"/>
+    <ROW Dialog_="PSMGlobalOptions" Control="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="100" Options="1"/>
+    <ROW Dialog_="PSMGlobalOptions" Control="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Cancel]" Order="200" Options="1"/>
+    <ROW Dialog_="PSMGlobalOptions" Control="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="300" Options="1"/>
+    <ROW Dialog_="PSMGlobalOptions" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="400"/>
+    <ROW Dialog_="PSMGlobalOptions" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="500"/>
+    <ROW Dialog_="PSMGlobalOptions" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="600"/>
+    <ROW Dialog_="PSMGlobalOptions" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Attributes="196611" Text="Settings that apply to all app configurations." TextStyle="Subtitle" Order="700"/>
+    <ROW Dialog_="PSMGlobalOptions" Control="Title" Type="Text" X="15" Y="6" Width="200" Height="19" Attributes="196611" Text="Global App Settings" TextStyle="Title" Order="800"/>
+    <ROW Dialog_="PSMGlobalOptions" Control="ScopeTagLabel" Type="Text" X="15" Y="55" Width="75" Height="13" Attributes="65539" Property="TEXT_1_PROP_2" Text="Scope Tag Name:" TextStyle="Normal" Order="900"/>
+    <ROW Dialog_="PSMGlobalOptions" Control="DebugModeToggleGroup" Type="RadioButtonGroup" X="15" Y="107" Width="131" Height="71" Attributes="16777219" Property="Debug" Text="Debug Mode" TextStyle="Normal" Order="1000"/>
+    <ROW Dialog_="PSMGlobalOptions" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="[Manufacturer]" Order="1100" TextLocId="Control.Text.PSMAuthOptions#Logo"/>
+    <ROW Dialog_="PSMGlobalOptions" Control="ScopeTagTextBox" Type="Edit" X="15" Y="68" Width="168" Height="18" Attributes="3" Property="Scope_Tag" Text="{260}" TextStyle="Normal" Order="1200"/>
+    <ROW Dialog_="PSMGlobalOptions" Control="DebugNote" Type="Text" X="152" Y="114" Width="28" Height="16" Attributes="65539" Property="TEXT_2_PROP_1" Text="Note:" TextStyle="SubtitleBold" Order="1300"/>
+    <ROW Dialog_="PSMGlobalOptions" Control="DebugLabel" Type="Text" X="152" Y="130" Width="216" Height="86" Attributes="65539" Property="TEXT_1_PROP_1_1" Text="Enabling debug mode is a security risk and should not be enabled in production environments. Enabling debug mode exposes sensitive un-controlled endpoints. These endpoints allow for manual control of the entire tenant and could expose sensitive materials like environmental variables and access tokens." TextStyle="Normal" Order="1400"/>
+    <ROW Dialog_="PSMGlobalOptions" Control="InsecureWarning" Type="Text" X="15" Y="182" Width="75" Height="25" Attributes="65538" Property="TEXT_1_PROP_4" Text="Warning! Insecure Option Selected!" TextStyle="Warning" Order="1500"/>
+    <ROW Dialog_="PSMKeyVaultAppReg" Control="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="100" Options="1"/>
+    <ROW Dialog_="PSMKeyVaultAppReg" Control="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Cancel]" Order="200" Options="1"/>
+    <ROW Dialog_="PSMKeyVaultAppReg" Control="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="300" Options="1"/>
+    <ROW Dialog_="PSMKeyVaultAppReg" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="400"/>
+    <ROW Dialog_="PSMKeyVaultAppReg" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="500"/>
+    <ROW Dialog_="PSMKeyVaultAppReg" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="600"/>
+    <ROW Dialog_="PSMKeyVaultAppReg" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="21" Attributes="196611" Text="Configure PSM to authenticate to an app registration via KeyVault." TextStyle="Subtitle" Order="700"/>
+    <ROW Dialog_="PSMKeyVaultAppReg" Control="Title" Type="Text" X="15" Y="6" Width="233" Height="18" Attributes="196611" Text="Configure Az KeyVault Authentication" TextStyle="Title" Order="800"/>
+    <ROW Dialog_="PSMKeyVaultAppReg" Control="ClientIdLabel" Type="Text" X="25" Y="102" Width="134" Height="11" Attributes="65539" Property="TEXT_1_PROP_3" Text="App Registration Client ID:" TextStyle="Normal" Order="900"/>
+    <ROW Dialog_="PSMKeyVaultAppReg" Control="ClientIdInput" Type="Edit" X="25" Y="113" Width="220" Height="18" Attributes="3" Property="Client_GUID" Text="{260}" TextStyle="Normal" Order="1000"/>
+    <ROW Dialog_="PSMKeyVaultAppReg" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="[Manufacturer]" Order="1100" TextLocId="Control.Text.PSMAuthOptions#Logo"/>
+    <ROW Dialog_="PSMKeyVaultAppReg" Control="TenantIdLabel" Type="Text" X="25" Y="63" Width="75" Height="11" Attributes="65539" Property="TEXT_1_PROP_3_1" Text="Tenant ID:" TextStyle="Normal" Order="1200"/>
+    <ROW Dialog_="PSMKeyVaultAppReg" Control="Edit_1" Type="Edit" X="25" Y="74" Width="220" Height="18" Attributes="3" Property="Tenant_ID" Text="{260}" TextStyle="Normal" Order="1300"/>
+    <ROW Dialog_="PSMKeyVaultAppReg" Control="KvNameLabel" Type="Text" X="25" Y="140" Width="134" Height="11" Attributes="65539" Property="TEXT_1_PROP_3_2" Text="Azure KeyVault Name:" TextStyle="Normal" Order="1400"/>
+    <ROW Dialog_="PSMKeyVaultAppReg" Control="KvNameInput" Type="Edit" X="25" Y="150" Width="220" Height="18" Attributes="3" Property="KeyVault_Name" Text="{260}" TextStyle="Normal" Order="1500"/>
+    <ROW Dialog_="PSMKeyVaultAppReg" Control="SecretNameLabel" Type="Text" X="25" Y="179" Width="134" Height="11" Attributes="65539" Property="TEXT_1_PROP_3_3" Text="KeyVault Secret Name:" TextStyle="Normal" Order="1600"/>
+    <ROW Dialog_="PSMKeyVaultAppReg" Control="SecretNameInput" Type="Edit" X="25" Y="189" Width="220" Height="18" Attributes="3" Property="KeyVault_Secret" Text="{260}" TextStyle="Normal" Order="1700"/>
+    <ROW Dialog_="PSMLocalVars" Control="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="100" Options="1"/>
+    <ROW Dialog_="PSMLocalVars" Control="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Cancel]" Order="200" Options="1"/>
+    <ROW Dialog_="PSMLocalVars" Control="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="300" Options="1"/>
+    <ROW Dialog_="PSMLocalVars" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="400"/>
+    <ROW Dialog_="PSMLocalVars" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="500"/>
+    <ROW Dialog_="PSMLocalVars" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="600"/>
+    <ROW Dialog_="PSMLocalVars" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Attributes="196611" Text="Configure local env vars to support non-Azure environments" TextStyle="Subtitle" Order="700"/>
+    <ROW Dialog_="PSMLocalVars" Control="Title" Type="Text" X="15" Y="6" Width="253" Height="19" Attributes="196611" Text="Configure Local Environmental Variables" TextStyle="Title" Order="800"/>
+    <ROW Dialog_="PSMLocalVars" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="[Manufacturer]" Order="900" TextLocId="Control.Text.PSMAuthOptions#Logo"/>
+    <ROW Dialog_="PSMLocalVars" Control="ClientIdLabel" Type="Text" X="25" Y="121" Width="134" Height="11" Attributes="65539" Property="TEXT_1_PROP_3_4" Text="App Registration Client ID:" TextStyle="Normal" Order="1000"/>
+    <ROW Dialog_="PSMLocalVars" Control="ClientIdInput" Type="Edit" X="25" Y="132" Width="220" Height="18" Attributes="3" Property="Client_GUID" Text="{260}" TextStyle="Normal" Order="1100"/>
+    <ROW Dialog_="PSMLocalVars" Control="TenantIdLabel" Type="Text" X="25" Y="82" Width="75" Height="11" Attributes="65539" Property="TEXT_1_PROP_3_1_1" Text="Tenant ID:" TextStyle="Normal" Order="1200"/>
+    <ROW Dialog_="PSMLocalVars" Control="Edit_1" Type="Edit" X="25" Y="93" Width="220" Height="18" Attributes="3" Property="Tenant_ID" Text="{260}" TextStyle="Normal" Order="1300"/>
+    <ROW Dialog_="PSMLocalVars" Control="KvNameLabel" Type="Text" X="25" Y="159" Width="134" Height="11" Attributes="65539" Property="TEXT_1_PROP_3_2_1" Text="App Registration Secret:" TextStyle="Normal" Order="1400"/>
+    <ROW Dialog_="PSMLocalVars" Control="ClientSecretInput" Type="Edit" X="25" Y="170" Width="220" Height="18" Attributes="2097155" Property="Client_Secret" Text="{260}" TextStyle="Normal" Order="1500"/>
+    <ROW Dialog_="PSMUserAssignedMI" Control="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="100" Options="1"/>
+    <ROW Dialog_="PSMUserAssignedMI" Control="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Cancel]" Order="200" Options="1"/>
+    <ROW Dialog_="PSMUserAssignedMI" Control="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="300" Options="1"/>
+    <ROW Dialog_="PSMUserAssignedMI" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="400"/>
+    <ROW Dialog_="PSMUserAssignedMI" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="500"/>
+    <ROW Dialog_="PSMUserAssignedMI" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="600"/>
+    <ROW Dialog_="PSMUserAssignedMI" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Attributes="196611" Text="Set the ID of the UA MI" TextStyle="Subtitle" Order="700"/>
+    <ROW Dialog_="PSMUserAssignedMI" Control="Title" Type="Text" X="15" Y="6" Width="272" Height="19" Attributes="196611" Text="Configure User Assigned Managed Identity" TextStyle="Title" Order="800"/>
+    <ROW Dialog_="PSMUserAssignedMI" Control="ClientIdLabel" Type="Text" X="25" Y="84" Width="117" Height="11" Attributes="65539" Property="TEXT_1_PROP" Text="Managed Identity Client ID:" TextStyle="Normal" Order="900"/>
+    <ROW Dialog_="PSMUserAssignedMI" Control="ManagedIdentIdInput" Type="Edit" X="23" Y="99" Width="220" Height="18" Attributes="3" Property="Managed_ID_GUID" Text="{260}" TextStyle="Normal" Order="1000"/>
+    <ROW Dialog_="PSMUserAssignedMI" Control="ClientIdNote" Type="Text" X="25" Y="129" Width="28" Height="16" Attributes="65539" Property="TEXT_2_PROP" Text="Note:" TextStyle="NormalBold" Order="1100"/>
+    <ROW Dialog_="PSMUserAssignedMI" Control="NotGuidLabel" Type="Text" X="25" Y="145" Width="218" Height="41" Attributes="65539" Property="TEXT_1_PROP_1" Text="The value for this text box is not the Object ID of the User Assigned Managed Identity (UA MI); it is the Client ID of the UA MI." TextStyle="Normal" Order="1200"/>
+    <ROW Dialog_="PSMUserAssignedMI" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="[Manufacturer]" Order="1300"/>
     <ROW Dialog_="PrepareDlg" Control="Description" Type="Text" X="135" Y="86" Width="220" Height="29" Attributes="196611" Text="Please wait while the [Wizard] prepares to guide you through the installation." Order="500" TextLocId="Control.Text.PrepareDlg#Description" MsiKey="PrepareDlg#Description"/>
     <ROW Dialog_="ProgressDlg" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="300" MsiKey="ProgressDlg#BottomLine"/>
     <ROW Dialog_="ProgressDlg" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="[Manufacturer]" Order="400" MsiKey="ProgressDlg#Logo"/>
-    <ROW Dialog_="UserAssignedMI" Control="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="100" Options="1"/>
-    <ROW Dialog_="UserAssignedMI" Control="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Cancel]" Order="200" Options="1"/>
-    <ROW Dialog_="UserAssignedMI" Control="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="300" Options="1"/>
-    <ROW Dialog_="UserAssignedMI" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="400"/>
-    <ROW Dialog_="UserAssignedMI" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="500"/>
-    <ROW Dialog_="UserAssignedMI" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="600"/>
-    <ROW Dialog_="UserAssignedMI" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Attributes="196611" Text="Set the ID of the UA MI" TextStyle="Subtitle" Order="700"/>
-    <ROW Dialog_="UserAssignedMI" Control="Title" Type="Text" X="15" Y="6" Width="272" Height="19" Attributes="196611" Text="Configure User Assigned Managed Identity" TextStyle="Title" Order="800"/>
-    <ROW Dialog_="UserAssignedMI" Control="ClientIdLabel" Type="Text" X="25" Y="89" Width="75" Height="11" Attributes="65539" Property="TEXT_1_PROP" Text="Client ID:" TextStyle="Normal" Order="900"/>
-    <ROW Dialog_="UserAssignedMI" Control="ClientIdInput" Type="Edit" X="23" Y="104" Width="220" Height="18" Attributes="3" Property="ClientIdInput" Text="{260}" Order="1000"/>
-    <ROW Dialog_="UserAssignedMI" Control="ClientIdNote" Type="Text" X="25" Y="134" Width="28" Height="16" Attributes="65539" Property="TEXT_2_PROP" Text="Note:" TextStyle="Normal" Order="1100"/>
-    <ROW Dialog_="UserAssignedMI" Control="NotGuidLabel" Type="Text" X="25" Y="150" Width="205" Height="33" Attributes="65539" Property="TEXT_1_PROP_1" Text="The value for this text box is not the Object ID of the UA MI; it is the Client ID of the UA MI." TextStyle="Normal" Order="1200"/>
-    <ROW Dialog_="UserAssignedMI" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="[Manufacturer]" Order="1300"/>
+    <ROW Dialog_="ProgressDlg" Control="Title" Type="Text" X="20" Y="15" Width="275" Height="19" Attributes="196611" Text="[Progress1] [ProductName]" TextStyle="Title" Order="900" TextLocId="Control.Text.ProgressDlg#Title" MsiKey="ProgressDlg#Title"/>
+    <ROW Dialog_="ProgressDlg" Control="Text" Type="Text" X="35" Y="65" Width="300" Height="30" Attributes="196611" Text="Please wait while the [Wizard] [Progress2] [ProductName].  This may take several minutes." TextStyle="Normal" Order="1000" TextLocId="Control.Text.ProgressDlg#Text" MsiKey="ProgressDlg#Text"/>
+    <ROW Dialog_="ProgressDlg" Control="StatusLabel" Type="Text" X="35" Y="100" Width="45" Height="10" Attributes="3" Text="Status:" TextStyle="Normal" Order="1100" TextLocId="Control.Text.ProgressDlg#StatusLabel" MsiKey="ProgressDlg#StatusLabel"/>
+    <ROW Dialog_="UserExit" Control="Bitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="234" Attributes="1048577" Text="[DialogBitmap]" Order="300" MsiKey="UserExit#Bitmap"/>
+    <ROW Dialog_="UserExit" Control="Title" Type="Text" X="135" Y="20" Width="220" Height="60" Attributes="196611" Text="The [ProductName] [Wizard] was interrupted" TextStyle="TitleBold" Order="500" TextLocId="Control.Text.UserExit#Title" MsiKey="UserExit#Title"/>
+    <ROW Dialog_="UserExit" Control="Description2" Type="Text" X="135" Y="141" Width="220" Height="20" Attributes="196611" Text="Click the &quot;Finish&quot; button to exit the [Wizard]." TextStyle="Normal" Order="600" TextLocId="Control.Text.UserExit#Description2" MsiKey="UserExit#Description2"/>
+    <ROW Dialog_="UserExit" Control="Description1" Type="Text" X="135" Y="86" Width="220" Height="49" Attributes="196611" Text="[ProductName] setup was interrupted.  Your system has not been modified.  To install this program at a later time, please run the installation again." TextStyle="Normal" Order="700" TextLocId="Control.Text.UserExit#Description1" MsiKey="UserExit#Description1"/>
     <ROW Dialog_="VerifyReadyDlg" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="400" MsiKey="VerifyReadyDlg#BottomLine"/>
     <ROW Dialog_="VerifyReadyDlg" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="[Manufacturer]" Order="500" MsiKey="VerifyReadyDlg#Logo"/>
-    <ROW Dialog_="VerifyReadyDlg" Control="Description" Type="Text" X="25" Y="23" Width="304" Height="21" Attributes="196611" Text="The [Wizard] is ready to begin the [ProductName] installation" Order="800" TextLocId="Control.Text.VerifyReadyDlg#Description" MsiKey="VerifyReadyDlg#Description"/>
-    <ROW Dialog_="VerifyReadyDlg" Control="Title" Type="Text" X="15" Y="6" Width="304" Height="17" Attributes="196611" Text="Ready to Install" TextStyle="[DlgTitleFont]" Order="1000" TextLocId="Control.Text.VerifyReadyDlg#Title" MsiKey="VerifyReadyDlg#Title"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="Text" Type="Text" X="25" Y="70" Width="320" Height="40" Attributes="196611" Text="Click &quot;Install&quot; to begin the installation.  If you want to review or change any of your installation settings, click &quot;Back&quot;.  Click &quot;Cancel&quot; to exit the wizard." TextStyle="Normal" Order="700" TextLocId="Control.Text.VerifyReadyDlg#Text" MsiKey="VerifyReadyDlg#Text"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="Description" Type="Text" X="25" Y="23" Width="304" Height="21" Attributes="196611" Text="The [Wizard] is ready to begin the installation" TextStyle="Subtitle" Order="800" MsiKey="VerifyReadyDlg#Description"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="Title" Type="Text" X="15" Y="6" Width="304" Height="17" Attributes="196611" Text="Ready to Install" TextStyle="Title" Order="1000" TextLocId="Control.Text.VerifyReadyDlg#Title" MsiKey="VerifyReadyDlg#Title"/>
     <ROW Dialog_="VerifyRemoveDlg" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="500" MsiKey="VerifyRemoveDlg#BottomLine"/>
     <ROW Dialog_="VerifyRemoveDlg" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="Advanced Installer" Order="600" TextLocId="Control.Text.VerifyRemoveDlg#Logo" MsiKey="VerifyRemoveDlg#Logo"/>
     <ROW Dialog_="VerifyRemoveDlg" Control="Title" Type="Text" X="15" Y="6" Width="277" Height="17" Attributes="196611" Text="Remove [ProductName]" TextStyle="Title" Order="700" TextLocId="Control.Text.VerifyRemoveDlg#Title" MsiKey="VerifyRemoveDlg#Title"/>
@@ -463,15 +534,21 @@
     <ROW Dialog_="VerifyRepairDlg" Control="Title" Type="Text" X="15" Y="6" Width="277" Height="17" Attributes="196611" Text="Repair [ProductName]" TextStyle="Title" Order="700" TextLocId="Control.Text.VerifyRepairDlg#Title" MsiKey="VerifyRepairDlg#Title"/>
     <ROW Dialog_="VerifyRepairDlg" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Attributes="196611" Text="The [Wizard] is ready to begin the repair of [ProductName]." TextStyle="Subtitle" Order="900" TextLocId="Control.Text.VerifyRepairDlg#Description" MsiKey="VerifyRepairDlg#Description"/>
   </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiControlConditionComponent">
+    <ROW Dialog_="PSMGlobalOptions" Control_="InsecureWarning" Action="Show" Condition="Debug = &quot;true&quot;"/>
+    <ROW Dialog_="PSMGlobalOptions" Control_="InsecureWarning" Action="Hide" Condition="Debug = &quot;false&quot;"/>
+    <ROW Dialog_="PSMAuthOptions" Control_="LocalVarsLabel" Action="Show" Condition="RADIOBUTTONGROUP_1_PROP = &quot;Local&quot;"/>
+    <ROW Dialog_="PSMAuthOptions" Control_="LocalVarsLabel" Action="Hide" Condition="RADIOBUTTONGROUP_1_PROP &lt;&gt; &quot;Local&quot;"/>
+  </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiControlEventComponent">
     <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_INSTALL" Ordering="197"/>
-    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="201"/>
-    <ROW Dialog_="FolderDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL" Ordering="201"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PSMUserAssignedMI" Condition="AI_INSTALL AND ( RADIOBUTTONGROUP_1_PROP = &quot;UA MI&quot; )" Ordering="205"/>
+    <ROW Dialog_="FolderDlg" Control_="Next" Event="NewDialog" Argument="PSMGlobalOptions" Condition="AI_INSTALL" Ordering="201"/>
     <ROW Dialog_="MaintenanceWelcomeDlg" Control_="Next" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="99"/>
     <ROW Dialog_="CustomizeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_MAINT" Ordering="101"/>
     <ROW Dialog_="CustomizeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="1"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_MAINT" Ordering="198"/>
-    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="202"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="206"/>
     <ROW Dialog_="MaintenanceTypeDlg" Control_="ChangeButton" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="501"/>
     <ROW Dialog_="MaintenanceTypeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceWelcomeDlg" Condition="AI_MAINT" Ordering="1"/>
     <ROW Dialog_="MaintenanceTypeDlg" Control_="RemoveButton" Event="NewDialog" Argument="VerifyRemoveDlg" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="601"/>
@@ -482,13 +559,37 @@
     <ROW Dialog_="VerifyRemoveDlg" Control_="Remove" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="299" Options="1"/>
     <ROW Dialog_="PatchWelcomeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_PATCH" Ordering="201"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_PATCH" Ordering="199"/>
-    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PatchWelcomeDlg" Condition="AI_PATCH" Ordering="203"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PatchWelcomeDlg" Condition="AI_PATCH" Ordering="207"/>
     <ROW Dialog_="ResumeDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_RESUME" Ordering="299"/>
-    <ROW Dialog_="PSMAuthOptions" Control_="Cancel" Event="SpawnDialog" Argument="CancelDlg" Condition="1" Ordering="100"/>
-    <ROW Dialog_="UserAssignedMI" Control_="Cancel" Event="SpawnDialog" Argument="CancelDlg" Condition="1" Ordering="100"/>
-    <ROW Dialog_="UserAssignedMI" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="1" Ordering="1"/>
-    <ROW Dialog_="PSMAuthOptions" Control_="Next" Event="NewDialog" Argument="UserAssignedMI" Condition="AI_INSTALL AND ( RADIOBUTTONGROUP_1_PROP = &quot;UA MI&quot; )" Ordering="3"/>
-    <ROW Dialog_="PSMAuthOptions" Control_="Next" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="2"/>
+    <ROW Dialog_="PSMUserAssignedMI" Control_="Cancel" Event="SpawnDialog" Argument="CancelDlg" Condition="1" Ordering="100"/>
+    <ROW Dialog_="PSMUserAssignedMI" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="1" Ordering="1"/>
+    <ROW Dialog_="PSMAuthOptions" Control_="Next" Event="NewDialog" Argument="PSMUserAssignedMI" Condition="AI_INSTALL AND ( RADIOBUTTONGROUP_1_PROP = &quot;UA MI&quot; )" Ordering="6"/>
+    <ROW Dialog_="PSMAuthOptions" Control_="Back" Event="NewDialog" Argument="PSMGlobalOptions" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="PSMUserAssignedMI" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL" Ordering="2"/>
+    <ROW Dialog_="PSMUserAssignedMI" Control_="Back" Event="NewDialog" Argument="PSMAuthOptions" Condition="RADIOBUTTONGROUP_1_PROP = &quot;UA MI&quot;" Ordering="2"/>
+    <ROW Dialog_="PSMAuthOptions" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL AND ( RADIOBUTTONGROUP_1_PROP = &quot;SA MI&quot; )" Ordering="5"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PSMAuthOptions" Condition="AI_INSTALL AND ( RADIOBUTTONGROUP_1_PROP = &quot;SA MI&quot; )" Ordering="204"/>
+    <ROW Dialog_="PSMGlobalOptions" Control_="Cancel" Event="SpawnDialog" Argument="CancelDlg" Condition="1" Ordering="100"/>
+    <ROW Dialog_="PSMGlobalOptions" Control_="Next" Event="NewDialog" Argument="PSMAuthOptions" Condition="AI_INSTALL AND ( Debug = &quot;false&quot; )" Ordering="2"/>
+    <ROW Dialog_="PSMGlobalOptions" Control_="Back" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="PSMDebugWarning" Control_="Cancel" Event="SpawnDialog" Argument="CancelDlg" Condition="1" Ordering="100"/>
+    <ROW Dialog_="PSMGlobalOptions" Control_="Next" Event="NewDialog" Argument="PSMDebugWarning" Condition="AI_INSTALL AND ( Debug = &quot;true&quot; )" Ordering="3"/>
+    <ROW Dialog_="PSMDebugWarning" Control_="Yes" Event="NewDialog" Argument="PSMAuthOptions" Condition="1" Ordering="1"/>
+    <ROW Dialog_="PSMDebugWarning" Control_="No" Event="NewDialog" Argument="PSMGlobalOptions" Condition="1" Ordering="0"/>
+    <ROW Dialog_="PSMKeyVaultAppReg" Control_="Cancel" Event="SpawnDialog" Argument="CancelDlg" Condition="1" Ordering="100"/>
+    <ROW Dialog_="PSMKeyVaultAppReg" Control_="Back" Event="NewDialog" Argument="PSMAuthOptions" Condition="1" Ordering="1"/>
+    <ROW Dialog_="PSMAuthOptions" Control_="Next" Event="NewDialog" Argument="PSMKeyVaultAppReg" Condition="AI_INSTALL AND ( RADIOBUTTONGROUP_1_PROP = &quot;SA MI KV App Reg&quot; )" Ordering="4"/>
+    <ROW Dialog_="PSMUserAssignedMI" Control_="Back" Event="NewDialog" Argument="PSMKeyVaultAppReg" Condition="RADIOBUTTONGROUP_1_PROP = &quot;UA MI KV App Reg&quot;" Ordering="1"/>
+    <ROW Dialog_="PSMAuthOptions" Control_="Next" Event="NewDialog" Argument="PSMKeyVaultAppReg" Condition="AI_INSTALL AND ( RADIOBUTTONGROUP_1_PROP = &quot;UA MI KV App Reg&quot; )" Ordering="3"/>
+    <ROW Dialog_="PSMLocalVars" Control_="Cancel" Event="SpawnDialog" Argument="CancelDlg" Condition="1" Ordering="100"/>
+    <ROW Dialog_="PSMAuthOptions" Control_="Next" Event="NewDialog" Argument="PSMLocalVars" Condition="AI_INSTALL AND ( RADIOBUTTONGROUP_1_PROP = &quot;Local&quot; )" Ordering="2"/>
+    <ROW Dialog_="PSMLocalVars" Control_="Back" Event="NewDialog" Argument="PSMAuthOptions" Condition="1" Ordering="1"/>
+    <ROW Dialog_="PSMLocalVars" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="1" Ordering="1"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PSMLocalVars" Condition="AI_INSTALL AND ( RADIOBUTTONGROUP_1_PROP = &quot;Local&quot; )" Ordering="203"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PSMUserAssignedMI" Condition="AI_INSTALL AND ( RADIOBUTTONGROUP_1_PROP = &quot;UA MI KV App Reg&quot; )" Ordering="202"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PSMKeyVaultAppReg" Condition="AI_INSTALL AND ( RADIOBUTTONGROUP_1_PROP = &quot;SA MI KV App Reg&quot; )" Ordering="201"/>
+    <ROW Dialog_="PSMKeyVaultAppReg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="( RADIOBUTTONGROUP_1_PROP = &quot;SA MI KV App Reg&quot; )" Ordering="2"/>
+    <ROW Dialog_="PSMKeyVaultAppReg" Control_="Next" Event="NewDialog" Argument="PSMUserAssignedMI" Condition="( RADIOBUTTONGROUP_1_PROP = &quot;UA MI KV App Reg&quot; )" Ordering="1"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
     <ROW Directory_="APPDIR" Component_="APPDIR" ManualDelete="true"/>
@@ -543,8 +644,11 @@
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDialogComponent">
-    <ROW Dialog="PSMAuthOptions" HCentering="50" VCentering="50" Width="370" Height="270" Attributes="3" Title="[ProductName] [Setup]" Control_Default="Next" Control_Cancel="Cancel"/>
-    <ROW Dialog="UserAssignedMI" HCentering="50" VCentering="50" Width="370" Height="270" Attributes="3" Title="[ProductName] [Setup]" Control_Default="Next" Control_Cancel="Cancel"/>
+    <ROW Dialog="PSMDebugWarning" HCentering="50" VCentering="50" Width="260" Height="85" Attributes="3" Title="[ProductName] [Setup]" Control_Default="Next" Control_Cancel="Cancel"/>
+    <ROW Dialog="PSMGlobalOptions" HCentering="50" VCentering="50" Width="370" Height="270" Attributes="3" Title="[ProductName] [Setup]" Control_Default="Next" Control_Cancel="Cancel"/>
+    <ROW Dialog="PSMKeyVaultAppReg" HCentering="50" VCentering="50" Width="370" Height="270" Attributes="3" Title="[ProductName] [Setup]" Control_Default="Next" Control_Cancel="Cancel"/>
+    <ROW Dialog="PSMLocalVars" HCentering="50" VCentering="50" Width="370" Height="270" Attributes="3" Title="[ProductName] [Setup]" Control_Default="Next" Control_Cancel="Cancel"/>
+    <ROW Dialog="PSMUserAssignedMI" HCentering="50" VCentering="50" Width="370" Height="270" Attributes="3" Title="[ProductName] [Setup]" Control_Default="Next" Control_Cancel="Cancel"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiEnvComponent">
     <ROW Environment="PSM_Client_GUID" Name="=-*PSM_Client_GUID" Value="[Client_GUID]" Component_="privilegedsecuritymanagementserverwin.exe"/>
@@ -617,10 +721,13 @@
     <ROW Condition="VersionNT" Description="[ProductName] cannot be installed on [WindowsType9XDisplay]." DescriptionLocId="AI.LaunchCondition.No9X" IsPredefined="true" Builds="DefaultBuild;ExeBuild"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiRadioButtonComponent">
-    <ROW Property="RADIOBUTTONGROUP_1_PROP" Order="1" Value="RadioButton_1" X="2" Y="20" Width="237" Height="12" Text="System Assigned Managed Identity - Recommended"/>
-    <ROW Property="RADIOBUTTONGROUP_1_PROP" Order="2" Value="UA MI" X="2" Y="39" Width="237" Height="12" Text="User Assigned Managed Identity - Recommended"/>
-    <ROW Property="RADIOBUTTONGROUP_1_PROP" Order="3" Value="SA MI KV App Reg" X="2" Y="58" Width="237" Height="12" Text="Key Vault App Registration"/>
-    <ROW Property="RADIOBUTTONGROUP_1_PROP" Order="4" Value="Local" X="2" Y="76" Width="237" Height="12" Text="Local Environmental Variables"/>
+    <ROW Property="RADIOBUTTONGROUP_1_PROP" Order="1" Value="SA MI" X="3" Y="20" Width="311" Height="14" Text="System Assigned Managed Identity" MsiKey="RADIOBUTTONGROUP_1_PROP#1"/>
+    <ROW Property="RADIOBUTTONGROUP_1_PROP" Order="2" Value="UA MI" X="3" Y="55" Width="311" Height="14" Text="User Assigned Managed Identity" MsiKey="RADIOBUTTONGROUP_1_PROP#2"/>
+    <ROW Property="RADIOBUTTONGROUP_1_PROP" Order="3" Value="SA MI KV App Reg" X="3" Y="37" Width="311" Height="14" Text="System Assigned Managed Identity - Key Vault App Registration Secret" MsiKey="RADIOBUTTONGROUP_1_PROP#3"/>
+    <ROW Property="RADIOBUTTONGROUP_1_PROP" Order="4" Value="Local" X="3" Y="90" Width="311" Height="14" Text="Local Environmental Variables" MsiKey="RADIOBUTTONGROUP_1_PROP#4"/>
+    <ROW Property="Debug" Order="1" Value="true" X="3" Y="23" Width="72" Height="11" Text="Enabled" Help="Only enable this if you know what you are doing!|" TextStyle="Normal"/>
+    <ROW Property="Debug" Order="2" Value="false" X="3" Y="42" Width="72" Height="11" Text="Disabled" Help="This is the safe option, please use this!|" TextStyle="Normal"/>
+    <ROW Property="RADIOBUTTONGROUP_1_PROP" Order="5" Value="UA MI KV App Reg" X="3" Y="73" Width="311" Height="14" Text="User Assigned Managed Identity- Key Vault App Registration Secret" TextStyle="Normal"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiRegLocatorComponent">
     <ROW Signature_="AI_EXE_PATH_CU" Root="1" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]\[ProductVersion]" Name="AI_ExePath" Type="2"/>
@@ -672,6 +779,7 @@
     <ROW TextStyle="Title" FaceName="Segoe UI" Size="14" Color="0" StyleBits="0"/>
     <ROW TextStyle="TitleBold" FaceName="Segoe UI" Size="14" Color="0" StyleBits="1"/>
     <ROW TextStyle="VerdanaBold13" FaceName="Segoe UI" Size="13" Color="0" StyleBits="1" MsiKey="VerdanaBold13"/>
+    <ROW TextStyle="Warning" FaceName="Segoe UI" Size="9" Color="255" StyleBits="0"/>
     <ATTRIBUTE name="DeletedRows" value="CfTitleFont@DlgFont8"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
