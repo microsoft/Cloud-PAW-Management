@@ -24,6 +24,7 @@
     <ROW Property="ARPURLINFOABOUT" Value="https://github.com/microsoft/Privileged-Security-Management/issues"/>
     <ROW Property="ARPURLUPDATEINFO" Value="https://github.com/microsoft/Privileged-Security-Management/releases"/>
     <ROW Property="AiFeatIcoCoreServer" Value="CloudPAWLogoIcon.exe" Type="8"/>
+    <ROW Property="AuthOptionsRadioGroup" Value="SA MI" Type="4"/>
     <ROW Property="Client_GUID" Comments="The Client GUID is the Application (client) ID of the application registration in Azure AD."/>
     <ROW Property="Client_Secret" Comments="The Client Secret variable is the password that was generated in the application registration."/>
     <ROW Property="Debug" Value="false" Comments="Enables debugging features such as additional http routes."/>
@@ -36,7 +37,7 @@
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="Privileged Security Management"/>
     <ROW Property="ProductVersion" Value="1.0.0"/>
-    <ROW Property="RADIOBUTTONGROUP_1_PROP" Value="SA MI" Type="4" MsiKey="RADIOBUTTONGROUP_1_PROP"/>
+    <ROW Property="RADIOBUTTONGROUP_1_PROP" Value="SA MI" Type="4"/>
     <ROW Property="Scope_Tag" Value="Privileged-Security-Management" Comments="This is the Intune Scope tag that the app will be used to store the app&apos;s configurations (in the description) and to isolate its configurations from other scopes to enforce least privilege."/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND;AI_SETUPEXEPATH;SETUPEXEDIR"/>
     <ROW Property="Tenant_ID" Comments="This is the ID of the tenant that the application registration is registered in."/>
@@ -222,7 +223,6 @@
   <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
     <ROW Path="&lt;AI_DICTS&gt;ui.ail"/>
     <ROW Path="&lt;AI_DICTS&gt;ui_en.ail"/>
-    <ROW Path="&lt;AI_REPOSITORY&gt;Dialogs\PSMAuthOptions\PSMAuthOptions_en.ail"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DigCertStoreComponent">
     <ROW TimeStampUrl="http://timestamp.digicert.com" SignerDescription="[|ProductName]" SignOptions="0" SignTool="0" UseSha256="1"/>
@@ -235,7 +235,6 @@
     <ROW Fragment="FolderDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\FolderDlg.aip"/>
     <ROW Fragment="MaintenanceTypeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceTypeDlg.aip"/>
     <ROW Fragment="MaintenanceWelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceWelcomeDlg.aip"/>
-    <ROW Fragment="PSMAuthOptions.aip" Path="&lt;AI_REPOSITORY&gt;Dialogs\PSMAuthOptions\PSMAuthOptions.aip"/>
     <ROW Fragment="SequenceDialogs.aip" Path="&lt;AI_THEMES&gt;classic\fragments\SequenceDialogs.aip"/>
     <ROW Fragment="Sequences.aip" Path="&lt;AI_FRAGS&gt;Sequences.aip"/>
     <ROW Fragment="StaticUIStrings.aip" Path="&lt;AI_FRAGS&gt;StaticUIStrings.aip"/>
@@ -438,9 +437,17 @@
     <ROW Dialog_="OutOfRbDiskDlg" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="Advanced Installer" Order="500" TextLocId="Control.Text.OutOfRbDiskDlg#Logo" MsiKey="OutOfRbDiskDlg#Logo"/>
     <ROW Dialog_="OutOfRbDiskDlg" Control="Description" Type="Text" X="20" Y="20" Width="280" Height="20" Attributes="196611" Text="Disk space required for the installation exceeds available disk space." TextStyle="Subtitle" Order="800" TextLocId="Control.Text.OutOfRbDiskDlg#Description" MsiKey="OutOfRbDiskDlg#Description"/>
     <ROW Dialog_="OutOfRbDiskDlg" Control="Title" Type="Text" X="15" Y="6" Width="277" Height="17" Attributes="196611" Text="Out of Disk Space" TextStyle="Title" Order="1100" TextLocId="Control.Text.OutOfRbDiskDlg#Title" MsiKey="OutOfRbDiskDlg#Title"/>
-    <ROW Dialog_="PSMAuthOptions" Control="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="300" MsiKey="PSMAuthOptions#Back" Options="1"/>
-    <ROW Dialog_="PSMAuthOptions" Control="AzAuthGroup" Type="RadioButtonGroup" X="15" Y="69" Width="342" Height="113" Attributes="16777219" Property="RADIOBUTTONGROUP_1_PROP" Text="Azure Authentication Type" Order="800" TextLocId="Control.Text.PSMAuthOptions#AzAuthGroup" MsiKey="PSMAuthOptions#AzAuthGroup"/>
-    <ROW Dialog_="PSMAuthOptions" Control="LocalVarsLabel" Type="Text" X="15" Y="191" Width="260" Height="11" Attributes="65539" Property="TEXT_1_PROP_5" Text="It is a best practice to use a managed identity to authenticate!" TextStyle="Warning" Order="1000"/>
+    <ROW Dialog_="PSMAuthOptions" Control="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="100" Options="1"/>
+    <ROW Dialog_="PSMAuthOptions" Control="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Cancel]" Order="200" Options="1"/>
+    <ROW Dialog_="PSMAuthOptions" Control="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="300" Options="1"/>
+    <ROW Dialog_="PSMAuthOptions" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="400"/>
+    <ROW Dialog_="PSMAuthOptions" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="500"/>
+    <ROW Dialog_="PSMAuthOptions" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="600"/>
+    <ROW Dialog_="PSMAuthOptions" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Attributes="196611" Text="Chose the method that the PSM app will authenticate to Azure AD." TextStyle="Subtitle" Order="700"/>
+    <ROW Dialog_="PSMAuthOptions" Control="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Attributes="196611" Text="Chose Authentication Method" TextStyle="Title" Order="800"/>
+    <ROW Dialog_="PSMAuthOptions" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="[Manufacturer]" Order="900" TextLocId="Control.Text.PSMAuthOptions#Logo"/>
+    <ROW Dialog_="PSMAuthOptions" Control="LocalVarLabel" Type="Text" X="15" Y="198" Width="248" Height="13" Attributes="65538" Property="TEXT_1_PROP_5" Text="It is a best practice to use managed identity to authenticate." TextStyle="Warning" Order="1000"/>
+    <ROW Dialog_="PSMAuthOptions" Control="AzAuthGroup" Type="RadioButtonGroup" X="15" Y="69" Width="342" Height="113" Attributes="16777219" Property="AuthOptionsRadioGroup" Text="Azure Authentication Type" Order="1100"/>
     <ROW Dialog_="PSMDebugWarning" Control="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="100" Options="1"/>
     <ROW Dialog_="PSMDebugWarning" Control="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Cancel]" Order="200" Options="1"/>
     <ROW Dialog_="PSMDebugWarning" Control="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="300" Options="1"/>
@@ -537,12 +544,12 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiControlConditionComponent">
     <ROW Dialog_="PSMGlobalOptions" Control_="InsecureWarning" Action="Show" Condition="Debug = &quot;true&quot;"/>
     <ROW Dialog_="PSMGlobalOptions" Control_="InsecureWarning" Action="Hide" Condition="Debug = &quot;false&quot;"/>
-    <ROW Dialog_="PSMAuthOptions" Control_="LocalVarsLabel" Action="Show" Condition="RADIOBUTTONGROUP_1_PROP = &quot;Local&quot;"/>
-    <ROW Dialog_="PSMAuthOptions" Control_="LocalVarsLabel" Action="Hide" Condition="RADIOBUTTONGROUP_1_PROP &lt;&gt; &quot;Local&quot;"/>
+    <ROW Dialog_="PSMAuthOptions" Control_="LocalVarLabel" Action="Show" Condition="AuthOptionsRadioGroup = &quot;Local&quot;"/>
+    <ROW Dialog_="PSMAuthOptions" Control_="LocalVarLabel" Action="Hide" Condition="AuthOptionsRadioGroup &lt;&gt; &quot;Local&quot;"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiControlEventComponent">
     <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_INSTALL" Ordering="197"/>
-    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PSMUserAssignedMI" Condition="AI_INSTALL AND ( RADIOBUTTONGROUP_1_PROP = &quot;UA MI&quot; )" Ordering="205"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PSMUserAssignedMI" Condition="AI_INSTALL AND ( AuthOptionsRadioGroup = &quot;UA MI&quot; )" Ordering="205"/>
     <ROW Dialog_="FolderDlg" Control_="Next" Event="NewDialog" Argument="PSMGlobalOptions" Condition="AI_INSTALL" Ordering="201"/>
     <ROW Dialog_="MaintenanceWelcomeDlg" Control_="Next" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="99"/>
     <ROW Dialog_="CustomizeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_MAINT" Ordering="101"/>
@@ -563,12 +570,9 @@
     <ROW Dialog_="ResumeDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_RESUME" Ordering="299"/>
     <ROW Dialog_="PSMUserAssignedMI" Control_="Cancel" Event="SpawnDialog" Argument="CancelDlg" Condition="1" Ordering="100"/>
     <ROW Dialog_="PSMUserAssignedMI" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="1" Ordering="1"/>
-    <ROW Dialog_="PSMAuthOptions" Control_="Next" Event="NewDialog" Argument="PSMUserAssignedMI" Condition="AI_INSTALL AND ( RADIOBUTTONGROUP_1_PROP = &quot;UA MI&quot; )" Ordering="6"/>
-    <ROW Dialog_="PSMAuthOptions" Control_="Back" Event="NewDialog" Argument="PSMGlobalOptions" Condition="AI_INSTALL" Ordering="1"/>
     <ROW Dialog_="PSMUserAssignedMI" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL" Ordering="2"/>
-    <ROW Dialog_="PSMUserAssignedMI" Control_="Back" Event="NewDialog" Argument="PSMAuthOptions" Condition="RADIOBUTTONGROUP_1_PROP = &quot;UA MI&quot;" Ordering="2"/>
-    <ROW Dialog_="PSMAuthOptions" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL AND ( RADIOBUTTONGROUP_1_PROP = &quot;SA MI&quot; )" Ordering="5"/>
-    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PSMAuthOptions" Condition="AI_INSTALL AND ( RADIOBUTTONGROUP_1_PROP = &quot;SA MI&quot; )" Ordering="204"/>
+    <ROW Dialog_="PSMUserAssignedMI" Control_="Back" Event="NewDialog" Argument="PSMAuthOptions" Condition="AuthOptionsRadioGroup = &quot;UA MI&quot;" Ordering="2"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PSMAuthOptions" Condition="AI_INSTALL AND ( AuthOptionsRadioGroup = &quot;SA MI&quot; )" Ordering="204"/>
     <ROW Dialog_="PSMGlobalOptions" Control_="Cancel" Event="SpawnDialog" Argument="CancelDlg" Condition="1" Ordering="100"/>
     <ROW Dialog_="PSMGlobalOptions" Control_="Next" Event="NewDialog" Argument="PSMAuthOptions" Condition="AI_INSTALL AND ( Debug = &quot;false&quot; )" Ordering="2"/>
     <ROW Dialog_="PSMGlobalOptions" Control_="Back" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="1"/>
@@ -578,18 +582,22 @@
     <ROW Dialog_="PSMDebugWarning" Control_="No" Event="NewDialog" Argument="PSMGlobalOptions" Condition="1" Ordering="0"/>
     <ROW Dialog_="PSMKeyVaultAppReg" Control_="Cancel" Event="SpawnDialog" Argument="CancelDlg" Condition="1" Ordering="100"/>
     <ROW Dialog_="PSMKeyVaultAppReg" Control_="Back" Event="NewDialog" Argument="PSMAuthOptions" Condition="1" Ordering="1"/>
-    <ROW Dialog_="PSMAuthOptions" Control_="Next" Event="NewDialog" Argument="PSMKeyVaultAppReg" Condition="AI_INSTALL AND ( RADIOBUTTONGROUP_1_PROP = &quot;SA MI KV App Reg&quot; )" Ordering="4"/>
-    <ROW Dialog_="PSMUserAssignedMI" Control_="Back" Event="NewDialog" Argument="PSMKeyVaultAppReg" Condition="RADIOBUTTONGROUP_1_PROP = &quot;UA MI KV App Reg&quot;" Ordering="1"/>
-    <ROW Dialog_="PSMAuthOptions" Control_="Next" Event="NewDialog" Argument="PSMKeyVaultAppReg" Condition="AI_INSTALL AND ( RADIOBUTTONGROUP_1_PROP = &quot;UA MI KV App Reg&quot; )" Ordering="3"/>
+    <ROW Dialog_="PSMUserAssignedMI" Control_="Back" Event="NewDialog" Argument="PSMKeyVaultAppReg" Condition="AuthOptionsRadioGroup = &quot;UA MI KV App Reg&quot;" Ordering="1"/>
     <ROW Dialog_="PSMLocalVars" Control_="Cancel" Event="SpawnDialog" Argument="CancelDlg" Condition="1" Ordering="100"/>
-    <ROW Dialog_="PSMAuthOptions" Control_="Next" Event="NewDialog" Argument="PSMLocalVars" Condition="AI_INSTALL AND ( RADIOBUTTONGROUP_1_PROP = &quot;Local&quot; )" Ordering="2"/>
     <ROW Dialog_="PSMLocalVars" Control_="Back" Event="NewDialog" Argument="PSMAuthOptions" Condition="1" Ordering="1"/>
     <ROW Dialog_="PSMLocalVars" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="1" Ordering="1"/>
-    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PSMLocalVars" Condition="AI_INSTALL AND ( RADIOBUTTONGROUP_1_PROP = &quot;Local&quot; )" Ordering="203"/>
-    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PSMUserAssignedMI" Condition="AI_INSTALL AND ( RADIOBUTTONGROUP_1_PROP = &quot;UA MI KV App Reg&quot; )" Ordering="202"/>
-    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PSMKeyVaultAppReg" Condition="AI_INSTALL AND ( RADIOBUTTONGROUP_1_PROP = &quot;SA MI KV App Reg&quot; )" Ordering="201"/>
-    <ROW Dialog_="PSMKeyVaultAppReg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="( RADIOBUTTONGROUP_1_PROP = &quot;SA MI KV App Reg&quot; )" Ordering="2"/>
-    <ROW Dialog_="PSMKeyVaultAppReg" Control_="Next" Event="NewDialog" Argument="PSMUserAssignedMI" Condition="( RADIOBUTTONGROUP_1_PROP = &quot;UA MI KV App Reg&quot; )" Ordering="1"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PSMLocalVars" Condition="AI_INSTALL AND ( AuthOptionsRadioGroup = &quot;Local&quot; )" Ordering="203"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PSMUserAssignedMI" Condition="AI_INSTALL AND ( AuthOptionsRadioGroup = &quot;UA MI KV App Reg&quot; )" Ordering="202"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PSMKeyVaultAppReg" Condition="AI_INSTALL AND ( AuthOptionsRadioGroup = &quot;SA MI KV App Reg&quot; )" Ordering="201"/>
+    <ROW Dialog_="PSMKeyVaultAppReg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="( AuthOptionsRadioGroup = &quot;SA MI KV App Reg&quot; )" Ordering="2"/>
+    <ROW Dialog_="PSMKeyVaultAppReg" Control_="Next" Event="NewDialog" Argument="PSMUserAssignedMI" Condition="( AuthOptionsRadioGroup = &quot;UA MI KV App Reg&quot; )" Ordering="1"/>
+    <ROW Dialog_="PSMAuthOptions" Control_="Cancel" Event="SpawnDialog" Argument="CancelDlg" Condition="1" Ordering="100"/>
+    <ROW Dialog_="PSMAuthOptions" Control_="Next" Event="NewDialog" Argument="PSMLocalVars" Condition="AI_INSTALL AND ( AuthOptionsRadioGroup = &quot;Local&quot; )" Ordering="5"/>
+    <ROW Dialog_="PSMAuthOptions" Control_="Back" Event="NewDialog" Argument="PSMGlobalOptions" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="PSMAuthOptions" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL AND ( AuthOptionsRadioGroup = &quot;SA MI&quot; )" Ordering="4"/>
+    <ROW Dialog_="PSMAuthOptions" Control_="Next" Event="NewDialog" Argument="PSMKeyVaultAppReg" Condition="AI_INSTALL AND ( AuthOptionsRadioGroup = &quot;SA MI KV App Reg&quot; )" Ordering="3"/>
+    <ROW Dialog_="PSMAuthOptions" Control_="Next" Event="NewDialog" Argument="PSMUserAssignedMI" Condition="AI_INSTALL AND ( AuthOptionsRadioGroup = &quot;UA MI&quot; )" Ordering="2"/>
+    <ROW Dialog_="PSMAuthOptions" Control_="Next" Event="NewDialog" Argument="PSMKeyVaultAppReg" Condition="AI_INSTALL AND ( AuthOptionsRadioGroup = &quot;UA MI KV App Reg&quot; )" Ordering="1"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
     <ROW Directory_="APPDIR" Component_="APPDIR" ManualDelete="true"/>
@@ -644,6 +652,7 @@
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDialogComponent">
+    <ROW Dialog="PSMAuthOptions" HCentering="50" VCentering="50" Width="370" Height="270" Attributes="3" Title="[ProductName] [Setup]" Control_Default="Next" Control_Cancel="Cancel"/>
     <ROW Dialog="PSMDebugWarning" HCentering="50" VCentering="50" Width="260" Height="85" Attributes="3" Title="[ProductName] [Setup]" Control_Default="Next" Control_Cancel="Cancel"/>
     <ROW Dialog="PSMGlobalOptions" HCentering="50" VCentering="50" Width="370" Height="270" Attributes="3" Title="[ProductName] [Setup]" Control_Default="Next" Control_Cancel="Cancel"/>
     <ROW Dialog="PSMKeyVaultAppReg" HCentering="50" VCentering="50" Width="370" Height="270" Attributes="3" Title="[ProductName] [Setup]" Control_Default="Next" Control_Cancel="Cancel"/>
@@ -721,13 +730,14 @@
     <ROW Condition="VersionNT" Description="[ProductName] cannot be installed on [WindowsType9XDisplay]." DescriptionLocId="AI.LaunchCondition.No9X" IsPredefined="true" Builds="DefaultBuild;ExeBuild"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiRadioButtonComponent">
-    <ROW Property="RADIOBUTTONGROUP_1_PROP" Order="1" Value="SA MI" X="3" Y="20" Width="311" Height="14" Text="System Assigned Managed Identity" MsiKey="RADIOBUTTONGROUP_1_PROP#1"/>
-    <ROW Property="RADIOBUTTONGROUP_1_PROP" Order="2" Value="UA MI" X="3" Y="55" Width="311" Height="14" Text="User Assigned Managed Identity" MsiKey="RADIOBUTTONGROUP_1_PROP#2"/>
-    <ROW Property="RADIOBUTTONGROUP_1_PROP" Order="3" Value="SA MI KV App Reg" X="3" Y="37" Width="311" Height="14" Text="System Assigned Managed Identity - Key Vault App Registration Secret" MsiKey="RADIOBUTTONGROUP_1_PROP#3"/>
-    <ROW Property="RADIOBUTTONGROUP_1_PROP" Order="4" Value="Local" X="3" Y="90" Width="311" Height="14" Text="Local Environmental Variables" MsiKey="RADIOBUTTONGROUP_1_PROP#4"/>
     <ROW Property="Debug" Order="1" Value="true" X="3" Y="23" Width="72" Height="11" Text="Enabled" Help="Only enable this if you know what you are doing!|" TextStyle="Normal"/>
     <ROW Property="Debug" Order="2" Value="false" X="3" Y="42" Width="72" Height="11" Text="Disabled" Help="This is the safe option, please use this!|" TextStyle="Normal"/>
     <ROW Property="RADIOBUTTONGROUP_1_PROP" Order="5" Value="UA MI KV App Reg" X="3" Y="73" Width="311" Height="14" Text="User Assigned Managed Identity- Key Vault App Registration Secret" TextStyle="Normal"/>
+    <ROW Property="AuthOptionsRadioGroup" Order="1" Value="SA MI" X="3" Y="20" Width="234" Height="13" Text="System Assigned Managed Identity" TextStyle="Normal"/>
+    <ROW Property="AuthOptionsRadioGroup" Order="2" Value="SA MI KV App Reg" X="3" Y="37" Width="234" Height="13" Text="System Assigned Managed Identity - Key Vault App Registration Secret" TextStyle="Normal"/>
+    <ROW Property="AuthOptionsRadioGroup" Order="3" Value="UA MI" X="3" Y="54" Width="234" Height="13" Text="User Assigned Managed Identity" TextStyle="Normal"/>
+    <ROW Property="AuthOptionsRadioGroup" Order="4" Value="UA MI KV App Reg" X="3" Y="72" Width="234" Height="13" Text="User Assigned Managed Identity - Key Vault App Registration Secret" TextStyle="Normal"/>
+    <ROW Property="AuthOptionsRadioGroup" Order="5" Value="Local" X="3" Y="89" Width="234" Height="13" Text="Local Environmental Variables"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiRegLocatorComponent">
     <ROW Signature_="AI_EXE_PATH_CU" Root="1" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]\[ProductVersion]" Name="AI_ExePath" Type="2"/>
