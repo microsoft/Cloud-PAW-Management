@@ -27,7 +27,7 @@
     <ROW Property="AuthOptionsRadioGroup" Value="SA MI" Type="4"/>
     <ROW Property="CLIENT_GUID" Comments="The Client GUID is the Application (client) ID of the application registration in Azure AD."/>
     <ROW Property="CLIENT_SECRET" Comments="The Client Secret variable is the password that was generated in the application registration."/>
-    <ROW Property="DEBUG" Value="false" Comments="Enables debugging features such as additional http routes."/>
+    <ROW Property="DEBUG_MODE" Value="false" Comments="Enables debugging features such as additional http routes."/>
     <ROW Property="DefaultUIFont" Value="Normal" Type="2" Options="65536" MsiKey="DefaultUIFont"/>
     <ROW Property="KEYVAULT_NAME" Comments="The unique name of the Azure Key Vault that contains the app registration secret that you want the app to authenticate with. If you configure the PSM_Client_Secret and the PSM_KeyVault_Name at the same time, the application will throw an error as this it is a security risk to have a plain text secret stored in the app configs when a perfectly good Azure Key Vault is available. Environmental variables are not meant for storing secret materials, Key Vaults are meant for storing secret materials."/>
     <ROW Property="KEYVAULT_SECRET" Comments="The name of the secret in the Azure Key Vault that you specified in the PSM_KeyVault_Name option. This option is only evaluated if the PSM_KeyVault_Name is configured."/>
@@ -467,7 +467,7 @@
     <ROW Dialog_="PSMGlobalOptions" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Attributes="196611" Text="Settings that apply to all app configurations." TextStyle="Subtitle" Order="700"/>
     <ROW Dialog_="PSMGlobalOptions" Control="Title" Type="Text" X="15" Y="6" Width="200" Height="19" Attributes="196611" Text="Global App Settings" TextStyle="Title" Order="800"/>
     <ROW Dialog_="PSMGlobalOptions" Control="ScopeTagLabel" Type="Text" X="15" Y="55" Width="75" Height="13" Attributes="65539" Property="TEXT_1_PROP_2" Text="Scope Tag Name:" TextStyle="Normal" Order="900"/>
-    <ROW Dialog_="PSMGlobalOptions" Control="DebugModeToggleGroup" Type="RadioButtonGroup" X="15" Y="107" Width="131" Height="71" Attributes="16777219" Property="DEBUG" Text="Debug Mode" TextStyle="Normal" Order="1000"/>
+    <ROW Dialog_="PSMGlobalOptions" Control="DebugModeToggleGroup" Type="RadioButtonGroup" X="15" Y="107" Width="131" Height="71" Attributes="16777219" Property="DEBUG_MODE" Text="Debug Mode" TextStyle="Normal" Order="1000"/>
     <ROW Dialog_="PSMGlobalOptions" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="[Manufacturer]" Order="1100" TextLocId="Control.Text.PSMAuthOptions#Logo"/>
     <ROW Dialog_="PSMGlobalOptions" Control="ScopeTagTextBox" Type="Edit" X="15" Y="68" Width="168" Height="18" Attributes="3" Property="SCOPE_TAG" Text="{260}" TextStyle="Normal" Order="1200"/>
     <ROW Dialog_="PSMGlobalOptions" Control="DebugNote" Type="Text" X="152" Y="114" Width="28" Height="16" Attributes="65539" Property="TEXT_2_PROP_1" Text="Note:" TextStyle="SubtitleBold" Order="1300"/>
@@ -543,8 +543,8 @@
     <ROW Dialog_="VerifyRepairDlg" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Attributes="196611" Text="The [Wizard] is ready to begin the repair of [ProductName]." TextStyle="Subtitle" Order="900" TextLocId="Control.Text.VerifyRepairDlg#Description" MsiKey="VerifyRepairDlg#Description"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiControlConditionComponent">
-    <ROW Dialog_="PSMGlobalOptions" Control_="InsecureWarning" Action="Show" Condition="DEBUG = &quot;true&quot;"/>
-    <ROW Dialog_="PSMGlobalOptions" Control_="InsecureWarning" Action="Hide" Condition="DEBUG = &quot;false&quot;"/>
+    <ROW Dialog_="PSMGlobalOptions" Control_="InsecureWarning" Action="Show" Condition="DEBUG_MODE = &quot;true&quot;"/>
+    <ROW Dialog_="PSMGlobalOptions" Control_="InsecureWarning" Action="Hide" Condition="DEBUG_MODE = &quot;false&quot;"/>
     <ROW Dialog_="PSMAuthOptions" Control_="LocalVarLabel" Action="Show" Condition="AuthOptionsRadioGroup = &quot;Local&quot;"/>
     <ROW Dialog_="PSMAuthOptions" Control_="LocalVarLabel" Action="Hide" Condition="AuthOptionsRadioGroup &lt;&gt; &quot;Local&quot;"/>
   </COMPONENT>
@@ -575,10 +575,10 @@
     <ROW Dialog_="PSMUserAssignedMI" Control_="Back" Event="NewDialog" Argument="PSMAuthOptions" Condition="AuthOptionsRadioGroup = &quot;UA MI&quot;" Ordering="2"/>
     <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PSMAuthOptions" Condition="AI_INSTALL AND ( AuthOptionsRadioGroup = &quot;SA MI&quot; )" Ordering="204"/>
     <ROW Dialog_="PSMGlobalOptions" Control_="Cancel" Event="SpawnDialog" Argument="CancelDlg" Condition="1" Ordering="100"/>
-    <ROW Dialog_="PSMGlobalOptions" Control_="Next" Event="NewDialog" Argument="PSMAuthOptions" Condition="AI_INSTALL AND ( DEBUG = &quot;false&quot; )" Ordering="2"/>
+    <ROW Dialog_="PSMGlobalOptions" Control_="Next" Event="NewDialog" Argument="PSMAuthOptions" Condition="AI_INSTALL AND ( DEBUG_MODE = &quot;false&quot; )" Ordering="2"/>
     <ROW Dialog_="PSMGlobalOptions" Control_="Back" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="1"/>
     <ROW Dialog_="PSMDebugWarning" Control_="Cancel" Event="SpawnDialog" Argument="CancelDlg" Condition="1" Ordering="100"/>
-    <ROW Dialog_="PSMGlobalOptions" Control_="Next" Event="NewDialog" Argument="PSMDebugWarning" Condition="AI_INSTALL AND ( DEBUG = &quot;true&quot; )" Ordering="3"/>
+    <ROW Dialog_="PSMGlobalOptions" Control_="Next" Event="NewDialog" Argument="PSMDebugWarning" Condition="AI_INSTALL AND ( DEBUG_MODE = &quot;true&quot; )" Ordering="3"/>
     <ROW Dialog_="PSMDebugWarning" Control_="Yes" Event="NewDialog" Argument="PSMAuthOptions" Condition="1" Ordering="1"/>
     <ROW Dialog_="PSMDebugWarning" Control_="No" Event="NewDialog" Argument="PSMGlobalOptions" Condition="1" Ordering="0"/>
     <ROW Dialog_="PSMKeyVaultAppReg" Control_="Cancel" Event="SpawnDialog" Argument="CancelDlg" Condition="1" Ordering="100"/>
@@ -661,14 +661,14 @@
     <ROW Dialog="PSMUserAssignedMI" HCentering="50" VCentering="50" Width="370" Height="270" Attributes="3" Title="[ProductName] [Setup]" Control_Default="Next" Control_Cancel="Cancel"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiEnvComponent">
-    <ROW Environment="PSM_Client_GUID" Name="=-*PSM_Client_GUID" Value="[CLIENT_GUID]" Component_="ProductInformation"/>
-    <ROW Environment="PSM_Client_Secret" Name="=-*PSM_Client_Secret" Value="[CLIENT_SECRET]" Component_="ProductInformation"/>
-    <ROW Environment="PSM_Debug" Name="=-*PSM_Debug" Value="[DEBUG]" Component_="ProductInformation"/>
-    <ROW Environment="PSM_KeyVault_Name" Name="=-*PSM_KeyVault_Name" Value="[KEYVAULT_NAME]" Component_="ProductInformation"/>
-    <ROW Environment="PSM_KeyVault_Secret" Name="=-*PSM_KeyVault_Secret" Value="[KEYVAULT_SECRET]" Component_="ProductInformation"/>
-    <ROW Environment="PSM_Managed_ID_GUID" Name="=-*PSM_Managed_ID_GUID" Value="[MANAGED_ID_GUID]" Component_="ProductInformation"/>
-    <ROW Environment="PSM_Scope_Tag" Name="=-*PSM_Scope_Tag" Value="[SCOPE_TAG]" Component_="ProductInformation"/>
-    <ROW Environment="PSM_Tenant_ID" Name="=-*PSM_Tenant_ID" Value="[TENANT_ID]" Component_="ProductInformation"/>
+    <ROW Environment="PSM_Client_GUID" Name="=-*PSM_Client_GUID" Value="[CLIENT_GUID]" Component_="APPDIR"/>
+    <ROW Environment="PSM_Client_Secret" Name="=-*PSM_Client_Secret" Value="[CLIENT_SECRET]" Component_="APPDIR"/>
+    <ROW Environment="PSM_Debug" Name="=-*PSM_Debug" Value="[DEBUG_MODE]" Component_="APPDIR"/>
+    <ROW Environment="PSM_KeyVault_Name" Name="=-*PSM_KeyVault_Name" Value="[KEYVAULT_NAME]" Component_="APPDIR"/>
+    <ROW Environment="PSM_KeyVault_Secret" Name="=-*PSM_KeyVault_Secret" Value="[KEYVAULT_SECRET]" Component_="APPDIR"/>
+    <ROW Environment="PSM_Managed_ID_GUID" Name="=-*PSM_Managed_ID_GUID" Value="[MANAGED_ID_GUID]" Component_="APPDIR"/>
+    <ROW Environment="PSM_Scope_Tag" Name="=-*PSM_Scope_Tag" Value="[SCOPE_TAG]" Component_="APPDIR"/>
+    <ROW Environment="PSM_Tenant_ID" Name="=-*PSM_Tenant_ID" Value="[TENANT_ID]" Component_="APPDIR"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatCompsComponent">
     <ROW Feature_="CoreServer" Component_="APPDIR"/>
@@ -731,8 +731,8 @@
     <ROW Condition="VersionNT" Description="[ProductName] cannot be installed on [WindowsType9XDisplay]." DescriptionLocId="AI.LaunchCondition.No9X" IsPredefined="true" Builds="DefaultBuild;ExeBuild"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiRadioButtonComponent">
-    <ROW Property="DEBUG" Order="1" Value="true" X="3" Y="23" Width="72" Height="11" Text="Enabled" Help="Only enable this if you know what you are doing!|" TextStyle="Normal"/>
-    <ROW Property="DEBUG" Order="2" Value="false" X="3" Y="42" Width="72" Height="11" Text="Disabled" Help="This is the safe option, please use this!|" TextStyle="Normal"/>
+    <ROW Property="DEBUG_MODE" Order="1" Value="true" X="3" Y="23" Width="72" Height="11" Text="Enabled" Help="Only enable this if you know what you are doing!|" TextStyle="Normal"/>
+    <ROW Property="DEBUG_MODE" Order="2" Value="false" X="3" Y="42" Width="72" Height="11" Text="Disabled" Help="This is the safe option, please use this!|" TextStyle="Normal"/>
     <ROW Property="RADIOBUTTONGROUP_1_PROP" Order="5" Value="UA MI KV App Reg" X="3" Y="73" Width="311" Height="14" Text="User Assigned Managed Identity- Key Vault App Registration Secret" TextStyle="Normal"/>
     <ROW Property="AuthOptionsRadioGroup" Order="1" Value="SA MI" X="3" Y="20" Width="336" Height="13" Text="System Assigned Managed Identity" TextStyle="Normal"/>
     <ROW Property="AuthOptionsRadioGroup" Order="2" Value="SA MI KV App Reg" X="3" Y="37" Width="336" Height="13" Text="System Assigned Managed Identity - Key Vault App Registration Secret" TextStyle="Normal"/>
