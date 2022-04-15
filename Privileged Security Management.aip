@@ -373,6 +373,7 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiBinaryComponent">
     <ROW Name="Change.ico" SourcePath="User-Interface\src\Assets\Change.ico"/>
+    <ROW Name="CloudPAWLogo4kRaster.png" SourcePath="User-Interface\src\Assets\Cloud PAW Logo - 4k Raster.png"/>
     <ROW Name="ExternalUICleaner.dll" SourcePath="&lt;AI_CUSTACTS&gt;ExternalUICleaner.dll"/>
     <ROW Name="Info.ico" SourcePath="User-Interface\src\Assets\Info.ico"/>
     <ROW Name="NetFirewall.dll" SourcePath="&lt;AI_CUSTACTS&gt;NetFirewall.dll"/>
@@ -397,7 +398,7 @@
     <ROW Dialog_="AdminBrowseDlg" Control="NewFolder" Type="PushButton" X="325" Y="55" Width="19" Height="19" Attributes="3670019" Text="[NewDirIcon]" Help="Create A New Folder|" Order="800" HelpLocId="Control.Help.AdminBrowseDlg#NewFolder" MsiKey="AdminBrowseDlg#NewFolder"/>
     <ROW Dialog_="AdminBrowseDlg" Control="DirectoryList" Type="DirectoryList" X="25" Y="83" Width="320" Height="110" Attributes="7" Property="TARGETDIR" Order="900" MsiKey="AdminBrowseDlg#DirectoryList"/>
     <ROW Dialog_="AdminBrowseDlg" Control="PathLabel" Type="Text" X="25" Y="205" Width="75" Height="10" Attributes="3" Text="&amp;Folder name:" Order="1000" TextLocId="Control.Text.AdminBrowseDlg#PathLabel" MsiKey="AdminBrowseDlg#PathLabel"/>
-    <ROW Dialog_="AdminBrowseDlg" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="1100" MsiKey="AdminBrowseDlg#BannerBitmap"/>
+    <ROW Dialog_="AdminBrowseDlg" Control="BannerBitmap" Type="Bitmap" X="324" Y="0" Width="44" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="1100" MsiKey="AdminBrowseDlg#BannerBitmap"/>
     <ROW Dialog_="AdminBrowseDlg" Control="Title" Type="Text" X="15" Y="6" Width="277" Height="17" Attributes="65539" Text="Change current destination folder" TextStyle="Title" Order="1200" TextLocId="Control.Text.AdminBrowseDlg#Title" MsiKey="AdminBrowseDlg#Title"/>
     <ROW Dialog_="AdminBrowseDlg" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="20" Attributes="196611" Text="Browse to the destination folder" TextStyle="Subtitle" Order="1300" TextLocId="Control.Text.AdminBrowseDlg#Description" MsiKey="AdminBrowseDlg#Description"/>
     <ROW Dialog_="AdminBrowseDlg" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="1400" MsiKey="AdminBrowseDlg#BannerLine"/>
@@ -406,7 +407,7 @@
     <ROW Dialog_="AdminInstallPointDlg" Control="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="500" TextLocId="-" MsiKey="AdminInstallPointDlg#Back" Options="1"/>
     <ROW Dialog_="AdminInstallPointDlg" Control="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="600" TextLocId="-" MsiKey="AdminInstallPointDlg#Next" Options="1"/>
     <ROW Dialog_="AdminInstallPointDlg" Control="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Cancel]" Order="700" TextLocId="-" MsiKey="AdminInstallPointDlg#Cancel" Options="1"/>
-    <ROW Dialog_="AdminInstallPointDlg" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="800" MsiKey="AdminInstallPointDlg#BannerBitmap"/>
+    <ROW Dialog_="AdminInstallPointDlg" Control="BannerBitmap" Type="Bitmap" X="324" Y="0" Width="44" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="800" MsiKey="AdminInstallPointDlg#BannerBitmap"/>
     <ROW Dialog_="AdminInstallPointDlg" Control="Title" Type="Text" X="15" Y="6" Width="277" Height="17" Attributes="196611" Text="Network Location" TextStyle="Title" Order="900" TextLocId="Control.Text.AdminInstallPointDlg#Title" MsiKey="AdminInstallPointDlg#Title"/>
     <ROW Dialog_="AdminInstallPointDlg" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="16" Attributes="196611" Text="Specify a network location for the server image of PSM." TextStyle="Subtitle" Order="1000" MsiKey="AdminInstallPointDlg#Description"/>
     <ROW Dialog_="AdminInstallPointDlg" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="1100" MsiKey="AdminInstallPointDlg#BannerLine"/>
@@ -420,7 +421,7 @@
     <ROW Dialog_="BrowseDlg" Control="NewFolder" Type="PushButton" X="325" Y="55" Width="19" Height="19" Attributes="3670019" Text="[NewDirIcon]" Help="Create A New Folder|" Order="800" HelpLocId="Control.Help.BrowseDlg#NewFolder" MsiKey="BrowseDlg#NewFolder"/>
     <ROW Dialog_="BrowseDlg" Control="DirectoryList" Type="DirectoryList" X="25" Y="83" Width="320" Height="110" Attributes="15" Property="_BrowseProperty" Order="900" MsiKey="BrowseDlg#DirectoryList"/>
     <ROW Dialog_="BrowseDlg" Control="PathLabel" Type="Text" X="25" Y="205" Width="75" Height="10" Attributes="3" Text="&amp;Folder name:" Order="1000" TextLocId="Control.Text.BrowseDlg#PathLabel" MsiKey="BrowseDlg#PathLabel"/>
-    <ROW Dialog_="BrowseDlg" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="1100" MsiKey="BrowseDlg#BannerBitmap"/>
+    <ROW Dialog_="BrowseDlg" Control="BannerBitmap" Type="Bitmap" X="324" Y="0" Width="44" Height="44" Attributes="1" Text="CloudPAWLogo4kRaster.png" Order="1100" MsiKey="BrowseDlg#BannerBitmap"/>
     <ROW Dialog_="BrowseDlg" Control="Title" Type="Text" X="15" Y="6" Width="277" Height="17" Attributes="196611" Text="Change current destination folder" TextStyle="Title" Order="1200" TextLocId="Control.Text.BrowseDlg#Title" MsiKey="BrowseDlg#Title"/>
     <ROW Dialog_="BrowseDlg" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="20" Attributes="196611" Text="Browse to the destination folder" TextStyle="Subtitle" Order="1300" TextLocId="Control.Text.BrowseDlg#Description" MsiKey="BrowseDlg#Description"/>
     <ROW Dialog_="BrowseDlg" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="1400" MsiKey="BrowseDlg#BannerLine"/>
@@ -430,7 +431,7 @@
     <ROW Dialog_="CustomizeDlg" Control="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="600" TextLocId="-" MsiKey="CustomizeDlg#Back" Options="1"/>
     <ROW Dialog_="CustomizeDlg" Control="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="700" TextLocId="-" MsiKey="CustomizeDlg#Next" Options="1"/>
     <ROW Dialog_="CustomizeDlg" Control="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Cancel]" Order="800" TextLocId="-" MsiKey="CustomizeDlg#Cancel" Options="1"/>
-    <ROW Dialog_="CustomizeDlg" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="900" MsiKey="CustomizeDlg#BannerBitmap"/>
+    <ROW Dialog_="CustomizeDlg" Control="BannerBitmap" Type="Bitmap" X="324" Y="0" Width="44" Height="44" Attributes="1" Text="CloudPAWLogo4kRaster.png" Order="900" MsiKey="CustomizeDlg#BannerBitmap"/>
     <ROW Dialog_="CustomizeDlg" Control="LocationLabel" Type="Text" X="25" Y="200" Width="50" Height="10" Attributes="3" Text="Location:" Order="1000" TextLocId="Control.Text.CustomizeDlg#LocationLabel" MsiKey="CustomizeDlg#LocationLabel"/>
     <ROW Dialog_="CustomizeDlg" Control="Location" Type="Text" X="75" Y="200" Width="215" Height="20" Attributes="3" Property="APPDIR" Text="&lt;The selection&apos;s path&gt;" Order="1100" TextLocId="Control.Text.CustomizeDlg#Location" MsiKey="CustomizeDlg#Location"/>
     <ROW Dialog_="CustomizeDlg" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="20" Attributes="196611" Text="Select the way you want features to be installed." TextStyle="Subtitle" Order="1200" TextLocId="Control.Text.CustomizeDlg#Description" MsiKey="CustomizeDlg#Description"/>
@@ -441,6 +442,7 @@
     <ROW Dialog_="CustomizeDlg" Control="Title" Type="Text" X="15" Y="6" Width="277" Height="17" Attributes="196611" Text="Custom Setup" TextStyle="Title" Order="1700" TextLocId="Control.Text.CustomizeDlg#Title" MsiKey="CustomizeDlg#Title"/>
     <ROW Dialog_="CustomizeDlg" Control="Text" Type="Text" X="25" Y="55" Width="320" Height="20" Attributes="3" Text="Click on the icons in the tree below to change the way features will be installed." Order="1800" TextLocId="Control.Text.CustomizeDlg#Text" MsiKey="CustomizeDlg#Text"/>
     <ROW Dialog_="CustomizeDlg" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="[Manufacturer]" Order="1900"/>
+    <ROW Dialog_="DiskCostDlg" Control="BannerBitmap" Type="Bitmap" X="324" Y="0" Width="44" Height="44" Attributes="1" Text="CloudPAWLogo4kRaster.png" Order="200" MsiKey="DiskCostDlg#BannerBitmap"/>
     <ROW Dialog_="DiskCostDlg" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="300" MsiKey="DiskCostDlg#BottomLine"/>
     <ROW Dialog_="DiskCostDlg" Control="VolumeList" Type="VolumeCostList" X="20" Y="101" Width="330" Height="119" Attributes="393223" Text="{120}{70}{70}{70}{70}" Order="400" TextLocId="Control.Text.DiskCostDlg#VolumeList" MsiKey="DiskCostDlg#VolumeList"/>
     <ROW Dialog_="DiskCostDlg" Control="Title" Type="Text" X="15" Y="6" Width="277" Height="17" Attributes="196611" Text="Disk Space Requirements" TextStyle="Title" Order="500" TextLocId="Control.Text.DiskCostDlg#Title" MsiKey="DiskCostDlg#Title"/>
@@ -449,11 +451,20 @@
     <ROW Dialog_="DiskCostDlg" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="800" MsiKey="DiskCostDlg#BannerLine"/>
     <ROW Dialog_="DiskCostDlg" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="[Manufacturer]" Order="900"/>
     <ROW Dialog_="ErrorDlg" Control="ErrorIcon" Type="Icon" X="15" Y="15" Width="24" Height="24" Attributes="1048577" Text="Info.ico" Help="Information icon|" Order="-1" HelpLocId="Control.Help.ErrorDlg#ErrorIcon" MsiKey="ErrorDlg#ErrorIcon" Options="1"/>
-    <ROW Dialog_="ExitDialog" Control="Description" Type="Text" X="135" Y="86" Width="220" Height="31" Attributes="196611" Text="Click the &quot;Finish&quot; button to exit the [Wizard]." Order="1000" TextLocId="Control.Text.ExitDialog#Description" MsiKey="ExitDialog#Description"/>
+    <ROW Dialog_="ExitDialog" Control="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Attributes="1" Text="[ButtonText_Back]" Order="300" TextLocId="-" MsiKey="ExitDialog#Back" Options="1"/>
+    <ROW Dialog_="ExitDialog" Control="ViewReadmeText" Type="Text" X="148" Y="140" Width="220" Height="20" Attributes="196611" Text="View readme file" Order="400" TextLocId="Control.Text.ExitDialog#ViewReadmeText" MsiKey="ExitDialog#ViewReadmeText"/>
+    <ROW Dialog_="ExitDialog" Control="ViewReadmeCheckBox" Type="CheckBox" X="135" Y="140" Width="10" Height="10" Attributes="3" Property="VIEWREADME" Order="500" MsiKey="ExitDialog#ViewReadmeCheckBox" Options="1"/>
+    <ROW Dialog_="ExitDialog" Control="Title" Type="Text" X="135" Y="20" Width="220" Height="60" Attributes="196611" Text="Completing the [ProductName] [Wizard]" TextStyle="VerdanaBold13" Order="600" TextLocId="Control.Text.ExitDialog#Title" MsiKey="ExitDialog#Title"/>
+    <ROW Dialog_="ExitDialog" Control="LaunchProdText" Type="Text" X="148" Y="170" Width="220" Height="20" Attributes="196611" Text="Launch [ProductName]" Order="700" TextLocId="Control.Text.ExitDialog#LaunchProdText" MsiKey="ExitDialog#LaunchProdText"/>
+    <ROW Dialog_="ExitDialog" Control="LaunchProdCheckBox" Type="CheckBox" X="135" Y="170" Width="10" Height="10" Attributes="3" Property="RUNAPPLICATION" Order="800" MsiKey="ExitDialog#LaunchProdCheckBox" Options="1"/>
+    <ROW Dialog_="ExitDialog" Control="Description" Type="Text" X="135" Y="86" Width="220" Height="31" Attributes="196611" Text="Click the &quot;Finish&quot; button to exit the [Wizard]." Order="900" TextLocId="Control.Text.ExitDialog#Description" MsiKey="ExitDialog#Description"/>
+    <ROW Dialog_="ExitDialog" Control="BottomLine" Type="Line" X="0" Y="234" Width="372" Height="0" Attributes="1" Order="1000" MsiKey="ExitDialog#BottomLine"/>
+    <ROW Dialog_="ExitDialog" Control="Bitmap_1" Type="Bitmap" X="0" Y="79" Width="113" Height="113" Attributes="1" Text="CloudPAWLogo4kRaster.png" Order="1100"/>
     <ROW Dialog_="FatalError" Control="Description2" Type="Text" X="135" Y="138" Width="220" Height="20" Attributes="196611" Text="Click the &quot;Finish&quot; button to exit the [Wizard]." TextStyle="Normal" Order="500" TextLocId="Control.Text.FatalError#Description2" MsiKey="FatalError#Description2"/>
     <ROW Dialog_="FatalError" Control="Description1" Type="Text" X="135" Y="86" Width="220" Height="52" Attributes="196611" Text="[ProductName] setup ended prematurely because of an error.  Your system has not been modified.  To install this program at a later time, please run the installation again." TextStyle="Normal" Order="600" TextLocId="Control.Text.FatalError#Description1" MsiKey="FatalError#Description1"/>
     <ROW Dialog_="FatalError" Control="Title" Type="Text" X="135" Y="20" Width="220" Height="60" Attributes="196611" Text="The [ProductName] [Wizard] ended prematurely" TextStyle="TitleBold" Order="800" TextLocId="Control.Text.FatalError#Title" MsiKey="FatalError#Title"/>
     <ROW Dialog_="FatalError" Control="LogCheckBoxLabel" Type="Text" X="148" Y="158" Width="75" Height="13" Attributes="65538" Property="AI_LOG_CHECKBOX_TEXT" Text="Show log" TextStyle="Normal" Order="1000" TextLocId="Control.Text.FatalError#LogCheckBox" MsiKey="FatalError#LogCheckBoxLabel"/>
+    <ROW Dialog_="FilesInUse" Control="BannerBitmap" Type="Bitmap" X="324" Y="0" Width="44" Height="44" Attributes="1" Text="CloudPAWLogo4kRaster.png" Order="400" MsiKey="FilesInUse#BannerBitmap"/>
     <ROW Dialog_="FilesInUse" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="500" MsiKey="FilesInUse#BottomLine"/>
     <ROW Dialog_="FilesInUse" Control="Title" Type="Text" X="15" Y="6" Width="277" Height="17" Attributes="196611" Text="Files in Use" TextStyle="Title" Order="600" TextLocId="Control.Text.FilesInUse#Title" MsiKey="FilesInUse#Title"/>
     <ROW Dialog_="FilesInUse" Control="Text" Type="Text" X="20" Y="55" Width="330" Height="50" Attributes="3" Text="The following applications are using files that need to be updated by this setup. You can either close the applications and then click &quot;Retry&quot;, or click &quot;Ignore&quot; so that the installer continues the installation and replaces these files when your system restarts." TextStyle="Normal" Order="700" TextLocId="Control.Text.FilesInUse#Text" MsiKey="FilesInUse#Text"/>
@@ -467,6 +478,7 @@
     <ROW Dialog_="FolderDlg" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="500" MsiKey="FolderDlg#BottomLine"/>
     <ROW Dialog_="FolderDlg" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="[Manufacturer]" Order="600" MsiKey="FolderDlg#Logo"/>
     <ROW Dialog_="FolderDlg" Control="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Attributes="2" Text="[ButtonText_Back]" Order="800" TextLocId="-" MsiKey="FolderDlg#Back" Options="1"/>
+    <ROW Dialog_="FolderDlg" Control="BannerBitmap" Type="Bitmap" X="324" Y="0" Width="44" Height="44" Attributes="1048577" Text="CloudPAWLogo4kRaster.png" Help="|" Order="900" HelpLocId="Control.Help.FolderDlg#BannerBitmap" MsiKey="FolderDlg#BannerBitmap"/>
     <ROW Dialog_="FolderDlg" Control="Title" Type="Text" X="15" Y="6" Width="277" Height="17" Attributes="196611" Text="Select Installation Folder" TextStyle="Title" Order="1000" TextLocId="Control.Text.FolderDlg#Title" MsiKey="FolderDlg#Title"/>
     <ROW Dialog_="FolderDlg" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Attributes="196611" Text="This is the folder where [ProductName] will be installed." TextStyle="Subtitle" Order="1200" TextLocId="Control.Text.FolderDlg#Description" MsiKey="FolderDlg#Description"/>
     <ROW Dialog_="MaintenanceTypeDlg" Control="ChangeLabel" Type="Text" X="105" Y="65" Width="100" Height="12" Attributes="3" Text="Modify" TextStyle="NormalBold" Order="100" MsiKey="MaintenanceTypeDlg#ChangeLabel"/>
@@ -475,6 +487,7 @@
     <ROW Dialog_="MaintenanceTypeDlg" Control="RepairButton" Type="PushButton" X="50" Y="114" Width="38" Height="38" Attributes="1572867" Text="Wrench.ico" Help="Repair Installation|" Order="400" HelpLocId="Control.Help.MaintenanceTypeDlg#RepairButton" MsiKey="MaintenanceTypeDlg#RepairButton"/>
     <ROW Dialog_="MaintenanceTypeDlg" Control="RemoveLabel" Type="Text" X="105" Y="163" Width="100" Height="12" Attributes="3" Text="Remove" TextStyle="NormalBold" Order="500" MsiKey="MaintenanceTypeDlg#RemoveLabel"/>
     <ROW Dialog_="MaintenanceTypeDlg" Control="RemoveButton" Type="PushButton" X="50" Y="163" Width="38" Height="38" Attributes="524291" Text="Trash.ico" Help="Remove Installation|" Order="600" HelpLocId="Control.Help.MaintenanceTypeDlg#RemoveButton" MsiKey="MaintenanceTypeDlg#RemoveButton"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="BannerBitmap" Type="Bitmap" X="324" Y="0" Width="44" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="1000" MsiKey="MaintenanceTypeDlg#BannerBitmap"/>
     <ROW Dialog_="MaintenanceTypeDlg" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="1100" MsiKey="MaintenanceTypeDlg#BottomLine"/>
     <ROW Dialog_="MaintenanceTypeDlg" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="20" Attributes="196611" Text="Select the operation you wish to perform." TextStyle="Subtitle" Order="1200" TextLocId="Control.Text.MaintenanceTypeDlg#Description" MsiKey="MaintenanceTypeDlg#Description"/>
     <ROW Dialog_="MaintenanceTypeDlg" Control="ChangeText" Type="Text" X="105" Y="78" Width="230" Height="20" Attributes="3" Text="Allows users to change the way features are installed." TextStyle="Normal" Order="1300" TextLocId="Control.Text.MaintenanceTypeDlg#ChangeText" MsiKey="MaintenanceTypeDlg#ChangeText"/>
@@ -485,10 +498,12 @@
     <ROW Dialog_="MaintenanceTypeDlg" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="[Manufacturer]" Order="1800"/>
     <ROW Dialog_="MaintenanceWelcomeDlg" Control="Title" Type="Text" X="135" Y="20" Width="220" Height="60" Attributes="196611" Text="Welcome to the [ProductName] [Wizard]" TextStyle="TitleBold" Order="500" TextLocId="Control.Text.MaintenanceWelcomeDlg#Title" MsiKey="MaintenanceWelcomeDlg#Title"/>
     <ROW Dialog_="MaintenanceWelcomeDlg" Control="Description" Type="Text" X="135" Y="86" Width="220" Height="75" Attributes="196611" Text="The [Wizard] will allow you to change the way [ProductName] features are installed on your computer or even to remove [ProductName] from your computer.  Click &quot;[Text_Next]&quot; to continue or &quot;Cancel&quot; to exit the [Wizard]." TextStyle="Normal" Order="600" TextLocId="Control.Text.MaintenanceWelcomeDlg#Description" MsiKey="MaintenanceWelcomeDlg#Description"/>
+    <ROW Dialog_="MsiRMFilesInUse" Control="BannerBitmap" Type="Bitmap" X="324" Y="0" Width="44" Height="44" Attributes="1048577" Text="CloudPAWLogo4kRaster.png" Order="300" MsiKey="MsiRMFilesInUse#BannerBitmap"/>
     <ROW Dialog_="MsiRMFilesInUse" Control="Title" Type="Text" X="15" Y="6" Width="200" Height="25" Attributes="196611" Text="Files in Use" TextStyle="Title" Order="400" TextLocId="Control.Text.MsiRMFilesInUse#Title" MsiKey="MsiRMFilesInUse#Title"/>
     <ROW Dialog_="MsiRMFilesInUse" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="20" Attributes="196611" Text="Some files that need to be updated are currently in use." TextStyle="Subtitle" Order="500" TextLocId="Control.Text.MsiRMFilesInUse#Description" MsiKey="MsiRMFilesInUse#Description"/>
     <ROW Dialog_="MsiRMFilesInUse" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="1000" MsiKey="MsiRMFilesInUse#BottomLine"/>
     <ROW Dialog_="MsiRMFilesInUse" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="[Manufacturer]" Order="1100"/>
+    <ROW Dialog_="OutOfDiskDlg" Control="BannerBitmap" Type="Bitmap" X="324" Y="0" Width="44" Height="44" Attributes="1" Text="CloudPAWLogo4kRaster.png" Order="200" MsiKey="OutOfDiskDlg#BannerBitmap"/>
     <ROW Dialog_="OutOfDiskDlg" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="300" MsiKey="OutOfDiskDlg#BottomLine"/>
     <ROW Dialog_="OutOfDiskDlg" Control="VolumeList" Type="VolumeCostList" X="20" Y="100" Width="330" Height="120" Attributes="393223" Text="{120}{70}{70}{70}{70}" Order="400" TextLocId="Control.Text.OutOfDiskDlg#VolumeList" MsiKey="OutOfDiskDlg#VolumeList"/>
     <ROW Dialog_="OutOfDiskDlg" Control="Title" Type="Text" X="15" Y="6" Width="277" Height="17" Attributes="196611" Text="Out of Disk Space" TextStyle="Title" Order="500" TextLocId="Control.Text.OutOfDiskDlg#Title" MsiKey="OutOfDiskDlg#Title"/>
@@ -496,6 +511,7 @@
     <ROW Dialog_="OutOfDiskDlg" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="20" Attributes="196611" Text="Disk space required for the installation exceeds available disk space." TextStyle="Subtitle" Order="700" TextLocId="Control.Text.OutOfDiskDlg#Description" MsiKey="OutOfDiskDlg#Description"/>
     <ROW Dialog_="OutOfDiskDlg" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="800" MsiKey="OutOfDiskDlg#BannerLine"/>
     <ROW Dialog_="OutOfDiskDlg" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="[Manufacturer]" Order="900"/>
+    <ROW Dialog_="OutOfRbDiskDlg" Control="BannerBitmap" Type="Bitmap" X="324" Y="0" Width="44" Height="44" Attributes="1" Text="CloudPAWLogo4kRaster.png" Order="300" MsiKey="OutOfRbDiskDlg#BannerBitmap"/>
     <ROW Dialog_="OutOfRbDiskDlg" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="400" MsiKey="OutOfRbDiskDlg#BottomLine"/>
     <ROW Dialog_="OutOfRbDiskDlg" Control="Text2" Type="Text" X="20" Y="101" Width="330" Height="48" Attributes="3" Text="Alternatively, you may choose to disable the installer&apos;s rollback functionality.  This allows the installer to restore your computer&apos;s original state should the installation be interrupted in any way.  Click &quot;Yes&quot; if you wish to take the risk to disable rollback." Order="500" TextLocId="Control.Text.OutOfRbDiskDlg#Text2" MsiKey="OutOfRbDiskDlg#Text2"/>
     <ROW Dialog_="OutOfRbDiskDlg" Control="Text" Type="Text" X="20" Y="53" Width="330" Height="48" Attributes="3" Text="The highlighted volumes do not have enough disk space available for the currently selected features.  You can either remove some files from the highlighted volumes, or choose to install less features onto local drive(s), or select different destination drive(s)." Order="600" TextLocId="Control.Text.OutOfRbDiskDlg#Text" MsiKey="OutOfRbDiskDlg#Text"/>
@@ -507,7 +523,7 @@
     <ROW Dialog_="PSMAuthOptions" Control="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="100" Options="1"/>
     <ROW Dialog_="PSMAuthOptions" Control="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Cancel]" Order="200" Options="1"/>
     <ROW Dialog_="PSMAuthOptions" Control="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="300" Options="1"/>
-    <ROW Dialog_="PSMAuthOptions" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="400"/>
+    <ROW Dialog_="PSMAuthOptions" Control="BannerLogo" Type="Bitmap" X="324" Y="0" Width="44" Height="44" Attributes="1" Text="CloudPAWLogo4kRaster.png" Order="400"/>
     <ROW Dialog_="PSMAuthOptions" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="500"/>
     <ROW Dialog_="PSMAuthOptions" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="600"/>
     <ROW Dialog_="PSMAuthOptions" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Attributes="196611" Text="Chose the method that the PSM app will authenticate to Azure AD." TextStyle="Subtitle" Order="700"/>
@@ -527,7 +543,7 @@
     <ROW Dialog_="PSMGlobalOptions" Control="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="100" Options="1"/>
     <ROW Dialog_="PSMGlobalOptions" Control="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Cancel]" Order="200" Options="1"/>
     <ROW Dialog_="PSMGlobalOptions" Control="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="300" Options="1"/>
-    <ROW Dialog_="PSMGlobalOptions" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="400"/>
+    <ROW Dialog_="PSMGlobalOptions" Control="BannerLogo" Type="Bitmap" X="324" Y="0" Width="44" Height="44" Attributes="1048577" Text="CloudPAWLogo4kRaster.png" Order="400"/>
     <ROW Dialog_="PSMGlobalOptions" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="500"/>
     <ROW Dialog_="PSMGlobalOptions" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="600"/>
     <ROW Dialog_="PSMGlobalOptions" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Attributes="196611" Text="Settings that apply to all app configurations." TextStyle="Subtitle" Order="700"/>
@@ -542,7 +558,7 @@
     <ROW Dialog_="PSMKeyVaultAppReg" Control="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="100" Options="1"/>
     <ROW Dialog_="PSMKeyVaultAppReg" Control="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Cancel]" Order="200" Options="1"/>
     <ROW Dialog_="PSMKeyVaultAppReg" Control="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="300" Options="1"/>
-    <ROW Dialog_="PSMKeyVaultAppReg" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="400"/>
+    <ROW Dialog_="PSMKeyVaultAppReg" Control="BannerLogo" Type="Bitmap" X="324" Y="0" Width="44" Height="44" Attributes="1" Text="CloudPAWLogo4kRaster.png" Order="400"/>
     <ROW Dialog_="PSMKeyVaultAppReg" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="500"/>
     <ROW Dialog_="PSMKeyVaultAppReg" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="600"/>
     <ROW Dialog_="PSMKeyVaultAppReg" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="21" Attributes="196611" Text="Configure PSM to authenticate to an app registration via KeyVault." TextStyle="Subtitle" Order="700"/>
@@ -559,7 +575,7 @@
     <ROW Dialog_="PSMLocalVars" Control="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="100" Options="1"/>
     <ROW Dialog_="PSMLocalVars" Control="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Cancel]" Order="200" Options="1"/>
     <ROW Dialog_="PSMLocalVars" Control="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="300" Options="1"/>
-    <ROW Dialog_="PSMLocalVars" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="400"/>
+    <ROW Dialog_="PSMLocalVars" Control="BannerBitmap" Type="Bitmap" X="324" Y="0" Width="44" Height="44" Attributes="1" Text="CloudPAWLogo4kRaster.png" Order="400"/>
     <ROW Dialog_="PSMLocalVars" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="500"/>
     <ROW Dialog_="PSMLocalVars" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="600"/>
     <ROW Dialog_="PSMLocalVars" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Attributes="196611" Text="Configure local env vars to support non-Azure environments" TextStyle="Subtitle" Order="700"/>
@@ -574,7 +590,7 @@
     <ROW Dialog_="PSMUserAssignedMI" Control="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="100" Options="1"/>
     <ROW Dialog_="PSMUserAssignedMI" Control="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Cancel]" Order="200" Options="1"/>
     <ROW Dialog_="PSMUserAssignedMI" Control="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="300" Options="1"/>
-    <ROW Dialog_="PSMUserAssignedMI" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Order="400"/>
+    <ROW Dialog_="PSMUserAssignedMI" Control="BannerLogo" Type="Bitmap" X="324" Y="0" Width="44" Height="44" Attributes="1" Text="CloudPAWLogo4kRaster.png" Order="400"/>
     <ROW Dialog_="PSMUserAssignedMI" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="500"/>
     <ROW Dialog_="PSMUserAssignedMI" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="600"/>
     <ROW Dialog_="PSMUserAssignedMI" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Attributes="196611" Text="Set the ID of the UA MI" TextStyle="Subtitle" Order="700"/>
@@ -584,9 +600,14 @@
     <ROW Dialog_="PSMUserAssignedMI" Control="ClientIdNote" Type="Text" X="25" Y="129" Width="28" Height="16" Attributes="65539" Property="TEXT_2_PROP" Text="Note:" TextStyle="NormalBold" Order="1100"/>
     <ROW Dialog_="PSMUserAssignedMI" Control="NotGuidLabel" Type="Text" X="25" Y="145" Width="218" Height="41" Attributes="65539" Property="TEXT_1_PROP_1" Text="The value for this text box is not the Object ID of the User Assigned Managed Identity (UA MI); it is the Client ID of the UA MI." TextStyle="Normal" Order="1200"/>
     <ROW Dialog_="PSMUserAssignedMI" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="[Manufacturer]" Order="1300"/>
+    <ROW Dialog_="PrepareDlg" Control="Title" Type="Text" X="135" Y="20" Width="220" Height="60" Attributes="196611" Text="Welcome to the [ProductName] [Wizard]" TextStyle="VerdanaBold13" Order="200" TextLocId="Control.Text.PrepareDlg#Title" MsiKey="PrepareDlg#Title"/>
+    <ROW Dialog_="PrepareDlg" Control="Bitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="234" Attributes="1048577" Text="[DialogBitmap]" Order="300" MsiKey="PrepareDlg#Bitmap"/>
     <ROW Dialog_="PrepareDlg" Control="Description" Type="Text" X="135" Y="86" Width="220" Height="36" Attributes="196611" Text="Please wait while the [Wizard] prepares to guide you through the installation." Order="500" TextLocId="Control.Text.PrepareDlg#Description" MsiKey="PrepareDlg#Description"/>
+    <ROW Dialog_="PrepareDlg" Control="Bitmap_1" Type="Bitmap" X="0" Y="79" Width="113" Height="113" Attributes="1" Text="CloudPAWLogo4kRaster.png" Order="1000"/>
+    <ROW Dialog_="ProgressDlg" Control="BannerBitmap" Type="Bitmap" X="324" Y="0" Width="44" Height="44" Attributes="1" Text="CloudPAWLogo4kRaster.png" Order="200" MsiKey="ProgressDlg#BannerBitmap"/>
     <ROW Dialog_="ProgressDlg" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="300" MsiKey="ProgressDlg#BottomLine"/>
     <ROW Dialog_="ProgressDlg" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="[Manufacturer]" Order="400" MsiKey="ProgressDlg#Logo"/>
+    <ROW Dialog_="ProgressDlg" Control="ActionText" Type="Text" X="80" Y="100" Width="255" Height="13" Attributes="3" Order="800" MsiKey="ProgressDlg#ActionText"/>
     <ROW Dialog_="ProgressDlg" Control="Title" Type="Text" X="20" Y="15" Width="275" Height="19" Attributes="196611" Text="[Progress1] [ProductName]" TextStyle="Title" Order="900" TextLocId="Control.Text.ProgressDlg#Title" MsiKey="ProgressDlg#Title"/>
     <ROW Dialog_="ProgressDlg" Control="Text" Type="Text" X="35" Y="65" Width="300" Height="30" Attributes="196611" Text="Please wait while the [Wizard] [Progress2] [ProductName].  This may take several minutes." TextStyle="Normal" Order="1000" TextLocId="Control.Text.ProgressDlg#Text" MsiKey="ProgressDlg#Text"/>
     <ROW Dialog_="ProgressDlg" Control="StatusLabel" Type="Text" X="35" Y="100" Width="45" Height="12" Attributes="3" Text="Status:" TextStyle="Normal" Order="1100" TextLocId="Control.Text.ProgressDlg#StatusLabel" MsiKey="ProgressDlg#StatusLabel"/>
@@ -594,17 +615,20 @@
     <ROW Dialog_="UserExit" Control="Title" Type="Text" X="135" Y="20" Width="220" Height="60" Attributes="196611" Text="The [ProductName] [Wizard] was interrupted" TextStyle="TitleBold" Order="500" TextLocId="Control.Text.UserExit#Title" MsiKey="UserExit#Title"/>
     <ROW Dialog_="UserExit" Control="Description2" Type="Text" X="135" Y="141" Width="220" Height="20" Attributes="196611" Text="Click the &quot;Finish&quot; button to exit the [Wizard]." TextStyle="Normal" Order="600" TextLocId="Control.Text.UserExit#Description2" MsiKey="UserExit#Description2"/>
     <ROW Dialog_="UserExit" Control="Description1" Type="Text" X="135" Y="86" Width="220" Height="49" Attributes="196611" Text="[ProductName] setup was interrupted.  Your system has not been modified.  To install this program at a later time, please run the installation again." TextStyle="Normal" Order="700" TextLocId="Control.Text.UserExit#Description1" MsiKey="UserExit#Description1"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="BannerBitmap" Type="Bitmap" X="324" Y="0" Width="44" Height="44" Attributes="1048577" Text="CloudPAWLogo4kRaster.png" Order="300" MsiKey="VerifyReadyDlg#BannerBitmap"/>
     <ROW Dialog_="VerifyReadyDlg" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="400" MsiKey="VerifyReadyDlg#BottomLine"/>
     <ROW Dialog_="VerifyReadyDlg" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="[Manufacturer]" Order="500" MsiKey="VerifyReadyDlg#Logo"/>
     <ROW Dialog_="VerifyReadyDlg" Control="Text" Type="Text" X="25" Y="70" Width="320" Height="40" Attributes="196611" Text="Click &quot;Install&quot; to begin the installation.  If you want to review or change any of your installation settings, click &quot;Back&quot;.  Click &quot;Cancel&quot; to exit the wizard." TextStyle="Normal" Order="700" TextLocId="Control.Text.VerifyReadyDlg#Text" MsiKey="VerifyReadyDlg#Text"/>
     <ROW Dialog_="VerifyReadyDlg" Control="Description" Type="Text" X="25" Y="23" Width="304" Height="21" Attributes="196611" Text="The [Wizard] is ready to begin the installation" TextStyle="Subtitle" Order="800" MsiKey="VerifyReadyDlg#Description"/>
     <ROW Dialog_="VerifyReadyDlg" Control="Title" Type="Text" X="15" Y="6" Width="304" Height="17" Attributes="196611" Text="Ready to Install" TextStyle="Title" Order="1000" TextLocId="Control.Text.VerifyReadyDlg#Title" MsiKey="VerifyReadyDlg#Title"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control="BannerBitmap" Type="Bitmap" X="324" Y="0" Width="44" Height="44" Attributes="1048577" Text="CloudPAWLogo4kRaster.png" Order="400" MsiKey="VerifyRemoveDlg#BannerBitmap"/>
     <ROW Dialog_="VerifyRemoveDlg" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="500" MsiKey="VerifyRemoveDlg#BottomLine"/>
     <ROW Dialog_="VerifyRemoveDlg" Control="Title" Type="Text" X="15" Y="6" Width="277" Height="17" Attributes="196611" Text="Remove [ProductName]" TextStyle="Title" Order="600" TextLocId="Control.Text.VerifyRemoveDlg#Title" MsiKey="VerifyRemoveDlg#Title"/>
     <ROW Dialog_="VerifyRemoveDlg" Control="Text" Type="Text" X="25" Y="70" Width="320" Height="60" Attributes="3" Text="Click &quot;Remove&quot; to remove [ProductName] from your computer.  If you want to review or change any of your installation settings, click &quot;Back&quot;.  Click &quot;Cancel&quot; to exit the wizard." Order="700" TextLocId="Control.Text.VerifyRemoveDlg#Text" MsiKey="VerifyRemoveDlg#Text"/>
     <ROW Dialog_="VerifyRemoveDlg" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Attributes="196611" Text="You have chosen to remove the program from your computer." TextStyle="Subtitle" Order="800" TextLocId="Control.Text.VerifyRemoveDlg#Description" MsiKey="VerifyRemoveDlg#Description"/>
     <ROW Dialog_="VerifyRemoveDlg" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="900" MsiKey="VerifyRemoveDlg#BannerLine"/>
     <ROW Dialog_="VerifyRemoveDlg" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="[Manufacturer]" Order="1000"/>
+    <ROW Dialog_="VerifyRepairDlg" Control="BannerBitmap" Type="Bitmap" X="324" Y="0" Width="44" Height="44" Attributes="1" Text="CloudPAWLogo4kRaster.png" Order="300" MsiKey="VerifyRepairDlg#BannerBitmap"/>
     <ROW Dialog_="VerifyRepairDlg" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Order="400" MsiKey="VerifyRepairDlg#BottomLine"/>
     <ROW Dialog_="VerifyRepairDlg" Control="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="500" TextLocId="-" MsiKey="VerifyRepairDlg#Back" Options="1"/>
     <ROW Dialog_="VerifyRepairDlg" Control="Title" Type="Text" X="15" Y="6" Width="277" Height="17" Attributes="196611" Text="Repair [ProductName]" TextStyle="Title" Order="600" TextLocId="Control.Text.VerifyRepairDlg#Title" MsiKey="VerifyRepairDlg#Title"/>
@@ -613,7 +637,7 @@
     <ROW Dialog_="VerifyRepairDlg" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Order="900" MsiKey="VerifyRepairDlg#BannerLine"/>
     <ROW Dialog_="VerifyRepairDlg" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="[Manufacturer]" Order="1000"/>
     <ROW Dialog_="WaitForCostingDlg" Control="Icon" Type="Icon" X="15" Y="15" Width="24" Height="24" Attributes="1048577" Text="Warning.ico" Help="Exclamation icon|" Order="300" HelpLocId="Control.Help.WaitForCostingDlg#Icon" MsiKey="WaitForCostingDlg#Icon"/>
-    <ATTRIBUTE name="DeletedRows" value="AdminBrowseDlg#Logo@AdminInstallPointDlg#Logo@BrowseDlg#Logo@CustomizeDlg#Logo@DiskCostDlg#Logo@FilesInUse#Logo@MaintenanceTypeDlg#Logo@MsiRMFilesInUse#Logo@OutOfDiskDlg#Logo@OutOfRbDiskDlg#Logo@VerifyRemoveDlg#Logo@VerifyRepairDlg#Logo"/>
+    <ATTRIBUTE name="DeletedRows" value="AdminBrowseDlg#Logo@AdminInstallPointDlg#Logo@BrowseDlg#Logo@CustomizeDlg#Logo@DiskCostDlg#Logo@ExitDialog#Bitmap@FilesInUse#Logo@MaintenanceTypeDlg#Logo@MaintenanceTypeDlg.aip@MsiRMFilesInUse#Logo@OutOfDiskDlg#Logo@OutOfRbDiskDlg#Logo@UI.aip@VerifyRemoveDlg#Logo@VerifyRemoveDlg.aip@VerifyRepairDlg#Logo@VerifyRepairDlg.aip"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiControlConditionComponent">
     <ROW Dialog_="PSMGlobalOptions" Control_="InsecureWarning" Action="Show" Condition="DEBUG_MODE = &quot;true&quot;"/>
