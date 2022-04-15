@@ -13,7 +13,7 @@ import { SwaggerUI } from "./Routes/OpenAPI";
 import { writeDebugInfo } from "./Utility/Utility";
 
 // Import environmental variables
-const port = process.env.PSM_PORT || 3000;
+const port = process.env.PORT || 3000;
 const debugMode = process.env.PSM_Debug || "false"
 
 // Generate an authentication session that can create access tokens.
