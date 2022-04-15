@@ -36,6 +36,7 @@
     <ROW Property="KEYVAULT_SECRET" Comments="The name of the secret in the Azure Key Vault that you specified in the PSM_KeyVault_Name option. This option is only evaluated if the PSM_KeyVault_Name is configured."/>
     <ROW Property="MANAGED_ID_GUID" Comments="This is the Client ID, not the Object ID."/>
     <ROW Property="Manufacturer" Value="Microsoft"/>
+    <ROW Property="PORT" Value="3000" Comments="Port number that the PSM server will host the REST API and UI on."/>
     <ROW Property="ProductCode" Value="1033:{7F741135-D475-4F25-B2F2-1C4F33984D0D} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="Privileged Security Management"/>
@@ -97,7 +98,7 @@
     <ROW TimeStampUrl="http://timestamp.digicert.com" SignerDescription="[|ProductName]" SignOptions="0" SignTool="0" UseSha256="1"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.FirewallExceptionComponent">
-    <ROW FirewallException="PrivSecMgmtServer" Direction="1" DisplayName="PrivSecMgmt Server" Enabled="1" Scope="*" Condition="((?privilegedsecuritymanagementserverwin.exe=2) AND ($privilegedsecuritymanagementserverwin.exe=3))" Profiles="0" AppPath="[#privilegedsecuritymanagementserverwin.exe]" Port="*" Protocol="TCP"/>
+    <ROW FirewallException="PrivSecMgmtServer" Direction="1" DisplayName="PrivSecMgmt Server" Enabled="1" Scope="*" Condition="((?privilegedsecuritymanagementserverwin.exe=2) AND ($privilegedsecuritymanagementserverwin.exe=3))" Profiles="0" AppPath="[#privilegedsecuritymanagementserverwin.exe]" Port="[PORT]" Protocol="TCP"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.FragmentComponent">
     <ROW Fragment="CommonUI.aip" Path="&lt;AI_FRAGS&gt;CommonUI.aip"/>
@@ -331,10 +332,12 @@
     <ROW Dialog_="PSMGlobalOptions" Control="ScopeTagLabel" Type="Text" X="15" Y="55" Width="75" Height="13" Attributes="65539" Property="TEXT_1_PROP_2" Text="Scope Tag Name:" TextStyle="Normal" Order="900"/>
     <ROW Dialog_="PSMGlobalOptions" Control="DebugModeToggleGroup" Type="RadioButtonGroup" X="15" Y="107" Width="131" Height="71" Attributes="16777219" Property="DEBUG_MODE" Text="Debug Mode" TextStyle="Normal" Order="1000"/>
     <ROW Dialog_="PSMGlobalOptions" Control="Logo" Type="Text" X="15" Y="227" Width="40" Height="12" Attributes="1" Text="[Manufacturer]" Order="1100" TextLocId="Control.Text.PSMAuthOptions#Logo"/>
-    <ROW Dialog_="PSMGlobalOptions" Control="ScopeTagTextBox" Type="Edit" X="15" Y="68" Width="168" Height="18" Attributes="3" Property="SCOPE_TAG" Text="{260}" TextStyle="Normal" Order="1200"/>
+    <ROW Dialog_="PSMGlobalOptions" Control="ScopeTagTextBox" Type="Edit" X="15" Y="68" Width="168" Height="18" Attributes="3" Property="SCOPE_TAG" Text="{260}" TextStyle="Normal" Help="Endpoint Manager scope tag that will contain all of the configs and will serve as the initial SILO for PSM.|" Order="1200"/>
     <ROW Dialog_="PSMGlobalOptions" Control="DebugNote" Type="Text" X="152" Y="114" Width="28" Height="16" Attributes="65539" Property="TEXT_2_PROP_1" Text="Note:" TextStyle="SubtitleBold" Order="1300"/>
     <ROW Dialog_="PSMGlobalOptions" Control="DebugLabel" Type="Text" X="152" Y="130" Width="216" Height="86" Attributes="65539" Property="TEXT_1_PROP_1_1" Text="Enabling debug mode is a security risk and should not be enabled in production environments. Enabling debug mode exposes sensitive un-controlled endpoints. These endpoints allow for manual control of the entire tenant and could expose sensitive materials like environmental variables and access tokens." TextStyle="Normal" Order="1400"/>
     <ROW Dialog_="PSMGlobalOptions" Control="InsecureWarning" Type="Text" X="15" Y="182" Width="75" Height="25" Attributes="65538" Property="TEXT_1_PROP_4" Text="Warning! Insecure Option Selected!" TextStyle="Warning" Order="1500"/>
+    <ROW Dialog_="PSMGlobalOptions" Control="PortTextBox" Type="Edit" X="241" Y="68" Width="90" Height="18" Attributes="3" Property="PORT" Text="{260}" TextStyle="Normal" Help="Port that the REST API and UI server for PSM will be hosted off of.|" Order="1600"/>
+    <ROW Dialog_="PSMGlobalOptions" Control="PortLabel" Type="Text" X="241" Y="55" Width="90" Height="13" Attributes="65539" Property="TEXT_1_PROP_6" Text="Server Port:" TextStyle="Normal" Order="1700"/>
     <ROW Dialog_="PSMKeyVaultAppReg" Control="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Next]" Order="100" Options="1"/>
     <ROW Dialog_="PSMKeyVaultAppReg" Control="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Cancel]" Order="200" Options="1"/>
     <ROW Dialog_="PSMKeyVaultAppReg" Control="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Order="300" Options="1"/>
@@ -560,6 +563,7 @@
     <ROW Environment="PSM_KeyVault_Name" Name="=-*PSM_KeyVault_Name" Value="[KEYVAULT_NAME]" Component_="APPDIR"/>
     <ROW Environment="PSM_KeyVault_Secret" Name="=-*PSM_KeyVault_Secret" Value="[KEYVAULT_SECRET]" Component_="APPDIR"/>
     <ROW Environment="PSM_Managed_ID_GUID" Name="=-*PSM_Managed_ID_GUID" Value="[MANAGED_ID_GUID]" Component_="APPDIR"/>
+    <ROW Environment="PSM_Port" Name="=-*PORT" Value="[PORT]" Component_="APPDIR"/>
     <ROW Environment="PSM_Scope_Tag" Name="=-*PSM_Scope_Tag" Value="[SCOPE_TAG]" Component_="APPDIR"/>
     <ROW Environment="PSM_Tenant_ID" Name="=-*PSM_Tenant_ID" Value="[TENANT_ID]" Component_="APPDIR"/>
   </COMPONENT>
