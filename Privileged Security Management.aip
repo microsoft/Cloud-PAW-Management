@@ -68,7 +68,16 @@
     <ROW Component="AI_CustomARPName" ComponentId="{1E99A6FC-A165-41BE-ABD8-3AF7CF4CC104}" Directory_="APPDIR" Attributes="260" KeyPath="DisplayName" Options="1"/>
     <ROW Component="AI_ExePath" ComponentId="{1CE90C63-CF03-4F3E-8DFE-867E99A6B810}" Directory_="APPDIR" Attributes="260" KeyPath="AI_ExePath"/>
     <ROW Component="APPDIR" ComponentId="{3A6BECF9-25D6-4219-B122-FECCD0BF6AEC}" Directory_="APPDIR" Attributes="256"/>
+    <ROW Component="CLIENT_GUID" ComponentId="{BDEC9CE7-B250-4A89-AC5A-F8BDC812B59D}" Directory_="APPDIR" Attributes="260" KeyPath="CLIENT_GUID" Options="1"/>
+    <ROW Component="CLIENT_SECRET" ComponentId="{7042FC60-0110-4123-A222-9DFCF573E5A7}" Directory_="APPDIR" Attributes="260" KeyPath="CLIENT_SECRET" Options="1"/>
+    <ROW Component="DEBUG_MODE" ComponentId="{99ADA5B8-18D0-43BD-AA4F-D4E82A6D310E}" Directory_="APPDIR" Attributes="260" KeyPath="DEBUG_MODE" Options="1"/>
+    <ROW Component="KEYVAULT_NAME" ComponentId="{A206E9DB-4F77-4797-9B39-C3DA1C517610}" Directory_="APPDIR" Attributes="260" KeyPath="KEYVAULT_NAME" Options="1"/>
+    <ROW Component="KEYVAULT_SECRET" ComponentId="{37F5259E-E007-4A29-B021-2E4C16F3CA6A}" Directory_="APPDIR" Attributes="260" KeyPath="KEYVAULT_SECRET" Options="1"/>
+    <ROW Component="MANAGED_ID_GUID" ComponentId="{3169094B-2577-4D4C-BA41-ED16FE8AC930}" Directory_="APPDIR" Attributes="260" KeyPath="MANAGED_ID_GUID" Options="1"/>
+    <ROW Component="PORT" ComponentId="{C01E2C64-C987-4A04-A93C-BC15D5D70798}" Directory_="APPDIR" Attributes="260" KeyPath="PORT" Options="1"/>
     <ROW Component="ProductInformation" ComponentId="{65947B40-50B4-4F17-89FA-F3CA2F2E9AB1}" Directory_="APPDIR" Attributes="260" KeyPath="Version"/>
+    <ROW Component="SCOPE_TAG" ComponentId="{4A97B864-642C-4D79-9DB7-FC012FDB41FF}" Directory_="APPDIR" Attributes="260" KeyPath="SCOPE_TAG" Options="1"/>
+    <ROW Component="TENANT_ID" ComponentId="{5FDDA9A4-30A8-4E61-8A00-36BBE2D3C1CA}" Directory_="APPDIR" Attributes="260" KeyPath="TENANT_ID" Options="1"/>
     <ROW Component="privilegedsecuritymanagementserverwin.exe" ComponentId="{6D2CF4B3-050C-454F-848D-937019B8E620}" Directory_="APPDIR" Attributes="256" KeyPath="privilegedsecuritymanagementserverwin.exe"/>
     <ROW Component="regid.199105.com.microsoftprivsecmgmt" ComponentId="{CF9B2C0D-E218-466A-B019-33546B90AF7F}" Directory_="regid.199105.com.microsoftprivs_Dir" Attributes="256"/>
   </COMPONENT>
@@ -78,6 +87,17 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
     <ROW File="privilegedsecuritymanagementserverwin.exe" Component_="privilegedsecuritymanagementserverwin.exe" FileName="PRIVIL~1.EXE|privileged-security-management-server-win.exe" Attributes="0" SourcePath="Server\dist\privileged-security-management-server-win.exe" SelfReg="false" DigSign="true"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.AiPersistentPropComponent">
+    <ROW Property="TENANT_ID" Registry="TENANT_ID" HklmSearch="TENANT_ID" HkcuSearch="TENANT_ID_1" Hklm64Search="TENANT_ID_2" Hkcu64Search="TENANT_ID_3"/>
+    <ROW Property="SCOPE_TAG" Registry="SCOPE_TAG" HklmSearch="SCOPE_TAG" HkcuSearch="SCOPE_TAG_1" Hklm64Search="SCOPE_TAG_2" Hkcu64Search="SCOPE_TAG_3"/>
+    <ROW Property="PORT" Registry="PORT" HklmSearch="PORT" HkcuSearch="PORT_1" Hklm64Search="PORT_2" Hkcu64Search="PORT_3"/>
+    <ROW Property="MANAGED_ID_GUID" Registry="MANAGED_ID_GUID" HklmSearch="MANAGED_ID_GUID" HkcuSearch="MANAGED_ID_GUID_1" Hklm64Search="MANAGED_ID_GUID_2" Hkcu64Search="MANAGED_ID_GUID_3"/>
+    <ROW Property="KEYVAULT_SECRET" Registry="KEYVAULT_SECRET" HklmSearch="KEYVAULT_SECRET" HkcuSearch="KEYVAULT_SECRET_1" Hklm64Search="KEYVAULT_SECRET_2" Hkcu64Search="KEYVAULT_SECRET_3"/>
+    <ROW Property="KEYVAULT_NAME" Registry="KEYVAULT_NAME" HklmSearch="KEYVAULT_NAME" HkcuSearch="KEYVAULT_NAME_1" Hklm64Search="KEYVAULT_NAME_2" Hkcu64Search="KEYVAULT_NAME_3"/>
+    <ROW Property="DEBUG_MODE" Registry="DEBUG_MODE" HklmSearch="DEBUG_MODE" HkcuSearch="DEBUG_MODE_1" Hklm64Search="DEBUG_MODE_2" Hkcu64Search="DEBUG_MODE_3"/>
+    <ROW Property="CLIENT_SECRET" Registry="CLIENT_SECRET" HklmSearch="CLIENT_SECRET" HkcuSearch="CLIENT_SECRET_1" Hklm64Search="CLIENT_SECRET_2" Hkcu64Search="CLIENT_SECRET_3"/>
+    <ROW Property="CLIENT_GUID" Registry="CLIENT_GUID" HklmSearch="CLIENT_GUID" HkcuSearch="CLIENT_GUID_1" Hklm64Search="CLIENT_GUID_2" Hkcu64Search="CLIENT_GUID_3"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
@@ -139,6 +159,42 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiAppSearchComponent">
     <ROW Property="AI_SETUPEXEPATH" Signature_="AI_EXE_PATH_LM" Builds="ExeBuild"/>
     <ROW Property="AI_SETUPEXEPATH" Signature_="AI_EXE_PATH_CU" Builds="ExeBuild"/>
+    <ROW Property="TENANT_ID" Signature_="TENANT_ID"/>
+    <ROW Property="TENANT_ID" Signature_="TENANT_ID_1"/>
+    <ROW Property="TENANT_ID" Signature_="TENANT_ID_2"/>
+    <ROW Property="TENANT_ID" Signature_="TENANT_ID_3"/>
+    <ROW Property="SCOPE_TAG" Signature_="SCOPE_TAG"/>
+    <ROW Property="SCOPE_TAG" Signature_="SCOPE_TAG_1"/>
+    <ROW Property="SCOPE_TAG" Signature_="SCOPE_TAG_2"/>
+    <ROW Property="SCOPE_TAG" Signature_="SCOPE_TAG_3"/>
+    <ROW Property="PORT" Signature_="PORT"/>
+    <ROW Property="PORT" Signature_="PORT_1"/>
+    <ROW Property="PORT" Signature_="PORT_2"/>
+    <ROW Property="PORT" Signature_="PORT_3"/>
+    <ROW Property="MANAGED_ID_GUID" Signature_="MANAGED_ID_GUID"/>
+    <ROW Property="MANAGED_ID_GUID" Signature_="MANAGED_ID_GUID_1"/>
+    <ROW Property="MANAGED_ID_GUID" Signature_="MANAGED_ID_GUID_2"/>
+    <ROW Property="MANAGED_ID_GUID" Signature_="MANAGED_ID_GUID_3"/>
+    <ROW Property="KEYVAULT_SECRET" Signature_="KEYVAULT_SECRET"/>
+    <ROW Property="KEYVAULT_SECRET" Signature_="KEYVAULT_SECRET_1"/>
+    <ROW Property="KEYVAULT_SECRET" Signature_="KEYVAULT_SECRET_2"/>
+    <ROW Property="KEYVAULT_SECRET" Signature_="KEYVAULT_SECRET_3"/>
+    <ROW Property="KEYVAULT_NAME" Signature_="KEYVAULT_NAME"/>
+    <ROW Property="KEYVAULT_NAME" Signature_="KEYVAULT_NAME_1"/>
+    <ROW Property="KEYVAULT_NAME" Signature_="KEYVAULT_NAME_2"/>
+    <ROW Property="KEYVAULT_NAME" Signature_="KEYVAULT_NAME_3"/>
+    <ROW Property="DEBUG_MODE" Signature_="DEBUG_MODE"/>
+    <ROW Property="DEBUG_MODE" Signature_="DEBUG_MODE_1"/>
+    <ROW Property="DEBUG_MODE" Signature_="DEBUG_MODE_2"/>
+    <ROW Property="DEBUG_MODE" Signature_="DEBUG_MODE_3"/>
+    <ROW Property="CLIENT_SECRET" Signature_="CLIENT_SECRET"/>
+    <ROW Property="CLIENT_SECRET" Signature_="CLIENT_SECRET_1"/>
+    <ROW Property="CLIENT_SECRET" Signature_="CLIENT_SECRET_2"/>
+    <ROW Property="CLIENT_SECRET" Signature_="CLIENT_SECRET_3"/>
+    <ROW Property="CLIENT_GUID" Signature_="CLIENT_GUID"/>
+    <ROW Property="CLIENT_GUID" Signature_="CLIENT_GUID_1"/>
+    <ROW Property="CLIENT_GUID" Signature_="CLIENT_GUID_2"/>
+    <ROW Property="CLIENT_GUID" Signature_="CLIENT_GUID_3"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiBinaryComponent">
     <ROW Name="Change.ico" SourcePath="User-Interface\src\Assets\Change.ico"/>
@@ -574,6 +630,15 @@
     <ROW Feature_="CoreServer" Component_="privilegedsecuritymanagementserverwin.exe"/>
     <ROW Feature_="CoreServer" Component_="AI_CustomARPName"/>
     <ROW Feature_="CoreServer" Component_="AI_ExePath"/>
+    <ROW Feature_="CoreServer" Component_="TENANT_ID"/>
+    <ROW Feature_="CoreServer" Component_="SCOPE_TAG"/>
+    <ROW Feature_="CoreServer" Component_="PORT"/>
+    <ROW Feature_="CoreServer" Component_="MANAGED_ID_GUID"/>
+    <ROW Feature_="CoreServer" Component_="KEYVAULT_SECRET"/>
+    <ROW Feature_="CoreServer" Component_="KEYVAULT_NAME"/>
+    <ROW Feature_="CoreServer" Component_="DEBUG_MODE"/>
+    <ROW Feature_="CoreServer" Component_="CLIENT_SECRET"/>
+    <ROW Feature_="CoreServer" Component_="CLIENT_GUID"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
     <ROW Name="CloudPAWLogoIcon.exe" SourcePath="User-Interface\src\Assets\Cloud PAW Logo - Icon.ico" Index="0"/>
@@ -641,14 +706,53 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiRegLocatorComponent">
     <ROW Signature_="AI_EXE_PATH_CU" Root="1" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]\[ProductVersion]" Name="AI_ExePath" Type="2"/>
     <ROW Signature_="AI_EXE_PATH_LM" Root="2" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]\[ProductVersion]" Name="AI_ExePath" Type="2"/>
+    <ROW Signature_="CLIENT_GUID" Root="2" Key="Software\[Manufacturer]\[UpgradeCode]" Name="CLIENT_GUID" Type="2"/>
+    <ROW Signature_="CLIENT_GUID_1" Root="1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="CLIENT_GUID" Type="2"/>
+    <ROW Signature_="CLIENT_GUID_2" Root="2" Key="Software\[Manufacturer]\[UpgradeCode]" Name="CLIENT_GUID" Type="18"/>
+    <ROW Signature_="CLIENT_GUID_3" Root="1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="CLIENT_GUID" Type="18"/>
+    <ROW Signature_="CLIENT_SECRET" Root="2" Key="Software\[Manufacturer]\[UpgradeCode]" Name="CLIENT_SECRET" Type="2"/>
+    <ROW Signature_="CLIENT_SECRET_1" Root="1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="CLIENT_SECRET" Type="2"/>
+    <ROW Signature_="CLIENT_SECRET_2" Root="2" Key="Software\[Manufacturer]\[UpgradeCode]" Name="CLIENT_SECRET" Type="18"/>
+    <ROW Signature_="CLIENT_SECRET_3" Root="1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="CLIENT_SECRET" Type="18"/>
+    <ROW Signature_="DEBUG_MODE" Root="2" Key="Software\[Manufacturer]\[UpgradeCode]" Name="DEBUG_MODE" Type="2"/>
+    <ROW Signature_="DEBUG_MODE_1" Root="1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="DEBUG_MODE" Type="2"/>
+    <ROW Signature_="DEBUG_MODE_2" Root="2" Key="Software\[Manufacturer]\[UpgradeCode]" Name="DEBUG_MODE" Type="18"/>
+    <ROW Signature_="DEBUG_MODE_3" Root="1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="DEBUG_MODE" Type="18"/>
+    <ROW Signature_="KEYVAULT_NAME" Root="2" Key="Software\[Manufacturer]\[UpgradeCode]" Name="KEYVAULT_NAME" Type="2"/>
+    <ROW Signature_="KEYVAULT_NAME_1" Root="1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="KEYVAULT_NAME" Type="2"/>
+    <ROW Signature_="KEYVAULT_NAME_2" Root="2" Key="Software\[Manufacturer]\[UpgradeCode]" Name="KEYVAULT_NAME" Type="18"/>
+    <ROW Signature_="KEYVAULT_NAME_3" Root="1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="KEYVAULT_NAME" Type="18"/>
+    <ROW Signature_="KEYVAULT_SECRET" Root="2" Key="Software\[Manufacturer]\[UpgradeCode]" Name="KEYVAULT_SECRET" Type="2"/>
+    <ROW Signature_="KEYVAULT_SECRET_1" Root="1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="KEYVAULT_SECRET" Type="2"/>
+    <ROW Signature_="KEYVAULT_SECRET_2" Root="2" Key="Software\[Manufacturer]\[UpgradeCode]" Name="KEYVAULT_SECRET" Type="18"/>
+    <ROW Signature_="KEYVAULT_SECRET_3" Root="1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="KEYVAULT_SECRET" Type="18"/>
+    <ROW Signature_="MANAGED_ID_GUID" Root="2" Key="Software\[Manufacturer]\[UpgradeCode]" Name="MANAGED_ID_GUID" Type="2"/>
+    <ROW Signature_="MANAGED_ID_GUID_1" Root="1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="MANAGED_ID_GUID" Type="2"/>
+    <ROW Signature_="MANAGED_ID_GUID_2" Root="2" Key="Software\[Manufacturer]\[UpgradeCode]" Name="MANAGED_ID_GUID" Type="18"/>
+    <ROW Signature_="MANAGED_ID_GUID_3" Root="1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="MANAGED_ID_GUID" Type="18"/>
+    <ROW Signature_="PORT" Root="2" Key="Software\[Manufacturer]\[UpgradeCode]" Name="PORT" Type="2"/>
+    <ROW Signature_="PORT_1" Root="1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="PORT" Type="2"/>
+    <ROW Signature_="PORT_2" Root="2" Key="Software\[Manufacturer]\[UpgradeCode]" Name="PORT" Type="18"/>
+    <ROW Signature_="PORT_3" Root="1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="PORT" Type="18"/>
+    <ROW Signature_="SCOPE_TAG" Root="2" Key="Software\[Manufacturer]\[UpgradeCode]" Name="SCOPE_TAG" Type="2"/>
+    <ROW Signature_="SCOPE_TAG_1" Root="1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="SCOPE_TAG" Type="2"/>
+    <ROW Signature_="SCOPE_TAG_2" Root="2" Key="Software\[Manufacturer]\[UpgradeCode]" Name="SCOPE_TAG" Type="18"/>
+    <ROW Signature_="SCOPE_TAG_3" Root="1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="SCOPE_TAG" Type="18"/>
+    <ROW Signature_="TENANT_ID" Root="2" Key="Software\[Manufacturer]\[UpgradeCode]" Name="TENANT_ID" Type="2"/>
+    <ROW Signature_="TENANT_ID_1" Root="1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="TENANT_ID" Type="2"/>
+    <ROW Signature_="TENANT_ID_2" Root="2" Key="Software\[Manufacturer]\[UpgradeCode]" Name="TENANT_ID" Type="18"/>
+    <ROW Signature_="TENANT_ID_3" Root="1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="TENANT_ID" Type="18"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiRegsComponent">
     <ROW Registry="AI_ExePath" Root="-1" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]\[ProductVersion]" Name="AI_ExePath" Value="[AI_SETUPEXEPATH]" Component_="AI_ExePath"/>
     <ROW Registry="AdvancedInstaller" Root="-1" Key="Software\Caphyon\Advanced Installer" Name="\"/>
+    <ROW Registry="CLIENT_GUID" Root="-1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="CLIENT_GUID" Value="[CLIENT_GUID]" Component_="CLIENT_GUID"/>
+    <ROW Registry="CLIENT_SECRET" Root="-1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="CLIENT_SECRET" Value="[CLIENT_SECRET]" Component_="CLIENT_SECRET"/>
     <ROW Registry="Caphyon" Root="-1" Key="Software\Caphyon" Name="\"/>
     <ROW Registry="Comments" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="Comments" Value="[ARPCOMMENTS]" Component_="AI_CustomARPName"/>
     <ROW Registry="Contact" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="Contact" Value="[ARPCONTACT]" Component_="AI_CustomARPName"/>
     <ROW Registry="CurrentVersion" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion" Name="\"/>
+    <ROW Registry="DEBUG_MODE" Root="-1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="DEBUG_MODE" Value="[DEBUG_MODE]" Component_="DEBUG_MODE"/>
     <ROW Registry="DisplayIcon" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="DisplayIcon" Value="[ARP_ICON_PATH]" Component_="AI_CustomARPName"/>
     <ROW Registry="DisplayName" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="DisplayName" Value="[AI_PRODUCTNAME_ARP]" Component_="AI_CustomARPName"/>
     <ROW Registry="DisplayVersion" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="DisplayVersion" Value="[ProductVersion]" Component_="AI_CustomARPName"/>
@@ -656,11 +760,15 @@
     <ROW Registry="HelpLink" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="HelpLink" Value="[ARPHELPLINK]" Component_="AI_CustomARPName"/>
     <ROW Registry="HelpTelephone" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="HelpTelephone" Value="[ARPHELPTELEPHONE]" Component_="AI_CustomARPName"/>
     <ROW Registry="InstallLocation" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="InstallLocation" Value="[APPDIR]" Component_="AI_CustomARPName"/>
+    <ROW Registry="KEYVAULT_NAME" Root="-1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="KEYVAULT_NAME" Value="[KEYVAULT_NAME]" Component_="KEYVAULT_NAME"/>
+    <ROW Registry="KEYVAULT_SECRET" Root="-1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="KEYVAULT_SECRET" Value="[KEYVAULT_SECRET]" Component_="KEYVAULT_SECRET"/>
     <ROW Registry="LZMA" Root="-1" Key="Software\Caphyon\Advanced Installer\LZMA" Name="\"/>
+    <ROW Registry="MANAGED_ID_GUID" Root="-1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="MANAGED_ID_GUID" Value="[MANAGED_ID_GUID]" Component_="MANAGED_ID_GUID"/>
     <ROW Registry="Manufacturer" Root="-1" Key="Software\[Manufacturer]" Name="\"/>
     <ROW Registry="Microsoft" Root="-1" Key="Software\Microsoft" Name="\"/>
     <ROW Registry="ModifyPath" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="ModifyPath" Value="[AI_UNINSTALLER] /i [ProductCode] AI_UNINSTALLER_CTP=1" Component_="AI_CustomARPName"/>
     <ROW Registry="NoRepair" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="NoRepair" Value="#1" Component_="AI_CustomARPName" VirtualValue="#"/>
+    <ROW Registry="PORT" Root="-1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="PORT" Value="[PORT]" Component_="PORT"/>
     <ROW Registry="Path" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Path" Value="[APPDIR]" Component_="ProductInformation"/>
     <ROW Registry="ProductCode" Root="-1" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]" Name="\"/>
     <ROW Registry="ProductName" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="\"/>
@@ -668,12 +776,15 @@
     <ROW Registry="ProductVersion" Root="-1" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]\[ProductVersion]" Name="\"/>
     <ROW Registry="Publisher" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="Publisher" Value="[Manufacturer]" Component_="AI_CustomARPName"/>
     <ROW Registry="Readme" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="Readme" Value="[ARPREADME]" Component_="AI_CustomARPName"/>
+    <ROW Registry="SCOPE_TAG" Root="-1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="SCOPE_TAG" Value="[SCOPE_TAG]" Component_="SCOPE_TAG"/>
     <ROW Registry="Software" Root="-1" Key="Software" Name="\"/>
+    <ROW Registry="TENANT_ID" Root="-1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="TENANT_ID" Value="[TENANT_ID]" Component_="TENANT_ID"/>
     <ROW Registry="URLInfoAbout" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="URLInfoAbout" Value="[ARPURLINFOABOUT]" Component_="AI_CustomARPName"/>
     <ROW Registry="URLUpdateInfo" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="URLUpdateInfo" Value="[ARPURLUPDATEINFO]" Component_="AI_CustomARPName"/>
     <ROW Registry="Uninstall" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall" Name="\"/>
     <ROW Registry="UninstallPath" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="UninstallPath" Value="[AI_UNINSTALLER] /x [ProductCode] AI_UNINSTALLER_CTP=1" Component_="AI_CustomARPName"/>
     <ROW Registry="UninstallString" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="UninstallString" Value="[AI_UNINSTALLER] /x [ProductCode] AI_UNINSTALLER_CTP=1" Component_="AI_CustomARPName"/>
+    <ROW Registry="UpgradeCode" Root="-1" Key="Software\[Manufacturer]\[UpgradeCode]" Name="\"/>
     <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
     <ROW Registry="VersionMajor" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="VersionMajor" Value="#1" Component_="AI_CustomARPName" VirtualValue="#"/>
     <ROW Registry="VersionMinor" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="VersionMinor" Value="#0" Component_="AI_CustomARPName" VirtualValue="#"/>
