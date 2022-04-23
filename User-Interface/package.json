@@ -17,7 +17,7 @@
     "url": "https://github.com/microsoft/Privileged-Security-Management"
   },
   "dependencies": {
-    "@fluentui/react": "^8.64.3",
+    "@fluentui/react": "^8.66.2",
     "@reduxjs/toolkit": "^1.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -30,7 +30,7 @@
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.4.1",
-    "@types/node": "^17.0.23",
+    "@types/node": "^17.0.25",
     "@types/react": "^17.0.43",
     "@types/react-dom": "^17.0.14",
     "@types/react-redux": "^7.1.23",
