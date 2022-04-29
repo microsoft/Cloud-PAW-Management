@@ -815,7 +815,7 @@
     <ATTRIBUTE name="MajorUpgradeInstances" value="DefaultBuild:false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.ScheduledTasksComponent">
-    <ROW TaskId="PrivSecMgmtServerStart" TaskName="[ProductName] Server Start" Run="[#privilegedsecuritymanagementserverwin.exe]" UserProp="SYSTEM" Comments="Starts the PSM server to run the REST API and the UI." Flags="0" Trigger="5|1|1|1|0|0|0||0|0" Settings="2|0" Condition="1" TaskVersion="2.0"/>
+    <ROW TaskId="PrivSecMgmtServerStart" TaskName="[ProductName] Server Start" Run="[#privilegedsecuritymanagementserverwin.exe]" UserProp="SYSTEM" Comments="Starts the PSM server to run the REST API and the UI." Flags="1024" Trigger="5|1|1|1|0|0|0||0|0" Settings="2|0" Condition="1" TaskVersion="2.4"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.SoftwareIdentificationComponent">
     <ATTRIBUTE name="LocalFile" value="regid.199509.com.example_ProductNam"/>
