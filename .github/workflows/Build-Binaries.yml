@@ -145,7 +145,7 @@ jobs:
       - name: Build MSI Installer
         uses: Caphyon/advinst-github-action@v1.0
         with:
-          advinst-version: '19.4'
+          advinst-version: '19.5'
           advinst-license: ${{ secrets.ADVANCEDINSTALLER_KEY }}
           advinst-enable-automation: 'false'
           aip-path: 'Privileged Security Management.aip'
@@ -161,7 +161,7 @@ jobs:
       - name: Build EXE Installer
         uses: Caphyon/advinst-github-action@v1.0
         with:
-          advinst-version: '19.3'
+          advinst-version: '19.5'
           advinst-license: ${{ secrets.ADVANCEDINSTALLER_KEY }}
           advinst-enable-automation: 'false'
           aip-path: 'Privileged Security Management.aip'
