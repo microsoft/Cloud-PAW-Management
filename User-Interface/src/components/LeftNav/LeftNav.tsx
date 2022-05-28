@@ -25,8 +25,8 @@ const navLinkGroups: INavLinkGroup[] = [
         url: '#',
       },
       {
-        key: 'SILO Management',
-        name: 'SILO Management',
+        key: 'Silo Management',
+        name: 'Silo Management',
         url: '#',
       },
       {
