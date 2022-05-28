@@ -1,5 +1,5 @@
 import { IDeviceItem } from "../models";
-// import { devices } from './mocks/deviceMocks';
+// import { autopilotDeviceList } from '../models/mocks/autopilotDeviceMock';
 
 export interface IDeviceService {
     getDevices: () => Promise<IDeviceItem[]>,
@@ -21,10 +21,14 @@ export class DeviceService {
          uncomment the following return to work with device mocks, also uncomment devices mock import above
         */
 
-        // return devices.map((device) => {
+        // Map the mock data to the redux store's device list format
+        // return autopilotDeviceList.map((device) => {
+        //     if (device.displayName === undefined) { device.displayName = device.serialNumber }
         //     return {
         //         displayName: device.displayName,
-        //         deviceId: device.azureActiveDirectoryDeviceId,
+        //         azureActiveDirectoryDeviceId: device.azureActiveDirectoryDeviceId,
+        //         azureAdDeviceId: device.azureAdDeviceId,
+        //         serialNumber: device.serialNumber
         //     };
         // });
     }

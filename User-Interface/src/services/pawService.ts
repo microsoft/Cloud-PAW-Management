@@ -1,6 +1,6 @@
 import type { User } from "@microsoft/microsoft-graph-types-beta";
 import { IDeviceItem, IPawItem } from "../models";
-// import { paws } from './mocks/pawMocks';
+// import { PsmDeviceList } from '../models/mocks';
 
 export interface IPawService {
     getPaws: () => Promise<IPawItem[]>,
@@ -34,15 +34,18 @@ export class PawService {
             };
         });
         /*
-        uncomment the below code to work with the mock, and also uncomment paws mock import
+            Uncomment the below code to work with the mock, and also uncomment paws mock import
         */
-        // return paws.map((paw) => {
+        // return PsmDeviceList.map((device: IPsmDevice) => {
         //     return {
-        //         displayName: paw.DisplayName,
-        //         pawId: paw.id,
-        //         pawType: paw.Type,
-        //         commissionDate: dateformat(paw.CommissionedDate,'yyyy/mm/dd H:mm'),
-        //         parentDeviceId: paw.ParentDevice,
+        //         DisplayName: device.DisplayName,
+        //         id: device.id,
+        //         Type: device.Type,
+        //         CommissionedDate: new Date(device.CommissionedDate).toUTCString(),
+        //         ParentDevice: device.ParentDevice,
+        //         GroupAssignment: device.GroupAssignment,
+        //         ParentGroup: device.ParentGroup,
+        //         UserAssignment: device.UserAssignment
         //     };
         // });
     };
