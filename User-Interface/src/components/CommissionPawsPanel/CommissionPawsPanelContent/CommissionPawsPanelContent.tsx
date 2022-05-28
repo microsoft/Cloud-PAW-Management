@@ -39,16 +39,29 @@ export const CommissionPawsPanelContent = () => {
     });
   };
 
-  const FilteredItemsMemo = useMemo(() => {
-    const filteredDevices = devices.filter((device) => device.deviceId.indexOf(searchTerm) >= 0);
-    return <FilteredItems items={filteredDevices} />;
-  }, [devices, searchTerm]);
+  const FilteredItemsMemo = useMemo(
+    () => {
+      if (searchTerm === "") {
+        var filteredDevices = devices;
+      } else {
+        filteredDevices = devices.filter((device) => {
+          if (device.azureAdDeviceId.toLowerCase().includes(searchTerm) || device.displayName?.toLowerCase().includes(searchTerm)) {
+            return true
+          } else {
+            return false
+          } 
+        });
+      }
+      return <FilteredItems items={filteredDevices} />;
+    },
+    [devices, searchTerm]
+  );
 
   return (
     <>
       <Stack tokens={stackTokens} styles={containerStyles}>
         <FocusZone direction={FocusZoneDirection.vertical}>
-          <SearchBox placeholder="Search by AAD Device ID" onSearch={onSearch} />
+          <SearchBox placeholder="Search Autopilot Devices" onSearch={onSearch} />
           {
             FilteredItemsMemo
           }
