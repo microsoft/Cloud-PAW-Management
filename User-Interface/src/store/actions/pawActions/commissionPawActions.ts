@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { getPaws } from '.';
-import type { IDeviceItem, IPawItem } from '../../../models';
+import type { IPsmAutopilotDevice, IPsmDevice } from '../../../models';
 import { PawService } from '../../../services';
 import {
     COMMISSIONING_PAWS_REQUEST,
@@ -16,7 +16,7 @@ import {
 const commissioningPawsRequest = () => ({
     type: COMMISSIONING_PAWS_REQUEST,
 });
-const commissioningPawsSuccess = (paws: IPawItem[]) => ({
+const commissioningPawsSuccess = (paws: IPsmDevice[]) => ({
     type: COMMISSIONING_PAWS_SUCCESS,
     payload: paws
 });
@@ -25,7 +25,7 @@ const commissioningPawsFailure = (error: Error) => ({
     payload: error
 });
 
-export const commissionPaws = (paws: IDeviceItem[], pawTypeToCommission: string) => {
+export const commissionPaws = (paws: IPsmAutopilotDevice[], pawTypeToCommission: string) => {
     return async (dispatch) => {
         dispatch(commissioningPawsRequest());
         PawService.commissionPaw(paws, pawTypeToCommission)
@@ -41,7 +41,7 @@ const decommissioningPawsRequest = () => ({
     type: DECOMMISSIONING_PAWS_REQUEST,
 });
 
-const decommissioningPawsSuccess = (paws: IPawItem[]) => ({
+const decommissioningPawsSuccess = (paws: IPsmDevice[]) => ({
     type: DECOMMISSIONING_PAWS_SUCCESS,
     payload: paws
 });
@@ -51,7 +51,7 @@ const decommissioningPawsFailure = (error: Error) => ({
     payload: error
 });
 
-export const decommissionPaws = (paws: IPawItem[]) => {
+export const decommissionPaws = (paws: IPsmDevice[]) => {
     return async (dispatch) => {
         dispatch(decommissioningPawsRequest())
         PawService.decommissionPaw(paws)

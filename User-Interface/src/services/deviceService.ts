@@ -1,20 +1,39 @@
-import { IDeviceItem } from "../models";
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+import type { IPsmAutopilotDevice } from "../models";
 // import { autopilotDeviceList } from '../models/mocks/autopilotDeviceMock';
 
 export interface IDeviceService {
-    getDevices: () => Promise<IDeviceItem[]>,
+    getDevices: () => Promise<IPsmAutopilotDevice[]>,
 }
 export class DeviceService {
     public static API_BASE_URL = document.location.origin;
-    public static async getDevices(): Promise<IDeviceItem[]> {
+    public static async getDevices(): Promise<IPsmAutopilotDevice[]> {
+
+        /*
+         Comment the following code to work with device mocks
+        */
+
+        //  Define the URL to query against
         const getDevicesUrl = `${this.API_BASE_URL}/API/Lifecycle/AutopilotDevice`
+
+        // Grab a list of autopilot devices
         const response = await fetch(getDevicesUrl);
+
+        // Parse the JSON return of the API call
         const result = await response.json();
-        return result.map((device) => {
+
+        // Return the specified
+        return result.map((device: IPsmAutopilotDevice) => {
+            let computedName = "";
+            computedName = device.displayName === undefined || device.displayName === "" ? device.serialNumber : device.displayName
             return {
-                displayName: device.displayName,
-                deviceId: device.azureActiveDirectoryDeviceId,
-            };  
+                displayName: computedName,
+                azureActiveDirectoryDeviceId: device.azureActiveDirectoryDeviceId,
+                azureAdDeviceId: device.azureActiveDirectoryDeviceId,
+                serialNumber: device.serialNumber
+            };
         });
 
         /*

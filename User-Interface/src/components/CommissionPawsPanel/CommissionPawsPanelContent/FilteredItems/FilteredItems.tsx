@@ -4,21 +4,21 @@
 import React, { useCallback, useMemo } from "react";
 import { DetailsList, IColumn, IconButton, Label, Stack, Selection, Dropdown, FocusZone } from "@fluentui/react";
 import { useDispatch } from "react-redux";
-import { IDeviceItem } from "../../../../models";
+import { IPsmAutopilotDevice } from "../../../../models";
 import { SELECT_DEVICES_TO_COMMISSION_PAW, SELECT_PAW_TYPE_TO_COMMISSION } from "../../../../store/actions/pawActions";
 
 interface IFilteredItemsProps {
-  items: IDeviceItem[];
+  items: IPsmAutopilotDevice[];
 }
 
 export const FilteredItems = ({ items }: IFilteredItemsProps) => {
   const dispatch = useDispatch();
 
-  const getKey = (item: IDeviceItem, index?: number): string => {
-    return item.deviceId;
+  const getKey = (item: IPsmAutopilotDevice, index?: number): string => {
+    return item.azureAdDeviceId;
   };
 
-  const onDeviceSelected = (deviceItems: IDeviceItem[]) => {
+  const onDeviceSelected = (deviceItems: IPsmAutopilotDevice[]) => {
     dispatch({
       type: SELECT_DEVICES_TO_COMMISSION_PAW,
       payload: deviceItems,
@@ -27,7 +27,7 @@ export const FilteredItems = ({ items }: IFilteredItemsProps) => {
 
   const selection = new Selection({
     onSelectionChanged: () => {
-      onDeviceSelected(selection.getSelection() as IDeviceItem[])
+      onDeviceSelected(selection.getSelection() as IPsmAutopilotDevice[])
     },
   });
 
@@ -52,21 +52,21 @@ export const FilteredItems = ({ items }: IFilteredItemsProps) => {
   />;
   }, [onPawTypeChange])
   const deviceSummaryColumn: IColumn = {
-    key: 'deviceId',
+    key: 'azureAdDeviceId',
     name: 'Select to commission',
-    fieldName: 'deviceId',
+    fieldName: 'azureAdDeviceId',
     minWidth: 150,
     maxWidth: 200,
     isRowHeader: true,
     isResizable: true,
     data: 'string',
-    onRender: (item: IDeviceItem) => {
+    onRender: (item: IPsmAutopilotDevice) => {
       return (
         <Stack horizontal>
           <IconButton iconProps={{ iconName: 'Devices3' }} title="Add" ariaLabel="Add" />  
           <Stack>
             <Stack.Item><Label>{item?.displayName}</Label></Stack.Item>
-            <Stack.Item>{item?.deviceId}</Stack.Item>
+            <Stack.Item>{item?.azureAdDeviceId}</Stack.Item>
           </Stack>
         </Stack>
       );

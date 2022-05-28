@@ -1,18 +1,18 @@
 import type { User } from "@microsoft/microsoft-graph-types-beta";
-import { IDeviceItem, IPawItem } from "../models";
+import type { IPsmAutopilotDevice, IPsmDevice } from "../models";
 // import { PsmDeviceList } from '../models/mocks';
 
 export interface IPawService {
-    getPaws: () => Promise<IPawItem[]>,
-    commissionPaw: (paw: IDeviceItem) => Promise<void>,
-    decommissionPaw: (paws: IPawItem[]) => Promise<string[]>, // return list of decommissioned Paws
+    getPaws: () => Promise<IPsmDevice[]>,
+    commissionPaw: (paw: IPsmAutopilotDevice) => Promise<void>,
+    decommissionPaw: (paws: IPsmDevice[]) => Promise<string[]>, // return list of decommissioned Paws
 }
 export class PawService {
     // Get the current host name and port (if there is a port)
     public static API_BASE_URL = document.location.origin;
 
     // Get a list of PAW devices from the Server's Lifecycle API
-    public static async getPaws(): Promise<IPawItem[]> {
+    public static async getPaws(): Promise<IPsmDevice[]> {
         // Build the URL to run the API request against
         const getPawsUrl = `${this.API_BASE_URL}/API/Lifecycle/PAW`;
 
@@ -23,14 +23,17 @@ export class PawService {
         const result: Array<any> = await response.json();
 
         // rename the object's keys to match what is used throughout the rest of the app
-        return result.map((paw) => {
+        return result.map((device: IPsmDevice) => {
             // For each object in the array, replace it's contents with the below object structure
             return {
-                displayName: paw.DisplayName,
-                pawId: paw.id,
-                pawType: paw.Type,
-                commissionDate: new Date(paw.CommissionedDate).toUTCString(),
-                parentDeviceId: paw.ParentDevice,
+                DisplayName: device.DisplayName,
+                id: device.id,
+                Type: device.Type,
+                CommissionedDate: new Date(device.CommissionedDate).toUTCString(),
+                ParentDevice: device.ParentDevice,
+                GroupAssignment: device.GroupAssignment,
+                UserAssignment: device.UserAssignment,
+                ParentGroup: device.ParentGroup
             };
         });
         /*
@@ -51,11 +54,11 @@ export class PawService {
     };
 
     // Commission the specified autopilot device by using the lifecycle API
-    public static commissionPaw = async (deviceList: IDeviceItem[], pawTypeToCommission: string) => {
+    public static commissionPaw = async (deviceList: IPsmAutopilotDevice[], pawTypeToCommission: string) => {
         // Loop through each device in the list of autopilot devices
         for (const device of deviceList) {
             // Build the URL for the specified unique autopilot device
-            const commissionPawUrl = `${this.API_BASE_URL}/API/Lifecycle/PAW/${device.deviceId}/Commission`;
+            const commissionPawUrl = `${this.API_BASE_URL}/API/Lifecycle/PAW/${device.azureAdDeviceId}/Commission`;
 
             // Build the post body
             const postBody = {
@@ -75,11 +78,11 @@ export class PawService {
     };
 
     // Decommission the specified PAW device by using the lifecycle API
-    public static decommissionPaw = async (pawList: IPawItem[]) => {
+    public static decommissionPaw = async (deviceList: IPsmDevice[]) => {
         // Loop through all of the specified PAWs and decommission them
-        for (const paw of pawList) {
+        for (const device of deviceList) {
             // Build the web request url dynamically
-            const commissionPawUrl = `${this.API_BASE_URL}/API/Lifecycle/PAW/${paw.pawId}/Commission`;
+            const commissionPawUrl = `${this.API_BASE_URL}/API/Lifecycle/PAW/${device.id}/Commission`;
 
             // Make the request to decommission the PAW with the specified options
             await fetch(commissionPawUrl, {
@@ -90,9 +93,9 @@ export class PawService {
     };
 
     // Get the User Assignments for the specified PAW device
-    public static async getPawAssignment(pawDevice: IPawItem): Promise<User[]> {
+    public static async getPawAssignment(psmDevice: IPsmDevice): Promise<User[]> {
         // Build the request url
-        const getAssignmentURL = `${this.API_BASE_URL}/API/Lifecycle/PAW/${pawDevice.pawId}/Assign`;
+        const getAssignmentURL = `${this.API_BASE_URL}/API/Lifecycle/PAW/${psmDevice.id}/Assign`;
 
         // Run the Get request against the specified endpoint
         const response = await fetch(getAssignmentURL);
@@ -104,9 +107,9 @@ export class PawService {
         return result;
     };
 
-    public static async setPawAssignment(pawDevice: IPawItem, upnList: string[]): Promise<User[]> {
+    public static async setPawAssignment(psmDevice: IPsmDevice, upnList: string[]): Promise<User[]> {
         // Build the request url
-        const postAssignmentURL = `${this.API_BASE_URL}/API/Lifecycle/PAW/${pawDevice.pawId}/Assign`;
+        const postAssignmentURL = `${this.API_BASE_URL}/API/Lifecycle/PAW/${psmDevice.id}/Assign`;
 
         // Build the post body to be used in the web request
         const postBody = {
@@ -130,9 +133,9 @@ export class PawService {
         return result;
     };
 
-    public static async removePawAssignment(pawDevice: IPawItem, upnList: string[]): Promise<User[]> {
+    public static async removePawAssignment(psmDevice: IPsmDevice, upnList: string[]): Promise<User[]> {
         // Build the request url
-        const deleteAssignmentURL = `${this.API_BASE_URL}/API/Lifecycle/PAW/${pawDevice.pawId}/Assign`;
+        const deleteAssignmentURL = `${this.API_BASE_URL}/API/Lifecycle/PAW/${psmDevice.id}/Assign`;
 
         // Build the delete body to be used in the web request
         const deleteBody = {

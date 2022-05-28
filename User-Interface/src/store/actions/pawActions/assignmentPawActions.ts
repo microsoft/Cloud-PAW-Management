@@ -13,7 +13,7 @@ import {
     UNASSIGN_PAW_FAILURE
 } from "./types";
 import { PawService } from "../../../services";
-import type { IPawItem } from "../../../models"
+import type { IPsmDevice } from "../../../models"
 import type { User } from "@microsoft/microsoft-graph-types-beta";
 
 // Define the redux store action for the start of the request
@@ -41,7 +41,7 @@ function getAssignedUserFailure(error: Error) {
 };
 
 // Execute the retrieval command async while updating the UI's state in redux when the command resolves
-export function getPawAssignedUserList(pawDevice: IPawItem) {
+export function getPawAssignedUserList(pawDevice: IPsmDevice) {
     // Return a thunk object on execution
     return async function(dispatch): Promise<void> {
         // Set the UI state to be in the retrieval mode
@@ -80,7 +80,7 @@ function setAssignedUserFailure(error: Error) {
 };
 
 // Execute the add assignment command async while updating the UI's state in redux when the command resolves
-export function setPawAssignedUserList(pawDevice: IPawItem, upnList: string[]) {
+export function setPawAssignedUserList(pawDevice: IPsmDevice, upnList: string[]) {
     // Return a thunk object on execution
     return async function(dispatch): Promise<void> {
         // Set the UI state to be in the addition mode
@@ -119,7 +119,7 @@ function removeAssignedUserFailure(error: Error) {
 };
 
 // Execute the un-assignment command async while updating the UI's state in redux when the command resolves
-export function removePawAssignedUserList(pawDevice: IPawItem, upnList: string[]) {
+export function removePawAssignedUserList(pawDevice: IPsmDevice, upnList: string[]) {
     // Return a thunk object on execution
     return async function(dispatch): Promise<void> {
         // Set the UI state to be in the removal mode

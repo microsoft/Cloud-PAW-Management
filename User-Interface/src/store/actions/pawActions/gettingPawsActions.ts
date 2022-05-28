@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IPawItem } from '../../../models';
+import { IPsmDevice } from '../../../models';
 import { PawService } from '../../../services';
 import {
     GETTING_PAWS_REQUEST,
@@ -12,7 +12,7 @@ import {
 const gettingPawsRequest = () => ({
     type: GETTING_PAWS_REQUEST,
 });
-const gettingPawsSuccess = (paws: IPawItem[]) => ({
+const gettingPawsSuccess = (paws: IPsmDevice[]) => ({
     type: GETTING_PAWS_SUCCESS,
     payload: paws
 });

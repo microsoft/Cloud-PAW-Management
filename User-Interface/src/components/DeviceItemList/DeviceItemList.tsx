@@ -4,7 +4,7 @@
 import { CheckboxVisibility, DetailsList, Selection, DetailsListLayoutMode, IColumn, SelectionMode } from '@fluentui/react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { IDeviceItem, IPawItem } from '../../models';
+import type { IPsmAutopilotDevice, IPsmDevice } from '../../models';
 import { IPawItemListProps } from './DeviceItemList.types';
 import { DECOMMISSIONING_PAW_SELECTED } from '../../store/actions/pawActions'; 
 export const DeviceItemList = (props: IPawItemListProps) => {
@@ -15,7 +15,7 @@ export const DeviceItemList = (props: IPawItemListProps) => {
       const pawDisplayNameColumn: IColumn =       {
         key: 'pawDisplayName',
         name: 'Display Name',
-        fieldName: 'displayName',
+        fieldName: 'DisplayName',
         minWidth: 100,
         maxWidth: 120,
         isRowHeader: true,
@@ -27,7 +27,7 @@ export const DeviceItemList = (props: IPawItemListProps) => {
     const pawIdColumn: IColumn =       {
         key: 'pawId',
         name: 'PAW ID',
-        fieldName: 'pawId',
+        fieldName: 'id',
         minWidth: 275,
         maxWidth: 350,
         isRowHeader: true,
@@ -40,7 +40,7 @@ export const DeviceItemList = (props: IPawItemListProps) => {
       const pawTypeColumn: IColumn = {
         key: 'pawType',
         name: 'PAW Type',
-        fieldName: 'pawType',
+        fieldName: 'Type',
         minWidth: 100,
         maxWidth: 100,
         isRowHeader: true,
@@ -53,7 +53,7 @@ export const DeviceItemList = (props: IPawItemListProps) => {
       const commissionDateColumn: IColumn = {
         key: 'commissionDate',
         name: 'Commission Date',
-        fieldName: 'commissionDate',
+        fieldName: 'CommissionedDate',
         minWidth: 210,
         isRowHeader: true,
         isResizable: true,
@@ -65,7 +65,7 @@ export const DeviceItemList = (props: IPawItemListProps) => {
       const parentDeviceIdColumn: IColumn =       {
         key: 'parentDeviceId',
         name: 'Parent Device',
-        fieldName: 'parentDeviceId',
+        fieldName: 'ParentDevice',
         minWidth: 275,
         // maxWidth: 350,
         isRowHeader: true,
@@ -77,7 +77,7 @@ export const DeviceItemList = (props: IPawItemListProps) => {
 
     const columns: IColumn[] = [pawDisplayNameColumn, pawIdColumn, pawTypeColumn, commissionDateColumn, parentDeviceIdColumn];
 
-    const  onPawSelected = (item: IPawItem[]) => {
+    const  onPawSelected = (item: IPsmDevice[]) => {
       dispatch({
         type: DECOMMISSIONING_PAW_SELECTED,
         payload: item
@@ -86,12 +86,12 @@ export const DeviceItemList = (props: IPawItemListProps) => {
 
     const selection = new Selection({
       onSelectionChanged: () => {
-        onPawSelected(selection.getSelection() as IPawItem[])
+        onPawSelected(selection.getSelection() as IPsmDevice[])
       },
     });
 
-    const getKey = (item: IDeviceItem, index?: number): string => {
-      return item.deviceId;
+    const getKey = (item: IPsmAutopilotDevice, index?: number): string => {
+      return item.azureActiveDirectoryDeviceId;
     };
 
     return <DetailsList

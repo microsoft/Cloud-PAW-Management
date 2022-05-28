@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IDeviceItem } from '../../../models';
+import { IPsmAutopilotDevice } from '../../../models';
 import { DeviceService } from '../../../services/deviceService';
 import {
     GETTING_DEVICE_REQUEST,
@@ -12,7 +12,7 @@ import {
 const gettingDeviceRequest = () => ({
     type: GETTING_DEVICE_REQUEST,
 });
-const gettingDevicesSuccess = (devices: IDeviceItem[]) => ({
+const gettingDevicesSuccess = (devices: IPsmAutopilotDevice[]) => ({
     type: GETTING_DEVICE_SUCCESS,
     payload: devices
 });

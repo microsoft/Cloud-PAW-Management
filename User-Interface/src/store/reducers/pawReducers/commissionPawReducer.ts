@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import type { IDeviceItem } from '../../../models';
+import type { IPsmAutopilotDevice } from '../../../models';
 
 import {
     DECOMMISSIONING_PAW_SELECTED,
@@ -82,7 +82,7 @@ export const commissionPaws = (state = initialState, action: any) => {
         case REMOVE_DEVICE_FROM_COMMISSION_PAW_LIST:
             return {
                 ...state,
-                devicesToCommission: state.devicesToCommission.filter((device: IDeviceItem) => device.deviceId !== action.payload.deviceId)
+                devicesToCommission: state.devicesToCommission.filter((device: IPsmAutopilotDevice) => device.azureAdDeviceId !== action.payload.azureAdDeviceId)
             };
         default:
             return state;
