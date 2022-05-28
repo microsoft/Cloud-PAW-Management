@@ -23,7 +23,9 @@ export function Home() {
             <h2>Please select a module to administer</h2>
             <PrimaryButton text="Device Management" onClick={onClickPageNavDevice} />
             <PrimaryButton text="User Management" disabled={true} />
-            <PrimaryButton text="SILO Management" disabled={true} />
+            <PrimaryButton text="Silo Management" disabled={true} />
+            <PrimaryButton text="Intermediaries Management" disabled={true} />
+            <PrimaryButton text="Interface/Server Management" disabled={true} />
             <PrimaryButton text="Privileged Secure Score" disabled={true} />
             <PrimaryButton text="Privileged Security Management Settings" disabled={true} />
         </React.Fragment>
