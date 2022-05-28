@@ -105,5 +105,5 @@ export const DeviceItemList = (props: IPawItemListProps) => {
                 setKey="none"
                 layoutMode={DetailsListLayoutMode.justified}
                 isHeaderVisible={true}
-            />
+            />;
 };

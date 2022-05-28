@@ -398,7 +398,7 @@ export class DebugRouter {
                 // Send the error details if something goes wrong
                 next(error);
             };
-        })
+        });
 
         // TODO: rewrite the update method to use the new validators, generators and graph client method
         // Generate an example settings catalog with the specified name, description, and scope tag
@@ -515,7 +515,7 @@ export class DebugRouter {
                 // Send the error details if something goes wrong
                 next(error);
             };
-        })
+        });
 
         // Get all Conditional Access Policies
         this.webServer.get('/Debug/conditionalAccess', async (request, response, next) => {
@@ -674,6 +674,6 @@ export class DebugRouter {
                 // Send the error details if something goes wrong
                 next(error);
             };
-        })
+        });
     };
 };

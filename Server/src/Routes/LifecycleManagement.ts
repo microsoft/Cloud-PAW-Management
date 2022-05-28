@@ -121,7 +121,7 @@ export class LifecycleRouter {
         // Commissions an Autopilot device as a PAW device based on its AAD Device ID
         this.webServer.post('/API/Lifecycle/PAW/:deviceID/Commission', async (request, response, next) => {
             // Write debug info
-            writeDebugInfo(request.params.deviceID, "Commission PAW - Device ID URL Param:")
+            writeDebugInfo(request.params.deviceID, "Commission PAW - Device ID URL Param:");
             writeDebugInfo(request.body, "Commission PAW - Body of the XHR:");
 
             // If the app is starting, send a notice to the client stating that
@@ -374,7 +374,7 @@ export class LifecycleRouter {
     // Recurse through the specified PAW group and return an array of PAW device config objects
     private async recursePAWGroup(groupID: string): Promise<PAWObject[]> {
         // Validate input
-        if (!validateGUID(groupID)) { throw new InternalAppError("The specified GUID is not a GUID!", "Invalid Input", "LifeCycleManagement - LifeCycleRouter - recursePAWGroup - Input Validation") }
+        if (!validateGUID(groupID)) { throw new InternalAppError("The specified GUID is not a GUID!", "Invalid Input", "LifeCycleManagement - LifeCycleRouter - recursePAWGroup - Input Validation"); }
 
         // Initialize variable namespaces
         let groupMemberList: MicrosoftGraphBeta.Group[];
@@ -450,7 +450,7 @@ export class LifecycleRouter {
     // Commission the specified PAW with no user(s)
     private async commissionPAW(deviceID: string, type?: string): Promise<PAWObject> {
         // Validate Input
-        if (!validateGUID(deviceID)) { throw new InternalAppError("The specified Device ID is not a valid device ID!", "Invalid Input", "LifecycleManagement - LifecycleRouter - commissionPAW - Input Validation") };
+        if (!validateGUID(deviceID)) { throw new InternalAppError("The specified Device ID is not a valid device ID!", "Invalid Input", "LifecycleManagement - LifecycleRouter - commissionPAW - Input Validation"); };
 
         // Initialize the variables that are locally scoped so that they are available for execution
         let devGroup: MicrosoftGraphBeta.Group;
@@ -462,10 +462,10 @@ export class LifecycleRouter {
         // If the type param is not specified, default it to standard PAW.
         if (typeof type !== "string") {
             // Set the PAW type to be used
-            pawType = "Privileged"
+            pawType = "Privileged";
         } else if (type === "Privileged" || type === "Developer" || type == "Tactical") {
             // Set the PAW type to be used
-            pawType = type
+            pawType = type;
         } else { // a string was specified but it doesn't match the expected types allowed
             // Throw an error
             throw new InternalAppError("The type parameter is not a valid value", "Invalid Input", "LifecycleManagement - LifecycleRouter - commissionPAW - Input Validation");
@@ -523,7 +523,7 @@ export class LifecycleRouter {
 
         // Write debug info
         writeDebugInfo(existingPAW, "Existing PAW?");
-        
+
         // If a PAW already exists, stop execution
         if (existingPAW) {
             // Throw an error
@@ -709,7 +709,7 @@ export class LifecycleRouter {
             writeDebugInfo(devGroup.id, "Adding PAW (" + deviceID + ") to its exclusive SG:");
 
             // Add the PAW device to the PAW SG
-            devGroupMemberResult = await this.graphClient.newAADGroupMember(devGroup.id, deviceID, true);
+            await this.graphClient.newAADGroupMember(devGroup.id, deviceID, true);
 
             // Write debug info
             writeDebugInfo(devGroup.id, "Completed membership addition of PAW (" + deviceID + ") to its exclusive SG:");
@@ -727,7 +727,7 @@ export class LifecycleRouter {
         // Catch execution errors
         try {
             // Add the newly created PAW device group to the PAW root group
-            rootGroupMemberResult = await this.graphClient.newAADGroupMember(this.configEngine.config.PAWSecGrp, devGroup.id);
+            await this.graphClient.newAADGroupMember(this.configEngine.config.PAWSecGrp, devGroup.id);
         } catch (error) { // If an error happens
             // Check if error is internal and pass it directly if it is.
             if (error instanceof InternalAppError) {
@@ -778,7 +778,7 @@ export class LifecycleRouter {
     // Decommission the specified PAW
     private async decommissionPAW(deviceID: string): Promise<boolean> {
         // Validate input
-        if (!validateGUID(deviceID)) { throw new InternalAppError("The specified Device ID is not a valid device ID!", "Invalid Input", "LifecycleManagement - LifecycleRouter - decommissionPAW - Input Validation") };
+        if (!validateGUID(deviceID)) { throw new InternalAppError("The specified Device ID is not a valid device ID!", "Invalid Input", "LifecycleManagement - LifecycleRouter - decommissionPAW - Input Validation"); };
 
         // Ensure that the config engine is initialized
         if (!this.configEngine.configInitialized || this.configEngine.config === undefined) {
@@ -888,8 +888,8 @@ export class LifecycleRouter {
     // Assign the specified user(s) to a device, if replacing assignment, wipes if no user overlap.
     private async assignPAW(deviceID: string, upnList: string[]): Promise<MicrosoftGraphBeta.User[]> {
         // Validate Input
-        if (!validateGUID(deviceID)) { throw new InternalAppError("The specified Device ID is not valid!", "Invalid Input", "LifecycleManagement - LifecycleRouter - assignPAW - Input Validation") };
-        if (!validateEmailArray(upnList)) { throw new InternalAppError("The UPN list is not valid!", "Invalid Input", "LifecycleManagement - LifecycleRouter - assignPAW - Input Validation") };
+        if (!validateGUID(deviceID)) { throw new InternalAppError("The specified Device ID is not valid!", "Invalid Input", "LifecycleManagement - LifecycleRouter - assignPAW - Input Validation"); };
+        if (!validateEmailArray(upnList)) { throw new InternalAppError("The UPN list is not valid!", "Invalid Input", "LifecycleManagement - LifecycleRouter - assignPAW - Input Validation"); };
 
         // Ensure that the config engine is initialized
         if (!this.configEngine.configInitialized || this.configEngine.config === undefined) {
@@ -982,7 +982,7 @@ export class LifecycleRouter {
             // If the default user 0 user (OOBE User) is listed, ignore it and continue to the next loop iteration
             if (userAssignment.value === "defaultuser0") {
                 // Skip this loop round
-                continue
+                continue;
             } else { // Is not the OOBE user
                 // Extract the UPN from the value and add it to the old user list
                 oldUpnList = [userAssignment.value.split("\\")[1], ...oldUpnList];
@@ -1125,7 +1125,7 @@ export class LifecycleRouter {
     // Get the user assignment(s) of the specified PAW
     private async getPawAssignment(deviceID: string): Promise<MicrosoftGraphBeta.User[]> {
         // Validate Input
-        if (!validateGUID(deviceID)) { throw new InternalAppError("The specified Device ID is not valid!", "Invalid Input", "LifecycleManagement - LifecycleRouter - getPawAssignment - Input Validation") };
+        if (!validateGUID(deviceID)) { throw new InternalAppError("The specified Device ID is not valid!", "Invalid Input", "LifecycleManagement - LifecycleRouter - getPawAssignment - Input Validation"); };
 
         // Ensure that the config engine is initialized
         if (!this.configEngine.configInitialized || this.configEngine.config === undefined) {
@@ -1134,7 +1134,7 @@ export class LifecycleRouter {
         };
 
         // Initialize Variables
-        let assignedUpnList: string[] = []
+        let assignedUpnList: string[] = [];
         let pawList: PAWObject[];
         let assignmentCatalog: MicrosoftGraphBeta.DeviceManagementConfigurationPolicy;
 
@@ -1218,7 +1218,7 @@ export class LifecycleRouter {
             // If the default user 0 user (OOBE User) is listed, ignore it and continue to the next loop iteration
             if (userAssignment.value === "defaultuser0") {
                 // Skip this loop round
-                continue
+                continue;
             } else { // Is not the OOBE user
                 // Extract the UPN from the value and add it to the old user list
                 assignedUpnList = [userAssignment.value.split("\\")[1], ...assignedUpnList];
@@ -1256,8 +1256,8 @@ export class LifecycleRouter {
     // Un-Assign the specified user(s) from the specified PAW. Wipes the device if no user left.
     private async unassignPAW(deviceID: string, upnList: string[]): Promise<MicrosoftGraphBeta.User[]> {
         // Validate Input
-        if (!validateGUID(deviceID)) { throw new InternalAppError("The specified Device ID is not valid!", "Invalid Input", "LifecycleManagement - LifecycleRouter - unassignPAW - Input Validation") };
-        if (!validateEmailArray(upnList)) { throw new InternalAppError("The UPN list is not valid!", "Invalid Input", "LifecycleManagement - LifecycleRouter - unassignPAW - Input Validation") };
+        if (!validateGUID(deviceID)) { throw new InternalAppError("The specified Device ID is not valid!", "Invalid Input", "LifecycleManagement - LifecycleRouter - unassignPAW - Input Validation"); };
+        if (!validateEmailArray(upnList)) { throw new InternalAppError("The UPN list is not valid!", "Invalid Input", "LifecycleManagement - LifecycleRouter - unassignPAW - Input Validation"); };
 
         // Ensure that the config engine is initialized
         if (!this.configEngine.configInitialized || this.configEngine.config === undefined) {
@@ -1266,7 +1266,6 @@ export class LifecycleRouter {
         };
 
         // Initialize variable
-        let oldUpnList: string[] = [];
         let pawList: PAWObject[];
         let assignedUserList: MicrosoftGraphBeta.User[];
 

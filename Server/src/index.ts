@@ -47,7 +47,7 @@ writeDebugInfo(path.join(__dirname, "UI"), "Static file path:")
 // If debug mode is enabled, enable the debug routes
 if (debugMode === "true") {
     // Instantiate an instance of the debug router which will add of the debugging routes
-    const debugRoutes = new DebugRouter(webServer, graphClient, configEngine, azureAuthSession.credential);
+    new DebugRouter(webServer, graphClient, configEngine, azureAuthSession.credential);
 
     // Stop the server if the stop command is issued
     // This can't be in the debug routes as the server instance can't be exposed there.
@@ -63,11 +63,11 @@ if (debugMode === "true") {
     });
 
     // Instantiate an instance of the OpenAPI docs engine
-    const openAPIRoutes = new SwaggerUI(webServer);
+    new SwaggerUI(webServer);
 };
 
 // Initialize the core business logic routes
-const lifeCycleRouter = new LifecycleRouter(webServer, graphClient, configEngine);
+new LifecycleRouter(webServer, graphClient, configEngine);
 
 // Set the startup indicator as false to indicate that the app is no longer starting up
 configEngine.startup = false;

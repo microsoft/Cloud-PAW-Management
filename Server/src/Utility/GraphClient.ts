@@ -447,7 +447,7 @@ export class AppGraphClient {
         if (name.length > 120) { throw new InternalAppError("The name is too long, can't be longer than 120 chars!", "Invalid Input", "GraphClient - newAADGroup - Input Validation") };
 
         // These characters cannot be used in the mailNickName: @()\[]";:.<>,SPACE
-        const nicknameRegex = /[\\\]\]@()";:.<>,\s]+/gm;
+        const nicknameRegex = /[\\\]@()";:.<>,\s]+/gm;
 
         // Filter out the non-valid chars from the group name to build a valid nickname
         const nickName = name.replace(nicknameRegex, "");
@@ -536,7 +536,7 @@ export class AppGraphClient {
         if (name.length > 120) { throw new InternalAppError("The name is too long, can't be longer than 120 chars!", "Invalid Input", "GraphClient - updateAADGroup - Input Validation") };
 
         // These characters cannot be used in the mailNickName: @()\[]";:.<>,SPACE
-        const nicknameRegex = /[\\\]\]@()";:.<>,\s]+/gm;
+        const nicknameRegex = /[\\\]@()";:.<>,\s]+/gm;
 
         // Filter out the non-valid chars from the group name to build a valid nickname
         const nickName = name.replace(nicknameRegex, "");
@@ -956,7 +956,7 @@ export class AppGraphClient {
     async updateConfigurationAssignment(configType: "Admin Template", configGUID: string, includeGUID?: string[], excludeGUID?: string[]): Promise<MicrosoftGraphBeta.GroupPolicyConfigurationAssignment>
     async updateConfigurationAssignment(configType: string, configGUID: string, includeGUID?: string[], excludeGUID?: string[]) {
         // Validate inputs
-        if (typeof configType !== "string" && configType !== "Settings Catalog" && configType !== "Setting Template" && configType !== "Admin Template") { throw new InternalAppError("The config type parameter only accepts the strings: 'Settings Catalog', 'Device', and 'Admin Template' as values.", "Invalid Input", "GraphClient - updateConfigurationAssignment - Input Validation") };
+        if (typeof configType !== "string" || (configType !== "Settings Catalog" && configType !== "Setting Template" && configType !== "Admin Template")) { throw new InternalAppError("The config type parameter only accepts the strings: 'Settings Catalog', 'Device', and 'Admin Template' as values.", "Invalid Input", "GraphClient - updateConfigurationAssignment - Input Validation") };
         if (!validateGUID(configGUID)) { throw new InternalAppError("The specified GUID for the config GUID is not valid!", "Invalid Input", "GraphClient - updateConfigurationAssignment - Input Validation") }
         if (typeof includeGUID !== "undefined" && !validateGUIDArray(includeGUID)) { throw new InternalAppError("The specified array of included group GUIDs is not valid!", "Invalid Input", "GraphClient - updateConfigurationAssignment - Input Validation") };
         if (typeof excludeGUID !== "undefined" && !validateGUIDArray(excludeGUID)) { throw new InternalAppError("The specified array of excluded group GUIDs is not valid!", "Invalid Input", "GraphClient - updateConfigurationAssignment - Input Validation") };
