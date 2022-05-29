@@ -15,6 +15,7 @@ import { writeDebugInfo } from "./Utility/Utility";
 // Import environmental variables
 const port = process.env.PORT || 3000;
 const debugMode = process.env.PSM_Debug || "false"
+const headlessOperation = process.env.PSM_Headless || "false"
 
 // Generate an authentication session that can create access tokens.
 // This will automatically use available credentials available in Managed Identity, Key Vault or environmental vars.
@@ -34,15 +35,18 @@ webServer.use(express.json());
 
 // TODO: Properly config the CSP settings so they are react compatible to bring more security
 // Quick configure Express to be more secure, disabling the CSP because it breaks react
-webServer.use(helmet({"contentSecurityPolicy": false}));
+webServer.use(helmet({ "contentSecurityPolicy": false }));
 
-// Serve up the UI directory
-webServer.use(express.static(path.join(__dirname, "UI")));
-webServer.use("/devices", express.static(path.join(__dirname, "UI")));
-webServer.use("/devices/:DeviceId", express.static(path.join(__dirname, "UI")));
+// Check to see if the UI has been suppressed.
+if (headlessOperation === "true") {
+    // Serve up the UI directory
+    webServer.use(express.static(path.join(__dirname, "UI")));
+    webServer.use("/devices", express.static(path.join(__dirname, "UI")));
+    webServer.use("/devices/:DeviceId", express.static(path.join(__dirname, "UI")));
 
-// Write the info about the static files being served
-writeDebugInfo(path.join(__dirname, "UI"), "Static file path:")
+    // Write the info about the static files being served
+    writeDebugInfo(path.join(__dirname, "UI"), "Static file path:")
+}
 
 // If debug mode is enabled, enable the debug routes
 if (debugMode === "true") {
