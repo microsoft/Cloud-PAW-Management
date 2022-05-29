@@ -12,7 +12,7 @@ Check out our deployment guides here:
 - [Container](https://github.com/microsoft/Privileged-Security-Management/wiki/Deploy-to-Container)
 - [Linux](https://github.com/microsoft/Privileged-Security-Management/wiki/Deploy-to-Linux)
 - [Windows](https://github.com/microsoft/Privileged-Security-Management/wiki/Deploy-to-Windows)
-- [Deploy/Build from Source Code](https://github.com/microsoft/Privileged-Security-Management/wiki/Deploy-from-Source)
+- [Deploy/Run from Source Code](https://github.com/microsoft/Privileged-Security-Management/wiki/Build-and-Run-from-Source)
 
 # Documentation
 The application's docs can be found in the GitHub wiki!   
