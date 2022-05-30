@@ -85,7 +85,7 @@ export class ConfigurationEngine {
             writeDebugInfo((typeof process.env.PSM_Scope_Tag), "Scope_Tag env var is not a string:");
 
             // If it isn't set the scope tag name to a predefined tag name
-            this.scopeTagName = "Priv Sec Mgmt App";
+            this.scopeTagName = "Privileged-Security-Management";
         } else {
             // If it is present, set the scope tag name to the specified tag name
             this.scopeTagName = process.env.PSM_Scope_Tag;
