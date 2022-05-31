@@ -37,15 +37,15 @@ webServer.use(express.json());
 webServer.use(helmet({ "contentSecurityPolicy": false }));
 
 // Check to see if the UI has been suppressed.
-if (headlessOperation === "true") {
+if (headlessOperation !== "true") {
     // Serve up the UI directory
     webServer.use(express.static(path.join(__dirname, "UI")));
     webServer.use("/devices", express.static(path.join(__dirname, "UI")));
     webServer.use("/devices/:DeviceId", express.static(path.join(__dirname, "UI")));
 
     // Write the info about the static files being served
-    writeDebugInfo(path.join(__dirname, "UI"), "Static file path:")
-}
+    writeDebugInfo(path.join(__dirname, "UI"), "Static file path:");
+};
 
 // If debug mode is enabled, enable the debug routes
 if (debugMode === "true") {
