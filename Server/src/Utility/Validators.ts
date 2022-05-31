@@ -89,6 +89,42 @@ export function validateStringArray(stringArray: string[]): boolean {
     return true;
 };
 
+// Validate the name of an Azure Key Vault
+export function validateKeyVaultName(name:string): boolean {
+    // Define the Azure Key Vault name structure in regex.
+    const kvNameRegex = /^[0-9a-zA-Z-]{3,24}$/
+    
+    // Ensure that a string was provided.
+    if (typeof name !== "string") { // if the name is not a string.
+        // Return false to indicate a failed validation.
+        return false;
+    } else if (kvNameRegex.test(name)) {
+        // Return true to indicate a successful validation.
+        return true;
+    } else { // if all else fails
+        // Return false to indicate a failed validation.
+        return false;
+    };
+};
+
+// Validate the name of an Azure Key Vault Secret
+export function validateKeyVaultSecretName(name:string): boolean {
+    // Define the Azure Key Vault Secret name structure in regex.
+    const kvSecretNameRegex = /^[0-9a-zA-Z-]{1,127}$/
+    
+    // Ensure that a string was provided.
+    if (typeof name !== "string") { // if the name is not a string.
+        // Return false to indicate a failed validation.
+        return false;
+    } else if (kvSecretNameRegex.test(name)) {
+        // Return true to indicate a successful validation.
+        return true;
+    } else { // if all else fails
+        // Return false to indicate a failed validation.
+        return false;
+    };
+};
+
 // Validate an array of strings
 export function validateOmaStringObjectArray(omaArray: any[]): boolean {
     // Validate input is an array
