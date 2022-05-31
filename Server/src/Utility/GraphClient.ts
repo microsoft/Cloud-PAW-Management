@@ -6,9 +6,7 @@ import { Client, ClientOptions, PageCollection, PageIterator } from "@microsoft/
 import { TokenCredentialAuthenticationProvider } from "@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials";
 import type * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta";
 import "isomorphic-fetch";
-import { endpointGroupAssignmentTarget } from "./RequestGenerator";
-import { writeDebugInfo, InternalAppError } from "./Utility";
-import { validateConditionalAccessSetting, validateEmail, validateGUID, validateGUIDArray, validateSettingCatalogSettings, validateStringArray, validateOmaStringObjectArray } from "./Validators";
+import { endpointGroupAssignmentTarget, writeDebugInfo, InternalAppError, validateConditionalAccessSetting, validateEmail, validateGUID, validateGUIDArray, validateSettingCatalogSettings, validateStringArray, validateOmaStringObjectArray } from "./";
 
 // Define the Graph Client class.
 export class AppGraphClient {

@@ -1,9 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import type { AppGraphClient } from "../Utility/GraphClient";
-import { InternalAppError, writeDebugInfo } from "../Utility/Utility";
-import { validateDate, validateGUID } from "../Utility/Validators";
+import { InternalAppError, writeDebugInfo, validateDate, validateGUID } from "../Utility";
+import type { AppGraphClient } from "../Utility";
 
 // Export the version of the app
 export const appVersion = "1.1.0";

@@ -3,8 +3,7 @@
 
 import type { AppGraphClient } from "../Utility/GraphClient";
 import type { ConfigurationEngine } from "../Startup/ConfigEngine";
-import { endpointPAWUserRightsSettings, conditionalAccessPAWUserAssignment, localGroupMembershipUserRights } from "../Utility/RequestGenerator";
-import { validateGUID, validateGUIDArray, validateStringArray } from "../Utility/Validators";
+import { endpointPAWUserRightsSettings, conditionalAccessPAWUserAssignment, localGroupMembershipUserRights, validateGUID, validateGUIDArray, validateStringArray } from "../Utility";
 import type express from "express";
 import type { ChainedTokenCredential } from "@azure/identity"
 

@@ -4,10 +4,8 @@
 import type * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta";
 import type express from "express";
 import type { ConfigurationEngine, PAWGroupConfig, PAWObject } from "../Startup/ConfigEngine";
-import type { AppGraphClient } from "../Utility/GraphClient";
-import { endpointPAWUserRightsSettings, localGroupMembershipUserRights } from "../Utility/RequestGenerator";
-import { InternalAppError, writeDebugInfo } from "../Utility/Utility";
-import { validateEmailArray, validateGUID } from "../Utility/Validators";
+import type { AppGraphClient } from "../Utility";
+import { endpointPAWUserRightsSettings, InternalAppError, localGroupMembershipUserRights, validateEmailArray, validateGUID, writeDebugInfo } from "../Utility";
 
 export class LifecycleRouter {
     // Define the properties that will be available to the class
