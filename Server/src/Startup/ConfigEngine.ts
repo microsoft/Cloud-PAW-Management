@@ -1,67 +1,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { InternalAppError, writeDebugInfo, validateDate, validateGUID } from "../Utility";
-import type { AppGraphClient } from "../Utility";
+import type { AppGraphClient, ICloudSecConfig, ICloudSecConfigIncomplete, IDeviceGroupConfig } from "../Utility";
+import { InternalAppError, validateDate, validateGUID, writeDebugInfo } from "../Utility";
 
 // Export the version of the app
 export const appVersion = "1.1.0";
-
-// Define the Endpoint Manager Role Scope Tag data format.
-interface CloudSecConfigIncomplete {
-    "PAWSecGrp"?: string,
-    "UsrSecGrp"?: string,
-    "SiloRootGrp"?: string,
-    "BrkGls"?: string,
-    "UsrTag"?: string,
-    "ScopeTagID"?: string
-};
-
-interface CloudSecConfig {
-    "PAWSecGrp": string,
-    "UsrSecGrp": string,
-    "SiloRootGrp": string,
-    "BrkGls": string,
-    "UsrTag": string,
-    "ScopeTagID": string
-};
-
-/*
- * CommissionedDate = is the ISO 8601 string format of the time representing the commission date of the PAW.
- * GroupAssignment = This is the ID of the Custom CSP Device Configuration that configures the local admin and local hyper-v group memberships.
- * Type = Is the commission type of PAW.
- * UserAssignment = The ID of the Settings Catalog that contains the user rights assignment of the specified PAW device.
- */
-// Define the PAW Configuration Spec
-export interface PAWGroupConfig {
-    CommissionedDate: Date,
-    GroupAssignment: string,
-    Type: "Privileged" | "Developer" | "Tactical",
-    UserAssignment: string
-};
-
-/* 
-id = DeviceID of the PAW Device
-DisplayName = The computer name of the device according to AAD.
-ParentGroup = the ObjectID of the unique PAW group that the PAW is a member of
-ParentDevice = is an optional property that is the DeviceID of the parent PAW device
-*/
-// Define the structure of the PAW device object
-export interface PAWObject extends PAWGroupConfig {
-    id: string,
-    DisplayName: string,
-    ParentDevice?: string,
-    ParentGroup: string
-};
 
 // Expose a configuration engine that interfaces with the
 export class ConfigurationEngine {
     // Define the properties available in the class
     private graphClient: AppGraphClient;
-    private configScratchSpace: CloudSecConfigIncomplete;
+    private configScratchSpace: ICloudSecConfigIncomplete;
     scopeTagName: string;
     configInitialized: boolean;
-    config: CloudSecConfig | undefined;
+    config: ICloudSecConfig | undefined;
     startup: boolean;
 
     // Initialize the class
@@ -165,12 +118,12 @@ export class ConfigurationEngine {
     };
 
     // Parse and validate the string data that should be in the config format
-    private parseTagConfigString(configString: string): CloudSecConfigIncomplete {
+    private parseTagConfigString(configString: string): ICloudSecConfigIncomplete {
         // Validate input
         if (typeof configString !== "string") { throw new InternalAppError("The data is not in string format!", "Invalid Input", "ConfigEngine -> ConfigurationEngine -> parseConfigString -> Input Validation") };
 
         // Create the returned object
-        let parsedConfig: CloudSecConfigIncomplete = {}
+        let parsedConfig: ICloudSecConfigIncomplete = {}
 
         // Check to see if the role scope tag exists but has a blank description
         if (configString === "") {
@@ -333,7 +286,7 @@ export class ConfigurationEngine {
     async updatePAWGroupConfig() { };
 
     // Read the specified commissioned PAW group's description and parse it into
-    async getPAWGroupConfig(groupID: string): Promise<PAWGroupConfig> {
+    async getPAWGroupConfig(groupID: string): Promise<IDeviceGroupConfig> {
         // Validate input
         if (!validateGUID(groupID)) { throw new InternalAppError("The Group ID is not a valid GUID!", "Invalid Input", "ConfigEngine - ConfigurationEngine - parsePAWGroupConfig - Input Validation") };
 
@@ -414,7 +367,7 @@ export class ConfigurationEngine {
         // Ensure that all of the properties have been initialized
         if (parsedConfig.CommissionedDate && parsedConfig.Type && parsedConfig.UserAssignment && parsedConfig.GroupAssignment) {
             // Typecast the loose object to a PAW Config object. (this is to satisfy typescript, the parsed config could actually be returned here instead if typescript were smarter)
-            const validatedConfig: PAWGroupConfig = {
+            const validatedConfig: IDeviceGroupConfig = {
                 "CommissionedDate": parsedConfig.CommissionedDate,
                 "Type": parsedConfig.Type,
                 "UserAssignment": parsedConfig.UserAssignment,

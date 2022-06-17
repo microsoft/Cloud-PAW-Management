@@ -3,8 +3,8 @@
 
 import type * as MicrosoftGraphBeta from "@microsoft/microsoft-graph-types-beta";
 import type express from "express";
-import type { ConfigurationEngine, PAWGroupConfig, PAWObject } from "../Startup/ConfigEngine";
-import type { AppGraphClient } from "../Utility";
+import type { ConfigurationEngine } from "../Startup/ConfigEngine";
+import type { AppGraphClient, IDeviceGroupConfig, IDeviceObject } from "../Utility";
 import { endpointPAWUserRightsSettings, InternalAppError, localGroupMembershipUserRights, validateEmailArray, validateGUID, writeDebugInfo } from "../Utility";
 
 export class LifecycleRouter {
@@ -370,14 +370,14 @@ export class LifecycleRouter {
 
     // TODO: Add child support
     // Recurse through the specified PAW group and return an array of PAW device config objects
-    private async recursePAWGroup(groupID: string): Promise<PAWObject[]> {
+    private async recursePAWGroup(groupID: string): Promise<IDeviceObject[]> {
         // Validate input
         if (!validateGUID(groupID)) { throw new InternalAppError("The specified GUID is not a GUID!", "Invalid Input", "LifeCycleManagement - LifeCycleRouter - recursePAWGroup - Input Validation"); }
 
         // Initialize variable namespaces
         let groupMemberList: MicrosoftGraphBeta.Group[];
         let deviceMemberList: MicrosoftGraphBeta.Device[];
-        let processedMembers: PAWObject[] = [];
+        let processedMembers: IDeviceObject[] = [];
 
         // Catch Execution errors on member list retrieval
         try {
@@ -410,7 +410,7 @@ export class LifecycleRouter {
             const parsedDescription = await this.configEngine.getPAWGroupConfig(groupID);
 
             // Compile the data into a PAW object
-            const pawObject: PAWObject = {
+            const pawObject: IDeviceObject = {
                 "id": deviceMemberList[0].deviceId,
                 "DisplayName": deviceMemberList[0].displayName,
                 "ParentGroup": groupID,
@@ -446,7 +446,7 @@ export class LifecycleRouter {
 
     // TODO: Add child support
     // Commission the specified PAW with no user(s)
-    private async commissionPAW(deviceID: string, type?: string): Promise<PAWObject> {
+    private async commissionPAW(deviceID: string, type?: string): Promise<IDeviceObject> {
         // Validate Input
         if (!validateGUID(deviceID)) { throw new InternalAppError("The specified Device ID is not a valid device ID!", "Invalid Input", "LifecycleManagement - LifecycleRouter - commissionPAW - Input Validation"); };
 
@@ -476,7 +476,7 @@ export class LifecycleRouter {
         };
 
         // Initialize vars
-        let pawList: PAWObject[];
+        let pawList: IDeviceObject[];
         let userAssignmentConfig: MicrosoftGraphBeta.DeviceManagementConfigurationPolicy;
         let localGroupsConfig: MicrosoftGraphBeta.Windows10CustomConfiguration;
 
@@ -622,7 +622,7 @@ export class LifecycleRouter {
         };
 
         // Collect all the data in one place for the PAW Device Group description
-        const devGroupDescription: PAWGroupConfig = {
+        const devGroupDescription: IDeviceGroupConfig = {
             "CommissionedDate": new Date(),
             "Type": pawType,
             "UserAssignment": userAssignmentConfig.id,
@@ -759,7 +759,7 @@ export class LifecycleRouter {
         };
 
         // Build the object that will be returned on successful execution.
-        const returnObject: PAWObject = {
+        const returnObject: IDeviceObject = {
             "id": deviceID,
             "DisplayName": deviceObject.displayName,
             "ParentGroup": devGroup.id,
@@ -897,7 +897,7 @@ export class LifecycleRouter {
 
         // Initialize variable
         let oldUpnList: string[] = [];
-        let pawList: PAWObject[];
+        let pawList: IDeviceObject[];
         let assignmentCatalog: MicrosoftGraphBeta.DeviceManagementConfigurationPolicy;
 
         // Catch execution errors
@@ -1133,7 +1133,7 @@ export class LifecycleRouter {
 
         // Initialize Variables
         let assignedUpnList: string[] = [];
-        let pawList: PAWObject[];
+        let pawList: IDeviceObject[];
         let assignmentCatalog: MicrosoftGraphBeta.DeviceManagementConfigurationPolicy;
 
         // Catch execution errors
@@ -1264,7 +1264,7 @@ export class LifecycleRouter {
         };
 
         // Initialize variable
-        let pawList: PAWObject[];
+        let pawList: IDeviceObject[];
         let assignedUserList: MicrosoftGraphBeta.User[];
 
         // Catch execution errors
