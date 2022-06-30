@@ -97,32 +97,32 @@ jobs:
 #           snap: ${{ steps.build.outputs.snap }}
 #           release: edge
 
-  Authenticode-Sign:
-    # This job can't procede if the EXE isn't present to sign
-    needs: Generate-Bins
+  # Authenticode-Sign:
+  #   # This job can't procede if the EXE isn't present to sign
+  #   needs: Generate-Bins
 
-    # The type of runner that the job will run on
-    runs-on: windows-latest
+  #   # The type of runner that the job will run on
+  #   runs-on: windows-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      - name: Download the Windows Raw un-packaged exe Artifact
-        uses: actions/download-artifact@v2
-        with:
-          # Artifact name
-          name: WindowsRawExe
-          # Destination path
-          path: Downloads
+  #   # Steps represent a sequence of tasks that will be executed as part of the job
+  #   steps:
+  #     - name: Download the Windows Raw un-packaged exe Artifact
+  #       uses: actions/download-artifact@v2
+  #       with:
+  #         # Artifact name
+  #         name: WindowsRawExe
+  #         # Destination path
+  #         path: Downloads
 
-      # Runs a single command using the runners shell
-      - name: Set up .Net CLI
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: "6.0.x"
+  #     # Runs a single command using the runners shell
+  #     - name: Set up .Net CLI
+  #       uses: actions/setup-dotnet@v1
+  #       with:
+  #         dotnet-version: "6.0.x"
 
-      # Install the Azure Sign Tool for authenticode signing
-      - name: Install Azure Sign Tool
-        run: dotnet tool install --global AzureSignTool
+  #     # Install the Azure Sign Tool for authenticode signing
+  #     - name: Install Azure Sign Tool
+  #       run: dotnet tool install --global AzureSignTool
 
   Package-WindowsInstallers:
     # This job can't procede if the EXE hasn't been generated or signed
