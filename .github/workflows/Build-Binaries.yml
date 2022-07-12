@@ -126,7 +126,7 @@ jobs:
 
   Package-WindowsInstallers:
     # This job can't procede if the EXE hasn't been generated or signed
-    needs: [Generate-Bins, Authenticode-Sign]
+    needs: [Generate-Bins]
 
     # The type of runner that the job will run on
     runs-on: windows-latest
