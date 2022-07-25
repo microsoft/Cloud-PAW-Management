@@ -44,7 +44,7 @@
     "@azure/keyvault-secrets": "^4.4.0",
     "@microsoft/microsoft-graph-client": "^3.0.2",
     "express": "^4.18.1",
-    "helmet": "^5.1.0",
+    "helmet": "^5.1.1",
     "isomorphic-fetch": "^3.0.0",
     "swagger-ui-express": "^4.4.0"
   },
